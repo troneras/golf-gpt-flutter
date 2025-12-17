@@ -1,6 +1,7 @@
 import 'package:apparence_kit/core/states/user_state_notifier.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 class DeleteUserButton extends ConsumerWidget {
   const DeleteUserButton({super.key});
@@ -11,7 +12,7 @@ class DeleteUserButton extends ConsumerWidget {
       onPressed: () {
         showDialog(
             context: context,
-            builder: (context) {
+            builder: (dialogContext) {
               return AlertDialog.adaptive(
                 title: const Text('Delete my account?'),
                 content: const Text('Warning: this action is irreversible'),
@@ -19,15 +20,19 @@ class DeleteUserButton extends ConsumerWidget {
                   TextButton(
                     child: const Text('Cancel'),
                     onPressed: () {
-                      Navigator.of(context).pop();
+                      Navigator.of(dialogContext).pop();
                     },
                   ),
                   TextButton(
                     child: const Text('Yes, delete'),
-                    onPressed: () {
-                      ref
+                    onPressed: () async {
+                      Navigator.of(dialogContext).pop();
+                      await ref
                           .read(userStateNotifierProvider.notifier)
                           .deleteAccount();
+                      if (context.mounted) {
+                        context.go('/signin');
+                      }
                     },
                   ),
                 ],

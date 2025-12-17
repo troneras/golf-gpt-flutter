@@ -1,7 +1,7 @@
+import 'package:apparence_kit/core/data/models/user.dart';
 import 'package:apparence_kit/core/states/user_state_notifier.dart';
 import 'package:apparence_kit/core/theme/extensions/theme_extension.dart';
 import 'package:apparence_kit/core/theme/providers/theme_provider.dart';
-import 'package:apparence_kit/modules/settings/ui/components/avatar_component.dart';
 import 'package:apparence_kit/modules/settings/ui/components/delete_user_component.dart';
 import 'package:apparence_kit/modules/settings/ui/widgets/settings_tile.dart';
 import 'package:flutter/material.dart';
@@ -16,8 +16,16 @@ class SettingsPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    // you can fetch the user state like this
-    // final userState = ref.watch(userStateNotifierProvider);
+    final userState = ref.watch(userStateNotifierProvider);
+    final user = userState.user;
+    final userName = switch (user) {
+      AuthenticatedUserData(:final name, :final email) => name ?? email,
+      _ => 'User',
+    };
+    final userEmail = switch (user) {
+      AuthenticatedUserData(:final email) => email,
+      _ => '',
+    };
     return SafeArea(
       child: Padding(
         padding: const EdgeInsets.fromLTRB(16, 40, 16, 8),
@@ -31,9 +39,9 @@ class SettingsPage extends ConsumerWidget {
               ),
             ),
             const SizedBox(height: 24),
-            const ProfileTile(
-              title: "My account", // userState.user.name,
-              subtitle: "johndoe@gmail.com", // userState.user.email,
+            ProfileTile(
+              title: userName,
+              subtitle: userEmail,
             ),
             const SizedBox(height: 24),
             SettingsContainer(
@@ -87,10 +95,14 @@ class SettingsPage extends ConsumerWidget {
                               ),
                               TextButton(
                                 child: const Text('Disconnect'),
-                                onPressed: () {
-                                  ref
+                                onPressed: () async {
+                                  Navigator.of(context).pop();
+                                  await ref
                                       .read(userStateNotifierProvider.notifier)
                                       .onLogout();
+                                  if (context.mounted) {
+                                    context.go('/signin');
+                                  }
                                 },
                               ),
                             ],
@@ -134,13 +146,11 @@ class SettingsContainer extends StatelessWidget {
 class ProfileTile extends StatelessWidget {
   final String title;
   final String subtitle;
-  final String? imagePath;
 
   const ProfileTile({
     super.key,
     required this.title,
     required this.subtitle,
-    this.imagePath,
   });
 
   @override
@@ -148,7 +158,11 @@ class ProfileTile extends StatelessWidget {
     return SettingsContainer(
       child: Row(
         children: [
-          const EditableUserAvatar(),
+          CircleAvatar(
+            radius: 32,
+            backgroundImage: const AssetImage('assets/images/avatar.png'),
+            backgroundColor: Theme.of(context).colorScheme.surfaceContainerHighest,
+          ),
           const SizedBox(width: 16),
           Expanded(
             child: Column(
