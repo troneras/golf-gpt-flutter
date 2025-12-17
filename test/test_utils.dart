@@ -1,8 +1,6 @@
 import 'package:apparence_kit/core/data/api/analytics_api.dart';
-
 import 'package:apparence_kit/core/data/api/user_api.dart';
 import 'package:apparence_kit/core/data/entities/user_entity.dart';
-import 'package:apparence_kit/core/data/models/subscription.dart';
 import 'package:apparence_kit/core/data/models/user.dart';
 import 'package:apparence_kit/core/initializer/models/run_state.dart';
 import 'package:apparence_kit/core/initializer/onstart_service.dart';
@@ -36,7 +34,6 @@ import 'core/data/api/analytics_api_fake.dart';
 import 'core/data/api/storage_api_fake.dart';
 import 'core/rating/rating_api_fake.dart';
 import 'core/security/secured_storage_fake.dart';
-import 'firebase_test_utils.dart';
 import 'modules/authentication/data/api/auth_api_fake.dart';
 import 'modules/authentication/data/api/user_api_fake.dart';
 import 'modules/notifications/data/device_api_fake.dart';
@@ -173,8 +170,7 @@ extension AppWidgetTester on WidgetTester {
 
             userApi.getUserResult = switch (userState.user) {
               AuthenticatedUserData() => userState.user.toEntity(),
-              AnonymousUserData() => userState.user.toEntity(),
-              LoadingUserData() => null,
+              _ => null,
             };
           }
           

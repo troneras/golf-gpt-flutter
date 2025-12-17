@@ -19,30 +19,20 @@ sealed class User with _$User {
     Subscription? subscription,
   }) = AuthenticatedUserData;
 
-  const factory User.anonymous({
-    String? id,
-    bool? onboarded,
-    Subscription? subscription,
-    DateTime? creationDate,
-    DateTime? lastUpdateDate,
-  }) = AnonymousUserData;
-
   const factory User.loading() = LoadingUserData;
+
+  /// Represents a user that is not authenticated (no credentials stored)
+  const factory User.unauthenticated() = UnauthenticatedUserData;
 
   const User._();
 
   factory User.fromEntity(UserEntity? entity) {
     try {
       if (entity == null) {
-        return const User.anonymous();
+        return const User.unauthenticated();
       }
       if (entity.email == null) {
-        return User.anonymous(
-          id: entity.id,
-          onboarded: entity.onboarded ?? false,
-          creationDate: entity.creationDate,
-          lastUpdateDate: entity.lastUpdateDate,
-        );
+        throw Exception('User entity must have an email address');
       }
       return User.authenticated(
         id: entity.id,
@@ -70,38 +60,38 @@ sealed class User with _$User {
         creationDate: value.creationDate,
         lastUpdateDate: value.lastUpdateDate,
       ),
-      final AnonymousUserData value => UserEntity(
-        id: value.id,
-        name: '',
-        onboarded: value.onboarded,
-        creationDate: value.creationDate,
-        lastUpdateDate: value.lastUpdateDate,
-      ),
-      LoadingUserData() => throw "user is not connected",
+      LoadingUserData() => throw "user is loading",
+      UnauthenticatedUserData() => throw "user is not authenticated",
     };
   }
 
   String get idOrThrow => switch (this) {
     AuthenticatedUserData(:final id) => id!,
-    AnonymousUserData(:final id) => id!,
-    LoadingUserData() => throw "user is not connected",
+    LoadingUserData() => throw "user is loading",
+    UnauthenticatedUserData() => throw "user is not authenticated",
   };
 
   String? get idOrNull => switch (this) {
     AuthenticatedUserData(:final id) => id,
-    AnonymousUserData(:final id) => id,
     LoadingUserData() => null,
+    UnauthenticatedUserData() => null,
   };
 
   bool get isLoading => switch (this) {
     AuthenticatedUserData() => false,
-    AnonymousUserData() => false,
     LoadingUserData() => true,
+    UnauthenticatedUserData() => false,
+  };
+
+  bool get isAuthenticated => switch (this) {
+    AuthenticatedUserData() => true,
+    LoadingUserData() => false,
+    UnauthenticatedUserData() => false,
   };
 
   bool get isOnboarded => switch (this) {
     AuthenticatedUserData(:final onboarded) => onboarded,
-    AnonymousUserData(:final onboarded) => onboarded ?? false,
     LoadingUserData() => false,
+    UnauthenticatedUserData() => false,
   };
 }

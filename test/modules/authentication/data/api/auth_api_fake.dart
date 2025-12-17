@@ -32,16 +32,6 @@ class FakeAuthenticationApi implements AuthenticationApi {
   }
 
   @override
-  Future<Credentials> signinAnonymously() async {
-    await Future.delayed(const Duration(seconds: 1));
-    current = Credentials(
-      id: 'fake-user-id-anonymous',
-      token: 'fake-user-token-1234567898',
-    );
-    return current!;
-  }
-
-  @override
   Future<void> signout() async {
     current = null;
   }

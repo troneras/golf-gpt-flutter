@@ -12,11 +12,10 @@ sealed class UserState with _$UserState {
 
   const UserState._();
 
-  /// The subscription will be null if we don't use the Subscrption module
-  /// Or the user is not loaded
+  /// The subscription will be null if we don't use the Subscription module
+  /// Or the user is not loaded/authenticated
   Subscription? get subscription => switch(user) {
     AuthenticatedUserData(:final subscription) => subscription,
-    AnonymousUserData(:final subscription) => subscription,
     _ => null,
   };
 }

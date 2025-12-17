@@ -5,7 +5,6 @@ import 'package:apparence_kit/core/data/models/user.dart';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:logger/logger.dart';
 
 final userRepositoryProvider = Provider<UserRepository>(
   (ref) => UserRepository(
@@ -55,8 +54,7 @@ class UserRepository {
   Future<User> setOnboarded(User user) async {
     final userCpy = switch(user) {
       final AuthenticatedUserData value => value.copyWith(onboarded: true),
-      final AnonymousUserData value => value.copyWith(onboarded: true),
-      _ => throw Exception('User not found'),
+      _ => throw Exception('User must be authenticated'),
     };
 
     await _userApi.update(userCpy.toEntity());

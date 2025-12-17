@@ -1,4 +1,3 @@
-import 'package:apparence_kit/core/data/models/user.dart';
 import 'package:apparence_kit/core/guards/guard.dart';
 import 'package:apparence_kit/core/states/user_state_notifier.dart';
 import 'package:flutter/material.dart';
@@ -24,11 +23,7 @@ class AuthenticatedGuard extends ConsumerWidget {
       );
     }
     return Guard(
-      canActivate: Future.value(switch (authState.user) {
-        AuthenticatedUserData() => true,
-        AnonymousUserData(:final id) => id != null,
-        _ => false,
-      }),
+      canActivate: Future.value(authState.user.isAuthenticated),
       fallbackRoute: fallbackRoute,
       child: child,
     );

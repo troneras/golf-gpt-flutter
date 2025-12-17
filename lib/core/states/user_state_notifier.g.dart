@@ -47,7 +47,7 @@ final class UserStateNotifierProvider
   }
 }
 
-String _$userStateNotifierHash() => r'294bd520005299f96356ba7a86e5e0267ad90c80';
+String _$userStateNotifierHash() => r'bf4d92fbd266223d4c873408470cb8b95ed64ad9';
 
 /// This class is responsible for managing the state of the user over the app.
 /// It will be used to know if the user is connected or not and to get the user

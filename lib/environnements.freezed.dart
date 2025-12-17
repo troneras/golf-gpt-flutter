@@ -25,9 +25,7 @@ mixin _$Environment {
  String? get androidInterstitialAdUnitId;/// only if you want to use ads
  String? get iOSInterstitialAdUnitID;/// Environment variable to handle Mixpanel analytics
 /// You can get it from https://mixpanel.com
- String? get mixpanelToken;/// The default authentication mode of the app (anonymous or authRequired)
-/// See [AuthenticationMode]
- AuthenticationMode get authenticationMode;
+ String? get mixpanelToken;
 /// Create a copy of Environment
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -38,16 +36,16 @@ $EnvironmentCopyWith<Environment> get copyWith => _$EnvironmentCopyWithImpl<Envi
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is Environment&&(identical(other.name, name) || other.name == name)&&(identical(other.backendUrl, backendUrl) || other.backendUrl == backendUrl)&&(identical(other.revenueCatAndroidApiKey, revenueCatAndroidApiKey) || other.revenueCatAndroidApiKey == revenueCatAndroidApiKey)&&(identical(other.revenueCatIOSApiKey, revenueCatIOSApiKey) || other.revenueCatIOSApiKey == revenueCatIOSApiKey)&&(identical(other.appStoreId, appStoreId) || other.appStoreId == appStoreId)&&(identical(other.androidInterstitialAdUnitId, androidInterstitialAdUnitId) || other.androidInterstitialAdUnitId == androidInterstitialAdUnitId)&&(identical(other.iOSInterstitialAdUnitID, iOSInterstitialAdUnitID) || other.iOSInterstitialAdUnitID == iOSInterstitialAdUnitID)&&(identical(other.mixpanelToken, mixpanelToken) || other.mixpanelToken == mixpanelToken)&&(identical(other.authenticationMode, authenticationMode) || other.authenticationMode == authenticationMode));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is Environment&&(identical(other.name, name) || other.name == name)&&(identical(other.backendUrl, backendUrl) || other.backendUrl == backendUrl)&&(identical(other.revenueCatAndroidApiKey, revenueCatAndroidApiKey) || other.revenueCatAndroidApiKey == revenueCatAndroidApiKey)&&(identical(other.revenueCatIOSApiKey, revenueCatIOSApiKey) || other.revenueCatIOSApiKey == revenueCatIOSApiKey)&&(identical(other.appStoreId, appStoreId) || other.appStoreId == appStoreId)&&(identical(other.androidInterstitialAdUnitId, androidInterstitialAdUnitId) || other.androidInterstitialAdUnitId == androidInterstitialAdUnitId)&&(identical(other.iOSInterstitialAdUnitID, iOSInterstitialAdUnitID) || other.iOSInterstitialAdUnitID == iOSInterstitialAdUnitID)&&(identical(other.mixpanelToken, mixpanelToken) || other.mixpanelToken == mixpanelToken));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,name,backendUrl,revenueCatAndroidApiKey,revenueCatIOSApiKey,appStoreId,androidInterstitialAdUnitId,iOSInterstitialAdUnitID,mixpanelToken,authenticationMode);
+int get hashCode => Object.hash(runtimeType,name,backendUrl,revenueCatAndroidApiKey,revenueCatIOSApiKey,appStoreId,androidInterstitialAdUnitId,iOSInterstitialAdUnitID,mixpanelToken);
 
 @override
 String toString() {
-  return 'Environment(name: $name, backendUrl: $backendUrl, revenueCatAndroidApiKey: $revenueCatAndroidApiKey, revenueCatIOSApiKey: $revenueCatIOSApiKey, appStoreId: $appStoreId, androidInterstitialAdUnitId: $androidInterstitialAdUnitId, iOSInterstitialAdUnitID: $iOSInterstitialAdUnitID, mixpanelToken: $mixpanelToken, authenticationMode: $authenticationMode)';
+  return 'Environment(name: $name, backendUrl: $backendUrl, revenueCatAndroidApiKey: $revenueCatAndroidApiKey, revenueCatIOSApiKey: $revenueCatIOSApiKey, appStoreId: $appStoreId, androidInterstitialAdUnitId: $androidInterstitialAdUnitId, iOSInterstitialAdUnitID: $iOSInterstitialAdUnitID, mixpanelToken: $mixpanelToken)';
 }
 
 
@@ -58,7 +56,7 @@ abstract mixin class $EnvironmentCopyWith<$Res>  {
   factory $EnvironmentCopyWith(Environment value, $Res Function(Environment) _then) = _$EnvironmentCopyWithImpl;
 @useResult
 $Res call({
- String name, String backendUrl, String? revenueCatAndroidApiKey, String? revenueCatIOSApiKey, String? appStoreId, String? androidInterstitialAdUnitId, String? iOSInterstitialAdUnitID, String? mixpanelToken, AuthenticationMode authenticationMode
+ String name, String backendUrl, String? revenueCatAndroidApiKey, String? revenueCatIOSApiKey, String? appStoreId, String? androidInterstitialAdUnitId, String? iOSInterstitialAdUnitID, String? mixpanelToken
 });
 
 
@@ -75,7 +73,7 @@ class _$EnvironmentCopyWithImpl<$Res>
 
 /// Create a copy of Environment
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? name = null,Object? backendUrl = null,Object? revenueCatAndroidApiKey = freezed,Object? revenueCatIOSApiKey = freezed,Object? appStoreId = freezed,Object? androidInterstitialAdUnitId = freezed,Object? iOSInterstitialAdUnitID = freezed,Object? mixpanelToken = freezed,Object? authenticationMode = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? name = null,Object? backendUrl = null,Object? revenueCatAndroidApiKey = freezed,Object? revenueCatIOSApiKey = freezed,Object? appStoreId = freezed,Object? androidInterstitialAdUnitId = freezed,Object? iOSInterstitialAdUnitID = freezed,Object? mixpanelToken = freezed,}) {
   return _then(_self.copyWith(
 name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
 as String,backendUrl: null == backendUrl ? _self.backendUrl : backendUrl // ignore: cast_nullable_to_non_nullable
@@ -85,8 +83,7 @@ as String?,appStoreId: freezed == appStoreId ? _self.appStoreId : appStoreId // 
 as String?,androidInterstitialAdUnitId: freezed == androidInterstitialAdUnitId ? _self.androidInterstitialAdUnitId : androidInterstitialAdUnitId // ignore: cast_nullable_to_non_nullable
 as String?,iOSInterstitialAdUnitID: freezed == iOSInterstitialAdUnitID ? _self.iOSInterstitialAdUnitID : iOSInterstitialAdUnitID // ignore: cast_nullable_to_non_nullable
 as String?,mixpanelToken: freezed == mixpanelToken ? _self.mixpanelToken : mixpanelToken // ignore: cast_nullable_to_non_nullable
-as String?,authenticationMode: null == authenticationMode ? _self.authenticationMode : authenticationMode // ignore: cast_nullable_to_non_nullable
-as AuthenticationMode,
+as String?,
   ));
 }
 
@@ -171,11 +168,11 @@ return prod(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function( String name,  String backendUrl,  String? revenueCatAndroidApiKey,  String? revenueCatIOSApiKey,  String? appStoreId,  String? androidInterstitialAdUnitId,  String? iOSInterstitialAdUnitID,  String? mixpanelToken,  AuthenticationMode authenticationMode)?  dev,TResult Function( String name,  String backendUrl,  String? revenueCatAndroidApiKey,  String? revenueCatIOSApiKey,  String? androidInterstitialAdUnitId,  String? iOSInterstitialAdUnitID,  String? appStoreId,  String? sentryDsn,  String? mixpanelToken,  AuthenticationMode authenticationMode)?  prod,required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function( String name,  String backendUrl,  String? revenueCatAndroidApiKey,  String? revenueCatIOSApiKey,  String? appStoreId,  String? androidInterstitialAdUnitId,  String? iOSInterstitialAdUnitID,  String? mixpanelToken)?  dev,TResult Function( String name,  String backendUrl,  String? revenueCatAndroidApiKey,  String? revenueCatIOSApiKey,  String? androidInterstitialAdUnitId,  String? iOSInterstitialAdUnitID,  String? appStoreId,  String? sentryDsn,  String? mixpanelToken)?  prod,required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case DevEnvironment() when dev != null:
-return dev(_that.name,_that.backendUrl,_that.revenueCatAndroidApiKey,_that.revenueCatIOSApiKey,_that.appStoreId,_that.androidInterstitialAdUnitId,_that.iOSInterstitialAdUnitID,_that.mixpanelToken,_that.authenticationMode);case ProdEnvironment() when prod != null:
-return prod(_that.name,_that.backendUrl,_that.revenueCatAndroidApiKey,_that.revenueCatIOSApiKey,_that.androidInterstitialAdUnitId,_that.iOSInterstitialAdUnitID,_that.appStoreId,_that.sentryDsn,_that.mixpanelToken,_that.authenticationMode);case _:
+return dev(_that.name,_that.backendUrl,_that.revenueCatAndroidApiKey,_that.revenueCatIOSApiKey,_that.appStoreId,_that.androidInterstitialAdUnitId,_that.iOSInterstitialAdUnitID,_that.mixpanelToken);case ProdEnvironment() when prod != null:
+return prod(_that.name,_that.backendUrl,_that.revenueCatAndroidApiKey,_that.revenueCatIOSApiKey,_that.androidInterstitialAdUnitId,_that.iOSInterstitialAdUnitID,_that.appStoreId,_that.sentryDsn,_that.mixpanelToken);case _:
   return orElse();
 
 }
@@ -193,11 +190,11 @@ return prod(_that.name,_that.backendUrl,_that.revenueCatAndroidApiKey,_that.reve
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function( String name,  String backendUrl,  String? revenueCatAndroidApiKey,  String? revenueCatIOSApiKey,  String? appStoreId,  String? androidInterstitialAdUnitId,  String? iOSInterstitialAdUnitID,  String? mixpanelToken,  AuthenticationMode authenticationMode)  dev,required TResult Function( String name,  String backendUrl,  String? revenueCatAndroidApiKey,  String? revenueCatIOSApiKey,  String? androidInterstitialAdUnitId,  String? iOSInterstitialAdUnitID,  String? appStoreId,  String? sentryDsn,  String? mixpanelToken,  AuthenticationMode authenticationMode)  prod,}) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function( String name,  String backendUrl,  String? revenueCatAndroidApiKey,  String? revenueCatIOSApiKey,  String? appStoreId,  String? androidInterstitialAdUnitId,  String? iOSInterstitialAdUnitID,  String? mixpanelToken)  dev,required TResult Function( String name,  String backendUrl,  String? revenueCatAndroidApiKey,  String? revenueCatIOSApiKey,  String? androidInterstitialAdUnitId,  String? iOSInterstitialAdUnitID,  String? appStoreId,  String? sentryDsn,  String? mixpanelToken)  prod,}) {final _that = this;
 switch (_that) {
 case DevEnvironment():
-return dev(_that.name,_that.backendUrl,_that.revenueCatAndroidApiKey,_that.revenueCatIOSApiKey,_that.appStoreId,_that.androidInterstitialAdUnitId,_that.iOSInterstitialAdUnitID,_that.mixpanelToken,_that.authenticationMode);case ProdEnvironment():
-return prod(_that.name,_that.backendUrl,_that.revenueCatAndroidApiKey,_that.revenueCatIOSApiKey,_that.androidInterstitialAdUnitId,_that.iOSInterstitialAdUnitID,_that.appStoreId,_that.sentryDsn,_that.mixpanelToken,_that.authenticationMode);}
+return dev(_that.name,_that.backendUrl,_that.revenueCatAndroidApiKey,_that.revenueCatIOSApiKey,_that.appStoreId,_that.androidInterstitialAdUnitId,_that.iOSInterstitialAdUnitID,_that.mixpanelToken);case ProdEnvironment():
+return prod(_that.name,_that.backendUrl,_that.revenueCatAndroidApiKey,_that.revenueCatIOSApiKey,_that.androidInterstitialAdUnitId,_that.iOSInterstitialAdUnitID,_that.appStoreId,_that.sentryDsn,_that.mixpanelToken);}
 }
 /// A variant of `when` that fallback to returning `null`
 ///
@@ -211,11 +208,11 @@ return prod(_that.name,_that.backendUrl,_that.revenueCatAndroidApiKey,_that.reve
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function( String name,  String backendUrl,  String? revenueCatAndroidApiKey,  String? revenueCatIOSApiKey,  String? appStoreId,  String? androidInterstitialAdUnitId,  String? iOSInterstitialAdUnitID,  String? mixpanelToken,  AuthenticationMode authenticationMode)?  dev,TResult? Function( String name,  String backendUrl,  String? revenueCatAndroidApiKey,  String? revenueCatIOSApiKey,  String? androidInterstitialAdUnitId,  String? iOSInterstitialAdUnitID,  String? appStoreId,  String? sentryDsn,  String? mixpanelToken,  AuthenticationMode authenticationMode)?  prod,}) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function( String name,  String backendUrl,  String? revenueCatAndroidApiKey,  String? revenueCatIOSApiKey,  String? appStoreId,  String? androidInterstitialAdUnitId,  String? iOSInterstitialAdUnitID,  String? mixpanelToken)?  dev,TResult? Function( String name,  String backendUrl,  String? revenueCatAndroidApiKey,  String? revenueCatIOSApiKey,  String? androidInterstitialAdUnitId,  String? iOSInterstitialAdUnitID,  String? appStoreId,  String? sentryDsn,  String? mixpanelToken)?  prod,}) {final _that = this;
 switch (_that) {
 case DevEnvironment() when dev != null:
-return dev(_that.name,_that.backendUrl,_that.revenueCatAndroidApiKey,_that.revenueCatIOSApiKey,_that.appStoreId,_that.androidInterstitialAdUnitId,_that.iOSInterstitialAdUnitID,_that.mixpanelToken,_that.authenticationMode);case ProdEnvironment() when prod != null:
-return prod(_that.name,_that.backendUrl,_that.revenueCatAndroidApiKey,_that.revenueCatIOSApiKey,_that.androidInterstitialAdUnitId,_that.iOSInterstitialAdUnitID,_that.appStoreId,_that.sentryDsn,_that.mixpanelToken,_that.authenticationMode);case _:
+return dev(_that.name,_that.backendUrl,_that.revenueCatAndroidApiKey,_that.revenueCatIOSApiKey,_that.appStoreId,_that.androidInterstitialAdUnitId,_that.iOSInterstitialAdUnitID,_that.mixpanelToken);case ProdEnvironment() when prod != null:
+return prod(_that.name,_that.backendUrl,_that.revenueCatAndroidApiKey,_that.revenueCatIOSApiKey,_that.androidInterstitialAdUnitId,_that.iOSInterstitialAdUnitID,_that.appStoreId,_that.sentryDsn,_that.mixpanelToken);case _:
   return null;
 
 }
@@ -227,7 +224,7 @@ return prod(_that.name,_that.backendUrl,_that.revenueCatAndroidApiKey,_that.reve
 
 
 class DevEnvironment extends Environment {
-  const DevEnvironment({required this.name, required this.backendUrl, this.revenueCatAndroidApiKey, this.revenueCatIOSApiKey, this.appStoreId, this.androidInterstitialAdUnitId, this.iOSInterstitialAdUnitID, this.mixpanelToken, required this.authenticationMode}): super._();
+  const DevEnvironment({required this.name, required this.backendUrl, this.revenueCatAndroidApiKey, this.revenueCatIOSApiKey, this.appStoreId, this.androidInterstitialAdUnitId, this.iOSInterstitialAdUnitID, this.mixpanelToken}): super._();
   
 
 // Name of the environment (dev, prod, ...) just for debug purpose
@@ -249,9 +246,6 @@ class DevEnvironment extends Environment {
 /// Environment variable to handle Mixpanel analytics
 /// You can get it from https://mixpanel.com
 @override final  String? mixpanelToken;
-/// The default authentication mode of the app (anonymous or authRequired)
-/// See [AuthenticationMode]
-@override final  AuthenticationMode authenticationMode;
 
 /// Create a copy of Environment
 /// with the given fields replaced by the non-null parameter values.
@@ -263,16 +257,16 @@ $DevEnvironmentCopyWith<DevEnvironment> get copyWith => _$DevEnvironmentCopyWith
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is DevEnvironment&&(identical(other.name, name) || other.name == name)&&(identical(other.backendUrl, backendUrl) || other.backendUrl == backendUrl)&&(identical(other.revenueCatAndroidApiKey, revenueCatAndroidApiKey) || other.revenueCatAndroidApiKey == revenueCatAndroidApiKey)&&(identical(other.revenueCatIOSApiKey, revenueCatIOSApiKey) || other.revenueCatIOSApiKey == revenueCatIOSApiKey)&&(identical(other.appStoreId, appStoreId) || other.appStoreId == appStoreId)&&(identical(other.androidInterstitialAdUnitId, androidInterstitialAdUnitId) || other.androidInterstitialAdUnitId == androidInterstitialAdUnitId)&&(identical(other.iOSInterstitialAdUnitID, iOSInterstitialAdUnitID) || other.iOSInterstitialAdUnitID == iOSInterstitialAdUnitID)&&(identical(other.mixpanelToken, mixpanelToken) || other.mixpanelToken == mixpanelToken)&&(identical(other.authenticationMode, authenticationMode) || other.authenticationMode == authenticationMode));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is DevEnvironment&&(identical(other.name, name) || other.name == name)&&(identical(other.backendUrl, backendUrl) || other.backendUrl == backendUrl)&&(identical(other.revenueCatAndroidApiKey, revenueCatAndroidApiKey) || other.revenueCatAndroidApiKey == revenueCatAndroidApiKey)&&(identical(other.revenueCatIOSApiKey, revenueCatIOSApiKey) || other.revenueCatIOSApiKey == revenueCatIOSApiKey)&&(identical(other.appStoreId, appStoreId) || other.appStoreId == appStoreId)&&(identical(other.androidInterstitialAdUnitId, androidInterstitialAdUnitId) || other.androidInterstitialAdUnitId == androidInterstitialAdUnitId)&&(identical(other.iOSInterstitialAdUnitID, iOSInterstitialAdUnitID) || other.iOSInterstitialAdUnitID == iOSInterstitialAdUnitID)&&(identical(other.mixpanelToken, mixpanelToken) || other.mixpanelToken == mixpanelToken));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,name,backendUrl,revenueCatAndroidApiKey,revenueCatIOSApiKey,appStoreId,androidInterstitialAdUnitId,iOSInterstitialAdUnitID,mixpanelToken,authenticationMode);
+int get hashCode => Object.hash(runtimeType,name,backendUrl,revenueCatAndroidApiKey,revenueCatIOSApiKey,appStoreId,androidInterstitialAdUnitId,iOSInterstitialAdUnitID,mixpanelToken);
 
 @override
 String toString() {
-  return 'Environment.dev(name: $name, backendUrl: $backendUrl, revenueCatAndroidApiKey: $revenueCatAndroidApiKey, revenueCatIOSApiKey: $revenueCatIOSApiKey, appStoreId: $appStoreId, androidInterstitialAdUnitId: $androidInterstitialAdUnitId, iOSInterstitialAdUnitID: $iOSInterstitialAdUnitID, mixpanelToken: $mixpanelToken, authenticationMode: $authenticationMode)';
+  return 'Environment.dev(name: $name, backendUrl: $backendUrl, revenueCatAndroidApiKey: $revenueCatAndroidApiKey, revenueCatIOSApiKey: $revenueCatIOSApiKey, appStoreId: $appStoreId, androidInterstitialAdUnitId: $androidInterstitialAdUnitId, iOSInterstitialAdUnitID: $iOSInterstitialAdUnitID, mixpanelToken: $mixpanelToken)';
 }
 
 
@@ -283,7 +277,7 @@ abstract mixin class $DevEnvironmentCopyWith<$Res> implements $EnvironmentCopyWi
   factory $DevEnvironmentCopyWith(DevEnvironment value, $Res Function(DevEnvironment) _then) = _$DevEnvironmentCopyWithImpl;
 @override @useResult
 $Res call({
- String name, String backendUrl, String? revenueCatAndroidApiKey, String? revenueCatIOSApiKey, String? appStoreId, String? androidInterstitialAdUnitId, String? iOSInterstitialAdUnitID, String? mixpanelToken, AuthenticationMode authenticationMode
+ String name, String backendUrl, String? revenueCatAndroidApiKey, String? revenueCatIOSApiKey, String? appStoreId, String? androidInterstitialAdUnitId, String? iOSInterstitialAdUnitID, String? mixpanelToken
 });
 
 
@@ -300,7 +294,7 @@ class _$DevEnvironmentCopyWithImpl<$Res>
 
 /// Create a copy of Environment
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? name = null,Object? backendUrl = null,Object? revenueCatAndroidApiKey = freezed,Object? revenueCatIOSApiKey = freezed,Object? appStoreId = freezed,Object? androidInterstitialAdUnitId = freezed,Object? iOSInterstitialAdUnitID = freezed,Object? mixpanelToken = freezed,Object? authenticationMode = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? name = null,Object? backendUrl = null,Object? revenueCatAndroidApiKey = freezed,Object? revenueCatIOSApiKey = freezed,Object? appStoreId = freezed,Object? androidInterstitialAdUnitId = freezed,Object? iOSInterstitialAdUnitID = freezed,Object? mixpanelToken = freezed,}) {
   return _then(DevEnvironment(
 name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
 as String,backendUrl: null == backendUrl ? _self.backendUrl : backendUrl // ignore: cast_nullable_to_non_nullable
@@ -310,8 +304,7 @@ as String?,appStoreId: freezed == appStoreId ? _self.appStoreId : appStoreId // 
 as String?,androidInterstitialAdUnitId: freezed == androidInterstitialAdUnitId ? _self.androidInterstitialAdUnitId : androidInterstitialAdUnitId // ignore: cast_nullable_to_non_nullable
 as String?,iOSInterstitialAdUnitID: freezed == iOSInterstitialAdUnitID ? _self.iOSInterstitialAdUnitID : iOSInterstitialAdUnitID // ignore: cast_nullable_to_non_nullable
 as String?,mixpanelToken: freezed == mixpanelToken ? _self.mixpanelToken : mixpanelToken // ignore: cast_nullable_to_non_nullable
-as String?,authenticationMode: null == authenticationMode ? _self.authenticationMode : authenticationMode // ignore: cast_nullable_to_non_nullable
-as AuthenticationMode,
+as String?,
   ));
 }
 
@@ -322,7 +315,7 @@ as AuthenticationMode,
 
 
 class ProdEnvironment extends Environment {
-  const ProdEnvironment({required this.name, required this.backendUrl, this.revenueCatAndroidApiKey, this.revenueCatIOSApiKey, this.androidInterstitialAdUnitId, this.iOSInterstitialAdUnitID, this.appStoreId, this.sentryDsn, this.mixpanelToken, required this.authenticationMode}): super._();
+  const ProdEnvironment({required this.name, required this.backendUrl, this.revenueCatAndroidApiKey, this.revenueCatIOSApiKey, this.androidInterstitialAdUnitId, this.iOSInterstitialAdUnitID, this.appStoreId, this.sentryDsn, this.mixpanelToken}): super._();
   
 
 @override final  String name;
@@ -348,9 +341,6 @@ class ProdEnvironment extends Environment {
 /// Environment variable to handle Mixpanel analytics
 /// You can get it from https://mixpanel.com
 @override final  String? mixpanelToken;
-/// The default authentication mode of the app (anonymous or authRequired)
-/// See [AuthenticationMode]
-@override final  AuthenticationMode authenticationMode;
 
 /// Create a copy of Environment
 /// with the given fields replaced by the non-null parameter values.
@@ -362,16 +352,16 @@ $ProdEnvironmentCopyWith<ProdEnvironment> get copyWith => _$ProdEnvironmentCopyW
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is ProdEnvironment&&(identical(other.name, name) || other.name == name)&&(identical(other.backendUrl, backendUrl) || other.backendUrl == backendUrl)&&(identical(other.revenueCatAndroidApiKey, revenueCatAndroidApiKey) || other.revenueCatAndroidApiKey == revenueCatAndroidApiKey)&&(identical(other.revenueCatIOSApiKey, revenueCatIOSApiKey) || other.revenueCatIOSApiKey == revenueCatIOSApiKey)&&(identical(other.androidInterstitialAdUnitId, androidInterstitialAdUnitId) || other.androidInterstitialAdUnitId == androidInterstitialAdUnitId)&&(identical(other.iOSInterstitialAdUnitID, iOSInterstitialAdUnitID) || other.iOSInterstitialAdUnitID == iOSInterstitialAdUnitID)&&(identical(other.appStoreId, appStoreId) || other.appStoreId == appStoreId)&&(identical(other.sentryDsn, sentryDsn) || other.sentryDsn == sentryDsn)&&(identical(other.mixpanelToken, mixpanelToken) || other.mixpanelToken == mixpanelToken)&&(identical(other.authenticationMode, authenticationMode) || other.authenticationMode == authenticationMode));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is ProdEnvironment&&(identical(other.name, name) || other.name == name)&&(identical(other.backendUrl, backendUrl) || other.backendUrl == backendUrl)&&(identical(other.revenueCatAndroidApiKey, revenueCatAndroidApiKey) || other.revenueCatAndroidApiKey == revenueCatAndroidApiKey)&&(identical(other.revenueCatIOSApiKey, revenueCatIOSApiKey) || other.revenueCatIOSApiKey == revenueCatIOSApiKey)&&(identical(other.androidInterstitialAdUnitId, androidInterstitialAdUnitId) || other.androidInterstitialAdUnitId == androidInterstitialAdUnitId)&&(identical(other.iOSInterstitialAdUnitID, iOSInterstitialAdUnitID) || other.iOSInterstitialAdUnitID == iOSInterstitialAdUnitID)&&(identical(other.appStoreId, appStoreId) || other.appStoreId == appStoreId)&&(identical(other.sentryDsn, sentryDsn) || other.sentryDsn == sentryDsn)&&(identical(other.mixpanelToken, mixpanelToken) || other.mixpanelToken == mixpanelToken));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,name,backendUrl,revenueCatAndroidApiKey,revenueCatIOSApiKey,androidInterstitialAdUnitId,iOSInterstitialAdUnitID,appStoreId,sentryDsn,mixpanelToken,authenticationMode);
+int get hashCode => Object.hash(runtimeType,name,backendUrl,revenueCatAndroidApiKey,revenueCatIOSApiKey,androidInterstitialAdUnitId,iOSInterstitialAdUnitID,appStoreId,sentryDsn,mixpanelToken);
 
 @override
 String toString() {
-  return 'Environment.prod(name: $name, backendUrl: $backendUrl, revenueCatAndroidApiKey: $revenueCatAndroidApiKey, revenueCatIOSApiKey: $revenueCatIOSApiKey, androidInterstitialAdUnitId: $androidInterstitialAdUnitId, iOSInterstitialAdUnitID: $iOSInterstitialAdUnitID, appStoreId: $appStoreId, sentryDsn: $sentryDsn, mixpanelToken: $mixpanelToken, authenticationMode: $authenticationMode)';
+  return 'Environment.prod(name: $name, backendUrl: $backendUrl, revenueCatAndroidApiKey: $revenueCatAndroidApiKey, revenueCatIOSApiKey: $revenueCatIOSApiKey, androidInterstitialAdUnitId: $androidInterstitialAdUnitId, iOSInterstitialAdUnitID: $iOSInterstitialAdUnitID, appStoreId: $appStoreId, sentryDsn: $sentryDsn, mixpanelToken: $mixpanelToken)';
 }
 
 
@@ -382,7 +372,7 @@ abstract mixin class $ProdEnvironmentCopyWith<$Res> implements $EnvironmentCopyW
   factory $ProdEnvironmentCopyWith(ProdEnvironment value, $Res Function(ProdEnvironment) _then) = _$ProdEnvironmentCopyWithImpl;
 @override @useResult
 $Res call({
- String name, String backendUrl, String? revenueCatAndroidApiKey, String? revenueCatIOSApiKey, String? androidInterstitialAdUnitId, String? iOSInterstitialAdUnitID, String? appStoreId, String? sentryDsn, String? mixpanelToken, AuthenticationMode authenticationMode
+ String name, String backendUrl, String? revenueCatAndroidApiKey, String? revenueCatIOSApiKey, String? androidInterstitialAdUnitId, String? iOSInterstitialAdUnitID, String? appStoreId, String? sentryDsn, String? mixpanelToken
 });
 
 
@@ -399,7 +389,7 @@ class _$ProdEnvironmentCopyWithImpl<$Res>
 
 /// Create a copy of Environment
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? name = null,Object? backendUrl = null,Object? revenueCatAndroidApiKey = freezed,Object? revenueCatIOSApiKey = freezed,Object? androidInterstitialAdUnitId = freezed,Object? iOSInterstitialAdUnitID = freezed,Object? appStoreId = freezed,Object? sentryDsn = freezed,Object? mixpanelToken = freezed,Object? authenticationMode = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? name = null,Object? backendUrl = null,Object? revenueCatAndroidApiKey = freezed,Object? revenueCatIOSApiKey = freezed,Object? androidInterstitialAdUnitId = freezed,Object? iOSInterstitialAdUnitID = freezed,Object? appStoreId = freezed,Object? sentryDsn = freezed,Object? mixpanelToken = freezed,}) {
   return _then(ProdEnvironment(
 name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
 as String,backendUrl: null == backendUrl ? _self.backendUrl : backendUrl // ignore: cast_nullable_to_non_nullable
@@ -410,8 +400,7 @@ as String?,iOSInterstitialAdUnitID: freezed == iOSInterstitialAdUnitID ? _self.i
 as String?,appStoreId: freezed == appStoreId ? _self.appStoreId : appStoreId // ignore: cast_nullable_to_non_nullable
 as String?,sentryDsn: freezed == sentryDsn ? _self.sentryDsn : sentryDsn // ignore: cast_nullable_to_non_nullable
 as String?,mixpanelToken: freezed == mixpanelToken ? _self.mixpanelToken : mixpanelToken // ignore: cast_nullable_to_non_nullable
-as String?,authenticationMode: null == authenticationMode ? _self.authenticationMode : authenticationMode // ignore: cast_nullable_to_non_nullable
-as AuthenticationMode,
+as String?,
   ));
 }
 

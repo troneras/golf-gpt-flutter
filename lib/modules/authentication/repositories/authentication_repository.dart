@@ -20,12 +20,6 @@ final authRepositoryProvider = Provider<AuthenticationRepository>(
 );
 
 abstract class AuthenticationRepository {
-  /// Signup a user anonymously
-  /// The user is signed in with an ID
-  /// but we don't have any information about him (email, name, ...)
-  /// This allows him to have a temporary account that he can link to an email or social login later
-  Future<void> signupAnonymously();
-
   /// Signup a user with [email] and [password]
   /// The user is signed in automatically
   /// We SHOULD NOT store the password in the database
@@ -106,23 +100,6 @@ class HttpAuthenticationRepository implements AuthenticationRepository {
         _userApi = userApi,
         _authenticationApi = authenticationApi,
         _storage = storage;
-
-  @override
-  Future<void> signupAnonymously() async {
-    try {
-      _logger.d('Signup anonymously up');
-      final credentials = await _authenticationApi.signinAnonymously();
-      await _storage.write(value: credentials);
-      _httpClient.authToken = credentials.token;
-    } on ApiError catch (e) {
-      throw SignupException.fromApiError(e);
-    } catch (e) {
-      throw SignupException(
-        code: 0,
-        message: 'Unknown error $e',
-      );
-    }
-  }
 
   @override
   Future<void> signup(String email, String password) async {

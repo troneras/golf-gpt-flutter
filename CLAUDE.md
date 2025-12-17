@@ -239,21 +239,17 @@ part 'user.freezed.dart';
 @freezed
 sealed class User with _$User {
   const factory User.authenticated({
-    required Email email,  // Not String - use typed wrapper
-    Name? name,
+    required String email,
+    String? name,
     String? id,
     DateTime? creationDate,
     required bool onboarded,
     Subscription? subscription,
   }) = AuthenticatedUserData;
 
-  const factory User.anonymous({
-    String? id,
-    bool? onboarded,
-    Subscription? subscription,
-  }) = AnonymousUserData;
-
   const factory User.loading() = LoadingUserData;
+
+  const factory User.unauthenticated() = UnauthenticatedUserData;
 
   const User._();
 }
@@ -413,7 +409,7 @@ flutter_native_splash:
 
 - **Social login**: Google Sign-In, Apple Sign-In (iOS only)
 - **Email/password**: Traditional auth flow
-- **Anonymous-first**: Users can use app without login, then upgrade
+- **Auth-required**: Users must authenticate to use the app
 
 ### Google Sign-In (v7.x API)
 ```dart

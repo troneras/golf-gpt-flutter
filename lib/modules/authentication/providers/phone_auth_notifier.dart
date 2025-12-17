@@ -1,5 +1,3 @@
-import 'package:apparence_kit/core/data/models/user.dart';
-import 'package:apparence_kit/core/states/user_state_notifier.dart';
 import 'package:apparence_kit/core/widgets/toast.dart';
 import 'package:apparence_kit/modules/authentication/api/authentication_api_interface.dart';
 import 'package:apparence_kit/modules/authentication/providers/models/phone_signin_state.dart';
@@ -17,9 +15,6 @@ part 'phone_auth_notifier.g.dart';
 /// and to verify the OTP code
 /// It is also used to link the phone number to the user
 /// and to sign in the user with the phone number
-///
-/// -- if you enable anonymous mode we try to link the user to the phone number
-/// -- if it fails we sign in the user with the phone number
 
 @Riverpod(keepAlive: false)
 class PhoneAuthNotifier extends _$PhoneAuthNotifier {
@@ -28,15 +23,7 @@ class PhoneAuthNotifier extends _$PhoneAuthNotifier {
   @override
   PhoneAuthState build() {
     _authRepository = ref.read(authRepositoryProvider);
-    final userState = ref.read(userStateNotifierProvider);
-
-    final linkUser = switch (userState.user) {
-      AuthenticatedUserData() => false,
-      AnonymousUserData(:final id) when id != null => true,
-      _ => false,
-    };
-
-    return PhoneAuthState.inputPhone(linkPhoneToUser: linkUser);
+    return const PhoneAuthState.inputPhone(linkPhoneToUser: false);
   }
 
   /// Send the OTP code to the user's phone number

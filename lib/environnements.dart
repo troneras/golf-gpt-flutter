@@ -1,6 +1,5 @@
 // ignore_for_file: avoid_redundant_argument_values
 
-import 'package:apparence_kit/core/states/user_state_notifier.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
@@ -53,10 +52,6 @@ sealed class Environment with _$Environment {
     /// Environment variable to handle Mixpanel analytics
     /// You can get it from https://mixpanel.com
     String? mixpanelToken,
-
-    /// The default authentication mode of the app (anonymous or authRequired)
-    /// See [AuthenticationMode]
-    required AuthenticationMode authenticationMode,
   }) = DevEnvironment;
 
   const factory Environment.prod({
@@ -91,10 +86,6 @@ sealed class Environment with _$Environment {
     /// Environment variable to handle Mixpanel analytics
     /// You can get it from https://mixpanel.com
     String? mixpanelToken,
-
-    /// The default authentication mode of the app (anonymous or authRequired)
-    /// See [AuthenticationMode]
-    required AuthenticationMode authenticationMode,
   }) = ProdEnvironment;
 
   const Environment._();
@@ -115,8 +106,6 @@ sealed class Environment with _$Environment {
             defaultValue: '',
           ),
           mixpanelToken: String.fromEnvironment("MIXPANEL_TOKEN"),
-          
-          authenticationMode: AuthenticationMode.authRequired,
         );
       case 'prod':
         return const Environment.prod(
@@ -133,8 +122,6 @@ sealed class Environment with _$Environment {
           ),
           sentryDsn: String.fromEnvironment('SENTRY_DSN'),
           mixpanelToken: String.fromEnvironment("MIXPANEL_TOKEN"),
-          
-          authenticationMode: AuthenticationMode.authRequired,
         );
       default:
         throw Exception('Unknown environment $_kEnvironmentInput');

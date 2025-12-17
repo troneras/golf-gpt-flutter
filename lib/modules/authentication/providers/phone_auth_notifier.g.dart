@@ -13,9 +13,6 @@ part of 'phone_auth_notifier.dart';
 /// and to verify the OTP code
 /// It is also used to link the phone number to the user
 /// and to sign in the user with the phone number
-///
-/// -- if you enable anonymous mode we try to link the user to the phone number
-/// -- if it fails we sign in the user with the phone number
 
 @ProviderFor(PhoneAuthNotifier)
 const phoneAuthProvider = PhoneAuthNotifierProvider._();
@@ -25,9 +22,6 @@ const phoneAuthProvider = PhoneAuthNotifierProvider._();
 /// and to verify the OTP code
 /// It is also used to link the phone number to the user
 /// and to sign in the user with the phone number
-///
-/// -- if you enable anonymous mode we try to link the user to the phone number
-/// -- if it fails we sign in the user with the phone number
 final class PhoneAuthNotifierProvider
     extends $NotifierProvider<PhoneAuthNotifier, PhoneAuthState> {
   /// This notifier is used to handle the phone number authentication flow
@@ -35,9 +29,6 @@ final class PhoneAuthNotifierProvider
   /// and to verify the OTP code
   /// It is also used to link the phone number to the user
   /// and to sign in the user with the phone number
-  ///
-  /// -- if you enable anonymous mode we try to link the user to the phone number
-  /// -- if it fails we sign in the user with the phone number
   const PhoneAuthNotifierProvider._()
     : super(
         from: null,
@@ -65,16 +56,13 @@ final class PhoneAuthNotifierProvider
   }
 }
 
-String _$phoneAuthNotifierHash() => r'69fe22b6a7adaca8027a6051f2f161f147927f30';
+String _$phoneAuthNotifierHash() => r'29eeb6fc6031c4e5d4072d626e654957a7ef65a8';
 
 /// This notifier is used to handle the phone number authentication flow
 /// It is used to send the OTP code to the user's phone number
 /// and to verify the OTP code
 /// It is also used to link the phone number to the user
 /// and to sign in the user with the phone number
-///
-/// -- if you enable anonymous mode we try to link the user to the phone number
-/// -- if it fails we sign in the user with the phone number
 
 abstract class _$PhoneAuthNotifier extends $Notifier<PhoneAuthState> {
   PhoneAuthState build();

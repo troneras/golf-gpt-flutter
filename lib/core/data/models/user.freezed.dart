@@ -55,13 +55,13 @@ extension UserPatterns on User {
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( AuthenticatedUserData value)?  authenticated,TResult Function( AnonymousUserData value)?  anonymous,TResult Function( LoadingUserData value)?  loading,required TResult orElse(),}){
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( AuthenticatedUserData value)?  authenticated,TResult Function( LoadingUserData value)?  loading,TResult Function( UnauthenticatedUserData value)?  unauthenticated,required TResult orElse(),}){
 final _that = this;
 switch (_that) {
 case AuthenticatedUserData() when authenticated != null:
-return authenticated(_that);case AnonymousUserData() when anonymous != null:
-return anonymous(_that);case LoadingUserData() when loading != null:
-return loading(_that);case _:
+return authenticated(_that);case LoadingUserData() when loading != null:
+return loading(_that);case UnauthenticatedUserData() when unauthenticated != null:
+return unauthenticated(_that);case _:
   return orElse();
 
 }
@@ -79,13 +79,13 @@ return loading(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( AuthenticatedUserData value)  authenticated,required TResult Function( AnonymousUserData value)  anonymous,required TResult Function( LoadingUserData value)  loading,}){
+@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( AuthenticatedUserData value)  authenticated,required TResult Function( LoadingUserData value)  loading,required TResult Function( UnauthenticatedUserData value)  unauthenticated,}){
 final _that = this;
 switch (_that) {
 case AuthenticatedUserData():
-return authenticated(_that);case AnonymousUserData():
-return anonymous(_that);case LoadingUserData():
-return loading(_that);}
+return authenticated(_that);case LoadingUserData():
+return loading(_that);case UnauthenticatedUserData():
+return unauthenticated(_that);}
 }
 /// A variant of `map` that fallback to returning `null`.
 ///
@@ -99,13 +99,13 @@ return loading(_that);}
 /// }
 /// ```
 
-@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( AuthenticatedUserData value)?  authenticated,TResult? Function( AnonymousUserData value)?  anonymous,TResult? Function( LoadingUserData value)?  loading,}){
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( AuthenticatedUserData value)?  authenticated,TResult? Function( LoadingUserData value)?  loading,TResult? Function( UnauthenticatedUserData value)?  unauthenticated,}){
 final _that = this;
 switch (_that) {
 case AuthenticatedUserData() when authenticated != null:
-return authenticated(_that);case AnonymousUserData() when anonymous != null:
-return anonymous(_that);case LoadingUserData() when loading != null:
-return loading(_that);case _:
+return authenticated(_that);case LoadingUserData() when loading != null:
+return loading(_that);case UnauthenticatedUserData() when unauthenticated != null:
+return unauthenticated(_that);case _:
   return null;
 
 }
@@ -122,12 +122,12 @@ return loading(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function( String email,  String? name,  String? id,  DateTime? creationDate,  DateTime? lastUpdateDate,  String? avatarPath,  bool onboarded,  Subscription? subscription)?  authenticated,TResult Function( String? id,  bool? onboarded,  Subscription? subscription,  DateTime? creationDate,  DateTime? lastUpdateDate)?  anonymous,TResult Function()?  loading,required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function( String email,  String? name,  String? id,  DateTime? creationDate,  DateTime? lastUpdateDate,  String? avatarPath,  bool onboarded,  Subscription? subscription)?  authenticated,TResult Function()?  loading,TResult Function()?  unauthenticated,required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case AuthenticatedUserData() when authenticated != null:
-return authenticated(_that.email,_that.name,_that.id,_that.creationDate,_that.lastUpdateDate,_that.avatarPath,_that.onboarded,_that.subscription);case AnonymousUserData() when anonymous != null:
-return anonymous(_that.id,_that.onboarded,_that.subscription,_that.creationDate,_that.lastUpdateDate);case LoadingUserData() when loading != null:
-return loading();case _:
+return authenticated(_that.email,_that.name,_that.id,_that.creationDate,_that.lastUpdateDate,_that.avatarPath,_that.onboarded,_that.subscription);case LoadingUserData() when loading != null:
+return loading();case UnauthenticatedUserData() when unauthenticated != null:
+return unauthenticated();case _:
   return orElse();
 
 }
@@ -145,12 +145,12 @@ return loading();case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function( String email,  String? name,  String? id,  DateTime? creationDate,  DateTime? lastUpdateDate,  String? avatarPath,  bool onboarded,  Subscription? subscription)  authenticated,required TResult Function( String? id,  bool? onboarded,  Subscription? subscription,  DateTime? creationDate,  DateTime? lastUpdateDate)  anonymous,required TResult Function()  loading,}) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function( String email,  String? name,  String? id,  DateTime? creationDate,  DateTime? lastUpdateDate,  String? avatarPath,  bool onboarded,  Subscription? subscription)  authenticated,required TResult Function()  loading,required TResult Function()  unauthenticated,}) {final _that = this;
 switch (_that) {
 case AuthenticatedUserData():
-return authenticated(_that.email,_that.name,_that.id,_that.creationDate,_that.lastUpdateDate,_that.avatarPath,_that.onboarded,_that.subscription);case AnonymousUserData():
-return anonymous(_that.id,_that.onboarded,_that.subscription,_that.creationDate,_that.lastUpdateDate);case LoadingUserData():
-return loading();}
+return authenticated(_that.email,_that.name,_that.id,_that.creationDate,_that.lastUpdateDate,_that.avatarPath,_that.onboarded,_that.subscription);case LoadingUserData():
+return loading();case UnauthenticatedUserData():
+return unauthenticated();}
 }
 /// A variant of `when` that fallback to returning `null`
 ///
@@ -164,12 +164,12 @@ return loading();}
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function( String email,  String? name,  String? id,  DateTime? creationDate,  DateTime? lastUpdateDate,  String? avatarPath,  bool onboarded,  Subscription? subscription)?  authenticated,TResult? Function( String? id,  bool? onboarded,  Subscription? subscription,  DateTime? creationDate,  DateTime? lastUpdateDate)?  anonymous,TResult? Function()?  loading,}) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function( String email,  String? name,  String? id,  DateTime? creationDate,  DateTime? lastUpdateDate,  String? avatarPath,  bool onboarded,  Subscription? subscription)?  authenticated,TResult? Function()?  loading,TResult? Function()?  unauthenticated,}) {final _that = this;
 switch (_that) {
 case AuthenticatedUserData() when authenticated != null:
-return authenticated(_that.email,_that.name,_that.id,_that.creationDate,_that.lastUpdateDate,_that.avatarPath,_that.onboarded,_that.subscription);case AnonymousUserData() when anonymous != null:
-return anonymous(_that.id,_that.onboarded,_that.subscription,_that.creationDate,_that.lastUpdateDate);case LoadingUserData() when loading != null:
-return loading();case _:
+return authenticated(_that.email,_that.name,_that.id,_that.creationDate,_that.lastUpdateDate,_that.avatarPath,_that.onboarded,_that.subscription);case LoadingUserData() when loading != null:
+return loading();case UnauthenticatedUserData() when unauthenticated != null:
+return unauthenticated();case _:
   return null;
 
 }
@@ -261,80 +261,6 @@ as Subscription?,
 /// @nodoc
 
 
-class AnonymousUserData extends User {
-  const AnonymousUserData({this.id, this.onboarded, this.subscription, this.creationDate, this.lastUpdateDate}): super._();
-  
-
- final  String? id;
- final  bool? onboarded;
- final  Subscription? subscription;
- final  DateTime? creationDate;
- final  DateTime? lastUpdateDate;
-
-/// Create a copy of User
-/// with the given fields replaced by the non-null parameter values.
-@JsonKey(includeFromJson: false, includeToJson: false)
-@pragma('vm:prefer-inline')
-$AnonymousUserDataCopyWith<AnonymousUserData> get copyWith => _$AnonymousUserDataCopyWithImpl<AnonymousUserData>(this, _$identity);
-
-
-
-@override
-bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is AnonymousUserData&&(identical(other.id, id) || other.id == id)&&(identical(other.onboarded, onboarded) || other.onboarded == onboarded)&&(identical(other.subscription, subscription) || other.subscription == subscription)&&(identical(other.creationDate, creationDate) || other.creationDate == creationDate)&&(identical(other.lastUpdateDate, lastUpdateDate) || other.lastUpdateDate == lastUpdateDate));
-}
-
-
-@override
-int get hashCode => Object.hash(runtimeType,id,onboarded,subscription,creationDate,lastUpdateDate);
-
-@override
-String toString() {
-  return 'User.anonymous(id: $id, onboarded: $onboarded, subscription: $subscription, creationDate: $creationDate, lastUpdateDate: $lastUpdateDate)';
-}
-
-
-}
-
-/// @nodoc
-abstract mixin class $AnonymousUserDataCopyWith<$Res> implements $UserCopyWith<$Res> {
-  factory $AnonymousUserDataCopyWith(AnonymousUserData value, $Res Function(AnonymousUserData) _then) = _$AnonymousUserDataCopyWithImpl;
-@useResult
-$Res call({
- String? id, bool? onboarded, Subscription? subscription, DateTime? creationDate, DateTime? lastUpdateDate
-});
-
-
-
-
-}
-/// @nodoc
-class _$AnonymousUserDataCopyWithImpl<$Res>
-    implements $AnonymousUserDataCopyWith<$Res> {
-  _$AnonymousUserDataCopyWithImpl(this._self, this._then);
-
-  final AnonymousUserData _self;
-  final $Res Function(AnonymousUserData) _then;
-
-/// Create a copy of User
-/// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') $Res call({Object? id = freezed,Object? onboarded = freezed,Object? subscription = freezed,Object? creationDate = freezed,Object? lastUpdateDate = freezed,}) {
-  return _then(AnonymousUserData(
-id: freezed == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
-as String?,onboarded: freezed == onboarded ? _self.onboarded : onboarded // ignore: cast_nullable_to_non_nullable
-as bool?,subscription: freezed == subscription ? _self.subscription : subscription // ignore: cast_nullable_to_non_nullable
-as Subscription?,creationDate: freezed == creationDate ? _self.creationDate : creationDate // ignore: cast_nullable_to_non_nullable
-as DateTime?,lastUpdateDate: freezed == lastUpdateDate ? _self.lastUpdateDate : lastUpdateDate // ignore: cast_nullable_to_non_nullable
-as DateTime?,
-  ));
-}
-
-
-}
-
-/// @nodoc
-
-
 class LoadingUserData extends User {
   const LoadingUserData(): super._();
   
@@ -356,6 +282,38 @@ int get hashCode => runtimeType.hashCode;
 @override
 String toString() {
   return 'User.loading()';
+}
+
+
+}
+
+
+
+
+/// @nodoc
+
+
+class UnauthenticatedUserData extends User {
+  const UnauthenticatedUserData(): super._();
+  
+
+
+
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is UnauthenticatedUserData);
+}
+
+
+@override
+int get hashCode => runtimeType.hashCode;
+
+@override
+String toString() {
+  return 'User.unauthenticated()';
 }
 
 

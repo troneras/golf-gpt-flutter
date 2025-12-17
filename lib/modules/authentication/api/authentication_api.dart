@@ -101,11 +101,6 @@ class HttpAuthenticationApi implements AuthenticationApi {
   }
 
   @override
-  Future<Credentials> signinAnonymously() {
-    throw UnimplementedError();
-  }
-
-  @override
   Future<void> signout() async {}
 
   @override

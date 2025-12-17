@@ -19,7 +19,7 @@ import '../data/api/storage_api_fake.dart';
 import '../security/secured_storage_fake.dart';
 
 void main() {
-  group('authRequired AuthenticationMode', () {
+  group('UserStateNotifier', () {
     final authRepository = HttpAuthenticationRepository(
       logger: Logger(),
       authenticationApi: FakeAuthenticationApi(),
@@ -38,17 +38,13 @@ void main() {
         prefs: sharedPrefs,
       );
 
-      
-
       final userRepository = UserRepository(
         userApi: FakeUserApi(storageApi: fakeStorageApi),
-        
       );
 
       const env = Environment.dev(
         name: 'dev',
         backendUrl: 'https://example.com',
-        authenticationMode: AuthenticationMode.authRequired,
       );
 
       final container = ProviderContainer.test(
@@ -57,7 +53,6 @@ void main() {
           authRepositoryProvider.overrideWithValue(authRepository),
           userRepositoryProvider.overrideWithValue(userRepository),
           deviceRepositoryProvider.overrideWithValue(deviceRepository),
-          
         ],
       );
 
@@ -65,7 +60,7 @@ void main() {
     }
 
     test(
-      'Should load user at startup, user is not connected => user should be in unauth state',
+      'Should load user at startup, user is not connected => user should be unauthenticated',
       () async {
         final testContainer = await initTestContainer();
         final userStateNotifier = testContainer.read(
@@ -80,7 +75,7 @@ void main() {
         await userStateNotifier.init();
         expect(
           userStateNotifier.state.user,
-          isA<AnonymousUserData>(),
+          isA<UnauthenticatedUserData>(),
           reason: 'user should be in unauthenticated state',
         );
       },
@@ -105,7 +100,7 @@ void main() {
       },
     );
 
-    test('on logout -> user state is anonymous', () async {
+    test('on logout -> user state is unauthenticated', () async {
       final testContainer = await initTestContainer();
       final userStateNotifier = testContainer.read(
         userStateNotifierProvider.notifier,
@@ -118,118 +113,9 @@ void main() {
 
       expect(
         userStateNotifier.state.user,
-        isA<AnonymousUserData>(),
-        reason: 'user should be anonymous',
+        isA<UnauthenticatedUserData>(),
+        reason: 'user should be unauthenticated',
       );
-    });
-  });
-
-  group('authRequired anonymous', () {
-    final authRepository = HttpAuthenticationRepository(
-      logger: Logger(),
-      authenticationApi: FakeAuthenticationApi(),
-      storage: FakeAuthSecuredStorage.empty(),
-      userApi: FakeUserApi(storageApi: FakeStorageApi()),
-      httpClient: HttpClient(baseUrl: ''),
-    );
-
-    final fakeStorageApi = FakeStorageApi();
-
-    Future<ProviderContainer> initTestContainer() async {
-      SharedPreferences.setMockInitialValues({});
-      final sharedPrefs = await SharedPreferences.getInstance();
-      final deviceRepository = DeviceRepository(
-        deviceApi: FakeDeviceApi(),
-        prefs: sharedPrefs,
-      );
-
-      
-
-      final userRepository = UserRepository(
-        userApi: FakeUserApi(storageApi: fakeStorageApi),
-        
-      );
-
-      const env = Environment.dev(
-        name: 'dev',
-        backendUrl: 'https://example.com',
-        authenticationMode: AuthenticationMode.anonymous,
-      );
-
-      final container = ProviderContainer.test(
-        overrides: [
-          environmentProvider.overrideWithValue(env),
-          authRepositoryProvider.overrideWithValue(authRepository),
-          
-          userRepositoryProvider.overrideWithValue(userRepository),
-          deviceRepositoryProvider.overrideWithValue(deviceRepository),
-        ],
-      );
-
-      return container;
-    }
-
-    test(
-      'Should load user at startup, user is not connected => login user anonymously with id',
-      () async {
-        final testContainer = await initTestContainer();
-        final userStateNotifier = testContainer.read(
-          userStateNotifierProvider.notifier,
-        );
-        expect(
-          userStateNotifier.state.user,
-          isA<LoadingUserData>(),
-          reason: 'user should be in loading state at the beginning',
-        );
-        await userStateNotifier.init();
-        expect(
-          userStateNotifier.state.user,
-          isA<AnonymousUserData>(),
-          reason: 'user should be in unauthenticated state',
-        );
-        expect(
-          userStateNotifier.state.user.idOrThrow,
-          'fake-user-id-anonymous',
-        );
-      },
-    );
-
-    test(
-      'Should load user at startup, user signin => state user is connected',
-      () async {
-        final testContainer = await initTestContainer();
-        final userStateNotifier = testContainer.read(
-          userStateNotifierProvider.notifier,
-        );
-        await userStateNotifier.init();
-
-        await authRepository.signup('email', 'password');
-        await userStateNotifier.onSignin();
-        expect(
-          userStateNotifier.state.user,
-          isA<AuthenticatedUserData>(),
-          reason: 'user should be authenticated',
-        );
-      },
-    );
-
-    test('on logout -> user state is anonymous with id', () async {
-      final testContainer = await initTestContainer();
-      final userStateNotifier = testContainer.read(
-        userStateNotifierProvider.notifier,
-      );
-      await userStateNotifier.init();
-      await authRepository.signup('email', 'password');
-      await userStateNotifier.onSignin();
-      await authRepository.logout();
-      await userStateNotifier.onLogout();
-
-      expect(
-        userStateNotifier.state.user,
-        isA<AnonymousUserData>(),
-        reason: 'user should be anonymous',
-      );
-      expect(userStateNotifier.state.user.idOrThrow, 'fake-user-id-anonymous');
     });
   });
 }

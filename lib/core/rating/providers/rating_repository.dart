@@ -21,7 +21,6 @@ class RatingRepository {
     final hasRateApp = await _ratingApi.hasRateApp();
     final creationDate = switch(user) {
       AuthenticatedUserData(:final creationDate) => creationDate,
-      AnonymousUserData(:final creationDate) => creationDate,
       _ => null,
     };
     return Rating(

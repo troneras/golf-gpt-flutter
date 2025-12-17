@@ -15,9 +15,6 @@ abstract class AuthenticationApi implements OnStartService {
   /// Signout the current user
   Future<void> signout();
 
-  /// Signin anonymously
-  Future<Credentials> signinAnonymously();
-
   /// Signin with Google account
   /// Requires the [google_sign_in](https://pub.dev/packages/google_sign_in) package
   Future<Credentials> signinWithGoogle();
