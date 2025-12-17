@@ -45,6 +45,7 @@ class Translations with BaseTranslations<AppLocale, Translations> {
 	late final TranslationsOnboardingEs onboarding = TranslationsOnboardingEs.internal(_root);
 	late final TranslationsAuthEs auth = TranslationsAuthEs.internal(_root);
 	late final TranslationsCommonEs common = TranslationsCommonEs.internal(_root);
+	late final TranslationsSettingsEs settings = TranslationsSettingsEs.internal(_root);
 }
 
 // Path: home
@@ -142,6 +143,20 @@ class TranslationsCommonEs {
 
 	/// es: 'o'
 	String get or => 'o';
+}
+
+// Path: settings
+class TranslationsSettingsEs {
+	TranslationsSettingsEs.internal(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+
+	/// es: 'Ajustes'
+	String get title => 'Ajustes';
+
+	late final TranslationsSettingsLocationPermissionEs location_permission = TranslationsSettingsLocationPermissionEs.internal(_root);
 }
 
 // Path: onboarding.welcome
@@ -435,6 +450,27 @@ class TranslationsAuthRecoverPasswordEs {
 	String get back_to_signin => 'Ir a iniciar sesion';
 }
 
+// Path: settings.location_permission
+class TranslationsSettingsLocationPermissionEs {
+	TranslationsSettingsLocationPermissionEs.internal(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+
+	/// es: 'Permiso de ubicacion'
+	String get title => 'Permiso de ubicacion';
+
+	/// es: 'Permitido'
+	String get granted => 'Permitido';
+
+	/// es: 'Denegado'
+	String get denied => 'Denegado';
+
+	/// es: 'Abrir ajustes'
+	String get open_settings => 'Abrir ajustes';
+}
+
 /// The flat map containing all translations for locale <es>.
 /// Only for edge cases! For simple maps, use the map function of this library.
 ///
@@ -527,6 +563,11 @@ extension on Translations {
 			'common.success' => 'Exito',
 			'common.loading' => 'Cargando...',
 			'common.or' => 'o',
+			'settings.title' => 'Ajustes',
+			'settings.location_permission.title' => 'Permiso de ubicacion',
+			'settings.location_permission.granted' => 'Permitido',
+			'settings.location_permission.denied' => 'Denegado',
+			'settings.location_permission.open_settings' => 'Abrir ajustes',
 			_ => null,
 		};
 	}

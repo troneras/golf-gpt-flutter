@@ -110,5 +110,14 @@
         "success": "Exito",
         "loading": "Cargando...",
         "or": "o"
+    },
+    "settings": {
+        "title": "Ajustes",
+        "location_permission": {
+            "title": "Permiso de ubicacion",
+            "granted": "Permitido",
+            "denied": "Denegado",
+            "open_settings": "Abrir ajustes"
+        }
     }
 }

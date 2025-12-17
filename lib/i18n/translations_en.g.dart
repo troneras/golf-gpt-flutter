@@ -44,6 +44,7 @@ class TranslationsEn extends Translations with BaseTranslations<AppLocale, Trans
 	@override late final _TranslationsOnboardingEn onboarding = _TranslationsOnboardingEn._(_root);
 	@override late final _TranslationsAuthEn auth = _TranslationsAuthEn._(_root);
 	@override late final _TranslationsCommonEn common = _TranslationsCommonEn._(_root);
+	@override late final _TranslationsSettingsEn settings = _TranslationsSettingsEn._(_root);
 }
 
 // Path: home
@@ -112,6 +113,17 @@ class _TranslationsCommonEn extends TranslationsCommonEs {
 	@override String get success => 'Success';
 	@override String get loading => 'Loading...';
 	@override String get or => 'or';
+}
+
+// Path: settings
+class _TranslationsSettingsEn extends TranslationsSettingsEs {
+	_TranslationsSettingsEn._(TranslationsEn root) : this._root = root, super.internal(root);
+
+	final TranslationsEn _root; // ignore: unused_field
+
+	// Translations
+	@override String get title => 'Settings';
+	@override late final _TranslationsSettingsLocationPermissionEn location_permission = _TranslationsSettingsLocationPermissionEn._(_root);
 }
 
 // Path: onboarding.welcome
@@ -265,6 +277,19 @@ class _TranslationsAuthRecoverPasswordEn extends TranslationsAuthRecoverPassword
 	@override String get back_to_signin => 'Go to sign in';
 }
 
+// Path: settings.location_permission
+class _TranslationsSettingsLocationPermissionEn extends TranslationsSettingsLocationPermissionEs {
+	_TranslationsSettingsLocationPermissionEn._(TranslationsEn root) : this._root = root, super.internal(root);
+
+	final TranslationsEn _root; // ignore: unused_field
+
+	// Translations
+	@override String get title => 'Location permission';
+	@override String get granted => 'Allowed';
+	@override String get denied => 'Denied';
+	@override String get open_settings => 'Open settings';
+}
+
 /// The flat map containing all translations for locale <en>.
 /// Only for edge cases! For simple maps, use the map function of this library.
 ///
@@ -357,6 +382,11 @@ extension on TranslationsEn {
 			'common.success' => 'Success',
 			'common.loading' => 'Loading...',
 			'common.or' => 'or',
+			'settings.title' => 'Settings',
+			'settings.location_permission.title' => 'Location permission',
+			'settings.location_permission.granted' => 'Allowed',
+			'settings.location_permission.denied' => 'Denied',
+			'settings.location_permission.open_settings' => 'Open settings',
 			_ => null,
 		};
 	}

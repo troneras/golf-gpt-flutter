@@ -3,6 +3,7 @@ import 'package:apparence_kit/core/states/user_state_notifier.dart';
 import 'package:apparence_kit/core/theme/extensions/theme_extension.dart';
 import 'package:apparence_kit/core/theme/providers/theme_provider.dart';
 import 'package:apparence_kit/modules/settings/ui/components/delete_user_component.dart';
+import 'package:apparence_kit/modules/settings/ui/widgets/location_permission_tile.dart';
 import 'package:apparence_kit/modules/settings/ui/widgets/settings_tile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -48,6 +49,8 @@ class SettingsPage extends ConsumerWidget {
               child: Wrap(
                 children: [
                   const ThemeSwitcher(),
+                  Divider(color: Colors.blueGrey.withValues(alpha: .10)),
+                  const LocationPermissionTile(),
                   Divider(color: Colors.blueGrey.withValues(alpha: .10)),
                   SettingsTile(
                     icon: Icons.message_rounded,
