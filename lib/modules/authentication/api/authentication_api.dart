@@ -105,15 +105,30 @@ class HttpAuthenticationApi implements AuthenticationApi {
 
   @override
   Future<Credentials> signinWithGoogle() async {
-    await GoogleSignIn.instance.initialize(
-      clientId: const String.fromEnvironment('GOOGLE_CLIENT_ID'),
-    );
-    final loginResult = await GoogleSignIn.instance.authenticate();
-    final googleAuth = loginResult.authentication;
-    throw UnimplementedError('''
-    ❌ You must edit lib/modules/authentication/api/authentication_api.dart
-    to send the Oauth2 token result to your backend
-    ''');
+    try {
+      const serverClientId = String.fromEnvironment('GOOGLE_SERVER_CLIENT_ID');
+      await GoogleSignIn.instance.initialize(
+        serverClientId: serverClientId,
+      );
+      final account = await GoogleSignIn.instance.authenticate();
+      final authentication = account.authentication;
+      final idToken = authentication.idToken;
+      if (idToken == null) {
+        throw ApiError(code: 0, message: 'Failed to get Google ID token');
+      }
+      final response = await _client.post(
+        '/auth/social/google',
+        data: {'id_token': idToken},
+      );
+      return Credentials.fromJson(response.data as Map<String, dynamic>);
+    } on DioException catch (e, stackTrace) {
+      _logger.e(e, stackTrace: stackTrace);
+      throw ApiError.fromDioException(e);
+    } catch (e) {
+      _logger.e(e);
+      if (e is ApiError) rethrow;
+      throw ApiError(code: 0, message: '$e');
+    }
   }
 
   @override

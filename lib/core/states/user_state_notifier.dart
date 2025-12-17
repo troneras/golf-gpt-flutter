@@ -5,7 +5,6 @@ import 'package:apparence_kit/core/states/models/user_state.dart';
 import 'package:apparence_kit/modules/authentication/repositories/authentication_repository.dart';
 import 'package:apparence_kit/modules/notifications/providers/models/device.dart';
 import 'package:apparence_kit/modules/notifications/repositories/device_repository.dart';
-import 'package:flutter/foundation.dart';
 import 'package:logger/logger.dart';
 
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -40,14 +39,17 @@ class UserStateNotifier extends _$UserStateNotifier implements OnStartService {
       await _loadState();
     } catch (e, stacktrace) {
       _logger.e(e, stackTrace: stacktrace);
-      if(kDebugMode) {
-        // we automatically logout the user if an error occurs in debug mode
-        // customize this behavior to fit your needs
-        _authenticationRepository.logout();
-      }
-      rethrow;
+      // Fail-safe: on auth error, logout and let user re-authenticate
+      // This prevents red error screens and provides a better UX
+      await _authenticationRepository.logout();
+      state = state.copyWith(user: const User.unauthenticated());
+      _logger.i('Auth error during init - user logged out, will redirect to login');
+      // Don't rethrow - let the app continue to the login screen
     }
-    assert(state.user is! LoadingUserData, 'UserStateNotifier is not ready');
+    if (state.user is LoadingUserData) {
+      // Safety check: ensure we never leave the user in loading state
+      state = state.copyWith(user: const User.unauthenticated());
+    }
     await _initDeviceRegistration();
     _deviceRepository.onTokenUpdate(_onUpdateToken);
   }

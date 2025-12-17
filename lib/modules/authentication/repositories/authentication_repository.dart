@@ -226,9 +226,13 @@ class HttpAuthenticationRepository implements AuthenticationRepository {
   }
 
   @override
-  
-  
-  Future<Credentials?> get() => _storage.read();
+  Future<Credentials?> get() async {
+    final credentials = await _storage.read();
+    if (credentials != null) {
+      _httpClient.authToken = credentials.token;
+    }
+    return credentials;
+  }
 
   @override
   Future<String> signinWithPhone(String phoneNumber) {
