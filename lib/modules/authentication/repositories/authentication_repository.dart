@@ -146,8 +146,23 @@ class HttpAuthenticationRepository implements AuthenticationRepository {
     try {
       _logger.d('Signing in with $email');
       final credentials = await _authenticationApi.signin(email, password);
-      await _storage.write(value: credentials);
       _httpClient.authToken = credentials.token;
+      // Fetch email verification status if not included in response
+      bool emailVerified = credentials.emailVerified;
+      if (!emailVerified) {
+        try {
+          emailVerified = await _authenticationApi.getEmailVerificationStatus();
+        } catch (_) {
+          // If status check fails, use the value from signin response
+        }
+      }
+      await _storage.write(
+        value: Credentials(
+          id: credentials.id,
+          token: credentials.token,
+          emailVerified: emailVerified,
+        ),
+      );
     } on ApiError catch (e) {
       throw SigninException.fromApiError(e);
     } catch (e) {
@@ -250,8 +265,23 @@ class HttpAuthenticationRepository implements AuthenticationRepository {
     try {
       _logger.d('Signing in with Google');
       final credentials = await _authenticationApi.signinWithGoogle(locale: locale);
-      await _storage.write(value: credentials);
       _httpClient.authToken = credentials.token;
+      // Fetch email verification status if not included in response
+      bool emailVerified = credentials.emailVerified;
+      if (!emailVerified) {
+        try {
+          emailVerified = await _authenticationApi.getEmailVerificationStatus();
+        } catch (_) {
+          // If status check fails, use the value from signin response
+        }
+      }
+      await _storage.write(
+        value: Credentials(
+          id: credentials.id,
+          token: credentials.token,
+          emailVerified: emailVerified,
+        ),
+      );
     } on ApiError catch (e) {
       throw SigninException.fromApiError(e);
     } catch (e) {
