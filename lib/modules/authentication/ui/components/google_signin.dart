@@ -8,26 +8,34 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 class GoogleSignInComponent extends ConsumerWidget {
-  const GoogleSignInComponent({super.key});
+  final String? label;
+
+  const GoogleSignInComponent({super.key, this.label});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return SocialSigninButton.google(() => ref
-            .read(signinStateProvider.notifier)
-            .signinWithGoogle()
-            .then(
-              (value) => context.go('/complete'),
-            )
-            .catchError(
-          (err) {
-            showErrorToast(
-              context: context,
-              title: 'Error',
-              text: 'Cannot signin with Google',
-            );
-            return err;
-          },
-        ));
+    void onPressed() {
+      ref
+          .read(signinStateProvider.notifier)
+          .signinWithGoogle()
+          .then(
+            (value) => context.go('/complete'),
+          )
+          .catchError(
+        (err) {
+          showErrorToast(
+            context: context,
+            title: 'Error',
+            text: 'Cannot signin with Google',
+          );
+          return err;
+        },
+      );
+    }
+    if (label != null) {
+      return SocialSigninButton.googleWithText(onPressed, label: label!);
+    }
+    return SocialSigninButton.google(onPressed);
   }
 }
 

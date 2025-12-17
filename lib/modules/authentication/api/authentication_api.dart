@@ -34,13 +34,14 @@ class HttpAuthenticationApi implements AuthenticationApi {
   }
 
   @override
-  Future<Credentials> signup(String email, String password) async {
+  Future<Credentials> signup(String email, String password, {String? locale}) async {
     try {
       final response = await _client.post(
         '/auth/signup',
         data: {
           'email': email,
           'password': password,
+          if (locale != null) 'locale': locale,
         },
       );
       return Credentials.fromJson(response.data as Map<String, dynamic>);
@@ -80,23 +81,46 @@ class HttpAuthenticationApi implements AuthenticationApi {
   }
 
   @override
-  Future<void> recoverPassword(String email) async {
+  Future<void> forgotPassword(String email) async {
     try {
       await _client.post(
-        '/auth/recover-password',
+        '/auth/password/forgot',
         data: {
           'email': email,
         },
       );
-    } on DioException catch (e) {
-      _logger.e(e);
+    } on DioException catch (e, stackTrace) {
+      _logger.e(e, stackTrace: stackTrace);
       throw ApiError.fromDioException(e);
     } catch (e) {
       _logger.e(e);
-      throw ApiError(
-        code: 0,
-        message: '$e',
+      throw ApiError(code: 0, message: '$e');
+    }
+  }
+
+  @override
+  Future<void> resetPassword({
+    required String email,
+    required String code,
+    required String password,
+    required String passwordConfirmation,
+  }) async {
+    try {
+      await _client.post(
+        '/auth/password/reset',
+        data: {
+          'email': email,
+          'code': code,
+          'password': password,
+          'password_confirmation': passwordConfirmation,
+        },
       );
+    } on DioException catch (e, stackTrace) {
+      _logger.e(e, stackTrace: stackTrace);
+      throw ApiError.fromDioException(e);
+    } catch (e) {
+      _logger.e(e);
+      throw ApiError(code: 0, message: '$e');
     }
   }
 
@@ -104,7 +128,47 @@ class HttpAuthenticationApi implements AuthenticationApi {
   Future<void> signout() async {}
 
   @override
-  Future<Credentials> signinWithGoogle() async {
+  Future<void> sendEmailVerification() async {
+    try {
+      await _client.post('/auth/email/send');
+    } on DioException catch (e, stackTrace) {
+      _logger.e(e, stackTrace: stackTrace);
+      throw ApiError.fromDioException(e);
+    } catch (e) {
+      _logger.e(e);
+      throw ApiError(code: 0, message: '$e');
+    }
+  }
+
+  @override
+  Future<void> verifyEmail(String code) async {
+    try {
+      await _client.post('/auth/email/verify', data: {'code': code});
+    } on DioException catch (e, stackTrace) {
+      _logger.e(e, stackTrace: stackTrace);
+      throw ApiError.fromDioException(e);
+    } catch (e) {
+      _logger.e(e);
+      throw ApiError(code: 0, message: '$e');
+    }
+  }
+
+  @override
+  Future<bool> getEmailVerificationStatus() async {
+    try {
+      final response = await _client.get('/auth/email/status');
+      return response.data['email_verified'] as bool? ?? false;
+    } on DioException catch (e, stackTrace) {
+      _logger.e(e, stackTrace: stackTrace);
+      throw ApiError.fromDioException(e);
+    } catch (e) {
+      _logger.e(e);
+      throw ApiError(code: 0, message: '$e');
+    }
+  }
+
+  @override
+  Future<Credentials> signinWithGoogle({String? locale}) async {
     try {
       const serverClientId = String.fromEnvironment('GOOGLE_SERVER_CLIENT_ID');
       await GoogleSignIn.instance.initialize(
@@ -118,7 +182,10 @@ class HttpAuthenticationApi implements AuthenticationApi {
       }
       final response = await _client.post(
         '/auth/social/google',
-        data: {'id_token': idToken},
+        data: {
+          'id_token': idToken,
+          if (locale != null) 'locale': locale,
+        },
       );
       return Credentials.fromJson(response.data as Map<String, dynamic>);
     } on DioException catch (e, stackTrace) {

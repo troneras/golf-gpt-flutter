@@ -6,17 +6,30 @@ typedef SocialSigninCallback = void Function();
 class SocialSigninButton extends StatelessWidget {
   final Image iconImage;
   final SocialSigninCallback? onPressed;
+  final String? label;
 
   const SocialSigninButton({
     super.key,
     required this.iconImage,
     required this.onPressed,
+    this.label,
   });
 
   factory SocialSigninButton.google(SocialSigninCallback onPressed) {
     return SocialSigninButton(
       iconImage: Image.asset("assets/icons/google.png", width: 24),
       onPressed: onPressed,
+    );
+  }
+
+  factory SocialSigninButton.googleWithText(
+    SocialSigninCallback onPressed, {
+    required String label,
+  }) {
+    return SocialSigninButton(
+      iconImage: Image.asset("assets/icons/google.png", width: 24),
+      onPressed: onPressed,
+      label: label,
     );
   }
 
@@ -57,6 +70,20 @@ class SocialSigninButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    if (label != null) {
+      return OutlinedButton.icon(
+        onPressed: () {
+          HapticFeedback.mediumImpact();
+          onPressed?.call();
+        },
+        icon: iconImage,
+        label: Text(label!),
+        style: OutlinedButton.styleFrom(
+          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+          side: const BorderSide(color: Colors.black12),
+        ),
+      );
+    }
     return Container(
       width: 56,
       decoration: BoxDecoration(

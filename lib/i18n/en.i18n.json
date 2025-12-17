@@ -45,6 +45,7 @@
     },
     "auth": {
         "or_sign_in_with": "Or sign in with",
+        "sign_in_with_google": "Sign in with Google",
         "signin": {
             "title": "Connect your caddie",
             "subtitle": "Your account syncs your round and course GPS.",
@@ -68,7 +69,37 @@
             "password_hint": "Password",
             "action": "Sign up",
             "has_account": "Already have an account?",
-            "signin_link": "Sign in"
+            "signin_link": "Sign in",
+            "error_title": "Error",
+            "error_message": "This email already exists or is invalid"
+        },
+        "email_verification": {
+            "title": "Verify email",
+            "code_sent_title": "Verification code",
+            "subtitle": "We sent a 6-digit code to {email}",
+            "verify_button": "Verify",
+            "resend_code": "Resend code",
+            "success": "Email verified",
+            "error_invalid": "Invalid or expired code"
+        },
+        "recover_password": {
+            "title": "Recover password",
+            "email_title": "Forgot your password?",
+            "email_subtitle": "Enter your email and we'll send you a verification code",
+            "email_label": "Email",
+            "send_code_button": "Send code",
+            "code_title": "Enter the code",
+            "code_subtitle": "We sent a 6-digit code to {email}",
+            "new_password_label": "New password",
+            "confirm_password_label": "Confirm password",
+            "password_required": "Password is required",
+            "password_min_length": "Password must be at least 8 characters",
+            "passwords_not_match": "Passwords do not match",
+            "reset_button": "Change password",
+            "back_to_email": "Go back to enter email",
+            "success_title": "Password changed",
+            "success_subtitle": "Your password has been updated. Sign in with your new password.",
+            "back_to_signin": "Go to sign in"
         }
     },
     "common": {

@@ -18,6 +18,7 @@ UserEntityData _$UserEntityDataFromJson(Map json) => UserEntityData(
   name: json['name'] as String?,
   avatarPath: json['avatarPath'] as String?,
   onboarded: json['onboarded'] as bool?,
+  locale: json['locale'] as String?,
 );
 
 Map<String, dynamic> _$UserEntityDataToJson(UserEntityData instance) =>
@@ -29,4 +30,5 @@ Map<String, dynamic> _$UserEntityDataToJson(UserEntityData instance) =>
       'name': instance.name,
       'avatarPath': instance.avatarPath,
       'onboarded': instance.onboarded,
+      'locale': instance.locale,
     };

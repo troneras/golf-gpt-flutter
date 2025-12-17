@@ -14,61 +14,30 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$RecoverState {
 
- Email get email;
-/// Create a copy of RecoverState
-/// with the given fields replaced by the non-null parameter values.
-@JsonKey(includeFromJson: false, includeToJson: false)
-@pragma('vm:prefer-inline')
-$RecoverStateCopyWith<RecoverState> get copyWith => _$RecoverStateCopyWithImpl<RecoverState>(this as RecoverState, _$identity);
+
 
 
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is RecoverState&&(identical(other.email, email) || other.email == email));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is RecoverState);
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,email);
+int get hashCode => runtimeType.hashCode;
 
 @override
 String toString() {
-  return 'RecoverState(email: $email)';
+  return 'RecoverState()';
 }
 
 
 }
 
 /// @nodoc
-abstract mixin class $RecoverStateCopyWith<$Res>  {
-  factory $RecoverStateCopyWith(RecoverState value, $Res Function(RecoverState) _then) = _$RecoverStateCopyWithImpl;
-@useResult
-$Res call({
- Email email
-});
-
-
-
-
-}
-/// @nodoc
-class _$RecoverStateCopyWithImpl<$Res>
-    implements $RecoverStateCopyWith<$Res> {
-  _$RecoverStateCopyWithImpl(this._self, this._then);
-
-  final RecoverState _self;
-  final $Res Function(RecoverState) _then;
-
-/// Create a copy of RecoverState
-/// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? email = null,}) {
-  return _then(_self.copyWith(
-email: null == email ? _self.email : email // ignore: cast_nullable_to_non_nullable
-as Email,
-  ));
-}
-
+class $RecoverStateCopyWith<$Res>  {
+$RecoverStateCopyWith(RecoverState _, $Res Function(RecoverState) __);
 }
 
 
@@ -86,13 +55,14 @@ extension RecoverStatePatterns on RecoverState {
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeMap<TResult extends Object?>(TResult Function( RecoverStateData value)?  $default,{TResult Function( RecoverStateSending value)?  sending,TResult Function( RecoverStateSent value)?  sent,required TResult orElse(),}){
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>(TResult Function( RecoverStateData value)?  $default,{TResult Function( RecoverStateSending value)?  sending,TResult Function( RecoverStateCodeEntry value)?  codeEntry,TResult Function( RecoverStateSuccess value)?  success,required TResult orElse(),}){
 final _that = this;
 switch (_that) {
 case RecoverStateData() when $default != null:
 return $default(_that);case RecoverStateSending() when sending != null:
-return sending(_that);case RecoverStateSent() when sent != null:
-return sent(_that);case _:
+return sending(_that);case RecoverStateCodeEntry() when codeEntry != null:
+return codeEntry(_that);case RecoverStateSuccess() when success != null:
+return success(_that);case _:
   return orElse();
 
 }
@@ -110,13 +80,14 @@ return sent(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult map<TResult extends Object?>(TResult Function( RecoverStateData value)  $default,{required TResult Function( RecoverStateSending value)  sending,required TResult Function( RecoverStateSent value)  sent,}){
+@optionalTypeArgs TResult map<TResult extends Object?>(TResult Function( RecoverStateData value)  $default,{required TResult Function( RecoverStateSending value)  sending,required TResult Function( RecoverStateCodeEntry value)  codeEntry,required TResult Function( RecoverStateSuccess value)  success,}){
 final _that = this;
 switch (_that) {
 case RecoverStateData():
 return $default(_that);case RecoverStateSending():
-return sending(_that);case RecoverStateSent():
-return sent(_that);}
+return sending(_that);case RecoverStateCodeEntry():
+return codeEntry(_that);case RecoverStateSuccess():
+return success(_that);}
 }
 /// A variant of `map` that fallback to returning `null`.
 ///
@@ -130,13 +101,14 @@ return sent(_that);}
 /// }
 /// ```
 
-@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>(TResult? Function( RecoverStateData value)?  $default,{TResult? Function( RecoverStateSending value)?  sending,TResult? Function( RecoverStateSent value)?  sent,}){
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>(TResult? Function( RecoverStateData value)?  $default,{TResult? Function( RecoverStateSending value)?  sending,TResult? Function( RecoverStateCodeEntry value)?  codeEntry,TResult? Function( RecoverStateSuccess value)?  success,}){
 final _that = this;
 switch (_that) {
 case RecoverStateData() when $default != null:
 return $default(_that);case RecoverStateSending() when sending != null:
-return sending(_that);case RecoverStateSent() when sent != null:
-return sent(_that);case _:
+return sending(_that);case RecoverStateCodeEntry() when codeEntry != null:
+return codeEntry(_that);case RecoverStateSuccess() when success != null:
+return success(_that);case _:
   return null;
 
 }
@@ -153,12 +125,13 @@ return sent(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( Email email)?  $default,{TResult Function( Email email)?  sending,TResult Function( Email email)?  sent,required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( Email email,  String? error)?  $default,{TResult Function( Email email)?  sending,TResult Function( Email email,  String code,  String password,  String passwordConfirmation,  bool isLoading,  String? error)?  codeEntry,TResult Function()?  success,required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case RecoverStateData() when $default != null:
-return $default(_that.email);case RecoverStateSending() when sending != null:
-return sending(_that.email);case RecoverStateSent() when sent != null:
-return sent(_that.email);case _:
+return $default(_that.email,_that.error);case RecoverStateSending() when sending != null:
+return sending(_that.email);case RecoverStateCodeEntry() when codeEntry != null:
+return codeEntry(_that.email,_that.code,_that.password,_that.passwordConfirmation,_that.isLoading,_that.error);case RecoverStateSuccess() when success != null:
+return success();case _:
   return orElse();
 
 }
@@ -176,12 +149,13 @@ return sent(_that.email);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( Email email)  $default,{required TResult Function( Email email)  sending,required TResult Function( Email email)  sent,}) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( Email email,  String? error)  $default,{required TResult Function( Email email)  sending,required TResult Function( Email email,  String code,  String password,  String passwordConfirmation,  bool isLoading,  String? error)  codeEntry,required TResult Function()  success,}) {final _that = this;
 switch (_that) {
 case RecoverStateData():
-return $default(_that.email);case RecoverStateSending():
-return sending(_that.email);case RecoverStateSent():
-return sent(_that.email);}
+return $default(_that.email,_that.error);case RecoverStateSending():
+return sending(_that.email);case RecoverStateCodeEntry():
+return codeEntry(_that.email,_that.code,_that.password,_that.passwordConfirmation,_that.isLoading,_that.error);case RecoverStateSuccess():
+return success();}
 }
 /// A variant of `when` that fallback to returning `null`
 ///
@@ -195,12 +169,13 @@ return sent(_that.email);}
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( Email email)?  $default,{TResult? Function( Email email)?  sending,TResult? Function( Email email)?  sent,}) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( Email email,  String? error)?  $default,{TResult? Function( Email email)?  sending,TResult? Function( Email email,  String code,  String password,  String passwordConfirmation,  bool isLoading,  String? error)?  codeEntry,TResult? Function()?  success,}) {final _that = this;
 switch (_that) {
 case RecoverStateData() when $default != null:
-return $default(_that.email);case RecoverStateSending() when sending != null:
-return sending(_that.email);case RecoverStateSent() when sent != null:
-return sent(_that.email);case _:
+return $default(_that.email,_that.error);case RecoverStateSending() when sending != null:
+return sending(_that.email);case RecoverStateCodeEntry() when codeEntry != null:
+return codeEntry(_that.email,_that.code,_that.password,_that.passwordConfirmation,_that.isLoading,_that.error);case RecoverStateSuccess() when success != null:
+return success();case _:
   return null;
 
 }
@@ -212,14 +187,15 @@ return sent(_that.email);case _:
 
 
 class RecoverStateData extends RecoverState {
-  const RecoverStateData({required this.email}): super._();
+  const RecoverStateData({required this.email, this.error}): super._();
   
 
-@override final  Email email;
+ final  Email email;
+ final  String? error;
 
 /// Create a copy of RecoverState
 /// with the given fields replaced by the non-null parameter values.
-@override @JsonKey(includeFromJson: false, includeToJson: false)
+@JsonKey(includeFromJson: false, includeToJson: false)
 @pragma('vm:prefer-inline')
 $RecoverStateDataCopyWith<RecoverStateData> get copyWith => _$RecoverStateDataCopyWithImpl<RecoverStateData>(this, _$identity);
 
@@ -227,16 +203,16 @@ $RecoverStateDataCopyWith<RecoverStateData> get copyWith => _$RecoverStateDataCo
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is RecoverStateData&&(identical(other.email, email) || other.email == email));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is RecoverStateData&&(identical(other.email, email) || other.email == email)&&(identical(other.error, error) || other.error == error));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,email);
+int get hashCode => Object.hash(runtimeType,email,error);
 
 @override
 String toString() {
-  return 'RecoverState(email: $email)';
+  return 'RecoverState(email: $email, error: $error)';
 }
 
 
@@ -245,9 +221,9 @@ String toString() {
 /// @nodoc
 abstract mixin class $RecoverStateDataCopyWith<$Res> implements $RecoverStateCopyWith<$Res> {
   factory $RecoverStateDataCopyWith(RecoverStateData value, $Res Function(RecoverStateData) _then) = _$RecoverStateDataCopyWithImpl;
-@override @useResult
+@useResult
 $Res call({
- Email email
+ Email email, String? error
 });
 
 
@@ -264,10 +240,11 @@ class _$RecoverStateDataCopyWithImpl<$Res>
 
 /// Create a copy of RecoverState
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? email = null,}) {
+@pragma('vm:prefer-inline') $Res call({Object? email = null,Object? error = freezed,}) {
   return _then(RecoverStateData(
 email: null == email ? _self.email : email // ignore: cast_nullable_to_non_nullable
-as Email,
+as Email,error: freezed == error ? _self.error : error // ignore: cast_nullable_to_non_nullable
+as String?,
   ));
 }
 
@@ -281,11 +258,11 @@ class RecoverStateSending extends RecoverState {
   const RecoverStateSending({required this.email}): super._();
   
 
-@override final  Email email;
+ final  Email email;
 
 /// Create a copy of RecoverState
 /// with the given fields replaced by the non-null parameter values.
-@override @JsonKey(includeFromJson: false, includeToJson: false)
+@JsonKey(includeFromJson: false, includeToJson: false)
 @pragma('vm:prefer-inline')
 $RecoverStateSendingCopyWith<RecoverStateSending> get copyWith => _$RecoverStateSendingCopyWithImpl<RecoverStateSending>(this, _$identity);
 
@@ -311,7 +288,7 @@ String toString() {
 /// @nodoc
 abstract mixin class $RecoverStateSendingCopyWith<$Res> implements $RecoverStateCopyWith<$Res> {
   factory $RecoverStateSendingCopyWith(RecoverStateSending value, $Res Function(RecoverStateSending) _then) = _$RecoverStateSendingCopyWithImpl;
-@override @useResult
+@useResult
 $Res call({
  Email email
 });
@@ -330,7 +307,7 @@ class _$RecoverStateSendingCopyWithImpl<$Res>
 
 /// Create a copy of RecoverState
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? email = null,}) {
+@pragma('vm:prefer-inline') $Res call({Object? email = null,}) {
   return _then(RecoverStateSending(
 email: null == email ? _self.email : email // ignore: cast_nullable_to_non_nullable
 as Email,
@@ -343,43 +320,48 @@ as Email,
 /// @nodoc
 
 
-class RecoverStateSent extends RecoverState {
-  const RecoverStateSent({required this.email}): super._();
+class RecoverStateCodeEntry extends RecoverState {
+  const RecoverStateCodeEntry({required this.email, this.code = '', this.password = '', this.passwordConfirmation = '', this.isLoading = false, this.error}): super._();
   
 
-@override final  Email email;
+ final  Email email;
+@JsonKey() final  String code;
+@JsonKey() final  String password;
+@JsonKey() final  String passwordConfirmation;
+@JsonKey() final  bool isLoading;
+ final  String? error;
 
 /// Create a copy of RecoverState
 /// with the given fields replaced by the non-null parameter values.
-@override @JsonKey(includeFromJson: false, includeToJson: false)
+@JsonKey(includeFromJson: false, includeToJson: false)
 @pragma('vm:prefer-inline')
-$RecoverStateSentCopyWith<RecoverStateSent> get copyWith => _$RecoverStateSentCopyWithImpl<RecoverStateSent>(this, _$identity);
+$RecoverStateCodeEntryCopyWith<RecoverStateCodeEntry> get copyWith => _$RecoverStateCodeEntryCopyWithImpl<RecoverStateCodeEntry>(this, _$identity);
 
 
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is RecoverStateSent&&(identical(other.email, email) || other.email == email));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is RecoverStateCodeEntry&&(identical(other.email, email) || other.email == email)&&(identical(other.code, code) || other.code == code)&&(identical(other.password, password) || other.password == password)&&(identical(other.passwordConfirmation, passwordConfirmation) || other.passwordConfirmation == passwordConfirmation)&&(identical(other.isLoading, isLoading) || other.isLoading == isLoading)&&(identical(other.error, error) || other.error == error));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,email);
+int get hashCode => Object.hash(runtimeType,email,code,password,passwordConfirmation,isLoading,error);
 
 @override
 String toString() {
-  return 'RecoverState.sent(email: $email)';
+  return 'RecoverState.codeEntry(email: $email, code: $code, password: $password, passwordConfirmation: $passwordConfirmation, isLoading: $isLoading, error: $error)';
 }
 
 
 }
 
 /// @nodoc
-abstract mixin class $RecoverStateSentCopyWith<$Res> implements $RecoverStateCopyWith<$Res> {
-  factory $RecoverStateSentCopyWith(RecoverStateSent value, $Res Function(RecoverStateSent) _then) = _$RecoverStateSentCopyWithImpl;
-@override @useResult
+abstract mixin class $RecoverStateCodeEntryCopyWith<$Res> implements $RecoverStateCopyWith<$Res> {
+  factory $RecoverStateCodeEntryCopyWith(RecoverStateCodeEntry value, $Res Function(RecoverStateCodeEntry) _then) = _$RecoverStateCodeEntryCopyWithImpl;
+@useResult
 $Res call({
- Email email
+ Email email, String code, String password, String passwordConfirmation, bool isLoading, String? error
 });
 
 
@@ -387,23 +369,60 @@ $Res call({
 
 }
 /// @nodoc
-class _$RecoverStateSentCopyWithImpl<$Res>
-    implements $RecoverStateSentCopyWith<$Res> {
-  _$RecoverStateSentCopyWithImpl(this._self, this._then);
+class _$RecoverStateCodeEntryCopyWithImpl<$Res>
+    implements $RecoverStateCodeEntryCopyWith<$Res> {
+  _$RecoverStateCodeEntryCopyWithImpl(this._self, this._then);
 
-  final RecoverStateSent _self;
-  final $Res Function(RecoverStateSent) _then;
+  final RecoverStateCodeEntry _self;
+  final $Res Function(RecoverStateCodeEntry) _then;
 
 /// Create a copy of RecoverState
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? email = null,}) {
-  return _then(RecoverStateSent(
+@pragma('vm:prefer-inline') $Res call({Object? email = null,Object? code = null,Object? password = null,Object? passwordConfirmation = null,Object? isLoading = null,Object? error = freezed,}) {
+  return _then(RecoverStateCodeEntry(
 email: null == email ? _self.email : email // ignore: cast_nullable_to_non_nullable
-as Email,
+as Email,code: null == code ? _self.code : code // ignore: cast_nullable_to_non_nullable
+as String,password: null == password ? _self.password : password // ignore: cast_nullable_to_non_nullable
+as String,passwordConfirmation: null == passwordConfirmation ? _self.passwordConfirmation : passwordConfirmation // ignore: cast_nullable_to_non_nullable
+as String,isLoading: null == isLoading ? _self.isLoading : isLoading // ignore: cast_nullable_to_non_nullable
+as bool,error: freezed == error ? _self.error : error // ignore: cast_nullable_to_non_nullable
+as String?,
   ));
 }
 
 
 }
+
+/// @nodoc
+
+
+class RecoverStateSuccess extends RecoverState {
+  const RecoverStateSuccess(): super._();
+  
+
+
+
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is RecoverStateSuccess);
+}
+
+
+@override
+int get hashCode => runtimeType.hashCode;
+
+@override
+String toString() {
+  return 'RecoverState.success()';
+}
+
+
+}
+
+
+
 
 // dart format on

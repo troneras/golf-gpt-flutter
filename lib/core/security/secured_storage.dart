@@ -4,6 +4,7 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 const _kTokenKey = "token";
 const _kUserIdKey = "userId";
+const _kEmailVerifiedKey = "emailVerified";
 
 final authSecuredStorageProvider = Provider<AuthSecuredStorage>(
   (ref) => AuthSecuredStorage.fromEnv(),
@@ -25,15 +26,18 @@ class AuthSecuredStorage {
   }) async {
     await _storage.write(key: _kUserIdKey, value: value.id);
     await _storage.write(key: _kTokenKey, value: value.token);
+    await _storage.write(key: _kEmailVerifiedKey, value: value.emailVerified.toString());
   }
 
   Future<Credentials?> read() async {
     final userId = await _storage.read(key: _kUserIdKey);
     final token = await _storage.read(key: _kTokenKey);
+    final emailVerifiedStr = await _storage.read(key: _kEmailVerifiedKey);
     if (userId != null && token != null) {
       return Credentials(
         id: userId,
         token: token,
+        emailVerified: emailVerifiedStr == 'true',
       );
     }
     return null;
@@ -42,5 +46,6 @@ class AuthSecuredStorage {
   Future<void> clear() async {
     await _storage.delete(key: _kUserIdKey);
     await _storage.delete(key: _kTokenKey);
+    await _storage.delete(key: _kEmailVerifiedKey);
   }
 }

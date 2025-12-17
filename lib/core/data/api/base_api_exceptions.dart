@@ -15,9 +15,15 @@ class ApiError implements Exception {
   });
 
   factory ApiError.fromDioException(DioException e) {
+    // Try to extract message from response body first
+    String? message;
+    final responseData = e.response?.data;
+    if (responseData is Map<String, dynamic>) {
+      message = responseData['message'] as String?;
+    }
     return ApiError(
       code: e.response?.statusCode ?? 0,
-      message: e.message,
+      message: message ?? e.message,
     );
   }
 

@@ -24,8 +24,9 @@ abstract class AuthenticationRepository {
   /// The user is signed in automatically
   /// We SHOULD NOT store the password in the database
   /// We stores the token in the secured storage
+  /// [locale] is the user's preferred locale (e.g., 'es', 'en')
   /// throws [SignupException] if an error occurs
-  Future<void> signup(String email, String password);
+  Future<void> signup(String email, String password, {String? locale});
 
   /// Signin a user with [email] and [password]
   /// The user is signed in automatically
@@ -42,7 +43,8 @@ abstract class AuthenticationRepository {
   Future<void> logout();
 
   /// Signin with Google account
-  Future<void> signinWithGoogle();
+  /// [locale] is the user's preferred locale (e.g., 'es', 'en')
+  Future<void> signinWithGoogle({String? locale});
 
   /// Signin with Google Play Games account on Android
   Future<void> signinWithGooglePlayGames();
@@ -53,9 +55,30 @@ abstract class AuthenticationRepository {
   /// Signin with Apple account
   Future<void> signinWithApple();
 
-  /// Recover password
-  /// (send an email to the user with a link to reset the password)
-  Future<void> recoverPassword(String email);
+  /// Request a 6-digit password reset code
+  /// throws [PasswordResetException] if an error occurs
+  Future<void> forgotPassword(String email);
+
+  /// Reset password with 6-digit code
+  /// throws [PasswordResetException] if an error occurs
+  Future<void> resetPassword({
+    required String email,
+    required String code,
+    required String password,
+    required String passwordConfirmation,
+  });
+
+  /// Send email verification code to the current user
+  /// throws [EmailVerificationException] if an error occurs
+  Future<void> sendEmailVerification();
+
+  /// Verify email with the provided code
+  /// Updates stored credentials with emailVerified = true
+  /// throws [EmailVerificationException] if an error occurs
+  Future<void> verifyEmail(String code);
+
+  /// Check if current user's email is verified
+  Future<bool> isEmailVerified();
 
   /// Request a verification code to be sent to the provided phone number
   /// Returns a verification id that will be used to verify the code
@@ -102,10 +125,10 @@ class HttpAuthenticationRepository implements AuthenticationRepository {
         _storage = storage;
 
   @override
-  Future<void> signup(String email, String password) async {
+  Future<void> signup(String email, String password, {String? locale}) async {
     try {
       _logger.d('Signing up with $email');
-      final credentials = await _authenticationApi.signup(email, password);
+      final credentials = await _authenticationApi.signup(email, password, locale: locale);
       await _storage.write(value: credentials);
       _httpClient.authToken = credentials.token;
     } on ApiError catch (e) {
@@ -136,13 +159,14 @@ class HttpAuthenticationRepository implements AuthenticationRepository {
   }
 
   @override
-  Future<void> recoverPassword(String email) async {
+  Future<void> forgotPassword(String email) async {
     try {
-      await _authenticationApi.recoverPassword(email);
+      _logger.d('Requesting password reset for $email');
+      await _authenticationApi.forgotPassword(email);
     } on ApiError catch (e) {
-      throw RecoverPasswordException.fromApiError(e);
+      throw PasswordResetException.fromApiError(e);
     } catch (e) {
-      throw RecoverPasswordException(
+      throw PasswordResetException(
         code: 0,
         message: '$e',
       );
@@ -150,10 +174,82 @@ class HttpAuthenticationRepository implements AuthenticationRepository {
   }
 
   @override
-  Future<void> signinWithGoogle() async {
+  Future<void> resetPassword({
+    required String email,
+    required String code,
+    required String password,
+    required String passwordConfirmation,
+  }) async {
+    try {
+      _logger.d('Resetting password for $email');
+      await _authenticationApi.resetPassword(
+        email: email,
+        code: code,
+        password: password,
+        passwordConfirmation: passwordConfirmation,
+      );
+    } on ApiError catch (e) {
+      throw PasswordResetException.fromApiError(e);
+    } catch (e) {
+      throw PasswordResetException(
+        code: 0,
+        message: '$e',
+      );
+    }
+  }
+
+  @override
+  Future<void> sendEmailVerification() async {
+    try {
+      _logger.d('Sending email verification code');
+      await _authenticationApi.sendEmailVerification();
+    } on ApiError catch (e) {
+      throw EmailVerificationException.fromApiError(e);
+    } catch (e) {
+      throw EmailVerificationException(
+        code: 0,
+        message: '$e',
+      );
+    }
+  }
+
+  @override
+  Future<void> verifyEmail(String code) async {
+    try {
+      _logger.d('Verifying email with code');
+      await _authenticationApi.verifyEmail(code);
+      // Update local storage with emailVerified = true
+      final credentials = await _storage.read();
+      if (credentials != null) {
+        await _storage.write(
+          value: Credentials(
+            id: credentials.id,
+            token: credentials.token,
+            emailVerified: true,
+          ),
+        );
+      }
+    } on ApiError catch (e) {
+      throw EmailVerificationException.fromApiError(e);
+    } catch (e) {
+      throw EmailVerificationException(
+        code: 0,
+        message: '$e',
+      );
+    }
+  }
+
+  @override
+  Future<bool> isEmailVerified() async {
+    final credentials = await _storage.read();
+    return credentials?.emailVerified ?? false;
+  }
+
+  @override
+  Future<void> signinWithGoogle({String? locale}) async {
     try {
       _logger.d('Signing in with Google');
-      final credentials = await _authenticationApi.signinWithGoogle();
+      final credentials = await _authenticationApi.signinWithGoogle(locale: locale);
       await _storage.write(value: credentials);
       _httpClient.authToken = credentials.token;
     } on ApiError catch (e) {

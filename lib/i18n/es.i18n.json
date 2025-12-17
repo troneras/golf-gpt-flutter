@@ -45,6 +45,7 @@
     },
     "auth": {
         "or_sign_in_with": "O inicia sesion con",
+        "sign_in_with_google": "Iniciar sesion con Google",
         "signin": {
             "title": "Conecta tu caddie",
             "subtitle": "Tu cuenta sincroniza tu ronda y el GPS del campo.",
@@ -68,7 +69,37 @@
             "password_hint": "Contrasena",
             "action": "Registrarse",
             "has_account": "Ya tienes cuenta?",
-            "signin_link": "Inicia sesion"
+            "signin_link": "Inicia sesion",
+            "error_title": "Error",
+            "error_message": "Este correo ya existe o es invalido"
+        },
+        "email_verification": {
+            "title": "Verificar correo",
+            "code_sent_title": "Codigo de verificacion",
+            "subtitle": "Hemos enviado un codigo de 6 digitos a {email}",
+            "verify_button": "Verificar",
+            "resend_code": "Reenviar codigo",
+            "success": "Correo verificado",
+            "error_invalid": "Codigo invalido o expirado"
+        },
+        "recover_password": {
+            "title": "Recuperar contrasena",
+            "email_title": "Olvidaste tu contrasena?",
+            "email_subtitle": "Ingresa tu correo y te enviaremos un codigo de verificacion",
+            "email_label": "Correo electronico",
+            "send_code_button": "Enviar codigo",
+            "code_title": "Ingresa el codigo",
+            "code_subtitle": "Enviamos un codigo de 6 digitos a {email}",
+            "new_password_label": "Nueva contrasena",
+            "confirm_password_label": "Confirmar contrasena",
+            "password_required": "La contrasena es requerida",
+            "password_min_length": "La contrasena debe tener al menos 8 caracteres",
+            "passwords_not_match": "Las contrasenas no coinciden",
+            "reset_button": "Cambiar contrasena",
+            "back_to_email": "Volver a ingresar correo",
+            "success_title": "Contrasena cambiada",
+            "success_subtitle": "Tu contrasena ha sido actualizada. Inicia sesion con tu nueva contrasena.",
+            "back_to_signin": "Ir a iniciar sesion"
         }
     },
     "common": {

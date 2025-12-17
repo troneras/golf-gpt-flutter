@@ -15,6 +15,7 @@ sealed class UserEntity with _$UserEntity {
     String? name,
     String? avatarPath,
     bool? onboarded,
+    String? locale,
   }) = UserEntityData;
 
   const UserEntity._();
@@ -29,10 +30,13 @@ class Credentials {
   // this is the user security token (example: JWT)
   // but your can use an Oauth2 token with a refresh token too
   final String token;
+  // whether the user's email has been verified
+  final bool emailVerified;
 
   Credentials({
     required this.id,
     required this.token,
+    this.emailVerified = false,
   });
 
   factory Credentials.fromJson(Map<String, Object?> json) {
@@ -42,6 +46,7 @@ class Credentials {
     return Credentials(
       id: json['id']! as String,
       token: json['token']! as String,
+      emailVerified: json['email_verified'] as bool? ?? false,
     );
   }
 }

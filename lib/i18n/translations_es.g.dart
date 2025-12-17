@@ -105,8 +105,13 @@ class TranslationsAuthEs {
 	/// es: 'O inicia sesion con'
 	String get or_sign_in_with => 'O inicia sesion con';
 
+	/// es: 'Iniciar sesion con Google'
+	String get sign_in_with_google => 'Iniciar sesion con Google';
+
 	late final TranslationsAuthSigninEs signin = TranslationsAuthSigninEs.internal(_root);
 	late final TranslationsAuthSignupEs signup = TranslationsAuthSignupEs.internal(_root);
+	late final TranslationsAuthEmailVerificationEs email_verification = TranslationsAuthEmailVerificationEs.internal(_root);
+	late final TranslationsAuthRecoverPasswordEs recover_password = TranslationsAuthRecoverPasswordEs.internal(_root);
 }
 
 // Path: common
@@ -332,6 +337,102 @@ class TranslationsAuthSignupEs {
 
 	/// es: 'Inicia sesion'
 	String get signin_link => 'Inicia sesion';
+
+	/// es: 'Error'
+	String get error_title => 'Error';
+
+	/// es: 'Este correo ya existe o es invalido'
+	String get error_message => 'Este correo ya existe o es invalido';
+}
+
+// Path: auth.email_verification
+class TranslationsAuthEmailVerificationEs {
+	TranslationsAuthEmailVerificationEs.internal(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+
+	/// es: 'Verificar correo'
+	String get title => 'Verificar correo';
+
+	/// es: 'Codigo de verificacion'
+	String get code_sent_title => 'Codigo de verificacion';
+
+	/// es: 'Hemos enviado un codigo de 6 digitos a {email}'
+	String get subtitle => 'Hemos enviado un codigo de 6 digitos a {email}';
+
+	/// es: 'Verificar'
+	String get verify_button => 'Verificar';
+
+	/// es: 'Reenviar codigo'
+	String get resend_code => 'Reenviar codigo';
+
+	/// es: 'Correo verificado'
+	String get success => 'Correo verificado';
+
+	/// es: 'Codigo invalido o expirado'
+	String get error_invalid => 'Codigo invalido o expirado';
+}
+
+// Path: auth.recover_password
+class TranslationsAuthRecoverPasswordEs {
+	TranslationsAuthRecoverPasswordEs.internal(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+
+	/// es: 'Recuperar contrasena'
+	String get title => 'Recuperar contrasena';
+
+	/// es: 'Olvidaste tu contrasena?'
+	String get email_title => 'Olvidaste tu contrasena?';
+
+	/// es: 'Ingresa tu correo y te enviaremos un codigo de verificacion'
+	String get email_subtitle => 'Ingresa tu correo y te enviaremos un codigo de verificacion';
+
+	/// es: 'Correo electronico'
+	String get email_label => 'Correo electronico';
+
+	/// es: 'Enviar codigo'
+	String get send_code_button => 'Enviar codigo';
+
+	/// es: 'Ingresa el codigo'
+	String get code_title => 'Ingresa el codigo';
+
+	/// es: 'Enviamos un codigo de 6 digitos a {email}'
+	String get code_subtitle => 'Enviamos un codigo de 6 digitos a {email}';
+
+	/// es: 'Nueva contrasena'
+	String get new_password_label => 'Nueva contrasena';
+
+	/// es: 'Confirmar contrasena'
+	String get confirm_password_label => 'Confirmar contrasena';
+
+	/// es: 'La contrasena es requerida'
+	String get password_required => 'La contrasena es requerida';
+
+	/// es: 'La contrasena debe tener al menos 8 caracteres'
+	String get password_min_length => 'La contrasena debe tener al menos 8 caracteres';
+
+	/// es: 'Las contrasenas no coinciden'
+	String get passwords_not_match => 'Las contrasenas no coinciden';
+
+	/// es: 'Cambiar contrasena'
+	String get reset_button => 'Cambiar contrasena';
+
+	/// es: 'Volver a ingresar correo'
+	String get back_to_email => 'Volver a ingresar correo';
+
+	/// es: 'Contrasena cambiada'
+	String get success_title => 'Contrasena cambiada';
+
+	/// es: 'Tu contrasena ha sido actualizada. Inicia sesion con tu nueva contrasena.'
+	String get success_subtitle => 'Tu contrasena ha sido actualizada. Inicia sesion con tu nueva contrasena.';
+
+	/// es: 'Ir a iniciar sesion'
+	String get back_to_signin => 'Ir a iniciar sesion';
 }
 
 /// The flat map containing all translations for locale <es>.
@@ -371,6 +472,7 @@ extension on Translations {
 			'onboarding.loading.title' => 'Preparando tu experiencia',
 			'onboarding.loading.subtitle' => 'Espera unos segundos',
 			'auth.or_sign_in_with' => 'O inicia sesion con',
+			'auth.sign_in_with_google' => 'Iniciar sesion con Google',
 			'auth.signin.title' => 'Conecta tu caddie',
 			'auth.signin.subtitle' => 'Tu cuenta sincroniza tu ronda y el GPS del campo.',
 			'auth.signin.email_label' => 'Correo electronico',
@@ -392,6 +494,32 @@ extension on Translations {
 			'auth.signup.action' => 'Registrarse',
 			'auth.signup.has_account' => 'Ya tienes cuenta?',
 			'auth.signup.signin_link' => 'Inicia sesion',
+			'auth.signup.error_title' => 'Error',
+			'auth.signup.error_message' => 'Este correo ya existe o es invalido',
+			'auth.email_verification.title' => 'Verificar correo',
+			'auth.email_verification.code_sent_title' => 'Codigo de verificacion',
+			'auth.email_verification.subtitle' => 'Hemos enviado un codigo de 6 digitos a {email}',
+			'auth.email_verification.verify_button' => 'Verificar',
+			'auth.email_verification.resend_code' => 'Reenviar codigo',
+			'auth.email_verification.success' => 'Correo verificado',
+			'auth.email_verification.error_invalid' => 'Codigo invalido o expirado',
+			'auth.recover_password.title' => 'Recuperar contrasena',
+			'auth.recover_password.email_title' => 'Olvidaste tu contrasena?',
+			'auth.recover_password.email_subtitle' => 'Ingresa tu correo y te enviaremos un codigo de verificacion',
+			'auth.recover_password.email_label' => 'Correo electronico',
+			'auth.recover_password.send_code_button' => 'Enviar codigo',
+			'auth.recover_password.code_title' => 'Ingresa el codigo',
+			'auth.recover_password.code_subtitle' => 'Enviamos un codigo de 6 digitos a {email}',
+			'auth.recover_password.new_password_label' => 'Nueva contrasena',
+			'auth.recover_password.confirm_password_label' => 'Confirmar contrasena',
+			'auth.recover_password.password_required' => 'La contrasena es requerida',
+			'auth.recover_password.password_min_length' => 'La contrasena debe tener al menos 8 caracteres',
+			'auth.recover_password.passwords_not_match' => 'Las contrasenas no coinciden',
+			'auth.recover_password.reset_button' => 'Cambiar contrasena',
+			'auth.recover_password.back_to_email' => 'Volver a ingresar correo',
+			'auth.recover_password.success_title' => 'Contrasena cambiada',
+			'auth.recover_password.success_subtitle' => 'Tu contrasena ha sido actualizada. Inicia sesion con tu nueva contrasena.',
+			'auth.recover_password.back_to_signin' => 'Ir a iniciar sesion',
 			'common.kContinue' => 'Continuar',
 			'common.cancel' => 'Cancelar',
 			'common.skip' => 'Omitir',

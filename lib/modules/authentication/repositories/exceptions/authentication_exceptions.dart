@@ -79,3 +79,47 @@ class PhoneAuthException extends ApiError {
     );
   }
 }
+
+class EmailVerificationException {
+  final int? code;
+  final String? message;
+
+  EmailVerificationException({
+    this.code,
+    this.message,
+  });
+
+  factory EmailVerificationException.fromApiError(ApiError error) {
+    return EmailVerificationException(
+      code: error.code,
+      message: error.message,
+    );
+  }
+
+  @override
+  String toString() {
+    return 'EmailVerificationException(code: $code, message: $message)';
+  }
+}
+
+class PasswordResetException {
+  final int? code;
+  final String? message;
+
+  PasswordResetException({
+    this.code,
+    this.message,
+  });
+
+  factory PasswordResetException.fromApiError(ApiError error) {
+    return PasswordResetException(
+      code: error.code,
+      message: error.message,
+    );
+  }
+
+  @override
+  String toString() {
+    return 'PasswordResetException(code: $code, message: $message)';
+  }
+}

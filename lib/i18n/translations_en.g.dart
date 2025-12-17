@@ -91,8 +91,11 @@ class _TranslationsAuthEn extends TranslationsAuthEs {
 
 	// Translations
 	@override String get or_sign_in_with => 'Or sign in with';
+	@override String get sign_in_with_google => 'Sign in with Google';
 	@override late final _TranslationsAuthSigninEn signin = _TranslationsAuthSigninEn._(_root);
 	@override late final _TranslationsAuthSignupEn signup = _TranslationsAuthSignupEn._(_root);
+	@override late final _TranslationsAuthEmailVerificationEn email_verification = _TranslationsAuthEmailVerificationEn._(_root);
+	@override late final _TranslationsAuthRecoverPasswordEn recover_password = _TranslationsAuthRecoverPasswordEn._(_root);
 }
 
 // Path: common
@@ -216,6 +219,50 @@ class _TranslationsAuthSignupEn extends TranslationsAuthSignupEs {
 	@override String get action => 'Sign up';
 	@override String get has_account => 'Already have an account?';
 	@override String get signin_link => 'Sign in';
+	@override String get error_title => 'Error';
+	@override String get error_message => 'This email already exists or is invalid';
+}
+
+// Path: auth.email_verification
+class _TranslationsAuthEmailVerificationEn extends TranslationsAuthEmailVerificationEs {
+	_TranslationsAuthEmailVerificationEn._(TranslationsEn root) : this._root = root, super.internal(root);
+
+	final TranslationsEn _root; // ignore: unused_field
+
+	// Translations
+	@override String get title => 'Verify email';
+	@override String get code_sent_title => 'Verification code';
+	@override String get subtitle => 'We sent a 6-digit code to {email}';
+	@override String get verify_button => 'Verify';
+	@override String get resend_code => 'Resend code';
+	@override String get success => 'Email verified';
+	@override String get error_invalid => 'Invalid or expired code';
+}
+
+// Path: auth.recover_password
+class _TranslationsAuthRecoverPasswordEn extends TranslationsAuthRecoverPasswordEs {
+	_TranslationsAuthRecoverPasswordEn._(TranslationsEn root) : this._root = root, super.internal(root);
+
+	final TranslationsEn _root; // ignore: unused_field
+
+	// Translations
+	@override String get title => 'Recover password';
+	@override String get email_title => 'Forgot your password?';
+	@override String get email_subtitle => 'Enter your email and we\'ll send you a verification code';
+	@override String get email_label => 'Email';
+	@override String get send_code_button => 'Send code';
+	@override String get code_title => 'Enter the code';
+	@override String get code_subtitle => 'We sent a 6-digit code to {email}';
+	@override String get new_password_label => 'New password';
+	@override String get confirm_password_label => 'Confirm password';
+	@override String get password_required => 'Password is required';
+	@override String get password_min_length => 'Password must be at least 8 characters';
+	@override String get passwords_not_match => 'Passwords do not match';
+	@override String get reset_button => 'Change password';
+	@override String get back_to_email => 'Go back to enter email';
+	@override String get success_title => 'Password changed';
+	@override String get success_subtitle => 'Your password has been updated. Sign in with your new password.';
+	@override String get back_to_signin => 'Go to sign in';
 }
 
 /// The flat map containing all translations for locale <en>.
@@ -255,6 +302,7 @@ extension on TranslationsEn {
 			'onboarding.loading.title' => 'Preparing your experience',
 			'onboarding.loading.subtitle' => 'Wait a few seconds',
 			'auth.or_sign_in_with' => 'Or sign in with',
+			'auth.sign_in_with_google' => 'Sign in with Google',
 			'auth.signin.title' => 'Connect your caddie',
 			'auth.signin.subtitle' => 'Your account syncs your round and course GPS.',
 			'auth.signin.email_label' => 'Email',
@@ -276,6 +324,32 @@ extension on TranslationsEn {
 			'auth.signup.action' => 'Sign up',
 			'auth.signup.has_account' => 'Already have an account?',
 			'auth.signup.signin_link' => 'Sign in',
+			'auth.signup.error_title' => 'Error',
+			'auth.signup.error_message' => 'This email already exists or is invalid',
+			'auth.email_verification.title' => 'Verify email',
+			'auth.email_verification.code_sent_title' => 'Verification code',
+			'auth.email_verification.subtitle' => 'We sent a 6-digit code to {email}',
+			'auth.email_verification.verify_button' => 'Verify',
+			'auth.email_verification.resend_code' => 'Resend code',
+			'auth.email_verification.success' => 'Email verified',
+			'auth.email_verification.error_invalid' => 'Invalid or expired code',
+			'auth.recover_password.title' => 'Recover password',
+			'auth.recover_password.email_title' => 'Forgot your password?',
+			'auth.recover_password.email_subtitle' => 'Enter your email and we\'ll send you a verification code',
+			'auth.recover_password.email_label' => 'Email',
+			'auth.recover_password.send_code_button' => 'Send code',
+			'auth.recover_password.code_title' => 'Enter the code',
+			'auth.recover_password.code_subtitle' => 'We sent a 6-digit code to {email}',
+			'auth.recover_password.new_password_label' => 'New password',
+			'auth.recover_password.confirm_password_label' => 'Confirm password',
+			'auth.recover_password.password_required' => 'Password is required',
+			'auth.recover_password.password_min_length' => 'Password must be at least 8 characters',
+			'auth.recover_password.passwords_not_match' => 'Passwords do not match',
+			'auth.recover_password.reset_button' => 'Change password',
+			'auth.recover_password.back_to_email' => 'Go back to enter email',
+			'auth.recover_password.success_title' => 'Password changed',
+			'auth.recover_password.success_subtitle' => 'Your password has been updated. Sign in with your new password.',
+			'auth.recover_password.back_to_signin' => 'Go to sign in',
 			'common.kContinue' => 'Continue',
 			'common.cancel' => 'Cancel',
 			'common.skip' => 'Skip',

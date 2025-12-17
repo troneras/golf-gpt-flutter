@@ -6,7 +6,8 @@ abstract class AuthenticationApi implements OnStartService {
   Future<Credentials?> get();
 
   /// Signup a new user using [email] and [password]
-  Future<Credentials> signup(String email, String password);
+  /// [locale] is the user's preferred locale (e.g., 'es', 'en')
+  Future<Credentials> signup(String email, String password, {String? locale});
 
   /// Signin an existing user using [email] and [password]
   /// If the user is not found, an [SigninException] is thrown
@@ -17,7 +18,8 @@ abstract class AuthenticationApi implements OnStartService {
 
   /// Signin with Google account
   /// Requires the [google_sign_in](https://pub.dev/packages/google_sign_in) package
-  Future<Credentials> signinWithGoogle();
+  /// [locale] is the user's preferred locale (e.g., 'es', 'en')
+  Future<Credentials> signinWithGoogle({String? locale});
 
   /// Signin with Google Play account
   /// Requires the [google_sign_in](https://pub.dev/packages/google_sign_in) package
@@ -30,12 +32,32 @@ abstract class AuthenticationApi implements OnStartService {
   /// Signin with Apple account
   Future<Credentials> signinWithApple();
 
-  /// Recover password if user signed up with email/password
-  Future<void> recoverPassword(String email);
-  
-  
+  /// Request a 6-digit password reset code
+  /// POST /auth/password/forgot
+  Future<void> forgotPassword(String email);
 
-  
+  /// Reset password with 6-digit code
+  /// POST /auth/password/reset
+  Future<void> resetPassword({
+    required String email,
+    required String code,
+    required String password,
+    required String passwordConfirmation,
+  });
+
+  /// Send 6-digit verification code to user's email
+  /// Requires authenticated user
+  Future<void> sendEmailVerification();
+
+  /// Verify email with 6-digit code
+  /// Requires authenticated user
+  Future<void> verifyEmail(String code);
+
+  /// Check email verification status
+  /// Requires authenticated user
+  Future<bool> getEmailVerificationStatus();
+
+
 
   /// Request a OTP code to be sent to the provided phone number
   /// Returns a verification ID that will be used to confirm the code

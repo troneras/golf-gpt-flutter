@@ -15,6 +15,7 @@ sealed class User with _$User {
     DateTime? lastUpdateDate,
     String? avatarPath,
     required bool onboarded,
+    String? locale,
     // this will be empty only if you don't use the Subscription module
     Subscription? subscription,
   }) = AuthenticatedUserData;
@@ -42,6 +43,7 @@ sealed class User with _$User {
         avatarPath: entity.avatarPath,
         creationDate: entity.creationDate,
         lastUpdateDate: entity.lastUpdateDate,
+        locale: entity.locale,
       );
     } catch (e, trace) {
       Logger().e(e, stackTrace: trace);
@@ -59,6 +61,7 @@ sealed class User with _$User {
         avatarPath: value.avatarPath,
         creationDate: value.creationDate,
         lastUpdateDate: value.lastUpdateDate,
+        locale: value.locale,
       ),
       LoadingUserData() => throw "user is loading",
       UnauthenticatedUserData() => throw "user is not authenticated",

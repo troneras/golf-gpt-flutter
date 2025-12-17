@@ -3,6 +3,7 @@ import 'package:apparence_kit/core/data/api/analytics_api.dart';
 import 'package:apparence_kit/core/guards/authenticated_guard.dart';
 import 'package:apparence_kit/core/guards/user_info_guard.dart';
 import 'package:apparence_kit/core/widgets/page_not_found.dart';
+import 'package:apparence_kit/modules/authentication/ui/email_verification_page.dart';
 import 'package:apparence_kit/modules/authentication/ui/phone_auth_page.dart';
 import 'package:apparence_kit/modules/authentication/ui/recover_password_page.dart';
 import 'package:apparence_kit/modules/authentication/ui/signin_page.dart';
@@ -72,8 +73,11 @@ GoRouter generateRouter({
         path: '/signinWithPhone',
         builder: (context, state) => const PhoneAuthPage(),
       ),
-      
-      
+      GoRoute(
+        name: 'email_verification',
+        path: '/email_verification',
+        builder: (context, state) => const EmailVerificationPage(),
+      ),
       GoRoute(
         name: 'recover_password',
         path: '/recover_password',
