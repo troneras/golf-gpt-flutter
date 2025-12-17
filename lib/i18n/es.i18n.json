@@ -44,6 +44,7 @@
         }
     },
     "auth": {
+        "or_sign_in_with": "O inicia sesion con",
         "signin": {
             "title": "Conecta tu caddie",
             "subtitle": "Tu cuenta sincroniza tu ronda y el GPS del campo.",

@@ -90,6 +90,7 @@ class _TranslationsAuthEn extends TranslationsAuthEs {
 	final TranslationsEn _root; // ignore: unused_field
 
 	// Translations
+	@override String get or_sign_in_with => 'Or sign in with';
 	@override late final _TranslationsAuthSigninEn signin = _TranslationsAuthSigninEn._(_root);
 	@override late final _TranslationsAuthSignupEn signup = _TranslationsAuthSignupEn._(_root);
 }
@@ -253,6 +254,7 @@ extension on TranslationsEn {
 			'onboarding.complete.action' => 'Go to chat',
 			'onboarding.loading.title' => 'Preparing your experience',
 			'onboarding.loading.subtitle' => 'Wait a few seconds',
+			'auth.or_sign_in_with' => 'Or sign in with',
 			'auth.signin.title' => 'Connect your caddie',
 			'auth.signin.subtitle' => 'Your account syncs your round and course GPS.',
 			'auth.signin.email_label' => 'Email',

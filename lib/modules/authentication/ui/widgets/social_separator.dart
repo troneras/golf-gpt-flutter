@@ -1,3 +1,4 @@
+import 'package:apparence_kit/i18n/translations.g.dart';
 import 'package:flutter/material.dart';
 
 class SocialSeparator extends StatelessWidget {
@@ -13,7 +14,7 @@ class SocialSeparator extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.all(16.0),
           child: Text(
-            "Or sign in with",
+            Translations.of(context).auth.or_sign_in_with,
             textAlign: TextAlign.center,
             style: Theme.of(context).textTheme.labelSmall,
           ),

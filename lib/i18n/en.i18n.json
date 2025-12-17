@@ -44,6 +44,7 @@
         }
     },
     "auth": {
+        "or_sign_in_with": "Or sign in with",
         "signin": {
             "title": "Connect your caddie",
             "subtitle": "Your account syncs your round and course GPS.",

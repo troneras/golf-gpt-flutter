@@ -101,6 +101,10 @@ class TranslationsAuthEs {
 	final Translations _root; // ignore: unused_field
 
 	// Translations
+
+	/// es: 'O inicia sesion con'
+	String get or_sign_in_with => 'O inicia sesion con';
+
 	late final TranslationsAuthSigninEs signin = TranslationsAuthSigninEs.internal(_root);
 	late final TranslationsAuthSignupEs signup = TranslationsAuthSignupEs.internal(_root);
 }
@@ -366,6 +370,7 @@ extension on Translations {
 			'onboarding.complete.action' => 'Ir al chat',
 			'onboarding.loading.title' => 'Preparando tu experiencia',
 			'onboarding.loading.subtitle' => 'Espera unos segundos',
+			'auth.or_sign_in_with' => 'O inicia sesion con',
 			'auth.signin.title' => 'Conecta tu caddie',
 			'auth.signin.subtitle' => 'Tu cuenta sincroniza tu ronda y el GPS del campo.',
 			'auth.signin.email_label' => 'Correo electronico',
