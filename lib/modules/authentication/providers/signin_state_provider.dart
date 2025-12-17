@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:apparence_kit/core/states/user_state_notifier.dart';
 import 'package:apparence_kit/modules/authentication/providers/models/email.dart';
 import 'package:apparence_kit/modules/authentication/providers/models/password.dart';
@@ -63,7 +65,8 @@ class SigninStateNotifier extends _$SigninStateNotifier {
     }
     try {
       state = SigninState.sending(email: state.email, password: state.password);
-      await _authRepository.signinWithGoogle();
+      final locale = PlatformDispatcher.instance.locale.languageCode;
+      await _authRepository.signinWithGoogle(locale: locale);
       // lets fake a delay to prevent spamming the signup button
       await Future.delayed(const Duration(milliseconds: 1500));
       await _userStateNotifier.onSignin();
