@@ -1,0 +1,82 @@
+{
+    "home": {
+        "title": "TalkCaddy"
+    },
+    "rate_popup": {
+        "title": "Tienes 15 segundos para valorarnos?",
+        "description": "Es rapido y nos ayuda mucho! Gracias!",
+        "cancel_button": "Quiza luego",
+        "rate_button": "Si, con gusto!"
+    },
+    "onboarding": {
+        "welcome": {
+            "title": "Tu caddie por voz",
+            "subtitle": "Juega sin tarjeta, sin apuntar nada.\nSolo habla. Yo me encargo del resto.",
+            "action": "Continuar"
+        },
+        "app_purpose": {
+            "title": "Para que sirve esta app?",
+            "bullet_1": "Permite a TalkCaddy seguirte en el campo",
+            "bullet_2": "Calcula distancias automaticamente",
+            "bullet_3": "Sincroniza tu ronda y tus golpes",
+            "key_message": "No necesitas usar la app durante la ronda.\nSolo hablar con TalkCaddy.",
+            "action": "Entendido"
+        },
+        "location_permission": {
+            "title": "Necesitamos tu ubicacion",
+            "description": "TalkCaddy usa el GPS para:",
+            "bullet_1": "Detectar el hoyo",
+            "bullet_2": "Medir distancias",
+            "bullet_3": "Registrar tus golpes",
+            "reassurance": "No se usa fuera de la ronda.",
+            "action": "Permitir ubicacion",
+            "skip": "Ahora no"
+        },
+        "complete": {
+            "title": "Todo listo",
+            "subtitle": "Vuelve al chat y di:",
+            "command": "\"TalkCaddy, empiezo una ronda\"",
+            "action": "Ir al chat"
+        },
+        "loading": {
+            "title": "Preparando tu experiencia",
+            "subtitle": "Espera unos segundos"
+        }
+    },
+    "auth": {
+        "signin": {
+            "title": "Conecta tu caddie",
+            "subtitle": "Tu cuenta sincroniza tu ronda y el GPS del campo.",
+            "email_label": "Correo electronico",
+            "email_hint": "tu@email.com",
+            "password_label": "Contrasena",
+            "password_hint": "Contrasena",
+            "action": "Entrar",
+            "forgot_password": "Olvidaste tu contrasena?",
+            "no_account": "No tienes cuenta?",
+            "signup_link": "Registrate",
+            "error_title": "Error",
+            "error_message": "Email o contrasena incorrectos"
+        },
+        "signup": {
+            "title": "Crear cuenta",
+            "subtitle": "Tu cuenta sincroniza tu ronda y el GPS del campo.",
+            "email_label": "Correo electronico",
+            "email_hint": "tu@email.com",
+            "password_label": "Contrasena",
+            "password_hint": "Contrasena",
+            "action": "Registrarse",
+            "has_account": "Ya tienes cuenta?",
+            "signin_link": "Inicia sesion"
+        }
+    },
+    "common": {
+        "continue": "Continuar",
+        "cancel": "Cancelar",
+        "skip": "Omitir",
+        "error": "Error",
+        "success": "Exito",
+        "loading": "Cargando...",
+        "or": "o"
+    }
+}

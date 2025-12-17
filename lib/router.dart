@@ -10,6 +10,7 @@ import 'package:apparence_kit/modules/authentication/ui/signup_page.dart';
 
 
 import 'package:apparence_kit/modules/onboarding/ui/onboarding_page.dart';
+import 'package:apparence_kit/modules/onboarding/ui/complete_page.dart';
 
 
 import 'package:flutter/material.dart';
@@ -77,6 +78,11 @@ GoRouter generateRouter({
         name: 'recover_password',
         path: '/recover_password',
         builder: (context, state) => const RecoverPasswordPage(),
+      ),
+      GoRoute(
+        name: 'complete',
+        path: '/complete',
+        builder: (context, state) => const CompletePage(),
       ),
       GoRoute(
         name: '404',

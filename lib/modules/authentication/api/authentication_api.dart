@@ -110,15 +110,15 @@ class HttpAuthenticationApi implements AuthenticationApi {
 
   @override
   Future<Credentials> signinWithGoogle() async {
-    final loginResult = await GoogleSignIn(
+    await GoogleSignIn.instance.initialize(
       clientId: const String.fromEnvironment('GOOGLE_CLIENT_ID'),
-    ).signIn();
-    final googleAuth = await loginResult?.authentication;
+    );
+    final loginResult = await GoogleSignIn.instance.authenticate();
+    final googleAuth = loginResult.authentication;
     throw UnimplementedError('''
-    ❌ You must edit lib/modules/authentication/api/authentication_api.dart 
+    ❌ You must edit lib/modules/authentication/api/authentication_api.dart
     to send the Oauth2 token result to your backend
     ''');
-    
   }
 
   @override

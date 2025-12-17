@@ -1,0 +1,82 @@
+{
+    "home": {
+        "title": "TalkCaddy"
+    },
+    "rate_popup": {
+        "title": "Would you have 15 seconds to rate us?",
+        "description": "It's fast and very helpful! Thanks!",
+        "cancel_button": "Maybe later",
+        "rate_button": "Yes, with pleasure!"
+    },
+    "onboarding": {
+        "welcome": {
+            "title": "Your voice caddie",
+            "subtitle": "Play without a scorecard, without writing anything.\nJust talk. I'll take care of the rest.",
+            "action": "Continue"
+        },
+        "app_purpose": {
+            "title": "What is this app for?",
+            "bullet_1": "Allows TalkCaddy to follow you on the course",
+            "bullet_2": "Calculates distances automatically",
+            "bullet_3": "Syncs your round and your shots",
+            "key_message": "You don't need to use the app during the round.\nJust talk to TalkCaddy.",
+            "action": "Got it"
+        },
+        "location_permission": {
+            "title": "We need your location",
+            "description": "TalkCaddy uses GPS to:",
+            "bullet_1": "Detect the hole",
+            "bullet_2": "Measure distances",
+            "bullet_3": "Record your shots",
+            "reassurance": "Not used outside of the round.",
+            "action": "Allow location",
+            "skip": "Not now"
+        },
+        "complete": {
+            "title": "All set",
+            "subtitle": "Go back to the chat and say:",
+            "command": "\"TalkCaddy, I'm starting a round\"",
+            "action": "Go to chat"
+        },
+        "loading": {
+            "title": "Preparing your experience",
+            "subtitle": "Wait a few seconds"
+        }
+    },
+    "auth": {
+        "signin": {
+            "title": "Connect your caddie",
+            "subtitle": "Your account syncs your round and course GPS.",
+            "email_label": "Email",
+            "email_hint": "you@email.com",
+            "password_label": "Password",
+            "password_hint": "Password",
+            "action": "Sign in",
+            "forgot_password": "Forgot your password?",
+            "no_account": "Don't have an account?",
+            "signup_link": "Sign up",
+            "error_title": "Error",
+            "error_message": "Wrong email or password"
+        },
+        "signup": {
+            "title": "Create account",
+            "subtitle": "Your account syncs your round and course GPS.",
+            "email_label": "Email",
+            "email_hint": "you@email.com",
+            "password_label": "Password",
+            "password_hint": "Password",
+            "action": "Sign up",
+            "has_account": "Already have an account?",
+            "signin_link": "Sign in"
+        }
+    },
+    "common": {
+        "continue": "Continue",
+        "cancel": "Cancel",
+        "skip": "Skip",
+        "error": "Error",
+        "success": "Success",
+        "loading": "Loading...",
+        "or": "or"
+    }
+}

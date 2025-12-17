@@ -100,10 +100,14 @@ flutter:
     - assets/images/
     - assets/images/onboarding/
     - assets/icons/
+    - assets/launcher/
 flutter_launcher_icons:
-  image_path: assets/images/icon.png
-  android: ic_launcher
   ios: true
+  android: true
+  image_path_ios: "assets/launcher/icon.png"
+  image_path_android: "assets/launcher/icon.png"
+  adaptive_icon_background: "assets/launcher/background.png"
+  adaptive_icon_foreground: "assets/launcher/foreground.png"
   remove_alpha_ios: true
 flutter_native_splash:
   color: "#FFFFFF"
@@ -113,6 +117,7 @@ flutter_native_splash:
   image: assets/images/splashscreen.png
   android_12:
     color: "#FFFFFF"
+    image: assets/images/splashscreen.png
 
   # To add assets to your application, add an assets section, like this:
   # assets:

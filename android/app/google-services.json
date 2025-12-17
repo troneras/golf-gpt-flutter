@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "992836548858",
+    "project_id": "talkcaddy",
+    "storage_bucket": "talkcaddy.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:992836548858:android:59b45a16e5198735fc3143",
+        "android_client_info": {
+          "package_name": "io.talkcaddy"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDCx2SO5piZf_u4v6LozQwQf_Ny4PFcEes"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
