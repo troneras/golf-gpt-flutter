@@ -46,6 +46,7 @@ class Translations with BaseTranslations<AppLocale, Translations> {
 	late final TranslationsAuthEs auth = TranslationsAuthEs.internal(_root);
 	late final TranslationsCommonEs common = TranslationsCommonEs.internal(_root);
 	late final TranslationsSettingsEs settings = TranslationsSettingsEs.internal(_root);
+	late final TranslationsFeedbackEs feedback = TranslationsFeedbackEs.internal(_root);
 }
 
 // Path: home
@@ -58,6 +59,42 @@ class TranslationsHomeEs {
 
 	/// es: 'TalkCaddy'
 	String get title => 'TalkCaddy';
+
+	/// es: 'esta listo'
+	String get title_ready => 'esta listo';
+
+	/// es: 'Iniciar ronda'
+	String get start_round => 'Iniciar ronda';
+
+	/// es: 'Activa el GPS y empieza a hablar con tu caddie'
+	String get gps_hint => 'Activa el GPS y empieza a hablar con tu caddie';
+
+	/// es: 'Di cosas como:'
+	String get say_things_like => 'Di cosas como:';
+
+	/// es: '"Salida con driver"'
+	String get example_1 => '"Salida con driver"';
+
+	/// es: '"Dos putts"'
+	String get example_2 => '"Dos putts"';
+
+	/// es: '"Hecho bogey"'
+	String get example_3 => '"Hecho bogey"';
+
+	/// es: 'Ver rondas anteriores'
+	String get previous_rounds => 'Ver rondas anteriores';
+
+	/// es: 'Ajustes'
+	String get settings => 'Ajustes';
+
+	/// es: 'Ubicacion requerida'
+	String get location_required_title => 'Ubicacion requerida';
+
+	/// es: 'TalkCaddy necesita acceso a tu ubicacion para calcular distancias y registrar tus golpes durante la ronda.'
+	String get location_required_message => 'TalkCaddy necesita acceso a tu ubicacion para calcular distancias y registrar tus golpes durante la ronda.';
+
+	/// es: 'Abrir ajustes'
+	String get location_required_action => 'Abrir ajustes';
 }
 
 // Path: rate_popup
@@ -159,6 +196,75 @@ class TranslationsSettingsEs {
 	late final TranslationsSettingsLocationPermissionEs location_permission = TranslationsSettingsLocationPermissionEs.internal(_root);
 }
 
+// Path: feedback
+class TranslationsFeedbackEs {
+	TranslationsFeedbackEs.internal(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+
+	/// es: 'Enviar comentarios'
+	String get title => 'Enviar comentarios';
+
+	/// es: 'Tus comentarios nos ayudan a mejorar TalkCaddy'
+	String get subtitle => 'Tus comentarios nos ayudan a mejorar TalkCaddy';
+
+	/// es: 'Categoria'
+	String get category_label => 'Categoria';
+
+	/// es: 'General'
+	String get category_general => 'General';
+
+	/// es: 'Soporte'
+	String get category_support => 'Soporte';
+
+	/// es: 'Comentarios'
+	String get category_feedback => 'Comentarios';
+
+	/// es: 'Reportar error'
+	String get category_bug_report => 'Reportar error';
+
+	/// es: 'Solicitar funcion'
+	String get category_feature_request => 'Solicitar funcion';
+
+	/// es: 'Asunto'
+	String get subject_label => 'Asunto';
+
+	/// es: 'Describe brevemente tu mensaje'
+	String get subject_hint => 'Describe brevemente tu mensaje';
+
+	/// es: 'El asunto es requerido'
+	String get subject_required => 'El asunto es requerido';
+
+	/// es: 'Mensaje'
+	String get message_label => 'Mensaje';
+
+	/// es: 'Cuentanos mas detalles...'
+	String get message_hint => 'Cuentanos mas detalles...';
+
+	/// es: 'El mensaje es requerido'
+	String get message_required => 'El mensaje es requerido';
+
+	/// es: 'Enviar'
+	String get submit => 'Enviar';
+
+	/// es: 'Error'
+	String get error_title => 'Error';
+
+	/// es: 'No se pudo enviar tu mensaje. Intenta de nuevo.'
+	String get error_message => 'No se pudo enviar tu mensaje. Intenta de nuevo.';
+
+	/// es: 'Mensaje enviado'
+	String get success_title => 'Mensaje enviado';
+
+	/// es: 'Gracias por tus comentarios. Te responderemos pronto.'
+	String get success_message => 'Gracias por tus comentarios. Te responderemos pronto.';
+
+	/// es: 'Volver'
+	String get back => 'Volver';
+}
+
 // Path: onboarding.welcome
 class TranslationsOnboardingWelcomeEs {
 	TranslationsOnboardingWelcomeEs.internal(this._root);
@@ -254,8 +360,8 @@ class TranslationsOnboardingCompleteEs {
 	/// es: '"TalkCaddy, empiezo una ronda"'
 	String get command => '"TalkCaddy, empiezo una ronda"';
 
-	/// es: 'Ir al chat'
-	String get action => 'Ir al chat';
+	/// es: 'Continuar'
+	String get action => 'Continuar';
 }
 
 // Path: onboarding.loading
@@ -480,6 +586,18 @@ extension on Translations {
 	dynamic _flatMapFunction(String path) {
 		return switch (path) {
 			'home.title' => 'TalkCaddy',
+			'home.title_ready' => 'esta listo',
+			'home.start_round' => 'Iniciar ronda',
+			'home.gps_hint' => 'Activa el GPS y empieza a hablar con tu caddie',
+			'home.say_things_like' => 'Di cosas como:',
+			'home.example_1' => '"Salida con driver"',
+			'home.example_2' => '"Dos putts"',
+			'home.example_3' => '"Hecho bogey"',
+			'home.previous_rounds' => 'Ver rondas anteriores',
+			'home.settings' => 'Ajustes',
+			'home.location_required_title' => 'Ubicacion requerida',
+			'home.location_required_message' => 'TalkCaddy necesita acceso a tu ubicacion para calcular distancias y registrar tus golpes durante la ronda.',
+			'home.location_required_action' => 'Abrir ajustes',
 			'rate_popup.title' => 'Tienes 15 segundos para valorarnos?',
 			'rate_popup.description' => 'Es rapido y nos ayuda mucho! Gracias!',
 			'rate_popup.cancel_button' => 'Quiza luego',
@@ -504,7 +622,7 @@ extension on Translations {
 			'onboarding.complete.title' => 'Todo listo',
 			'onboarding.complete.subtitle' => 'Vuelve al chat y di:',
 			'onboarding.complete.command' => '"TalkCaddy, empiezo una ronda"',
-			'onboarding.complete.action' => 'Ir al chat',
+			'onboarding.complete.action' => 'Continuar',
 			'onboarding.loading.title' => 'Preparando tu experiencia',
 			'onboarding.loading.subtitle' => 'Espera unos segundos',
 			'auth.or_sign_in_with' => 'O inicia sesion con',
@@ -568,6 +686,26 @@ extension on Translations {
 			'settings.location_permission.granted' => 'Permitido',
 			'settings.location_permission.denied' => 'Denegado',
 			'settings.location_permission.open_settings' => 'Abrir ajustes',
+			'feedback.title' => 'Enviar comentarios',
+			'feedback.subtitle' => 'Tus comentarios nos ayudan a mejorar TalkCaddy',
+			'feedback.category_label' => 'Categoria',
+			'feedback.category_general' => 'General',
+			'feedback.category_support' => 'Soporte',
+			'feedback.category_feedback' => 'Comentarios',
+			'feedback.category_bug_report' => 'Reportar error',
+			'feedback.category_feature_request' => 'Solicitar funcion',
+			'feedback.subject_label' => 'Asunto',
+			'feedback.subject_hint' => 'Describe brevemente tu mensaje',
+			'feedback.subject_required' => 'El asunto es requerido',
+			'feedback.message_label' => 'Mensaje',
+			'feedback.message_hint' => 'Cuentanos mas detalles...',
+			'feedback.message_required' => 'El mensaje es requerido',
+			'feedback.submit' => 'Enviar',
+			'feedback.error_title' => 'Error',
+			'feedback.error_message' => 'No se pudo enviar tu mensaje. Intenta de nuevo.',
+			'feedback.success_title' => 'Mensaje enviado',
+			'feedback.success_message' => 'Gracias por tus comentarios. Te responderemos pronto.',
+			'feedback.back' => 'Volver',
 			_ => null,
 		};
 	}

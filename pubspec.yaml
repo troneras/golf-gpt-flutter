@@ -99,6 +99,7 @@ flutter:
   assets:
     - assets/images/
     - assets/images/onboarding/
+    - assets/images/icons/
     - assets/icons/
     - assets/launcher/
 flutter_launcher_icons:

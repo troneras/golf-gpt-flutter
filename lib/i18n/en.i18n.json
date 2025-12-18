@@ -1,6 +1,18 @@
 {
     "home": {
-        "title": "TalkCaddy"
+        "title": "TalkCaddy",
+        "title_ready": "is ready",
+        "start_round": "Start round",
+        "gps_hint": "Enable GPS and start talking to your caddie",
+        "say_things_like": "Say things like:",
+        "example_1": "\"Tee shot with driver\"",
+        "example_2": "\"Two putts\"",
+        "example_3": "\"Made bogey\"",
+        "previous_rounds": "View previous rounds",
+        "settings": "Settings",
+        "location_required_title": "Location required",
+        "location_required_message": "TalkCaddy needs access to your location to calculate distances and record your shots during the round.",
+        "location_required_action": "Open settings"
     },
     "rate_popup": {
         "title": "Would you have 15 seconds to rate us?",
@@ -36,7 +48,7 @@
             "title": "All set",
             "subtitle": "Go back to the chat and say:",
             "command": "\"TalkCaddy, I'm starting a round\"",
-            "action": "Go to chat"
+            "action": "Continue"
         },
         "loading": {
             "title": "Preparing your experience",
@@ -119,5 +131,27 @@
             "denied": "Denied",
             "open_settings": "Open settings"
         }
+    },
+    "feedback": {
+        "title": "Send feedback",
+        "subtitle": "Your feedback helps us improve TalkCaddy",
+        "category_label": "Category",
+        "category_general": "General",
+        "category_support": "Support",
+        "category_feedback": "Feedback",
+        "category_bug_report": "Bug report",
+        "category_feature_request": "Feature request",
+        "subject_label": "Subject",
+        "subject_hint": "Briefly describe your message",
+        "subject_required": "Subject is required",
+        "message_label": "Message",
+        "message_hint": "Tell us more details...",
+        "message_required": "Message is required",
+        "submit": "Send",
+        "error_title": "Error",
+        "error_message": "Could not send your message. Please try again.",
+        "success_title": "Message sent",
+        "success_message": "Thank you for your feedback. We will respond shortly.",
+        "back": "Go back"
     }
 }

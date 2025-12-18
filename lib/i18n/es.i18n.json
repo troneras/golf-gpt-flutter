@@ -1,6 +1,18 @@
 {
     "home": {
-        "title": "TalkCaddy"
+        "title": "TalkCaddy",
+        "title_ready": "esta listo",
+        "start_round": "Iniciar ronda",
+        "gps_hint": "Activa el GPS y empieza a hablar con tu caddie",
+        "say_things_like": "Di cosas como:",
+        "example_1": "\"Salida con driver\"",
+        "example_2": "\"Dos putts\"",
+        "example_3": "\"Hecho bogey\"",
+        "previous_rounds": "Ver rondas anteriores",
+        "settings": "Ajustes",
+        "location_required_title": "Ubicacion requerida",
+        "location_required_message": "TalkCaddy necesita acceso a tu ubicacion para calcular distancias y registrar tus golpes durante la ronda.",
+        "location_required_action": "Abrir ajustes"
     },
     "rate_popup": {
         "title": "Tienes 15 segundos para valorarnos?",
@@ -36,7 +48,7 @@
             "title": "Todo listo",
             "subtitle": "Vuelve al chat y di:",
             "command": "\"TalkCaddy, empiezo una ronda\"",
-            "action": "Ir al chat"
+            "action": "Continuar"
         },
         "loading": {
             "title": "Preparando tu experiencia",
@@ -119,5 +131,27 @@
             "denied": "Denegado",
             "open_settings": "Abrir ajustes"
         }
+    },
+    "feedback": {
+        "title": "Enviar comentarios",
+        "subtitle": "Tus comentarios nos ayudan a mejorar TalkCaddy",
+        "category_label": "Categoria",
+        "category_general": "General",
+        "category_support": "Soporte",
+        "category_feedback": "Comentarios",
+        "category_bug_report": "Reportar error",
+        "category_feature_request": "Solicitar funcion",
+        "subject_label": "Asunto",
+        "subject_hint": "Describe brevemente tu mensaje",
+        "subject_required": "El asunto es requerido",
+        "message_label": "Mensaje",
+        "message_hint": "Cuentanos mas detalles...",
+        "message_required": "El mensaje es requerido",
+        "submit": "Enviar",
+        "error_title": "Error",
+        "error_message": "No se pudo enviar tu mensaje. Intenta de nuevo.",
+        "success_title": "Mensaje enviado",
+        "success_message": "Gracias por tus comentarios. Te responderemos pronto.",
+        "back": "Volver"
     }
 }

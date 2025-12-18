@@ -45,6 +45,7 @@ class TranslationsEn extends Translations with BaseTranslations<AppLocale, Trans
 	@override late final _TranslationsAuthEn auth = _TranslationsAuthEn._(_root);
 	@override late final _TranslationsCommonEn common = _TranslationsCommonEn._(_root);
 	@override late final _TranslationsSettingsEn settings = _TranslationsSettingsEn._(_root);
+	@override late final _TranslationsFeedbackEn feedback = _TranslationsFeedbackEn._(_root);
 }
 
 // Path: home
@@ -55,6 +56,18 @@ class _TranslationsHomeEn extends TranslationsHomeEs {
 
 	// Translations
 	@override String get title => 'TalkCaddy';
+	@override String get title_ready => 'is ready';
+	@override String get start_round => 'Start round';
+	@override String get gps_hint => 'Enable GPS and start talking to your caddie';
+	@override String get say_things_like => 'Say things like:';
+	@override String get example_1 => '"Tee shot with driver"';
+	@override String get example_2 => '"Two putts"';
+	@override String get example_3 => '"Made bogey"';
+	@override String get previous_rounds => 'View previous rounds';
+	@override String get settings => 'Settings';
+	@override String get location_required_title => 'Location required';
+	@override String get location_required_message => 'TalkCaddy needs access to your location to calculate distances and record your shots during the round.';
+	@override String get location_required_action => 'Open settings';
 }
 
 // Path: rate_popup
@@ -126,6 +139,35 @@ class _TranslationsSettingsEn extends TranslationsSettingsEs {
 	@override late final _TranslationsSettingsLocationPermissionEn location_permission = _TranslationsSettingsLocationPermissionEn._(_root);
 }
 
+// Path: feedback
+class _TranslationsFeedbackEn extends TranslationsFeedbackEs {
+	_TranslationsFeedbackEn._(TranslationsEn root) : this._root = root, super.internal(root);
+
+	final TranslationsEn _root; // ignore: unused_field
+
+	// Translations
+	@override String get title => 'Send feedback';
+	@override String get subtitle => 'Your feedback helps us improve TalkCaddy';
+	@override String get category_label => 'Category';
+	@override String get category_general => 'General';
+	@override String get category_support => 'Support';
+	@override String get category_feedback => 'Feedback';
+	@override String get category_bug_report => 'Bug report';
+	@override String get category_feature_request => 'Feature request';
+	@override String get subject_label => 'Subject';
+	@override String get subject_hint => 'Briefly describe your message';
+	@override String get subject_required => 'Subject is required';
+	@override String get message_label => 'Message';
+	@override String get message_hint => 'Tell us more details...';
+	@override String get message_required => 'Message is required';
+	@override String get submit => 'Send';
+	@override String get error_title => 'Error';
+	@override String get error_message => 'Could not send your message. Please try again.';
+	@override String get success_title => 'Message sent';
+	@override String get success_message => 'Thank you for your feedback. We will respond shortly.';
+	@override String get back => 'Go back';
+}
+
 // Path: onboarding.welcome
 class _TranslationsOnboardingWelcomeEn extends TranslationsOnboardingWelcomeEs {
 	_TranslationsOnboardingWelcomeEn._(TranslationsEn root) : this._root = root, super.internal(root);
@@ -180,7 +222,7 @@ class _TranslationsOnboardingCompleteEn extends TranslationsOnboardingCompleteEs
 	@override String get title => 'All set';
 	@override String get subtitle => 'Go back to the chat and say:';
 	@override String get command => '"TalkCaddy, I\'m starting a round"';
-	@override String get action => 'Go to chat';
+	@override String get action => 'Continue';
 }
 
 // Path: onboarding.loading
@@ -299,6 +341,18 @@ extension on TranslationsEn {
 	dynamic _flatMapFunction(String path) {
 		return switch (path) {
 			'home.title' => 'TalkCaddy',
+			'home.title_ready' => 'is ready',
+			'home.start_round' => 'Start round',
+			'home.gps_hint' => 'Enable GPS and start talking to your caddie',
+			'home.say_things_like' => 'Say things like:',
+			'home.example_1' => '"Tee shot with driver"',
+			'home.example_2' => '"Two putts"',
+			'home.example_3' => '"Made bogey"',
+			'home.previous_rounds' => 'View previous rounds',
+			'home.settings' => 'Settings',
+			'home.location_required_title' => 'Location required',
+			'home.location_required_message' => 'TalkCaddy needs access to your location to calculate distances and record your shots during the round.',
+			'home.location_required_action' => 'Open settings',
 			'rate_popup.title' => 'Would you have 15 seconds to rate us?',
 			'rate_popup.description' => 'It\'s fast and very helpful! Thanks!',
 			'rate_popup.cancel_button' => 'Maybe later',
@@ -323,7 +377,7 @@ extension on TranslationsEn {
 			'onboarding.complete.title' => 'All set',
 			'onboarding.complete.subtitle' => 'Go back to the chat and say:',
 			'onboarding.complete.command' => '"TalkCaddy, I\'m starting a round"',
-			'onboarding.complete.action' => 'Go to chat',
+			'onboarding.complete.action' => 'Continue',
 			'onboarding.loading.title' => 'Preparing your experience',
 			'onboarding.loading.subtitle' => 'Wait a few seconds',
 			'auth.or_sign_in_with' => 'Or sign in with',
@@ -387,6 +441,26 @@ extension on TranslationsEn {
 			'settings.location_permission.granted' => 'Allowed',
 			'settings.location_permission.denied' => 'Denied',
 			'settings.location_permission.open_settings' => 'Open settings',
+			'feedback.title' => 'Send feedback',
+			'feedback.subtitle' => 'Your feedback helps us improve TalkCaddy',
+			'feedback.category_label' => 'Category',
+			'feedback.category_general' => 'General',
+			'feedback.category_support' => 'Support',
+			'feedback.category_feedback' => 'Feedback',
+			'feedback.category_bug_report' => 'Bug report',
+			'feedback.category_feature_request' => 'Feature request',
+			'feedback.subject_label' => 'Subject',
+			'feedback.subject_hint' => 'Briefly describe your message',
+			'feedback.subject_required' => 'Subject is required',
+			'feedback.message_label' => 'Message',
+			'feedback.message_hint' => 'Tell us more details...',
+			'feedback.message_required' => 'Message is required',
+			'feedback.submit' => 'Send',
+			'feedback.error_title' => 'Error',
+			'feedback.error_message' => 'Could not send your message. Please try again.',
+			'feedback.success_title' => 'Message sent',
+			'feedback.success_message' => 'Thank you for your feedback. We will respond shortly.',
+			'feedback.back' => 'Go back',
 			_ => null,
 		};
 	}
