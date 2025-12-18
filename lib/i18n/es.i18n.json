@@ -8,8 +8,6 @@
         "example_1": "\"Salida con driver\"",
         "example_2": "\"Dos putts\"",
         "example_3": "\"Hecho bogey\"",
-        "previous_rounds": "Ver rondas anteriores",
-        "settings": "Ajustes",
         "location_required_title": "Ubicacion requerida",
         "location_required_message": "TalkCaddy necesita acceso a tu ubicacion para calcular distancias y registrar tus golpes durante la ronda.",
         "location_required_action": "Abrir ajustes"
@@ -122,6 +120,16 @@
         "success": "Exito",
         "loading": "Cargando...",
         "or": "o"
+    },
+    "bottom_menu": {
+        "home": "Inicio",
+        "rounds": "Rondas",
+        "settings": "Ajustes"
+    },
+    "rounds": {
+        "title": "Mis rondas",
+        "empty": "Aun no tienes rondas registradas",
+        "empty_hint": "Inicia una ronda para ver tu historial aqui"
     },
     "settings": {
         "title": "Ajustes",

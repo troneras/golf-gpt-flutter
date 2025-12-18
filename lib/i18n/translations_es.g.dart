@@ -45,6 +45,8 @@ class Translations with BaseTranslations<AppLocale, Translations> {
 	late final TranslationsOnboardingEs onboarding = TranslationsOnboardingEs.internal(_root);
 	late final TranslationsAuthEs auth = TranslationsAuthEs.internal(_root);
 	late final TranslationsCommonEs common = TranslationsCommonEs.internal(_root);
+	late final TranslationsBottomMenuEs bottom_menu = TranslationsBottomMenuEs.internal(_root);
+	late final TranslationsRoundsEs rounds = TranslationsRoundsEs.internal(_root);
 	late final TranslationsSettingsEs settings = TranslationsSettingsEs.internal(_root);
 	late final TranslationsFeedbackEs feedback = TranslationsFeedbackEs.internal(_root);
 }
@@ -80,12 +82,6 @@ class TranslationsHomeEs {
 
 	/// es: '"Hecho bogey"'
 	String get example_3 => '"Hecho bogey"';
-
-	/// es: 'Ver rondas anteriores'
-	String get previous_rounds => 'Ver rondas anteriores';
-
-	/// es: 'Ajustes'
-	String get settings => 'Ajustes';
 
 	/// es: 'Ubicacion requerida'
 	String get location_required_title => 'Ubicacion requerida';
@@ -180,6 +176,42 @@ class TranslationsCommonEs {
 
 	/// es: 'o'
 	String get or => 'o';
+}
+
+// Path: bottom_menu
+class TranslationsBottomMenuEs {
+	TranslationsBottomMenuEs.internal(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+
+	/// es: 'Inicio'
+	String get home => 'Inicio';
+
+	/// es: 'Rondas'
+	String get rounds => 'Rondas';
+
+	/// es: 'Ajustes'
+	String get settings => 'Ajustes';
+}
+
+// Path: rounds
+class TranslationsRoundsEs {
+	TranslationsRoundsEs.internal(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+
+	/// es: 'Mis rondas'
+	String get title => 'Mis rondas';
+
+	/// es: 'Aun no tienes rondas registradas'
+	String get empty => 'Aun no tienes rondas registradas';
+
+	/// es: 'Inicia una ronda para ver tu historial aqui'
+	String get empty_hint => 'Inicia una ronda para ver tu historial aqui';
 }
 
 // Path: settings
@@ -593,8 +625,6 @@ extension on Translations {
 			'home.example_1' => '"Salida con driver"',
 			'home.example_2' => '"Dos putts"',
 			'home.example_3' => '"Hecho bogey"',
-			'home.previous_rounds' => 'Ver rondas anteriores',
-			'home.settings' => 'Ajustes',
 			'home.location_required_title' => 'Ubicacion requerida',
 			'home.location_required_message' => 'TalkCaddy necesita acceso a tu ubicacion para calcular distancias y registrar tus golpes durante la ronda.',
 			'home.location_required_action' => 'Abrir ajustes',
@@ -681,6 +711,12 @@ extension on Translations {
 			'common.success' => 'Exito',
 			'common.loading' => 'Cargando...',
 			'common.or' => 'o',
+			'bottom_menu.home' => 'Inicio',
+			'bottom_menu.rounds' => 'Rondas',
+			'bottom_menu.settings' => 'Ajustes',
+			'rounds.title' => 'Mis rondas',
+			'rounds.empty' => 'Aun no tienes rondas registradas',
+			'rounds.empty_hint' => 'Inicia una ronda para ver tu historial aqui',
 			'settings.title' => 'Ajustes',
 			'settings.location_permission.title' => 'Permiso de ubicacion',
 			'settings.location_permission.granted' => 'Permitido',

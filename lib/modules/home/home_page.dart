@@ -3,7 +3,6 @@ import 'package:apparence_kit/i18n/translations.g.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 class HomePage extends ConsumerStatefulWidget {
@@ -221,17 +220,7 @@ class _HomePageState extends ConsumerState<HomePage> with WidgetsBindingObserver
                           tr.example_3,
                         ],
                       ),
-                      const Spacer(),
-                      // Bottom links
-                      _BottomLinks(
-                        previousRoundsLabel: tr.previous_rounds,
-                        settingsLabel: tr.settings,
-                        onPreviousRounds: () {
-                          // TODO: Navigate to previous rounds
-                        },
-                        onSettings: () => context.push('/settings'),
-                      ),
-                      const SizedBox(height: 16),
+                      const SizedBox(height: 24),
                     ],
                   ),
                 ),
@@ -383,53 +372,6 @@ class _VoiceCommandsSection extends StatelessWidget {
               )),
         ],
       ),
-    );
-  }
-}
-
-class _BottomLinks extends StatelessWidget {
-  final String previousRoundsLabel;
-  final String settingsLabel;
-  final VoidCallback onPreviousRounds;
-  final VoidCallback onSettings;
-
-  const _BottomLinks({
-    required this.previousRoundsLabel,
-    required this.settingsLabel,
-    required this.onPreviousRounds,
-    required this.onSettings,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        TextButton(
-          onPressed: onPreviousRounds,
-          child: Text(
-            previousRoundsLabel,
-            style: context.textTheme.bodyMedium?.copyWith(
-              color: context.colors.onBackground.withValues(alpha: 0.6),
-            ),
-          ),
-        ),
-        Text(
-          '·',
-          style: context.textTheme.bodyMedium?.copyWith(
-            color: context.colors.onBackground.withValues(alpha: 0.4),
-          ),
-        ),
-        TextButton(
-          onPressed: onSettings,
-          child: Text(
-            settingsLabel,
-            style: context.textTheme.bodyMedium?.copyWith(
-              color: context.colors.onBackground.withValues(alpha: 0.6),
-            ),
-          ),
-        ),
-      ],
     );
   }
 }

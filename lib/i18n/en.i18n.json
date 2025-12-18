@@ -8,8 +8,6 @@
         "example_1": "\"Tee shot with driver\"",
         "example_2": "\"Two putts\"",
         "example_3": "\"Made bogey\"",
-        "previous_rounds": "View previous rounds",
-        "settings": "Settings",
         "location_required_title": "Location required",
         "location_required_message": "TalkCaddy needs access to your location to calculate distances and record your shots during the round.",
         "location_required_action": "Open settings"
@@ -122,6 +120,16 @@
         "success": "Success",
         "loading": "Loading...",
         "or": "or"
+    },
+    "bottom_menu": {
+        "home": "Home",
+        "rounds": "Rounds",
+        "settings": "Settings"
+    },
+    "rounds": {
+        "title": "My rounds",
+        "empty": "You don't have any rounds yet",
+        "empty_hint": "Start a round to see your history here"
     },
     "settings": {
         "title": "Settings",

@@ -44,6 +44,8 @@ class TranslationsEn extends Translations with BaseTranslations<AppLocale, Trans
 	@override late final _TranslationsOnboardingEn onboarding = _TranslationsOnboardingEn._(_root);
 	@override late final _TranslationsAuthEn auth = _TranslationsAuthEn._(_root);
 	@override late final _TranslationsCommonEn common = _TranslationsCommonEn._(_root);
+	@override late final _TranslationsBottomMenuEn bottom_menu = _TranslationsBottomMenuEn._(_root);
+	@override late final _TranslationsRoundsEn rounds = _TranslationsRoundsEn._(_root);
 	@override late final _TranslationsSettingsEn settings = _TranslationsSettingsEn._(_root);
 	@override late final _TranslationsFeedbackEn feedback = _TranslationsFeedbackEn._(_root);
 }
@@ -63,8 +65,6 @@ class _TranslationsHomeEn extends TranslationsHomeEs {
 	@override String get example_1 => '"Tee shot with driver"';
 	@override String get example_2 => '"Two putts"';
 	@override String get example_3 => '"Made bogey"';
-	@override String get previous_rounds => 'View previous rounds';
-	@override String get settings => 'Settings';
 	@override String get location_required_title => 'Location required';
 	@override String get location_required_message => 'TalkCaddy needs access to your location to calculate distances and record your shots during the round.';
 	@override String get location_required_action => 'Open settings';
@@ -126,6 +126,30 @@ class _TranslationsCommonEn extends TranslationsCommonEs {
 	@override String get success => 'Success';
 	@override String get loading => 'Loading...';
 	@override String get or => 'or';
+}
+
+// Path: bottom_menu
+class _TranslationsBottomMenuEn extends TranslationsBottomMenuEs {
+	_TranslationsBottomMenuEn._(TranslationsEn root) : this._root = root, super.internal(root);
+
+	final TranslationsEn _root; // ignore: unused_field
+
+	// Translations
+	@override String get home => 'Home';
+	@override String get rounds => 'Rounds';
+	@override String get settings => 'Settings';
+}
+
+// Path: rounds
+class _TranslationsRoundsEn extends TranslationsRoundsEs {
+	_TranslationsRoundsEn._(TranslationsEn root) : this._root = root, super.internal(root);
+
+	final TranslationsEn _root; // ignore: unused_field
+
+	// Translations
+	@override String get title => 'My rounds';
+	@override String get empty => 'You don\'t have any rounds yet';
+	@override String get empty_hint => 'Start a round to see your history here';
 }
 
 // Path: settings
@@ -348,8 +372,6 @@ extension on TranslationsEn {
 			'home.example_1' => '"Tee shot with driver"',
 			'home.example_2' => '"Two putts"',
 			'home.example_3' => '"Made bogey"',
-			'home.previous_rounds' => 'View previous rounds',
-			'home.settings' => 'Settings',
 			'home.location_required_title' => 'Location required',
 			'home.location_required_message' => 'TalkCaddy needs access to your location to calculate distances and record your shots during the round.',
 			'home.location_required_action' => 'Open settings',
@@ -436,6 +458,12 @@ extension on TranslationsEn {
 			'common.success' => 'Success',
 			'common.loading' => 'Loading...',
 			'common.or' => 'or',
+			'bottom_menu.home' => 'Home',
+			'bottom_menu.rounds' => 'Rounds',
+			'bottom_menu.settings' => 'Settings',
+			'rounds.title' => 'My rounds',
+			'rounds.empty' => 'You don\'t have any rounds yet',
+			'rounds.empty_hint' => 'Start a round to see your history here',
 			'settings.title' => 'Settings',
 			'settings.location_permission.title' => 'Location permission',
 			'settings.location_permission.granted' => 'Allowed',
