@@ -48,6 +48,7 @@ class Translations with BaseTranslations<AppLocale, Translations> {
 	late final TranslationsBottomMenuEs bottom_menu = TranslationsBottomMenuEs.internal(_root);
 	late final TranslationsRoundsEs rounds = TranslationsRoundsEs.internal(_root);
 	late final TranslationsSettingsEs settings = TranslationsSettingsEs.internal(_root);
+	late final TranslationsSelectCourseEs select_course = TranslationsSelectCourseEs.internal(_root);
 	late final TranslationsFeedbackEs feedback = TranslationsFeedbackEs.internal(_root);
 }
 
@@ -226,6 +227,42 @@ class TranslationsSettingsEs {
 	String get title => 'Ajustes';
 
 	late final TranslationsSettingsLocationPermissionEs location_permission = TranslationsSettingsLocationPermissionEs.internal(_root);
+}
+
+// Path: select_course
+class TranslationsSelectCourseEs {
+	TranslationsSelectCourseEs.internal(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+
+	/// es: 'Selecciona el campo'
+	String get title => 'Selecciona el campo';
+
+	/// es: 'Buscando campo cercano...'
+	String get loading => 'Buscando campo cercano...';
+
+	/// es: 'Campo mas cercano'
+	String get closest_course => 'Campo mas cercano';
+
+	/// es: 'Seleccionar otro campo'
+	String get select_other_course => 'Seleccionar otro campo';
+
+	/// es: 'Tees de salida'
+	String get tees_section => 'Tees de salida';
+
+	/// es: 'No encontramos campos cerca'
+	String get no_course_found => 'No encontramos campos cerca';
+
+	/// es: 'Asegurate de estar en un campo de golf o intenta de nuevo'
+	String get no_course_found_hint => 'Asegurate de estar en un campo de golf o intenta de nuevo';
+
+	/// es: 'Error al buscar campo'
+	String get error_title => 'Error al buscar campo';
+
+	/// es: 'Reintentar'
+	String get retry => 'Reintentar';
 }
 
 // Path: feedback
@@ -722,6 +759,15 @@ extension on Translations {
 			'settings.location_permission.granted' => 'Permitido',
 			'settings.location_permission.denied' => 'Denegado',
 			'settings.location_permission.open_settings' => 'Abrir ajustes',
+			'select_course.title' => 'Selecciona el campo',
+			'select_course.loading' => 'Buscando campo cercano...',
+			'select_course.closest_course' => 'Campo mas cercano',
+			'select_course.select_other_course' => 'Seleccionar otro campo',
+			'select_course.tees_section' => 'Tees de salida',
+			'select_course.no_course_found' => 'No encontramos campos cerca',
+			'select_course.no_course_found_hint' => 'Asegurate de estar en un campo de golf o intenta de nuevo',
+			'select_course.error_title' => 'Error al buscar campo',
+			'select_course.retry' => 'Reintentar',
 			'feedback.title' => 'Enviar comentarios',
 			'feedback.subtitle' => 'Tus comentarios nos ayudan a mejorar TalkCaddy',
 			'feedback.category_label' => 'Categoria',

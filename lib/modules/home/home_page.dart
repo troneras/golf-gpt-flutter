@@ -3,6 +3,7 @@ import 'package:apparence_kit/i18n/translations.g.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 class HomePage extends ConsumerStatefulWidget {
@@ -56,8 +57,8 @@ class _HomePageState extends ConsumerState<HomePage> with WidgetsBindingObserver
   }
 
   void _startRound() {
-    // TODO: Navigate to start round flow
     HapticFeedback.mediumImpact();
+    context.push('/select-course');
   }
 
   void _showLocationRequiredDialog() {

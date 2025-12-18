@@ -140,6 +140,17 @@
             "open_settings": "Abrir ajustes"
         }
     },
+    "select_course": {
+        "title": "Selecciona el campo",
+        "loading": "Buscando campo cercano...",
+        "closest_course": "Campo mas cercano",
+        "select_other_course": "Seleccionar otro campo",
+        "tees_section": "Tees de salida",
+        "no_course_found": "No encontramos campos cerca",
+        "no_course_found_hint": "Asegurate de estar en un campo de golf o intenta de nuevo",
+        "error_title": "Error al buscar campo",
+        "retry": "Reintentar"
+    },
     "feedback": {
         "title": "Enviar comentarios",
         "subtitle": "Tus comentarios nos ayudan a mejorar TalkCaddy",

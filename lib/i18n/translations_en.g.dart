@@ -47,6 +47,7 @@ class TranslationsEn extends Translations with BaseTranslations<AppLocale, Trans
 	@override late final _TranslationsBottomMenuEn bottom_menu = _TranslationsBottomMenuEn._(_root);
 	@override late final _TranslationsRoundsEn rounds = _TranslationsRoundsEn._(_root);
 	@override late final _TranslationsSettingsEn settings = _TranslationsSettingsEn._(_root);
+	@override late final _TranslationsSelectCourseEn select_course = _TranslationsSelectCourseEn._(_root);
 	@override late final _TranslationsFeedbackEn feedback = _TranslationsFeedbackEn._(_root);
 }
 
@@ -161,6 +162,24 @@ class _TranslationsSettingsEn extends TranslationsSettingsEs {
 	// Translations
 	@override String get title => 'Settings';
 	@override late final _TranslationsSettingsLocationPermissionEn location_permission = _TranslationsSettingsLocationPermissionEn._(_root);
+}
+
+// Path: select_course
+class _TranslationsSelectCourseEn extends TranslationsSelectCourseEs {
+	_TranslationsSelectCourseEn._(TranslationsEn root) : this._root = root, super.internal(root);
+
+	final TranslationsEn _root; // ignore: unused_field
+
+	// Translations
+	@override String get title => 'Select the course';
+	@override String get loading => 'Searching for nearby course...';
+	@override String get closest_course => 'Closest course';
+	@override String get select_other_course => 'Select another course';
+	@override String get tees_section => 'Tee boxes';
+	@override String get no_course_found => 'No courses found nearby';
+	@override String get no_course_found_hint => 'Make sure you\'re at a golf course or try again';
+	@override String get error_title => 'Error searching course';
+	@override String get retry => 'Retry';
 }
 
 // Path: feedback
@@ -469,6 +488,15 @@ extension on TranslationsEn {
 			'settings.location_permission.granted' => 'Allowed',
 			'settings.location_permission.denied' => 'Denied',
 			'settings.location_permission.open_settings' => 'Open settings',
+			'select_course.title' => 'Select the course',
+			'select_course.loading' => 'Searching for nearby course...',
+			'select_course.closest_course' => 'Closest course',
+			'select_course.select_other_course' => 'Select another course',
+			'select_course.tees_section' => 'Tee boxes',
+			'select_course.no_course_found' => 'No courses found nearby',
+			'select_course.no_course_found_hint' => 'Make sure you\'re at a golf course or try again',
+			'select_course.error_title' => 'Error searching course',
+			'select_course.retry' => 'Retry',
 			'feedback.title' => 'Send feedback',
 			'feedback.subtitle' => 'Your feedback helps us improve TalkCaddy',
 			'feedback.category_label' => 'Category',

@@ -140,6 +140,17 @@
             "open_settings": "Open settings"
         }
     },
+    "select_course": {
+        "title": "Select the course",
+        "loading": "Searching for nearby course...",
+        "closest_course": "Closest course",
+        "select_other_course": "Select another course",
+        "tees_section": "Tee boxes",
+        "no_course_found": "No courses found nearby",
+        "no_course_found_hint": "Make sure you're at a golf course or try again",
+        "error_title": "Error searching course",
+        "retry": "Retry"
+    },
     "feedback": {
         "title": "Send feedback",
         "subtitle": "Your feedback helps us improve TalkCaddy",

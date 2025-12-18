@@ -8,7 +8,8 @@ import 'package:apparence_kit/modules/authentication/ui/phone_auth_page.dart';
 import 'package:apparence_kit/modules/authentication/ui/recover_password_page.dart';
 import 'package:apparence_kit/modules/authentication/ui/signin_page.dart';
 import 'package:apparence_kit/modules/authentication/ui/signup_page.dart';
-
+import 'package:apparence_kit/modules/feedback/ui/feedback_page.dart';
+import 'package:apparence_kit/modules/round/ui/select_course_page.dart';
 
 import 'package:apparence_kit/modules/onboarding/ui/onboarding_page.dart';
 import 'package:apparence_kit/modules/onboarding/ui/complete_page.dart';
@@ -87,6 +88,16 @@ GoRouter generateRouter({
         name: 'complete',
         path: '/complete',
         builder: (context, state) => const CompletePage(),
+      ),
+      GoRoute(
+        name: 'feedback',
+        path: '/feedback',
+        builder: (context, state) => const FeedbackPage(),
+      ),
+      GoRoute(
+        name: 'select_course',
+        path: '/select-course',
+        builder: (context, state) => const SelectCoursePage(),
       ),
       GoRoute(
         name: '404',

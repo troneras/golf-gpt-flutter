@@ -1,0 +1,51 @@
+// GENERATED CODE - DO NOT MODIFY BY HAND
+
+part of 'course_entity.dart';
+
+// **************************************************************************
+// JsonSerializableGenerator
+// **************************************************************************
+
+CourseEntityData _$CourseEntityDataFromJson(Map json) => CourseEntityData(
+  id: json['id'] as String,
+  externalCourseId: json['external_course_id'] as String?,
+  name: json['name'] as String,
+  address: json['address'] as String?,
+  city: json['city'] as String?,
+  state: json['state'] as String?,
+  country: json['country'] as String?,
+  latitude: (json['latitude'] as num?)?.toDouble(),
+  longitude: (json['longitude'] as num?)?.toDouble(),
+  distanceKm: (json['distance_km'] as num?)?.toDouble(),
+  tees:
+      (json['tees'] as List<dynamic>?)
+          ?.map((e) => TeeEntity.fromJson(Map<String, Object?>.from(e as Map)))
+          .toList() ??
+      const [],
+);
+
+Map<String, dynamic> _$CourseEntityDataToJson(CourseEntityData instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'external_course_id': instance.externalCourseId,
+      'name': instance.name,
+      'address': instance.address,
+      'city': instance.city,
+      'state': instance.state,
+      'country': instance.country,
+      'latitude': instance.latitude,
+      'longitude': instance.longitude,
+      'distance_km': instance.distanceKm,
+      'tees': instance.tees.map((e) => e.toJson()).toList(),
+    };
+
+ClosestCourseResponseData _$ClosestCourseResponseDataFromJson(Map json) =>
+    ClosestCourseResponseData(
+      course: CourseEntity.fromJson(
+        Map<String, Object?>.from(json['course'] as Map),
+      ),
+    );
+
+Map<String, dynamic> _$ClosestCourseResponseDataToJson(
+  ClosestCourseResponseData instance,
+) => <String, dynamic>{'course': instance.course.toJson()};
