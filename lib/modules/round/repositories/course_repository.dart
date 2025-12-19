@@ -30,7 +30,7 @@ class CourseRepository {
   Future<List<Course>> getNearby({
     required double latitude,
     required double longitude,
-    int radius = 50,
+    int radius = 2000,
     int limit = 20,
   }) async {
     final entities = await _courseApi.getNearby(

@@ -12,6 +12,7 @@ sealed class CourseEntity with _$CourseEntity {
     required String id,
     @JsonKey(name: 'external_course_id') String? externalCourseId,
     required String name,
+    @JsonKey(name: 'club_name') String? clubName,
     String? address,
     String? city,
     String? state,
@@ -69,6 +70,7 @@ sealed class NearbyCourseEntity with _$NearbyCourseEntity {
     return CourseEntity(
       id: courseId,
       name: courseName,
+      clubName: clubName,
       address: address,
       city: city,
       state: state,

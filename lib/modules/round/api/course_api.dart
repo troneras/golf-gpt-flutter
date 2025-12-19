@@ -89,7 +89,7 @@ class CourseApi {
   Future<List<CourseEntity>> getNearby({
     required double latitude,
     required double longitude,
-    int radius = 50,
+    int radius = 2000,
     int limit = 20,
   }) async {
     _logger.i('API Request: GET /courses/nearby?lat=$latitude&lng=$longitude&radius=$radius&limit=$limit');
@@ -107,7 +107,7 @@ class CourseApi {
       _logger.d('Response data: ${response.data}');
       final List<dynamic> data = _extractList(response.data);
       final courses = data
-          .map((e) => NearbyCourseEntity.fromJson(e as Map<String, dynamic>).toCourseEntity())
+          .map((e) => CourseEntity.fromJson(e as Map<String, dynamic>))
           .toList();
       _logger.i('Parsed ${courses.length} nearby courses');
       return courses;

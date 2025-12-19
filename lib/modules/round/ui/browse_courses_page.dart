@@ -283,7 +283,7 @@ class _CourseListView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
-      padding: const EdgeInsets.symmetric(horizontal: 16),
+      padding: const EdgeInsets.fromLTRB(16, 16, 16, 0),
       itemCount: courses.length,
       itemBuilder: (context, index) {
         final course = courses[index];
@@ -304,6 +304,17 @@ class _CourseListTile extends StatelessWidget {
     required this.course,
     required this.onTap,
   });
+
+  String _buildSubtitle(Course course) {
+    final parts = <String>[];
+    if (course.cityCountry.isNotEmpty) {
+      parts.add(course.cityCountry);
+    }
+    if (course.formattedDistance.isNotEmpty) {
+      parts.add(course.formattedDistance);
+    }
+    return parts.join(' · ');
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -338,14 +349,17 @@ class _CourseListTile extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      course.name,
+                      course.clubName != null && course.clubName!.isNotEmpty
+                          ? '${course.clubName} - ${course.name}'
+                          : course.name,
                       style: context.textTheme.titleMedium?.copyWith(
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    if (course.formattedDistance.isNotEmpty)
+                    if (course.cityCountry.isNotEmpty ||
+                        course.formattedDistance.isNotEmpty)
                       Text(
-                        course.formattedDistance,
+                        _buildSubtitle(course),
                         style: context.textTheme.bodySmall?.copyWith(
                           color: context.colors.onSurface.withValues(alpha: 0.6),
                         ),

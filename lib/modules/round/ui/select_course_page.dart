@@ -150,6 +150,7 @@ class _LoadedView extends StatelessWidget {
                 // Course card
                 _CourseCard(
                   courseName: course.name,
+                  clubName: course.clubName,
                   onSelectOther: onSelectOther,
                 ),
                 const SizedBox(height: 24),
@@ -186,10 +187,12 @@ class _LoadedView extends StatelessWidget {
 
 class _CourseCard extends StatelessWidget {
   final String courseName;
+  final String? clubName;
   final VoidCallback onSelectOther;
 
   const _CourseCard({
     required this.courseName,
+    this.clubName,
     required this.onSelectOther,
   });
 
@@ -231,6 +234,15 @@ class _CourseCard extends StatelessWidget {
                         fontWeight: FontWeight.bold,
                       ),
                     ),
+                    if (clubName != null && clubName!.isNotEmpty) ...[
+                      const SizedBox(height: 2),
+                      Text(
+                        clubName!,
+                        style: context.textTheme.bodySmall?.copyWith(
+                          color: context.colors.onSurface.withValues(alpha: 0.5),
+                        ),
+                      ),
+                    ],
                     const SizedBox(height: 4),
                     Text(
                       tr.select_other_course,

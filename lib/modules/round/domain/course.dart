@@ -9,6 +9,7 @@ sealed class Course with _$Course {
   const factory Course({
     required String id,
     required String name,
+    String? clubName,
     String? externalCourseId,
     String? address,
     String? city,
@@ -26,6 +27,7 @@ sealed class Course with _$Course {
     return Course(
       id: entity.id,
       name: entity.name,
+      clubName: entity.clubName,
       externalCourseId: entity.externalCourseId,
       address: entity.address,
       city: entity.city,
@@ -52,5 +54,12 @@ sealed class Course with _$Course {
       return '${(distanceKm! * 1000).round()} m';
     }
     return '${distanceKm!.toStringAsFixed(1)} km';
+  }
+
+  String get cityCountry {
+    final parts = <String>[];
+    if (city != null && city!.isNotEmpty) parts.add(city!);
+    if (country != null && country!.isNotEmpty) parts.add(country!);
+    return parts.join(', ');
   }
 }
