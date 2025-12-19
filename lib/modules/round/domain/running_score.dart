@@ -1,4 +1,5 @@
 import 'package:apparence_kit/modules/round/api/entities/score_upsert_response.dart';
+import 'package:apparence_kit/modules/round/domain/round.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'running_score.freezed.dart';
@@ -63,6 +64,19 @@ sealed class RoundSummary with _$RoundSummary {
       gir: entity.gir,
       girTotal: entity.girTotal,
       durationMinutes: entity.durationMinutes,
+    );
+  }
+
+  factory RoundSummary.fromRound(Round round) {
+    return RoundSummary(
+      totalStrokes: round.totalStrokes ?? round.computedTotalStrokes,
+      relativeToPar: round.scoreRelativeToPar ?? round.computedRelativeToPar,
+      totalPutts: round.totalPutts ?? 0,
+      fairwaysHit: round.fairwaysHit,
+      fairwaysTotal: round.fairwaysTotal,
+      gir: round.greensInRegulation,
+      girTotal: round.greensTotal,
+      durationMinutes: round.durationMinutes,
     );
   }
 

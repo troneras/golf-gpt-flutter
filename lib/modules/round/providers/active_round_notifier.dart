@@ -1,5 +1,6 @@
 import 'package:apparence_kit/modules/gps/providers/gps_tracking_notifier.dart';
 import 'package:apparence_kit/modules/gps/services/gps_tracking_service.dart';
+import 'package:apparence_kit/modules/round/domain/running_score.dart';
 import 'package:apparence_kit/modules/round/providers/models/active_round_state.dart';
 import 'package:apparence_kit/modules/round/repositories/round_repository.dart';
 import 'package:flutter/widgets.dart';
@@ -105,6 +106,19 @@ class ActiveRoundNotifier extends _$ActiveRoundNotifier {
     try {
       final round = await _roundRepository.getRound(currentState.round.id);
       if (!ref.mounted) return;
+
+      // Check if round was finished externally (e.g., via ChatGPT)
+      if (round.isFinished) {
+        _logger.i('Round was finished externally, navigating to summary');
+        await ref.read(gpsTrackingProvider.notifier).stopTracking();
+        final summary = RoundSummary.fromRound(round);
+        state = ActiveRoundState.finished(
+          roundId: round.id,
+          summary: summary,
+        );
+        return;
+      }
+
       _logger.i('Round refreshed: ${round.holesPlayed} holes played');
       state = ActiveRoundState.active(
         round: round,
@@ -277,6 +291,24 @@ class ActiveRoundNotifier extends _$ActiveRoundNotifier {
     } catch (e, stackTrace) {
       _logger.e('Error finishing round', error: e, stackTrace: stackTrace);
       if (!ref.mounted) return;
+
+      // Check if round was already finished (e.g., via ChatGPT)
+      try {
+        final round = await _roundRepository.getRound(currentState.round.id);
+        if (!ref.mounted) return;
+        if (round.isFinished) {
+          _logger.i('Round was already finished, navigating to summary');
+          final summary = RoundSummary.fromRound(round);
+          state = ActiveRoundState.finished(
+            roundId: round.id,
+            summary: summary,
+          );
+          return;
+        }
+      } catch (_) {
+        // Failed to fetch round, show original error
+      }
+
       state = currentState.copyWith(
         isSaving: false,
         savingError: e.toString(),
