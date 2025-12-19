@@ -270,5 +270,20 @@
             "stopped": "Rastreo GPS detenido",
             "error": "Error de GPS"
         }
+    },
+    "bag": {
+        "title": "Mi bolsa",
+        "empty": "Tu bolsa esta vacia",
+        "add_club": "Agregar un palo",
+        "delete_club": "Eliminar palo",
+        "delete_confirm": "Seguro que quieres eliminar \"$clubName\"?",
+        "error_loading": "Error al cargar la bolsa",
+        "edit_distance": "Editar distancia",
+        "add_club_title": "Agregar palo",
+        "select_club": "Seleccionar palo",
+        "distance_label": "Distancia (yardas)",
+        "distance_hint": "Ej: 150",
+        "distance_unit": "yds",
+        "save": "Guardar"
     }
 }

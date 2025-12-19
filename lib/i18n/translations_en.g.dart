@@ -55,6 +55,7 @@ class TranslationsEn extends Translations with BaseTranslations<AppLocale, Trans
 	@override late final _TranslationsActiveRoundEn active_round = _TranslationsActiveRoundEn._(_root);
 	@override late final _TranslationsFeedbackEn feedback = _TranslationsFeedbackEn._(_root);
 	@override late final _TranslationsGpsEn gps = _TranslationsGpsEn._(_root);
+	@override late final _TranslationsBagEn bag = _TranslationsBagEn._(_root);
 }
 
 // Path: home
@@ -346,6 +347,28 @@ class _TranslationsGpsEn extends TranslationsGpsEs {
 
 	// Translations
 	@override late final _TranslationsGpsTrackingEn tracking = _TranslationsGpsTrackingEn._(_root);
+}
+
+// Path: bag
+class _TranslationsBagEn extends TranslationsBagEs {
+	_TranslationsBagEn._(TranslationsEn root) : this._root = root, super.internal(root);
+
+	final TranslationsEn _root; // ignore: unused_field
+
+	// Translations
+	@override String get title => 'My bag';
+	@override String get empty => 'Your bag is empty';
+	@override String get add_club => 'Add a club';
+	@override String get delete_club => 'Delete club';
+	@override String delete_confirm({required Object clubName}) => 'Are you sure you want to delete "${clubName}"?';
+	@override String get error_loading => 'Error loading bag';
+	@override String get edit_distance => 'Edit distance';
+	@override String get add_club_title => 'Add club';
+	@override String get select_club => 'Select club';
+	@override String get distance_label => 'Distance (yards)';
+	@override String get distance_hint => 'E.g.: 150';
+	@override String get distance_unit => 'yds';
+	@override String get save => 'Save';
 }
 
 // Path: onboarding.welcome
@@ -755,6 +778,19 @@ extension on TranslationsEn {
 			'gps.tracking.started' => 'GPS tracking started',
 			'gps.tracking.stopped' => 'GPS tracking stopped',
 			'gps.tracking.error' => 'GPS error',
+			'bag.title' => 'My bag',
+			'bag.empty' => 'Your bag is empty',
+			'bag.add_club' => 'Add a club',
+			'bag.delete_club' => 'Delete club',
+			'bag.delete_confirm' => ({required Object clubName}) => 'Are you sure you want to delete "${clubName}"?',
+			'bag.error_loading' => 'Error loading bag',
+			'bag.edit_distance' => 'Edit distance',
+			'bag.add_club_title' => 'Add club',
+			'bag.select_club' => 'Select club',
+			'bag.distance_label' => 'Distance (yards)',
+			'bag.distance_hint' => 'E.g.: 150',
+			'bag.distance_unit' => 'yds',
+			'bag.save' => 'Save',
 			_ => null,
 		};
 	}

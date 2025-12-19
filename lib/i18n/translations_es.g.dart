@@ -56,6 +56,7 @@ class Translations with BaseTranslations<AppLocale, Translations> {
 	late final TranslationsActiveRoundEs active_round = TranslationsActiveRoundEs.internal(_root);
 	late final TranslationsFeedbackEs feedback = TranslationsFeedbackEs.internal(_root);
 	late final TranslationsGpsEs gps = TranslationsGpsEs.internal(_root);
+	late final TranslationsBagEs bag = TranslationsBagEs.internal(_root);
 }
 
 // Path: home
@@ -621,6 +622,54 @@ class TranslationsGpsEs {
 
 	// Translations
 	late final TranslationsGpsTrackingEs tracking = TranslationsGpsTrackingEs.internal(_root);
+}
+
+// Path: bag
+class TranslationsBagEs {
+	TranslationsBagEs.internal(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+
+	/// es: 'Mi bolsa'
+	String get title => 'Mi bolsa';
+
+	/// es: 'Tu bolsa esta vacia'
+	String get empty => 'Tu bolsa esta vacia';
+
+	/// es: 'Agregar un palo'
+	String get add_club => 'Agregar un palo';
+
+	/// es: 'Eliminar palo'
+	String get delete_club => 'Eliminar palo';
+
+	/// es: 'Seguro que quieres eliminar "$clubName"?'
+	String delete_confirm({required Object clubName}) => 'Seguro que quieres eliminar "${clubName}"?';
+
+	/// es: 'Error al cargar la bolsa'
+	String get error_loading => 'Error al cargar la bolsa';
+
+	/// es: 'Editar distancia'
+	String get edit_distance => 'Editar distancia';
+
+	/// es: 'Agregar palo'
+	String get add_club_title => 'Agregar palo';
+
+	/// es: 'Seleccionar palo'
+	String get select_club => 'Seleccionar palo';
+
+	/// es: 'Distancia (yardas)'
+	String get distance_label => 'Distancia (yardas)';
+
+	/// es: 'Ej: 150'
+	String get distance_hint => 'Ej: 150';
+
+	/// es: 'yds'
+	String get distance_unit => 'yds';
+
+	/// es: 'Guardar'
+	String get save => 'Guardar';
 }
 
 // Path: onboarding.welcome
@@ -1194,6 +1243,19 @@ extension on Translations {
 			'gps.tracking.started' => 'Rastreo GPS iniciado',
 			'gps.tracking.stopped' => 'Rastreo GPS detenido',
 			'gps.tracking.error' => 'Error de GPS',
+			'bag.title' => 'Mi bolsa',
+			'bag.empty' => 'Tu bolsa esta vacia',
+			'bag.add_club' => 'Agregar un palo',
+			'bag.delete_club' => 'Eliminar palo',
+			'bag.delete_confirm' => ({required Object clubName}) => 'Seguro que quieres eliminar "${clubName}"?',
+			'bag.error_loading' => 'Error al cargar la bolsa',
+			'bag.edit_distance' => 'Editar distancia',
+			'bag.add_club_title' => 'Agregar palo',
+			'bag.select_club' => 'Seleccionar palo',
+			'bag.distance_label' => 'Distancia (yardas)',
+			'bag.distance_hint' => 'Ej: 150',
+			'bag.distance_unit' => 'yds',
+			'bag.save' => 'Guardar',
 			_ => null,
 		};
 	}

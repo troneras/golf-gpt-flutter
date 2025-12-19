@@ -270,5 +270,20 @@
             "stopped": "GPS tracking stopped",
             "error": "GPS error"
         }
+    },
+    "bag": {
+        "title": "My bag",
+        "empty": "Your bag is empty",
+        "add_club": "Add a club",
+        "delete_club": "Delete club",
+        "delete_confirm": "Are you sure you want to delete \"$clubName\"?",
+        "error_loading": "Error loading bag",
+        "edit_distance": "Edit distance",
+        "add_club_title": "Add club",
+        "select_club": "Select club",
+        "distance_label": "Distance (yards)",
+        "distance_hint": "E.g.: 150",
+        "distance_unit": "yds",
+        "save": "Save"
     }
 }

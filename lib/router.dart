@@ -15,6 +15,7 @@ import 'package:apparence_kit/modules/round/ui/round_summary_page.dart';
 import 'package:apparence_kit/modules/round/ui/select_course_page.dart';
 import 'package:apparence_kit/modules/round/domain/running_score.dart';
 import 'package:apparence_kit/modules/rounds/ui/round_detail_page.dart';
+import 'package:apparence_kit/modules/bag/ui/bag_page.dart';
 
 import 'package:apparence_kit/modules/onboarding/ui/onboarding_page.dart';
 import 'package:apparence_kit/modules/onboarding/ui/complete_page.dart';
@@ -98,6 +99,11 @@ GoRouter generateRouter({
         name: 'feedback',
         path: '/feedback',
         builder: (context, state) => const FeedbackPage(),
+      ),
+      GoRoute(
+        name: 'bag',
+        path: '/bag',
+        builder: (context, state) => const BagPage(),
       ),
       GoRoute(
         name: 'select_course',

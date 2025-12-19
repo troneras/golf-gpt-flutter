@@ -53,6 +53,12 @@ class SettingsPage extends ConsumerWidget {
                   const LocationPermissionTile(),
                   Divider(color: Colors.blueGrey.withValues(alpha: .10)),
                   SettingsTile(
+                    icon: Icons.golf_course,
+                    title: "Mi bolsa",
+                    onTap: () => context.push('/bag'),
+                  ),
+                  Divider(color: Colors.blueGrey.withValues(alpha: .10)),
+                  SettingsTile(
                     icon: Icons.message_rounded,
                     title: "Send feedback",
                     onTap: () => context.push('/feedback'),
