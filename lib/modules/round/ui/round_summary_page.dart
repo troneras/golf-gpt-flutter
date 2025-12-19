@@ -102,8 +102,7 @@ class RoundSummaryPage extends StatelessWidget {
               const SizedBox(height: 12),
               TextButton(
                 onPressed: () {
-                  // TODO: Navigate to detailed round view
-                  context.go('/');
+                  context.go('/round-detail/$roundId');
                 },
                 child: Text(
                   'Ver detalles',
