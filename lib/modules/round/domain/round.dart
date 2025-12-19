@@ -1,3 +1,4 @@
+import 'package:apparence_kit/modules/round/api/entities/hole_score_entity.dart';
 import 'package:apparence_kit/modules/round/api/entities/round_entity.dart';
 import 'package:apparence_kit/modules/round/domain/course.dart';
 import 'package:apparence_kit/modules/round/domain/hole_score.dart';
@@ -84,7 +85,12 @@ sealed class Round with _$Round {
   ) {
     final scoreMap = <int, dynamic>{};
     for (final score in apiScores) {
-      if (score is Map<String, dynamic>) {
+      // Handle HoleScoreEntity objects (from typed entity parsing)
+      if (score is HoleScoreEntity) {
+        scoreMap[score.holeNumber] = score;
+      }
+      // Handle raw JSON maps (fallback for untyped data)
+      else if (score is Map<String, dynamic>) {
         final holeNumber = score['hole_number'] as int?;
         if (holeNumber != null) {
           scoreMap[holeNumber] = score;
@@ -99,6 +105,23 @@ sealed class Round with _$Round {
 
       final apiScore = scoreMap[holeNumber];
       if (apiScore != null) {
+        // Handle HoleScoreEntity
+        if (apiScore is HoleScoreEntity) {
+          return HoleScore(
+            id: apiScore.id,
+            holeNumber: holeNumber,
+            strokes: apiScore.strokes,
+            putts: apiScore.putts,
+            penalties: apiScore.penalties,
+            par: apiScore.par ?? par,
+            yards: yards,
+            fairwayHit: apiScore.fairwayHit,
+            greenInRegulation: apiScore.greenInRegulation,
+            inSand: apiScore.inSand,
+            scoreName: apiScore.scoreName,
+          );
+        }
+        // Handle raw JSON map
         return HoleScore(
           id: apiScore['id'] as String?,
           holeNumber: holeNumber,

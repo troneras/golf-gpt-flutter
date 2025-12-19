@@ -121,7 +121,8 @@
         "error": "Error",
         "success": "Exito",
         "loading": "Cargando...",
-        "or": "o"
+        "or": "o",
+        "retry": "Reintentar"
     },
     "bottom_menu": {
         "home": "Inicio",
@@ -131,7 +132,13 @@
     "rounds": {
         "title": "Mis rondas",
         "empty": "Aun no tienes rondas registradas",
-        "empty_hint": "Inicia una ronda para ver tu historial aqui"
+        "empty_hint": "Inicia una ronda para ver tu historial aqui",
+        "error_loading": "Error al cargar las rondas",
+        "total_strokes": "golpes",
+        "holes_played": "hoyos",
+        "duration": "duracion",
+        "detail_title": "Detalle de ronda",
+        "result": "Resultado"
     },
     "settings": {
         "title": "Ajustes",

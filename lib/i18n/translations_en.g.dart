@@ -134,6 +134,7 @@ class _TranslationsCommonEn extends TranslationsCommonEs {
 	@override String get success => 'Success';
 	@override String get loading => 'Loading...';
 	@override String get or => 'or';
+	@override String get retry => 'Retry';
 }
 
 // Path: bottom_menu
@@ -158,6 +159,12 @@ class _TranslationsRoundsEn extends TranslationsRoundsEs {
 	@override String get title => 'My rounds';
 	@override String get empty => 'You don\'t have any rounds yet';
 	@override String get empty_hint => 'Start a round to see your history here';
+	@override String get error_loading => 'Error loading rounds';
+	@override String get total_strokes => 'strokes';
+	@override String get holes_played => 'holes';
+	@override String get duration => 'duration';
+	@override String get detail_title => 'Round details';
+	@override String get result => 'Result';
 }
 
 // Path: settings
@@ -595,12 +602,19 @@ extension on TranslationsEn {
 			'common.success' => 'Success',
 			'common.loading' => 'Loading...',
 			'common.or' => 'or',
+			'common.retry' => 'Retry',
 			'bottom_menu.home' => 'Home',
 			'bottom_menu.rounds' => 'Rounds',
 			'bottom_menu.settings' => 'Settings',
 			'rounds.title' => 'My rounds',
 			'rounds.empty' => 'You don\'t have any rounds yet',
 			'rounds.empty_hint' => 'Start a round to see your history here',
+			'rounds.error_loading' => 'Error loading rounds',
+			'rounds.total_strokes' => 'strokes',
+			'rounds.holes_played' => 'holes',
+			'rounds.duration' => 'duration',
+			'rounds.detail_title' => 'Round details',
+			'rounds.result' => 'Result',
 			'settings.title' => 'Settings',
 			'settings.location_permission.title' => 'Location permission',
 			'settings.location_permission.granted' => 'Allowed',

@@ -121,7 +121,8 @@
         "error": "Error",
         "success": "Success",
         "loading": "Loading...",
-        "or": "or"
+        "or": "or",
+        "retry": "Retry"
     },
     "bottom_menu": {
         "home": "Home",
@@ -131,7 +132,13 @@
     "rounds": {
         "title": "My rounds",
         "empty": "You don't have any rounds yet",
-        "empty_hint": "Start a round to see your history here"
+        "empty_hint": "Start a round to see your history here",
+        "error_loading": "Error loading rounds",
+        "total_strokes": "strokes",
+        "holes_played": "holes",
+        "duration": "duration",
+        "detail_title": "Round details",
+        "result": "Result"
     },
     "settings": {
         "title": "Settings",

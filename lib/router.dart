@@ -14,6 +14,7 @@ import 'package:apparence_kit/modules/round/ui/round_in_progress_page.dart';
 import 'package:apparence_kit/modules/round/ui/round_summary_page.dart';
 import 'package:apparence_kit/modules/round/ui/select_course_page.dart';
 import 'package:apparence_kit/modules/round/domain/running_score.dart';
+import 'package:apparence_kit/modules/rounds/ui/round_detail_page.dart';
 
 import 'package:apparence_kit/modules/onboarding/ui/onboarding_page.dart';
 import 'package:apparence_kit/modules/onboarding/ui/complete_page.dart';
@@ -125,6 +126,14 @@ GoRouter generateRouter({
           final roundId = extra?['roundId'] as String? ?? '';
           final summary = extra?['summary'] as RoundSummary? ?? const RoundSummary();
           return RoundSummaryPage(roundId: roundId, summary: summary);
+        },
+      ),
+      GoRoute(
+        name: 'round_detail',
+        path: '/round-detail/:id',
+        builder: (context, state) {
+          final roundId = state.pathParameters['id'] ?? '';
+          return RoundDetailPage(roundId: roundId);
         },
       ),
       GoRoute(

@@ -188,6 +188,9 @@ class TranslationsCommonEs {
 
 	/// es: 'o'
 	String get or => 'o';
+
+	/// es: 'Reintentar'
+	String get retry => 'Reintentar';
 }
 
 // Path: bottom_menu
@@ -224,6 +227,24 @@ class TranslationsRoundsEs {
 
 	/// es: 'Inicia una ronda para ver tu historial aqui'
 	String get empty_hint => 'Inicia una ronda para ver tu historial aqui';
+
+	/// es: 'Error al cargar las rondas'
+	String get error_loading => 'Error al cargar las rondas';
+
+	/// es: 'golpes'
+	String get total_strokes => 'golpes';
+
+	/// es: 'hoyos'
+	String get holes_played => 'hoyos';
+
+	/// es: 'duracion'
+	String get duration => 'duracion';
+
+	/// es: 'Detalle de ronda'
+	String get detail_title => 'Detalle de ronda';
+
+	/// es: 'Resultado'
+	String get result => 'Resultado';
 }
 
 // Path: settings
@@ -998,12 +1019,19 @@ extension on Translations {
 			'common.success' => 'Exito',
 			'common.loading' => 'Cargando...',
 			'common.or' => 'o',
+			'common.retry' => 'Reintentar',
 			'bottom_menu.home' => 'Inicio',
 			'bottom_menu.rounds' => 'Rondas',
 			'bottom_menu.settings' => 'Ajustes',
 			'rounds.title' => 'Mis rondas',
 			'rounds.empty' => 'Aun no tienes rondas registradas',
 			'rounds.empty_hint' => 'Inicia una ronda para ver tu historial aqui',
+			'rounds.error_loading' => 'Error al cargar las rondas',
+			'rounds.total_strokes' => 'golpes',
+			'rounds.holes_played' => 'hoyos',
+			'rounds.duration' => 'duracion',
+			'rounds.detail_title' => 'Detalle de ronda',
+			'rounds.result' => 'Resultado',
 			'settings.title' => 'Ajustes',
 			'settings.location_permission.title' => 'Permiso de ubicacion',
 			'settings.location_permission.granted' => 'Permitido',
