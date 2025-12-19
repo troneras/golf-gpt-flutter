@@ -10,7 +10,10 @@ import 'package:apparence_kit/modules/authentication/ui/signin_page.dart';
 import 'package:apparence_kit/modules/authentication/ui/signup_page.dart';
 import 'package:apparence_kit/modules/feedback/ui/feedback_page.dart';
 import 'package:apparence_kit/modules/round/ui/browse_courses_page.dart';
+import 'package:apparence_kit/modules/round/ui/round_in_progress_page.dart';
+import 'package:apparence_kit/modules/round/ui/round_summary_page.dart';
 import 'package:apparence_kit/modules/round/ui/select_course_page.dart';
+import 'package:apparence_kit/modules/round/domain/running_score.dart';
 
 import 'package:apparence_kit/modules/onboarding/ui/onboarding_page.dart';
 import 'package:apparence_kit/modules/onboarding/ui/complete_page.dart';
@@ -104,6 +107,25 @@ GoRouter generateRouter({
         name: 'browse_courses',
         path: '/browse-courses',
         builder: (context, state) => const BrowseCoursesPage(),
+      ),
+      GoRoute(
+        name: 'round_in_progress',
+        path: '/round-in-progress',
+        builder: (context, state) {
+          final extra = state.extra as Map<String, dynamic>?;
+          final roundId = extra?['roundId'] as String?;
+          return RoundInProgressPage(roundId: roundId);
+        },
+      ),
+      GoRoute(
+        name: 'round_summary',
+        path: '/round-summary',
+        builder: (context, state) {
+          final extra = state.extra as Map<String, dynamic>?;
+          final roundId = extra?['roundId'] as String? ?? '';
+          final summary = extra?['summary'] as RoundSummary? ?? const RoundSummary();
+          return RoundSummaryPage(roundId: roundId, summary: summary);
+        },
       ),
       GoRoute(
         name: '404',

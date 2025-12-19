@@ -23,6 +23,16 @@ CourseEntityData _$CourseEntityDataFromJson(Map json) => CourseEntityData(
           ?.map((e) => TeeEntity.fromJson(Map<String, Object?>.from(e as Map)))
           .toList() ??
       const [],
+  holes: (json['holes'] as num?)?.toInt(),
+  par: (json['par'] as num?)?.toInt(),
+  measureUnit: json['measure_unit'] as String?,
+  hasGps: json['has_gps'] as bool?,
+  parsMen: (json['pars_men'] as List<dynamic>?)
+      ?.map((e) => (e as num).toInt())
+      .toList(),
+  indexesMen: (json['indexes_men'] as List<dynamic>?)
+      ?.map((e) => (e as num).toInt())
+      .toList(),
 );
 
 Map<String, dynamic> _$CourseEntityDataToJson(CourseEntityData instance) =>
@@ -39,6 +49,12 @@ Map<String, dynamic> _$CourseEntityDataToJson(CourseEntityData instance) =>
       'longitude': instance.longitude,
       'distance_km': instance.distanceKm,
       'tees': instance.tees.map((e) => e.toJson()).toList(),
+      'holes': instance.holes,
+      'par': instance.par,
+      'measure_unit': instance.measureUnit,
+      'has_gps': instance.hasGps,
+      'pars_men': instance.parsMen,
+      'indexes_men': instance.indexesMen,
     };
 
 ClosestCourseResponseData _$ClosestCourseResponseDataFromJson(Map json) =>

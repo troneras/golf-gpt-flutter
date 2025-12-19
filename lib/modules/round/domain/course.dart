@@ -19,6 +19,12 @@ sealed class Course with _$Course {
     double? longitude,
     double? distanceKm,
     @Default([]) List<Tee> tees,
+    int? holes,
+    int? par,
+    String? measureUnit,
+    bool? hasGps,
+    @Default([]) List<int> parsMen,
+    @Default([]) List<int> indexesMen,
   }) = CourseData;
 
   const Course._();
@@ -37,6 +43,12 @@ sealed class Course with _$Course {
       longitude: entity.longitude,
       distanceKm: entity.distanceKm,
       tees: entity.tees.map(Tee.fromEntity).toList(),
+      holes: entity.holes,
+      par: entity.par,
+      measureUnit: entity.measureUnit,
+      hasGps: entity.hasGps,
+      parsMen: entity.parsMen ?? [],
+      indexesMen: entity.indexesMen ?? [],
     );
   }
 

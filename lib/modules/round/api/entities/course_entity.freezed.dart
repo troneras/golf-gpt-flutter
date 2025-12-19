@@ -22,7 +22,7 @@ CourseEntity _$CourseEntityFromJson(
 /// @nodoc
 mixin _$CourseEntity {
 
- String get id;@JsonKey(name: 'external_course_id') String? get externalCourseId; String get name;@JsonKey(name: 'club_name') String? get clubName; String? get address; String? get city; String? get state; String? get country; double? get latitude; double? get longitude;@JsonKey(name: 'distance_km') double? get distanceKm; List<TeeEntity> get tees;
+ String get id;@JsonKey(name: 'external_course_id') String? get externalCourseId; String get name;@JsonKey(name: 'club_name') String? get clubName; String? get address; String? get city; String? get state; String? get country; double? get latitude; double? get longitude;@JsonKey(name: 'distance_km') double? get distanceKm; List<TeeEntity> get tees; int? get holes; int? get par;@JsonKey(name: 'measure_unit') String? get measureUnit;@JsonKey(name: 'has_gps') bool? get hasGps;@JsonKey(name: 'pars_men') List<int>? get parsMen;@JsonKey(name: 'indexes_men') List<int>? get indexesMen;
 /// Create a copy of CourseEntity
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -35,16 +35,16 @@ $CourseEntityCopyWith<CourseEntity> get copyWith => _$CourseEntityCopyWithImpl<C
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is CourseEntity&&(identical(other.id, id) || other.id == id)&&(identical(other.externalCourseId, externalCourseId) || other.externalCourseId == externalCourseId)&&(identical(other.name, name) || other.name == name)&&(identical(other.clubName, clubName) || other.clubName == clubName)&&(identical(other.address, address) || other.address == address)&&(identical(other.city, city) || other.city == city)&&(identical(other.state, state) || other.state == state)&&(identical(other.country, country) || other.country == country)&&(identical(other.latitude, latitude) || other.latitude == latitude)&&(identical(other.longitude, longitude) || other.longitude == longitude)&&(identical(other.distanceKm, distanceKm) || other.distanceKm == distanceKm)&&const DeepCollectionEquality().equals(other.tees, tees));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is CourseEntity&&(identical(other.id, id) || other.id == id)&&(identical(other.externalCourseId, externalCourseId) || other.externalCourseId == externalCourseId)&&(identical(other.name, name) || other.name == name)&&(identical(other.clubName, clubName) || other.clubName == clubName)&&(identical(other.address, address) || other.address == address)&&(identical(other.city, city) || other.city == city)&&(identical(other.state, state) || other.state == state)&&(identical(other.country, country) || other.country == country)&&(identical(other.latitude, latitude) || other.latitude == latitude)&&(identical(other.longitude, longitude) || other.longitude == longitude)&&(identical(other.distanceKm, distanceKm) || other.distanceKm == distanceKm)&&const DeepCollectionEquality().equals(other.tees, tees)&&(identical(other.holes, holes) || other.holes == holes)&&(identical(other.par, par) || other.par == par)&&(identical(other.measureUnit, measureUnit) || other.measureUnit == measureUnit)&&(identical(other.hasGps, hasGps) || other.hasGps == hasGps)&&const DeepCollectionEquality().equals(other.parsMen, parsMen)&&const DeepCollectionEquality().equals(other.indexesMen, indexesMen));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,externalCourseId,name,clubName,address,city,state,country,latitude,longitude,distanceKm,const DeepCollectionEquality().hash(tees));
+int get hashCode => Object.hash(runtimeType,id,externalCourseId,name,clubName,address,city,state,country,latitude,longitude,distanceKm,const DeepCollectionEquality().hash(tees),holes,par,measureUnit,hasGps,const DeepCollectionEquality().hash(parsMen),const DeepCollectionEquality().hash(indexesMen));
 
 @override
 String toString() {
-  return 'CourseEntity(id: $id, externalCourseId: $externalCourseId, name: $name, clubName: $clubName, address: $address, city: $city, state: $state, country: $country, latitude: $latitude, longitude: $longitude, distanceKm: $distanceKm, tees: $tees)';
+  return 'CourseEntity(id: $id, externalCourseId: $externalCourseId, name: $name, clubName: $clubName, address: $address, city: $city, state: $state, country: $country, latitude: $latitude, longitude: $longitude, distanceKm: $distanceKm, tees: $tees, holes: $holes, par: $par, measureUnit: $measureUnit, hasGps: $hasGps, parsMen: $parsMen, indexesMen: $indexesMen)';
 }
 
 
@@ -55,7 +55,7 @@ abstract mixin class $CourseEntityCopyWith<$Res>  {
   factory $CourseEntityCopyWith(CourseEntity value, $Res Function(CourseEntity) _then) = _$CourseEntityCopyWithImpl;
 @useResult
 $Res call({
- String id,@JsonKey(name: 'external_course_id') String? externalCourseId, String name,@JsonKey(name: 'club_name') String? clubName, String? address, String? city, String? state, String? country, double? latitude, double? longitude,@JsonKey(name: 'distance_km') double? distanceKm, List<TeeEntity> tees
+ String id,@JsonKey(name: 'external_course_id') String? externalCourseId, String name,@JsonKey(name: 'club_name') String? clubName, String? address, String? city, String? state, String? country, double? latitude, double? longitude,@JsonKey(name: 'distance_km') double? distanceKm, List<TeeEntity> tees, int? holes, int? par,@JsonKey(name: 'measure_unit') String? measureUnit,@JsonKey(name: 'has_gps') bool? hasGps,@JsonKey(name: 'pars_men') List<int>? parsMen,@JsonKey(name: 'indexes_men') List<int>? indexesMen
 });
 
 
@@ -72,7 +72,7 @@ class _$CourseEntityCopyWithImpl<$Res>
 
 /// Create a copy of CourseEntity
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? externalCourseId = freezed,Object? name = null,Object? clubName = freezed,Object? address = freezed,Object? city = freezed,Object? state = freezed,Object? country = freezed,Object? latitude = freezed,Object? longitude = freezed,Object? distanceKm = freezed,Object? tees = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? externalCourseId = freezed,Object? name = null,Object? clubName = freezed,Object? address = freezed,Object? city = freezed,Object? state = freezed,Object? country = freezed,Object? latitude = freezed,Object? longitude = freezed,Object? distanceKm = freezed,Object? tees = null,Object? holes = freezed,Object? par = freezed,Object? measureUnit = freezed,Object? hasGps = freezed,Object? parsMen = freezed,Object? indexesMen = freezed,}) {
   return _then(_self.copyWith(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,externalCourseId: freezed == externalCourseId ? _self.externalCourseId : externalCourseId // ignore: cast_nullable_to_non_nullable
@@ -86,7 +86,13 @@ as String?,latitude: freezed == latitude ? _self.latitude : latitude // ignore: 
 as double?,longitude: freezed == longitude ? _self.longitude : longitude // ignore: cast_nullable_to_non_nullable
 as double?,distanceKm: freezed == distanceKm ? _self.distanceKm : distanceKm // ignore: cast_nullable_to_non_nullable
 as double?,tees: null == tees ? _self.tees : tees // ignore: cast_nullable_to_non_nullable
-as List<TeeEntity>,
+as List<TeeEntity>,holes: freezed == holes ? _self.holes : holes // ignore: cast_nullable_to_non_nullable
+as int?,par: freezed == par ? _self.par : par // ignore: cast_nullable_to_non_nullable
+as int?,measureUnit: freezed == measureUnit ? _self.measureUnit : measureUnit // ignore: cast_nullable_to_non_nullable
+as String?,hasGps: freezed == hasGps ? _self.hasGps : hasGps // ignore: cast_nullable_to_non_nullable
+as bool?,parsMen: freezed == parsMen ? _self.parsMen : parsMen // ignore: cast_nullable_to_non_nullable
+as List<int>?,indexesMen: freezed == indexesMen ? _self.indexesMen : indexesMen // ignore: cast_nullable_to_non_nullable
+as List<int>?,
   ));
 }
 
@@ -168,10 +174,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id, @JsonKey(name: 'external_course_id')  String? externalCourseId,  String name, @JsonKey(name: 'club_name')  String? clubName,  String? address,  String? city,  String? state,  String? country,  double? latitude,  double? longitude, @JsonKey(name: 'distance_km')  double? distanceKm,  List<TeeEntity> tees)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id, @JsonKey(name: 'external_course_id')  String? externalCourseId,  String name, @JsonKey(name: 'club_name')  String? clubName,  String? address,  String? city,  String? state,  String? country,  double? latitude,  double? longitude, @JsonKey(name: 'distance_km')  double? distanceKm,  List<TeeEntity> tees,  int? holes,  int? par, @JsonKey(name: 'measure_unit')  String? measureUnit, @JsonKey(name: 'has_gps')  bool? hasGps, @JsonKey(name: 'pars_men')  List<int>? parsMen, @JsonKey(name: 'indexes_men')  List<int>? indexesMen)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case CourseEntityData() when $default != null:
-return $default(_that.id,_that.externalCourseId,_that.name,_that.clubName,_that.address,_that.city,_that.state,_that.country,_that.latitude,_that.longitude,_that.distanceKm,_that.tees);case _:
+return $default(_that.id,_that.externalCourseId,_that.name,_that.clubName,_that.address,_that.city,_that.state,_that.country,_that.latitude,_that.longitude,_that.distanceKm,_that.tees,_that.holes,_that.par,_that.measureUnit,_that.hasGps,_that.parsMen,_that.indexesMen);case _:
   return orElse();
 
 }
@@ -189,10 +195,10 @@ return $default(_that.id,_that.externalCourseId,_that.name,_that.clubName,_that.
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id, @JsonKey(name: 'external_course_id')  String? externalCourseId,  String name, @JsonKey(name: 'club_name')  String? clubName,  String? address,  String? city,  String? state,  String? country,  double? latitude,  double? longitude, @JsonKey(name: 'distance_km')  double? distanceKm,  List<TeeEntity> tees)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id, @JsonKey(name: 'external_course_id')  String? externalCourseId,  String name, @JsonKey(name: 'club_name')  String? clubName,  String? address,  String? city,  String? state,  String? country,  double? latitude,  double? longitude, @JsonKey(name: 'distance_km')  double? distanceKm,  List<TeeEntity> tees,  int? holes,  int? par, @JsonKey(name: 'measure_unit')  String? measureUnit, @JsonKey(name: 'has_gps')  bool? hasGps, @JsonKey(name: 'pars_men')  List<int>? parsMen, @JsonKey(name: 'indexes_men')  List<int>? indexesMen)  $default,) {final _that = this;
 switch (_that) {
 case CourseEntityData():
-return $default(_that.id,_that.externalCourseId,_that.name,_that.clubName,_that.address,_that.city,_that.state,_that.country,_that.latitude,_that.longitude,_that.distanceKm,_that.tees);}
+return $default(_that.id,_that.externalCourseId,_that.name,_that.clubName,_that.address,_that.city,_that.state,_that.country,_that.latitude,_that.longitude,_that.distanceKm,_that.tees,_that.holes,_that.par,_that.measureUnit,_that.hasGps,_that.parsMen,_that.indexesMen);}
 }
 /// A variant of `when` that fallback to returning `null`
 ///
@@ -206,10 +212,10 @@ return $default(_that.id,_that.externalCourseId,_that.name,_that.clubName,_that.
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id, @JsonKey(name: 'external_course_id')  String? externalCourseId,  String name, @JsonKey(name: 'club_name')  String? clubName,  String? address,  String? city,  String? state,  String? country,  double? latitude,  double? longitude, @JsonKey(name: 'distance_km')  double? distanceKm,  List<TeeEntity> tees)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id, @JsonKey(name: 'external_course_id')  String? externalCourseId,  String name, @JsonKey(name: 'club_name')  String? clubName,  String? address,  String? city,  String? state,  String? country,  double? latitude,  double? longitude, @JsonKey(name: 'distance_km')  double? distanceKm,  List<TeeEntity> tees,  int? holes,  int? par, @JsonKey(name: 'measure_unit')  String? measureUnit, @JsonKey(name: 'has_gps')  bool? hasGps, @JsonKey(name: 'pars_men')  List<int>? parsMen, @JsonKey(name: 'indexes_men')  List<int>? indexesMen)?  $default,) {final _that = this;
 switch (_that) {
 case CourseEntityData() when $default != null:
-return $default(_that.id,_that.externalCourseId,_that.name,_that.clubName,_that.address,_that.city,_that.state,_that.country,_that.latitude,_that.longitude,_that.distanceKm,_that.tees);case _:
+return $default(_that.id,_that.externalCourseId,_that.name,_that.clubName,_that.address,_that.city,_that.state,_that.country,_that.latitude,_that.longitude,_that.distanceKm,_that.tees,_that.holes,_that.par,_that.measureUnit,_that.hasGps,_that.parsMen,_that.indexesMen);case _:
   return null;
 
 }
@@ -221,7 +227,7 @@ return $default(_that.id,_that.externalCourseId,_that.name,_that.clubName,_that.
 @JsonSerializable()
 
 class CourseEntityData extends CourseEntity {
-  const CourseEntityData({required this.id, @JsonKey(name: 'external_course_id') this.externalCourseId, required this.name, @JsonKey(name: 'club_name') this.clubName, this.address, this.city, this.state, this.country, this.latitude, this.longitude, @JsonKey(name: 'distance_km') this.distanceKm, final  List<TeeEntity> tees = const []}): _tees = tees,super._();
+  const CourseEntityData({required this.id, @JsonKey(name: 'external_course_id') this.externalCourseId, required this.name, @JsonKey(name: 'club_name') this.clubName, this.address, this.city, this.state, this.country, this.latitude, this.longitude, @JsonKey(name: 'distance_km') this.distanceKm, final  List<TeeEntity> tees = const [], this.holes, this.par, @JsonKey(name: 'measure_unit') this.measureUnit, @JsonKey(name: 'has_gps') this.hasGps, @JsonKey(name: 'pars_men') final  List<int>? parsMen, @JsonKey(name: 'indexes_men') final  List<int>? indexesMen}): _tees = tees,_parsMen = parsMen,_indexesMen = indexesMen,super._();
   factory CourseEntityData.fromJson(Map<String, dynamic> json) => _$CourseEntityDataFromJson(json);
 
 @override final  String id;
@@ -242,6 +248,28 @@ class CourseEntityData extends CourseEntity {
   return EqualUnmodifiableListView(_tees);
 }
 
+@override final  int? holes;
+@override final  int? par;
+@override@JsonKey(name: 'measure_unit') final  String? measureUnit;
+@override@JsonKey(name: 'has_gps') final  bool? hasGps;
+ final  List<int>? _parsMen;
+@override@JsonKey(name: 'pars_men') List<int>? get parsMen {
+  final value = _parsMen;
+  if (value == null) return null;
+  if (_parsMen is EqualUnmodifiableListView) return _parsMen;
+  // ignore: implicit_dynamic_type
+  return EqualUnmodifiableListView(value);
+}
+
+ final  List<int>? _indexesMen;
+@override@JsonKey(name: 'indexes_men') List<int>? get indexesMen {
+  final value = _indexesMen;
+  if (value == null) return null;
+  if (_indexesMen is EqualUnmodifiableListView) return _indexesMen;
+  // ignore: implicit_dynamic_type
+  return EqualUnmodifiableListView(value);
+}
+
 
 /// Create a copy of CourseEntity
 /// with the given fields replaced by the non-null parameter values.
@@ -256,16 +284,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is CourseEntityData&&(identical(other.id, id) || other.id == id)&&(identical(other.externalCourseId, externalCourseId) || other.externalCourseId == externalCourseId)&&(identical(other.name, name) || other.name == name)&&(identical(other.clubName, clubName) || other.clubName == clubName)&&(identical(other.address, address) || other.address == address)&&(identical(other.city, city) || other.city == city)&&(identical(other.state, state) || other.state == state)&&(identical(other.country, country) || other.country == country)&&(identical(other.latitude, latitude) || other.latitude == latitude)&&(identical(other.longitude, longitude) || other.longitude == longitude)&&(identical(other.distanceKm, distanceKm) || other.distanceKm == distanceKm)&&const DeepCollectionEquality().equals(other._tees, _tees));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is CourseEntityData&&(identical(other.id, id) || other.id == id)&&(identical(other.externalCourseId, externalCourseId) || other.externalCourseId == externalCourseId)&&(identical(other.name, name) || other.name == name)&&(identical(other.clubName, clubName) || other.clubName == clubName)&&(identical(other.address, address) || other.address == address)&&(identical(other.city, city) || other.city == city)&&(identical(other.state, state) || other.state == state)&&(identical(other.country, country) || other.country == country)&&(identical(other.latitude, latitude) || other.latitude == latitude)&&(identical(other.longitude, longitude) || other.longitude == longitude)&&(identical(other.distanceKm, distanceKm) || other.distanceKm == distanceKm)&&const DeepCollectionEquality().equals(other._tees, _tees)&&(identical(other.holes, holes) || other.holes == holes)&&(identical(other.par, par) || other.par == par)&&(identical(other.measureUnit, measureUnit) || other.measureUnit == measureUnit)&&(identical(other.hasGps, hasGps) || other.hasGps == hasGps)&&const DeepCollectionEquality().equals(other._parsMen, _parsMen)&&const DeepCollectionEquality().equals(other._indexesMen, _indexesMen));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,externalCourseId,name,clubName,address,city,state,country,latitude,longitude,distanceKm,const DeepCollectionEquality().hash(_tees));
+int get hashCode => Object.hash(runtimeType,id,externalCourseId,name,clubName,address,city,state,country,latitude,longitude,distanceKm,const DeepCollectionEquality().hash(_tees),holes,par,measureUnit,hasGps,const DeepCollectionEquality().hash(_parsMen),const DeepCollectionEquality().hash(_indexesMen));
 
 @override
 String toString() {
-  return 'CourseEntity(id: $id, externalCourseId: $externalCourseId, name: $name, clubName: $clubName, address: $address, city: $city, state: $state, country: $country, latitude: $latitude, longitude: $longitude, distanceKm: $distanceKm, tees: $tees)';
+  return 'CourseEntity(id: $id, externalCourseId: $externalCourseId, name: $name, clubName: $clubName, address: $address, city: $city, state: $state, country: $country, latitude: $latitude, longitude: $longitude, distanceKm: $distanceKm, tees: $tees, holes: $holes, par: $par, measureUnit: $measureUnit, hasGps: $hasGps, parsMen: $parsMen, indexesMen: $indexesMen)';
 }
 
 
@@ -276,7 +304,7 @@ abstract mixin class $CourseEntityDataCopyWith<$Res> implements $CourseEntityCop
   factory $CourseEntityDataCopyWith(CourseEntityData value, $Res Function(CourseEntityData) _then) = _$CourseEntityDataCopyWithImpl;
 @override @useResult
 $Res call({
- String id,@JsonKey(name: 'external_course_id') String? externalCourseId, String name,@JsonKey(name: 'club_name') String? clubName, String? address, String? city, String? state, String? country, double? latitude, double? longitude,@JsonKey(name: 'distance_km') double? distanceKm, List<TeeEntity> tees
+ String id,@JsonKey(name: 'external_course_id') String? externalCourseId, String name,@JsonKey(name: 'club_name') String? clubName, String? address, String? city, String? state, String? country, double? latitude, double? longitude,@JsonKey(name: 'distance_km') double? distanceKm, List<TeeEntity> tees, int? holes, int? par,@JsonKey(name: 'measure_unit') String? measureUnit,@JsonKey(name: 'has_gps') bool? hasGps,@JsonKey(name: 'pars_men') List<int>? parsMen,@JsonKey(name: 'indexes_men') List<int>? indexesMen
 });
 
 
@@ -293,7 +321,7 @@ class _$CourseEntityDataCopyWithImpl<$Res>
 
 /// Create a copy of CourseEntity
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? externalCourseId = freezed,Object? name = null,Object? clubName = freezed,Object? address = freezed,Object? city = freezed,Object? state = freezed,Object? country = freezed,Object? latitude = freezed,Object? longitude = freezed,Object? distanceKm = freezed,Object? tees = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? externalCourseId = freezed,Object? name = null,Object? clubName = freezed,Object? address = freezed,Object? city = freezed,Object? state = freezed,Object? country = freezed,Object? latitude = freezed,Object? longitude = freezed,Object? distanceKm = freezed,Object? tees = null,Object? holes = freezed,Object? par = freezed,Object? measureUnit = freezed,Object? hasGps = freezed,Object? parsMen = freezed,Object? indexesMen = freezed,}) {
   return _then(CourseEntityData(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,externalCourseId: freezed == externalCourseId ? _self.externalCourseId : externalCourseId // ignore: cast_nullable_to_non_nullable
@@ -307,7 +335,13 @@ as String?,latitude: freezed == latitude ? _self.latitude : latitude // ignore: 
 as double?,longitude: freezed == longitude ? _self.longitude : longitude // ignore: cast_nullable_to_non_nullable
 as double?,distanceKm: freezed == distanceKm ? _self.distanceKm : distanceKm // ignore: cast_nullable_to_non_nullable
 as double?,tees: null == tees ? _self._tees : tees // ignore: cast_nullable_to_non_nullable
-as List<TeeEntity>,
+as List<TeeEntity>,holes: freezed == holes ? _self.holes : holes // ignore: cast_nullable_to_non_nullable
+as int?,par: freezed == par ? _self.par : par // ignore: cast_nullable_to_non_nullable
+as int?,measureUnit: freezed == measureUnit ? _self.measureUnit : measureUnit // ignore: cast_nullable_to_non_nullable
+as String?,hasGps: freezed == hasGps ? _self.hasGps : hasGps // ignore: cast_nullable_to_non_nullable
+as bool?,parsMen: freezed == parsMen ? _self._parsMen : parsMen // ignore: cast_nullable_to_non_nullable
+as List<int>?,indexesMen: freezed == indexesMen ? _self._indexesMen : indexesMen // ignore: cast_nullable_to_non_nullable
+as List<int>?,
   ));
 }
 

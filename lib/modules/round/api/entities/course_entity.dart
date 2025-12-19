@@ -21,6 +21,12 @@ sealed class CourseEntity with _$CourseEntity {
     double? longitude,
     @JsonKey(name: 'distance_km') double? distanceKm,
     @Default([]) List<TeeEntity> tees,
+    int? holes,
+    int? par,
+    @JsonKey(name: 'measure_unit') String? measureUnit,
+    @JsonKey(name: 'has_gps') bool? hasGps,
+    @JsonKey(name: 'pars_men') List<int>? parsMen,
+    @JsonKey(name: 'indexes_men') List<int>? indexesMen,
   }) = CourseEntityData;
 
   const CourseEntity._();

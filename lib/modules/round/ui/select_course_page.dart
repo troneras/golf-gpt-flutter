@@ -2,12 +2,18 @@ import 'package:apparence_kit/core/theme/extensions/theme_extension.dart';
 import 'package:apparence_kit/i18n/translations.g.dart';
 import 'package:apparence_kit/modules/round/domain/course.dart';
 import 'package:apparence_kit/modules/round/domain/tee.dart';
+import 'package:apparence_kit/modules/round/providers/active_round_notifier.dart';
+import 'package:apparence_kit/modules/round/providers/models/active_round_state.dart';
 import 'package:apparence_kit/modules/round/providers/models/select_course_state.dart';
 import 'package:apparence_kit/modules/round/providers/select_course_notifier.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+
+// Alias for the generated provider
+const activeRoundNotifierProvider = activeRoundProvider;
 
 class SelectCoursePage extends ConsumerWidget {
   const SelectCoursePage({super.key});
@@ -44,9 +50,35 @@ class SelectCoursePage extends ConsumerWidget {
               ref.read(selectCourseProvider.notifier).selectTee(tee);
             },
             onCancel: () => context.pop(),
-            onStartRound: () {
+            onStartRound: () async {
               HapticFeedback.mediumImpact();
-              // TODO: Navigate to round in progress
+              if (selectedTee == null) return;
+
+              // Start the round
+              await ref.read(activeRoundNotifierProvider.notifier).startRound(
+                courseId: course.id,
+                teeId: selectedTee.id,
+                gpsEnabled: true, // TODO: Add GPS toggle to UI
+              );
+
+              // Check if round was started successfully
+              final roundState = ref.read(activeRoundNotifierProvider);
+              if (roundState is ActiveRoundStateActive) {
+                // Navigate to round in progress
+                if (context.mounted) {
+                  context.go('/round-in-progress');
+                }
+              } else if (roundState is ActiveRoundStateError) {
+                // Show error
+                if (context.mounted) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text('Error: ${roundState.message}'),
+                      backgroundColor: Colors.red,
+                    ),
+                  );
+                }
+              }
             },
             onSelectOther: () async {
               final selectedCourse = await context.push<Course>('/browse-courses');
@@ -103,7 +135,7 @@ class _LoadedView extends StatelessWidget {
   final bool isManuallySelected;
   final void Function(Tee) onTeeSelected;
   final VoidCallback onCancel;
-  final VoidCallback onStartRound;
+  final Future<void> Function() onStartRound;
   final VoidCallback onSelectOther;
 
   const _LoadedView({
