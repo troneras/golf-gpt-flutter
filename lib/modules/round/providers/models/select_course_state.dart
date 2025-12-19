@@ -12,6 +12,7 @@ sealed class SelectCourseState with _$SelectCourseState {
     required Course course,
     Tee? selectedTee,
     @Default(false) bool isManuallySelected,
+    @Default(true) bool gpsEnabled,
   }) = SelectCourseStateLoaded;
 
   const factory SelectCourseState.noCourseFound() = SelectCourseStateNoCourseFound;

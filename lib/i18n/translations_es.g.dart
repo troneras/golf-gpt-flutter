@@ -284,6 +284,15 @@ class TranslationsSelectCourseEs {
 	/// es: 'Tees de salida'
 	String get tees_section => 'Tees de salida';
 
+	/// es: 'Ajustes'
+	String get settings_section => 'Ajustes';
+
+	/// es: 'Seguimiento GPS'
+	String get gps_tracking => 'Seguimiento GPS';
+
+	/// es: 'Mide distancias al green y obstaculos'
+	String get gps_tracking_description => 'Mide distancias al green y obstaculos';
+
 	/// es: 'No encontramos campos cerca'
 	String get no_course_found => 'No encontramos campos cerca';
 
@@ -1042,6 +1051,9 @@ extension on Translations {
 			'select_course.closest_course' => 'Campo mas cercano',
 			'select_course.select_other_course' => 'Seleccionar otro campo',
 			'select_course.tees_section' => 'Tees de salida',
+			'select_course.settings_section' => 'Ajustes',
+			'select_course.gps_tracking' => 'Seguimiento GPS',
+			'select_course.gps_tracking_description' => 'Mide distancias al green y obstaculos',
 			'select_course.no_course_found' => 'No encontramos campos cerca',
 			'select_course.no_course_found_hint' => 'Asegurate de estar en un campo de golf o intenta de nuevo',
 			'select_course.error_title' => 'Error al buscar campo',

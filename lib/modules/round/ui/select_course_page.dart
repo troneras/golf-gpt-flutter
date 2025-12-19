@@ -41,13 +41,17 @@ class SelectCoursePage extends ConsumerWidget {
       ),
       body: switch (state) {
         SelectCourseStateLoading() => const _LoadingView(),
-        SelectCourseStateLoaded(:final course, :final selectedTee, :final isManuallySelected) =>
+        SelectCourseStateLoaded(:final course, :final selectedTee, :final isManuallySelected, :final gpsEnabled) =>
           _LoadedView(
             course: course,
             selectedTee: selectedTee,
             isManuallySelected: isManuallySelected,
+            gpsEnabled: gpsEnabled,
             onTeeSelected: (tee) {
               ref.read(selectCourseProvider.notifier).selectTee(tee);
+            },
+            onGpsToggle: () {
+              ref.read(selectCourseProvider.notifier).toggleGps();
             },
             onCancel: () => context.pop(),
             onStartRound: () async {
@@ -58,7 +62,7 @@ class SelectCoursePage extends ConsumerWidget {
               await ref.read(activeRoundNotifierProvider.notifier).startRound(
                 courseId: course.id,
                 teeId: selectedTee.id,
-                gpsEnabled: true, // TODO: Add GPS toggle to UI
+                gpsEnabled: gpsEnabled,
               );
 
               // Check if round was started successfully
@@ -133,7 +137,9 @@ class _LoadedView extends StatelessWidget {
   final Course course;
   final Tee? selectedTee;
   final bool isManuallySelected;
+  final bool gpsEnabled;
   final void Function(Tee) onTeeSelected;
+  final VoidCallback onGpsToggle;
   final VoidCallback onCancel;
   final Future<void> Function() onStartRound;
   final VoidCallback onSelectOther;
@@ -142,7 +148,9 @@ class _LoadedView extends StatelessWidget {
     required this.course,
     required this.selectedTee,
     required this.isManuallySelected,
+    required this.gpsEnabled,
     required this.onTeeSelected,
+    required this.onGpsToggle,
     required this.onCancel,
     required this.onStartRound,
     required this.onSelectOther,
@@ -203,6 +211,19 @@ class _LoadedView extends StatelessWidget {
                     onTap: () => onTeeSelected(tee),
                   ),
                 )),
+                const SizedBox(height: 24),
+                // Settings section
+                Text(
+                  tr.settings_section,
+                  style: context.textTheme.titleMedium?.copyWith(
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+                const SizedBox(height: 12),
+                _GpsToggleCard(
+                  isEnabled: gpsEnabled,
+                  onToggle: onGpsToggle,
+                ),
               ],
             ),
           ),
@@ -372,6 +393,72 @@ class _TeeCard extends StatelessWidget {
                         : context.colors.onSurface.withValues(alpha: 0.7),
                   ),
                 ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _GpsToggleCard extends StatelessWidget {
+  final bool isEnabled;
+  final VoidCallback onToggle;
+
+  const _GpsToggleCard({
+    required this.isEnabled,
+    required this.onToggle,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final tr = Translations.of(context).select_course;
+    return Container(
+      decoration: BoxDecoration(
+        color: context.colors.surface,
+        borderRadius: BorderRadius.circular(12),
+        border: Border.all(
+          color: context.colors.onSurface.withValues(alpha: 0.1),
+        ),
+      ),
+      child: InkWell(
+        onTap: onToggle,
+        borderRadius: BorderRadius.circular(12),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+          child: Row(
+            children: [
+              Icon(
+                Icons.gps_fixed,
+                size: 24,
+                color: isEnabled ? context.colors.primary : context.colors.onSurface.withValues(alpha: 0.4),
+              ),
+              const SizedBox(width: 12),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      tr.gps_tracking,
+                      style: context.textTheme.titleSmall?.copyWith(
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                    Text(
+                      tr.gps_tracking_description,
+                      style: context.textTheme.bodySmall?.copyWith(
+                        color: context.colors.onSurface.withValues(alpha: 0.6),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Switch(
+                value: isEnabled,
+                onChanged: (_) => onToggle(),
+                activeTrackColor: context.colors.primary.withValues(alpha: 0.5),
+                activeThumbColor: context.colors.primary,
+              ),
             ],
           ),
         ),
