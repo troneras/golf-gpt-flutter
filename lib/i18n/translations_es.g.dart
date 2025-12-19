@@ -260,6 +260,27 @@ class TranslationsSettingsEs {
 	/// es: 'Ajustes'
 	String get title => 'Ajustes';
 
+	/// es: 'Mi bolsa'
+	String get my_bag => 'Mi bolsa';
+
+	/// es: 'Enviar comentarios'
+	String get send_feedback => 'Enviar comentarios';
+
+	/// es: 'Politica de privacidad'
+	String get privacy_policy => 'Politica de privacidad';
+
+	/// es: 'Soporte'
+	String get support => 'Soporte';
+
+	/// es: 'Desconectar'
+	String get disconnect => 'Desconectar';
+
+	/// es: 'Seguro que quieres desconectarte?'
+	String get disconnect_confirm => 'Seguro que quieres desconectarte?';
+
+	/// es: 'Modo claro/oscuro'
+	String get theme_mode => 'Modo claro/oscuro';
+
 	late final TranslationsSettingsLocationPermissionEs location_permission = TranslationsSettingsLocationPermissionEs.internal(_root);
 }
 
@@ -1135,6 +1156,13 @@ extension on Translations {
 			'rounds.detail_title' => 'Detalle de ronda',
 			'rounds.result' => 'Resultado',
 			'settings.title' => 'Ajustes',
+			'settings.my_bag' => 'Mi bolsa',
+			'settings.send_feedback' => 'Enviar comentarios',
+			'settings.privacy_policy' => 'Politica de privacidad',
+			'settings.support' => 'Soporte',
+			'settings.disconnect' => 'Desconectar',
+			'settings.disconnect_confirm' => 'Seguro que quieres desconectarte?',
+			'settings.theme_mode' => 'Modo claro/oscuro',
 			'settings.location_permission.title' => 'Permiso de ubicacion',
 			'settings.location_permission.granted' => 'Permitido',
 			'settings.location_permission.denied' => 'Denegado',

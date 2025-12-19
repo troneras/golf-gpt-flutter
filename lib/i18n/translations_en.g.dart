@@ -177,6 +177,13 @@ class _TranslationsSettingsEn extends TranslationsSettingsEs {
 
 	// Translations
 	@override String get title => 'Settings';
+	@override String get my_bag => 'My bag';
+	@override String get send_feedback => 'Send feedback';
+	@override String get privacy_policy => 'Privacy policy';
+	@override String get support => 'Support';
+	@override String get disconnect => 'Disconnect';
+	@override String get disconnect_confirm => 'Are you sure you want to disconnect?';
+	@override String get theme_mode => 'Light/Dark mode';
 	@override late final _TranslationsSettingsLocationPermissionEn location_permission = _TranslationsSettingsLocationPermissionEn._(_root);
 }
 
@@ -670,6 +677,13 @@ extension on TranslationsEn {
 			'rounds.detail_title' => 'Round details',
 			'rounds.result' => 'Result',
 			'settings.title' => 'Settings',
+			'settings.my_bag' => 'My bag',
+			'settings.send_feedback' => 'Send feedback',
+			'settings.privacy_policy' => 'Privacy policy',
+			'settings.support' => 'Support',
+			'settings.disconnect' => 'Disconnect',
+			'settings.disconnect_confirm' => 'Are you sure you want to disconnect?',
+			'settings.theme_mode' => 'Light/Dark mode',
 			'settings.location_permission.title' => 'Location permission',
 			'settings.location_permission.granted' => 'Allowed',
 			'settings.location_permission.denied' => 'Denied',

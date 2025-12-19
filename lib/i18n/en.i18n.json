@@ -142,6 +142,13 @@
     },
     "settings": {
         "title": "Settings",
+        "my_bag": "My bag",
+        "send_feedback": "Send feedback",
+        "privacy_policy": "Privacy policy",
+        "support": "Support",
+        "disconnect": "Disconnect",
+        "disconnect_confirm": "Are you sure you want to disconnect?",
+        "theme_mode": "Light/Dark mode",
         "location_permission": {
             "title": "Location permission",
             "granted": "Allowed",

@@ -142,6 +142,13 @@
     },
     "settings": {
         "title": "Ajustes",
+        "my_bag": "Mi bolsa",
+        "send_feedback": "Enviar comentarios",
+        "privacy_policy": "Politica de privacidad",
+        "support": "Soporte",
+        "disconnect": "Desconectar",
+        "disconnect_confirm": "Seguro que quieres desconectarte?",
+        "theme_mode": "Modo claro/oscuro",
         "location_permission": {
             "title": "Permiso de ubicacion",
             "granted": "Permitido",

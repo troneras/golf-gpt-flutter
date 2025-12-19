@@ -2,6 +2,7 @@ import 'package:apparence_kit/core/data/models/user.dart';
 import 'package:apparence_kit/core/states/user_state_notifier.dart';
 import 'package:apparence_kit/core/theme/extensions/theme_extension.dart';
 import 'package:apparence_kit/core/theme/providers/theme_provider.dart';
+import 'package:apparence_kit/i18n/translations.g.dart';
 import 'package:apparence_kit/modules/settings/ui/components/delete_user_component.dart';
 import 'package:apparence_kit/modules/settings/ui/widgets/location_permission_tile.dart';
 import 'package:apparence_kit/modules/settings/ui/widgets/settings_tile.dart';
@@ -10,13 +11,12 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-/// This is an example of a settings page.
-/// You are free to use it or not.
 class SettingsPage extends ConsumerWidget {
   const SettingsPage({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final tr = Translations.of(context);
     final userState = ref.watch(userStateNotifierProvider);
     final user = userState.user;
     final userName = switch (user) {
@@ -34,7 +34,7 @@ class SettingsPage extends ConsumerWidget {
           physics: const NeverScrollableScrollPhysics(),
           children: [
             Text(
-              "Settings",
+              tr.settings.title,
               style: context.textTheme.headlineLarge!.copyWith(
                 color: context.colors.onBackground,
               ),
@@ -54,58 +54,53 @@ class SettingsPage extends ConsumerWidget {
                   Divider(color: Colors.blueGrey.withValues(alpha: .10)),
                   SettingsTile(
                     icon: Icons.golf_course,
-                    title: "Mi bolsa",
+                    title: tr.settings.my_bag,
                     onTap: () => context.push('/bag'),
                   ),
                   Divider(color: Colors.blueGrey.withValues(alpha: .10)),
                   SettingsTile(
                     icon: Icons.message_rounded,
-                    title: "Send feedback",
+                    title: tr.settings.send_feedback,
                     onTap: () => context.push('/feedback'),
                   ),
                   Divider(color: Colors.blueGrey.withValues(alpha: .10)),
                   SettingsTile(
                     icon: Icons.privacy_tip,
-                    title: "Privacy policy",
+                    title: tr.settings.privacy_policy,
                     onTap: () {
-                      // you may need to add some url_launcher configuration in your app for iOS and Android
-                      // https://pub.dev/packages/url_launcher
                       launchUrl(Uri.parse("https://apparencekit.dev/privacy/"));
                     },
                   ),
                   Divider(color: Colors.blueGrey.withValues(alpha: .10)),
                   SettingsTile(
                     icon: Icons.help,
-                    title: "Support",
+                    title: tr.settings.support,
                     onTap: () {
-                      // you may need to add some url_launcher configuration in your app for iOS and Android
-                      // https://pub.dev/packages/url_launcher
                       launchUrl(Uri.parse("https://apparencekit.dev/"));
                     },
                   ),
                   Divider(color: Colors.blueGrey.withValues(alpha: .10)),
                   SettingsTile(
                     icon: Icons.logout,
-                    title: "Disconnect",
+                    title: tr.settings.disconnect,
                     onTap: () {
                       showDialog(
                         context: context,
-                        builder: (context) {
+                        builder: (dialogContext) {
                           return AlertDialog.adaptive(
-                            title: const Text('Disconnect'),
-                            content: const Text(
-                                'Are you sure you want to disconnect?'),
+                            title: Text(tr.settings.disconnect),
+                            content: Text(tr.settings.disconnect_confirm),
                             actions: <Widget>[
                               TextButton(
-                                child: const Text('Cancel'),
+                                child: Text(tr.common.cancel),
                                 onPressed: () {
-                                  Navigator.of(context).pop();
+                                  Navigator.of(dialogContext).pop();
                                 },
                               ),
                               TextButton(
-                                child: const Text('Disconnect'),
+                                child: Text(tr.settings.disconnect),
                                 onPressed: () async {
-                                  Navigator.of(context).pop();
+                                  Navigator.of(dialogContext).pop();
                                   await ref
                                       .read(userStateNotifierProvider.notifier)
                                       .onLogout();
@@ -220,6 +215,7 @@ class _ThemeSwitcherState extends State<ThemeSwitcher> {
 
   @override
   Widget build(BuildContext context) {
+    final tr = Translations.of(context);
     return SwitchListTile(
       value: darkMode,
       onChanged: (value) {
@@ -229,7 +225,7 @@ class _ThemeSwitcherState extends State<ThemeSwitcher> {
         ThemeProvider.of(context).toggle();
       },
       title: Text(
-        "Light/Dark mode",
+        tr.settings.theme_mode,
         style: Theme.of(context).textTheme.bodyMedium!.copyWith(
               color: Theme.of(context).colorScheme.onSurface,
             ),
