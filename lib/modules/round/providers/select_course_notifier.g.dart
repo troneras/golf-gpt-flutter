@@ -42,7 +42,7 @@ final class SelectCourseNotifierProvider
 }
 
 String _$selectCourseNotifierHash() =>
-    r'7c4ecf8a136ed61c06f202d5f5bf99001e9c27f2';
+    r'6761cd4ec9eb9fddf7b3e25d4e838a187495450b';
 
 abstract class _$SelectCourseNotifier extends $Notifier<SelectCourseState> {
   SelectCourseState build();

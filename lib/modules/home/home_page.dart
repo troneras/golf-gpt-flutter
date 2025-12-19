@@ -46,7 +46,7 @@ class _HomePageState extends ConsumerState<HomePage> with WidgetsBindingObserver
       final newStatus = await Permission.locationWhenInUse.request();
       if (newStatus.isGranted) {
         _startRound();
-      } else if (newStatus.isPermanentlyDenied && mounted) {
+      } else if (mounted) {
         _showLocationRequiredDialog();
       }
     } finally {
@@ -67,7 +67,7 @@ class _HomePageState extends ConsumerState<HomePage> with WidgetsBindingObserver
     final homeTr = tr.home;
     showDialog(
       context: context,
-      builder: (context) => AlertDialog(
+      builder: (dialogContext) => AlertDialog(
         title: Text(homeTr.location_required_title),
         content: Column(
           mainAxisSize: MainAxisSize.min,
@@ -95,12 +95,15 @@ class _HomePageState extends ConsumerState<HomePage> with WidgetsBindingObserver
         ),
         actions: [
           TextButton(
-            onPressed: () => Navigator.of(context).pop(),
-            child: Text(tr.common.cancel),
+            onPressed: () {
+              Navigator.of(dialogContext).pop();
+              _startRoundWithoutGps();
+            },
+            child: Text(homeTr.play_without_gps),
           ),
           FilledButton(
             onPressed: () {
-              Navigator.of(context).pop();
+              Navigator.of(dialogContext).pop();
               openAppSettings();
             },
             child: Text(homeTr.location_required_action),
@@ -108,6 +111,11 @@ class _HomePageState extends ConsumerState<HomePage> with WidgetsBindingObserver
         ],
       ),
     );
+  }
+
+  void _startRoundWithoutGps() {
+    HapticFeedback.mediumImpact();
+    context.push('/select-course', extra: {'gpsEnabled': false});
   }
 
   @override

@@ -39,3 +39,41 @@ sealed class ClosestCourseResponse with _$ClosestCourseResponse {
   factory ClosestCourseResponse.fromJson(Map<String, Object?> json) =>
       _$ClosestCourseResponseFromJson(json);
 }
+
+/// Entity for /courses/nearby and /courses/search responses
+/// which have different field names than /courses/closest
+@freezed
+sealed class NearbyCourseEntity with _$NearbyCourseEntity {
+  const factory NearbyCourseEntity({
+    @JsonKey(name: 'courseID') required String courseId,
+    @JsonKey(name: 'courseName') required String courseName,
+    @JsonKey(name: 'clubID') String? clubId,
+    @JsonKey(name: 'clubName') String? clubName,
+    String? address,
+    String? city,
+    String? state,
+    String? country,
+    double? distance,
+    @JsonKey(name: 'measureUnit') String? measureUnit,
+    @JsonKey(name: 'numHoles') int? numHoles,
+    @JsonKey(name: 'hasGPS') int? hasGps,
+  }) = NearbyCourseEntityData;
+
+  const NearbyCourseEntity._();
+
+  factory NearbyCourseEntity.fromJson(Map<String, Object?> json) =>
+      _$NearbyCourseEntityFromJson(json);
+
+  /// Convert to the standard CourseEntity format
+  CourseEntity toCourseEntity() {
+    return CourseEntity(
+      id: courseId,
+      name: courseName,
+      address: address,
+      city: city,
+      state: state,
+      country: country,
+      distanceKm: distance,
+    );
+  }
+}

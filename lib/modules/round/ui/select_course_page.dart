@@ -35,10 +35,11 @@ class SelectCoursePage extends ConsumerWidget {
       ),
       body: switch (state) {
         SelectCourseStateLoading() => const _LoadingView(),
-        SelectCourseStateLoaded(:final course, :final selectedTee) =>
+        SelectCourseStateLoaded(:final course, :final selectedTee, :final isManuallySelected) =>
           _LoadedView(
             course: course,
             selectedTee: selectedTee,
+            isManuallySelected: isManuallySelected,
             onTeeSelected: (tee) {
               ref.read(selectCourseProvider.notifier).selectTee(tee);
             },
@@ -46,6 +47,12 @@ class SelectCoursePage extends ConsumerWidget {
             onStartRound: () {
               HapticFeedback.mediumImpact();
               // TODO: Navigate to round in progress
+            },
+            onSelectOther: () async {
+              final selectedCourse = await context.push<Course>('/browse-courses');
+              if (selectedCourse != null) {
+                ref.read(selectCourseProvider.notifier).setCourse(selectedCourse);
+              }
             },
           ),
         SelectCourseStateNoCourseFound() => _NoCourseFoundView(
@@ -93,16 +100,20 @@ class _LoadingView extends StatelessWidget {
 class _LoadedView extends StatelessWidget {
   final Course course;
   final Tee? selectedTee;
+  final bool isManuallySelected;
   final void Function(Tee) onTeeSelected;
   final VoidCallback onCancel;
   final VoidCallback onStartRound;
+  final VoidCallback onSelectOther;
 
   const _LoadedView({
     required this.course,
     required this.selectedTee,
+    required this.isManuallySelected,
     required this.onTeeSelected,
     required this.onCancel,
     required this.onStartRound,
+    required this.onSelectOther,
   });
 
   @override
@@ -116,30 +127,30 @@ class _LoadedView extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                // Closest course section
-                Row(
-                  children: [
-                    Image.asset(
-                      'assets/images/icons/ic_gps_pin.png',
-                      width: 20,
-                      height: 20,
-                    ),
-                    const SizedBox(width: 8),
-                    Text(
-                      tr.closest_course,
-                      style: context.textTheme.bodyMedium?.copyWith(
-                        color: context.colors.onBackground.withValues(alpha: 0.7),
+                // Closest course section - only show if not manually selected
+                if (!isManuallySelected) ...[
+                  Row(
+                    children: [
+                      Image.asset(
+                        'assets/images/icons/ic_gps_pin.png',
+                        width: 20,
+                        height: 20,
                       ),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 12),
+                      const SizedBox(width: 8),
+                      Text(
+                        tr.closest_course,
+                        style: context.textTheme.bodyMedium?.copyWith(
+                          color: context.colors.onBackground.withValues(alpha: 0.7),
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 12),
+                ],
                 // Course card
                 _CourseCard(
                   courseName: course.name,
-                  onSelectOther: () {
-                    // TODO: Navigate to course search
-                  },
+                  onSelectOther: onSelectOther,
                 ),
                 const SizedBox(height: 24),
                 // Tees section

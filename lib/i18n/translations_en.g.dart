@@ -48,6 +48,7 @@ class TranslationsEn extends Translations with BaseTranslations<AppLocale, Trans
 	@override late final _TranslationsRoundsEn rounds = _TranslationsRoundsEn._(_root);
 	@override late final _TranslationsSettingsEn settings = _TranslationsSettingsEn._(_root);
 	@override late final _TranslationsSelectCourseEn select_course = _TranslationsSelectCourseEn._(_root);
+	@override late final _TranslationsBrowseCoursesEn browse_courses = _TranslationsBrowseCoursesEn._(_root);
 	@override late final _TranslationsFeedbackEn feedback = _TranslationsFeedbackEn._(_root);
 }
 
@@ -69,6 +70,8 @@ class _TranslationsHomeEn extends TranslationsHomeEs {
 	@override String get location_required_title => 'Location required';
 	@override String get location_required_message => 'TalkCaddy needs access to your location to calculate distances and record your shots during the round.';
 	@override String get location_required_action => 'Open settings';
+	@override String get play_without_gps => 'Play without GPS';
+	@override String get no_gps_warning => 'Without GPS you won\'t be able to see distances or record your shot locations.';
 }
 
 // Path: rate_popup
@@ -179,6 +182,29 @@ class _TranslationsSelectCourseEn extends TranslationsSelectCourseEs {
 	@override String get no_course_found => 'No courses found nearby';
 	@override String get no_course_found_hint => 'Make sure you\'re at a golf course or try again';
 	@override String get error_title => 'Error searching course';
+	@override String get retry => 'Retry';
+}
+
+// Path: browse_courses
+class _TranslationsBrowseCoursesEn extends TranslationsBrowseCoursesEs {
+	_TranslationsBrowseCoursesEn._(TranslationsEn root) : this._root = root, super.internal(root);
+
+	final TranslationsEn _root; // ignore: unused_field
+
+	// Translations
+	@override String get title => 'Select another course';
+	@override String get tab_nearby => 'Nearby';
+	@override String get tab_recent => 'Recent';
+	@override String get tab_search => 'Search';
+	@override String get search_placeholder => 'City or course name';
+	@override String get search_min_chars => 'Type at least 3 characters';
+	@override String get no_results => 'No courses found';
+	@override String get empty_nearby => 'No nearby courses';
+	@override String get empty_recent => 'No recent courses';
+	@override String get empty_recent_hint => 'Courses you play will appear here';
+	@override String get login_required => 'Sign in to see your recent courses';
+	@override String get login_action => 'Sign in';
+	@override String get error_loading => 'Error loading courses';
 	@override String get retry => 'Retry';
 }
 
@@ -394,6 +420,8 @@ extension on TranslationsEn {
 			'home.location_required_title' => 'Location required',
 			'home.location_required_message' => 'TalkCaddy needs access to your location to calculate distances and record your shots during the round.',
 			'home.location_required_action' => 'Open settings',
+			'home.play_without_gps' => 'Play without GPS',
+			'home.no_gps_warning' => 'Without GPS you won\'t be able to see distances or record your shot locations.',
 			'rate_popup.title' => 'Would you have 15 seconds to rate us?',
 			'rate_popup.description' => 'It\'s fast and very helpful! Thanks!',
 			'rate_popup.cancel_button' => 'Maybe later',
@@ -497,6 +525,20 @@ extension on TranslationsEn {
 			'select_course.no_course_found_hint' => 'Make sure you\'re at a golf course or try again',
 			'select_course.error_title' => 'Error searching course',
 			'select_course.retry' => 'Retry',
+			'browse_courses.title' => 'Select another course',
+			'browse_courses.tab_nearby' => 'Nearby',
+			'browse_courses.tab_recent' => 'Recent',
+			'browse_courses.tab_search' => 'Search',
+			'browse_courses.search_placeholder' => 'City or course name',
+			'browse_courses.search_min_chars' => 'Type at least 3 characters',
+			'browse_courses.no_results' => 'No courses found',
+			'browse_courses.empty_nearby' => 'No nearby courses',
+			'browse_courses.empty_recent' => 'No recent courses',
+			'browse_courses.empty_recent_hint' => 'Courses you play will appear here',
+			'browse_courses.login_required' => 'Sign in to see your recent courses',
+			'browse_courses.login_action' => 'Sign in',
+			'browse_courses.error_loading' => 'Error loading courses',
+			'browse_courses.retry' => 'Retry',
 			'feedback.title' => 'Send feedback',
 			'feedback.subtitle' => 'Your feedback helps us improve TalkCaddy',
 			'feedback.category_label' => 'Category',

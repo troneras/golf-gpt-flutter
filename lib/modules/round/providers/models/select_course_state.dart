@@ -11,6 +11,7 @@ sealed class SelectCourseState with _$SelectCourseState {
   const factory SelectCourseState.loaded({
     required Course course,
     Tee? selectedTee,
+    @Default(false) bool isManuallySelected,
   }) = SelectCourseStateLoaded;
 
   const factory SelectCourseState.noCourseFound() = SelectCourseStateNoCourseFound;

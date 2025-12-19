@@ -49,3 +49,36 @@ ClosestCourseResponseData _$ClosestCourseResponseDataFromJson(Map json) =>
 Map<String, dynamic> _$ClosestCourseResponseDataToJson(
   ClosestCourseResponseData instance,
 ) => <String, dynamic>{'course': instance.course.toJson()};
+
+NearbyCourseEntityData _$NearbyCourseEntityDataFromJson(Map json) =>
+    NearbyCourseEntityData(
+      courseId: json['courseID'] as String,
+      courseName: json['courseName'] as String,
+      clubId: json['clubID'] as String?,
+      clubName: json['clubName'] as String?,
+      address: json['address'] as String?,
+      city: json['city'] as String?,
+      state: json['state'] as String?,
+      country: json['country'] as String?,
+      distance: (json['distance'] as num?)?.toDouble(),
+      measureUnit: json['measureUnit'] as String?,
+      numHoles: (json['numHoles'] as num?)?.toInt(),
+      hasGps: (json['hasGPS'] as num?)?.toInt(),
+    );
+
+Map<String, dynamic> _$NearbyCourseEntityDataToJson(
+  NearbyCourseEntityData instance,
+) => <String, dynamic>{
+  'courseID': instance.courseId,
+  'courseName': instance.courseName,
+  'clubID': instance.clubId,
+  'clubName': instance.clubName,
+  'address': instance.address,
+  'city': instance.city,
+  'state': instance.state,
+  'country': instance.country,
+  'distance': instance.distance,
+  'measureUnit': instance.measureUnit,
+  'numHoles': instance.numHoles,
+  'hasGPS': instance.hasGps,
+};

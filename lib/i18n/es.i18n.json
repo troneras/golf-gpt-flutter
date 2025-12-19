@@ -10,7 +10,9 @@
         "example_3": "\"Hecho bogey\"",
         "location_required_title": "Ubicacion requerida",
         "location_required_message": "TalkCaddy necesita acceso a tu ubicacion para calcular distancias y registrar tus golpes durante la ronda.",
-        "location_required_action": "Abrir ajustes"
+        "location_required_action": "Abrir ajustes",
+        "play_without_gps": "Jugar sin GPS",
+        "no_gps_warning": "Sin GPS no podras ver distancias ni registrar la ubicacion de tus golpes."
     },
     "rate_popup": {
         "title": "Tienes 15 segundos para valorarnos?",
@@ -149,6 +151,22 @@
         "no_course_found": "No encontramos campos cerca",
         "no_course_found_hint": "Asegurate de estar en un campo de golf o intenta de nuevo",
         "error_title": "Error al buscar campo",
+        "retry": "Reintentar"
+    },
+    "browse_courses": {
+        "title": "Seleccionar otro campo",
+        "tab_nearby": "Cercanos",
+        "tab_recent": "Recientes",
+        "tab_search": "Buscar",
+        "search_placeholder": "Ciudad o nombre del campo",
+        "search_min_chars": "Escribe al menos 3 caracteres",
+        "no_results": "No se encontraron campos",
+        "empty_nearby": "No hay campos cercanos",
+        "empty_recent": "No tienes campos recientes",
+        "empty_recent_hint": "Los campos donde juegues apareceran aqui",
+        "login_required": "Inicia sesion para ver tus campos recientes",
+        "login_action": "Iniciar sesion",
+        "error_loading": "Error al cargar campos",
         "retry": "Reintentar"
     },
     "feedback": {

@@ -10,7 +10,9 @@
         "example_3": "\"Made bogey\"",
         "location_required_title": "Location required",
         "location_required_message": "TalkCaddy needs access to your location to calculate distances and record your shots during the round.",
-        "location_required_action": "Open settings"
+        "location_required_action": "Open settings",
+        "play_without_gps": "Play without GPS",
+        "no_gps_warning": "Without GPS you won't be able to see distances or record your shot locations."
     },
     "rate_popup": {
         "title": "Would you have 15 seconds to rate us?",
@@ -149,6 +151,22 @@
         "no_course_found": "No courses found nearby",
         "no_course_found_hint": "Make sure you're at a golf course or try again",
         "error_title": "Error searching course",
+        "retry": "Retry"
+    },
+    "browse_courses": {
+        "title": "Select another course",
+        "tab_nearby": "Nearby",
+        "tab_recent": "Recent",
+        "tab_search": "Search",
+        "search_placeholder": "City or course name",
+        "search_min_chars": "Type at least 3 characters",
+        "no_results": "No courses found",
+        "empty_nearby": "No nearby courses",
+        "empty_recent": "No recent courses",
+        "empty_recent_hint": "Courses you play will appear here",
+        "login_required": "Sign in to see your recent courses",
+        "login_action": "Sign in",
+        "error_loading": "Error loading courses",
         "retry": "Retry"
     },
     "feedback": {

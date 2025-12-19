@@ -5,7 +5,7 @@ import 'package:apparence_kit/modules/onboarding/ui/widgets/onboarding_backgroun
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:url_launcher/url_launcher.dart';
+import 'package:go_router/go_router.dart';
 
 class CompletePage extends ConsumerStatefulWidget {
   const CompletePage({super.key});
@@ -28,13 +28,8 @@ class _CompletePageState extends ConsumerState<CompletePage> {
     }
   }
 
-  Future<void> _openChat() async {
-    // Open ChatGPT or the relevant chat app
-    // You can customize this URL to open your specific ChatGPT action
-    final uri = Uri.parse('https://chat.openai.com');
-    if (await canLaunchUrl(uri)) {
-      await launchUrl(uri, mode: LaunchMode.externalApplication);
-    }
+  void _continueToHome() {
+    context.go('/');
   }
 
   @override
@@ -167,7 +162,7 @@ class _CompletePageState extends ConsumerState<CompletePage> {
                   child: SizedBox(
                     width: double.infinity,
                     child: ElevatedButton(
-                      onPressed: _openChat,
+                      onPressed: _continueToHome,
                       child: Text(tr.action),
                     ),
                   ),

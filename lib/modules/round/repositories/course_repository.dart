@@ -26,4 +26,37 @@ class CourseRepository {
     }
     return Course.fromEntity(entity);
   }
+
+  Future<List<Course>> getNearby({
+    required double latitude,
+    required double longitude,
+    int radius = 50,
+    int limit = 20,
+  }) async {
+    final entities = await _courseApi.getNearby(
+      latitude: latitude,
+      longitude: longitude,
+      radius: radius,
+      limit: limit,
+    );
+    return entities.map(Course.fromEntity).toList();
+  }
+
+  Future<List<Course>> getRecent() async {
+    final entities = await _courseApi.getRecent();
+    return entities.map(Course.fromEntity).toList();
+  }
+
+  Future<List<Course>> search(String query) async {
+    final entities = await _courseApi.search(query);
+    return entities.map(Course.fromEntity).toList();
+  }
+
+  Future<Course?> getCourseDetails(String courseId) async {
+    final entity = await _courseApi.getCourseDetails(courseId);
+    if (entity == null) {
+      return null;
+    }
+    return Course.fromEntity(entity);
+  }
 }

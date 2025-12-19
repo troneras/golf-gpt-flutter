@@ -593,4 +593,301 @@ $CourseEntityCopyWith<$Res> get course {
 }
 }
 
+NearbyCourseEntity _$NearbyCourseEntityFromJson(
+  Map<String, dynamic> json
+) {
+    return NearbyCourseEntityData.fromJson(
+      json
+    );
+}
+
+/// @nodoc
+mixin _$NearbyCourseEntity {
+
+@JsonKey(name: 'courseID') String get courseId;@JsonKey(name: 'courseName') String get courseName;@JsonKey(name: 'clubID') String? get clubId;@JsonKey(name: 'clubName') String? get clubName; String? get address; String? get city; String? get state; String? get country; double? get distance;@JsonKey(name: 'measureUnit') String? get measureUnit;@JsonKey(name: 'numHoles') int? get numHoles;@JsonKey(name: 'hasGPS') int? get hasGps;
+/// Create a copy of NearbyCourseEntity
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+$NearbyCourseEntityCopyWith<NearbyCourseEntity> get copyWith => _$NearbyCourseEntityCopyWithImpl<NearbyCourseEntity>(this as NearbyCourseEntity, _$identity);
+
+  /// Serializes this NearbyCourseEntity to a JSON map.
+  Map<String, dynamic> toJson();
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is NearbyCourseEntity&&(identical(other.courseId, courseId) || other.courseId == courseId)&&(identical(other.courseName, courseName) || other.courseName == courseName)&&(identical(other.clubId, clubId) || other.clubId == clubId)&&(identical(other.clubName, clubName) || other.clubName == clubName)&&(identical(other.address, address) || other.address == address)&&(identical(other.city, city) || other.city == city)&&(identical(other.state, state) || other.state == state)&&(identical(other.country, country) || other.country == country)&&(identical(other.distance, distance) || other.distance == distance)&&(identical(other.measureUnit, measureUnit) || other.measureUnit == measureUnit)&&(identical(other.numHoles, numHoles) || other.numHoles == numHoles)&&(identical(other.hasGps, hasGps) || other.hasGps == hasGps));
+}
+
+@JsonKey(includeFromJson: false, includeToJson: false)
+@override
+int get hashCode => Object.hash(runtimeType,courseId,courseName,clubId,clubName,address,city,state,country,distance,measureUnit,numHoles,hasGps);
+
+@override
+String toString() {
+  return 'NearbyCourseEntity(courseId: $courseId, courseName: $courseName, clubId: $clubId, clubName: $clubName, address: $address, city: $city, state: $state, country: $country, distance: $distance, measureUnit: $measureUnit, numHoles: $numHoles, hasGps: $hasGps)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class $NearbyCourseEntityCopyWith<$Res>  {
+  factory $NearbyCourseEntityCopyWith(NearbyCourseEntity value, $Res Function(NearbyCourseEntity) _then) = _$NearbyCourseEntityCopyWithImpl;
+@useResult
+$Res call({
+@JsonKey(name: 'courseID') String courseId,@JsonKey(name: 'courseName') String courseName,@JsonKey(name: 'clubID') String? clubId,@JsonKey(name: 'clubName') String? clubName, String? address, String? city, String? state, String? country, double? distance,@JsonKey(name: 'measureUnit') String? measureUnit,@JsonKey(name: 'numHoles') int? numHoles,@JsonKey(name: 'hasGPS') int? hasGps
+});
+
+
+
+
+}
+/// @nodoc
+class _$NearbyCourseEntityCopyWithImpl<$Res>
+    implements $NearbyCourseEntityCopyWith<$Res> {
+  _$NearbyCourseEntityCopyWithImpl(this._self, this._then);
+
+  final NearbyCourseEntity _self;
+  final $Res Function(NearbyCourseEntity) _then;
+
+/// Create a copy of NearbyCourseEntity
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') @override $Res call({Object? courseId = null,Object? courseName = null,Object? clubId = freezed,Object? clubName = freezed,Object? address = freezed,Object? city = freezed,Object? state = freezed,Object? country = freezed,Object? distance = freezed,Object? measureUnit = freezed,Object? numHoles = freezed,Object? hasGps = freezed,}) {
+  return _then(_self.copyWith(
+courseId: null == courseId ? _self.courseId : courseId // ignore: cast_nullable_to_non_nullable
+as String,courseName: null == courseName ? _self.courseName : courseName // ignore: cast_nullable_to_non_nullable
+as String,clubId: freezed == clubId ? _self.clubId : clubId // ignore: cast_nullable_to_non_nullable
+as String?,clubName: freezed == clubName ? _self.clubName : clubName // ignore: cast_nullable_to_non_nullable
+as String?,address: freezed == address ? _self.address : address // ignore: cast_nullable_to_non_nullable
+as String?,city: freezed == city ? _self.city : city // ignore: cast_nullable_to_non_nullable
+as String?,state: freezed == state ? _self.state : state // ignore: cast_nullable_to_non_nullable
+as String?,country: freezed == country ? _self.country : country // ignore: cast_nullable_to_non_nullable
+as String?,distance: freezed == distance ? _self.distance : distance // ignore: cast_nullable_to_non_nullable
+as double?,measureUnit: freezed == measureUnit ? _self.measureUnit : measureUnit // ignore: cast_nullable_to_non_nullable
+as String?,numHoles: freezed == numHoles ? _self.numHoles : numHoles // ignore: cast_nullable_to_non_nullable
+as int?,hasGps: freezed == hasGps ? _self.hasGps : hasGps // ignore: cast_nullable_to_non_nullable
+as int?,
+  ));
+}
+
+}
+
+
+/// Adds pattern-matching-related methods to [NearbyCourseEntity].
+extension NearbyCourseEntityPatterns on NearbyCourseEntity {
+/// A variant of `map` that fallback to returning `orElse`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>(TResult Function( NearbyCourseEntityData value)?  $default,{required TResult orElse(),}){
+final _that = this;
+switch (_that) {
+case NearbyCourseEntityData() when $default != null:
+return $default(_that);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// Callbacks receives the raw object, upcasted.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case final Subclass2 value:
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult map<TResult extends Object?>(TResult Function( NearbyCourseEntityData value)  $default,){
+final _that = this;
+switch (_that) {
+case NearbyCourseEntityData():
+return $default(_that);}
+}
+/// A variant of `map` that fallback to returning `null`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>(TResult? Function( NearbyCourseEntityData value)?  $default,){
+final _that = this;
+switch (_that) {
+case NearbyCourseEntityData() when $default != null:
+return $default(_that);case _:
+  return null;
+
+}
+}
+/// A variant of `when` that fallback to an `orElse` callback.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function(@JsonKey(name: 'courseID')  String courseId, @JsonKey(name: 'courseName')  String courseName, @JsonKey(name: 'clubID')  String? clubId, @JsonKey(name: 'clubName')  String? clubName,  String? address,  String? city,  String? state,  String? country,  double? distance, @JsonKey(name: 'measureUnit')  String? measureUnit, @JsonKey(name: 'numHoles')  int? numHoles, @JsonKey(name: 'hasGPS')  int? hasGps)?  $default,{required TResult orElse(),}) {final _that = this;
+switch (_that) {
+case NearbyCourseEntityData() when $default != null:
+return $default(_that.courseId,_that.courseName,_that.clubId,_that.clubName,_that.address,_that.city,_that.state,_that.country,_that.distance,_that.measureUnit,_that.numHoles,_that.hasGps);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// As opposed to `map`, this offers destructuring.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case Subclass2(:final field2):
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function(@JsonKey(name: 'courseID')  String courseId, @JsonKey(name: 'courseName')  String courseName, @JsonKey(name: 'clubID')  String? clubId, @JsonKey(name: 'clubName')  String? clubName,  String? address,  String? city,  String? state,  String? country,  double? distance, @JsonKey(name: 'measureUnit')  String? measureUnit, @JsonKey(name: 'numHoles')  int? numHoles, @JsonKey(name: 'hasGPS')  int? hasGps)  $default,) {final _that = this;
+switch (_that) {
+case NearbyCourseEntityData():
+return $default(_that.courseId,_that.courseName,_that.clubId,_that.clubName,_that.address,_that.city,_that.state,_that.country,_that.distance,_that.measureUnit,_that.numHoles,_that.hasGps);}
+}
+/// A variant of `when` that fallback to returning `null`
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function(@JsonKey(name: 'courseID')  String courseId, @JsonKey(name: 'courseName')  String courseName, @JsonKey(name: 'clubID')  String? clubId, @JsonKey(name: 'clubName')  String? clubName,  String? address,  String? city,  String? state,  String? country,  double? distance, @JsonKey(name: 'measureUnit')  String? measureUnit, @JsonKey(name: 'numHoles')  int? numHoles, @JsonKey(name: 'hasGPS')  int? hasGps)?  $default,) {final _that = this;
+switch (_that) {
+case NearbyCourseEntityData() when $default != null:
+return $default(_that.courseId,_that.courseName,_that.clubId,_that.clubName,_that.address,_that.city,_that.state,_that.country,_that.distance,_that.measureUnit,_that.numHoles,_that.hasGps);case _:
+  return null;
+
+}
+}
+
+}
+
+/// @nodoc
+@JsonSerializable()
+
+class NearbyCourseEntityData extends NearbyCourseEntity {
+  const NearbyCourseEntityData({@JsonKey(name: 'courseID') required this.courseId, @JsonKey(name: 'courseName') required this.courseName, @JsonKey(name: 'clubID') this.clubId, @JsonKey(name: 'clubName') this.clubName, this.address, this.city, this.state, this.country, this.distance, @JsonKey(name: 'measureUnit') this.measureUnit, @JsonKey(name: 'numHoles') this.numHoles, @JsonKey(name: 'hasGPS') this.hasGps}): super._();
+  factory NearbyCourseEntityData.fromJson(Map<String, dynamic> json) => _$NearbyCourseEntityDataFromJson(json);
+
+@override@JsonKey(name: 'courseID') final  String courseId;
+@override@JsonKey(name: 'courseName') final  String courseName;
+@override@JsonKey(name: 'clubID') final  String? clubId;
+@override@JsonKey(name: 'clubName') final  String? clubName;
+@override final  String? address;
+@override final  String? city;
+@override final  String? state;
+@override final  String? country;
+@override final  double? distance;
+@override@JsonKey(name: 'measureUnit') final  String? measureUnit;
+@override@JsonKey(name: 'numHoles') final  int? numHoles;
+@override@JsonKey(name: 'hasGPS') final  int? hasGps;
+
+/// Create a copy of NearbyCourseEntity
+/// with the given fields replaced by the non-null parameter values.
+@override @JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+$NearbyCourseEntityDataCopyWith<NearbyCourseEntityData> get copyWith => _$NearbyCourseEntityDataCopyWithImpl<NearbyCourseEntityData>(this, _$identity);
+
+@override
+Map<String, dynamic> toJson() {
+  return _$NearbyCourseEntityDataToJson(this, );
+}
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is NearbyCourseEntityData&&(identical(other.courseId, courseId) || other.courseId == courseId)&&(identical(other.courseName, courseName) || other.courseName == courseName)&&(identical(other.clubId, clubId) || other.clubId == clubId)&&(identical(other.clubName, clubName) || other.clubName == clubName)&&(identical(other.address, address) || other.address == address)&&(identical(other.city, city) || other.city == city)&&(identical(other.state, state) || other.state == state)&&(identical(other.country, country) || other.country == country)&&(identical(other.distance, distance) || other.distance == distance)&&(identical(other.measureUnit, measureUnit) || other.measureUnit == measureUnit)&&(identical(other.numHoles, numHoles) || other.numHoles == numHoles)&&(identical(other.hasGps, hasGps) || other.hasGps == hasGps));
+}
+
+@JsonKey(includeFromJson: false, includeToJson: false)
+@override
+int get hashCode => Object.hash(runtimeType,courseId,courseName,clubId,clubName,address,city,state,country,distance,measureUnit,numHoles,hasGps);
+
+@override
+String toString() {
+  return 'NearbyCourseEntity(courseId: $courseId, courseName: $courseName, clubId: $clubId, clubName: $clubName, address: $address, city: $city, state: $state, country: $country, distance: $distance, measureUnit: $measureUnit, numHoles: $numHoles, hasGps: $hasGps)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class $NearbyCourseEntityDataCopyWith<$Res> implements $NearbyCourseEntityCopyWith<$Res> {
+  factory $NearbyCourseEntityDataCopyWith(NearbyCourseEntityData value, $Res Function(NearbyCourseEntityData) _then) = _$NearbyCourseEntityDataCopyWithImpl;
+@override @useResult
+$Res call({
+@JsonKey(name: 'courseID') String courseId,@JsonKey(name: 'courseName') String courseName,@JsonKey(name: 'clubID') String? clubId,@JsonKey(name: 'clubName') String? clubName, String? address, String? city, String? state, String? country, double? distance,@JsonKey(name: 'measureUnit') String? measureUnit,@JsonKey(name: 'numHoles') int? numHoles,@JsonKey(name: 'hasGPS') int? hasGps
+});
+
+
+
+
+}
+/// @nodoc
+class _$NearbyCourseEntityDataCopyWithImpl<$Res>
+    implements $NearbyCourseEntityDataCopyWith<$Res> {
+  _$NearbyCourseEntityDataCopyWithImpl(this._self, this._then);
+
+  final NearbyCourseEntityData _self;
+  final $Res Function(NearbyCourseEntityData) _then;
+
+/// Create a copy of NearbyCourseEntity
+/// with the given fields replaced by the non-null parameter values.
+@override @pragma('vm:prefer-inline') $Res call({Object? courseId = null,Object? courseName = null,Object? clubId = freezed,Object? clubName = freezed,Object? address = freezed,Object? city = freezed,Object? state = freezed,Object? country = freezed,Object? distance = freezed,Object? measureUnit = freezed,Object? numHoles = freezed,Object? hasGps = freezed,}) {
+  return _then(NearbyCourseEntityData(
+courseId: null == courseId ? _self.courseId : courseId // ignore: cast_nullable_to_non_nullable
+as String,courseName: null == courseName ? _self.courseName : courseName // ignore: cast_nullable_to_non_nullable
+as String,clubId: freezed == clubId ? _self.clubId : clubId // ignore: cast_nullable_to_non_nullable
+as String?,clubName: freezed == clubName ? _self.clubName : clubName // ignore: cast_nullable_to_non_nullable
+as String?,address: freezed == address ? _self.address : address // ignore: cast_nullable_to_non_nullable
+as String?,city: freezed == city ? _self.city : city // ignore: cast_nullable_to_non_nullable
+as String?,state: freezed == state ? _self.state : state // ignore: cast_nullable_to_non_nullable
+as String?,country: freezed == country ? _self.country : country // ignore: cast_nullable_to_non_nullable
+as String?,distance: freezed == distance ? _self.distance : distance // ignore: cast_nullable_to_non_nullable
+as double?,measureUnit: freezed == measureUnit ? _self.measureUnit : measureUnit // ignore: cast_nullable_to_non_nullable
+as String?,numHoles: freezed == numHoles ? _self.numHoles : numHoles // ignore: cast_nullable_to_non_nullable
+as int?,hasGps: freezed == hasGps ? _self.hasGps : hasGps // ignore: cast_nullable_to_non_nullable
+as int?,
+  ));
+}
+
+
+}
+
 // dart format on

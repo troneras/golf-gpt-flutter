@@ -1,3 +1,4 @@
+import 'package:apparence_kit/modules/round/domain/course.dart';
 import 'package:apparence_kit/modules/round/domain/tee.dart';
 import 'package:apparence_kit/modules/round/providers/models/select_course_state.dart';
 import 'package:apparence_kit/modules/round/repositories/course_repository.dart';
@@ -57,5 +58,35 @@ class SelectCourseNotifier extends _$SelectCourseNotifier {
   void retry() {
     state = const SelectCourseState.loading();
     _loadClosestCourse();
+  }
+
+  Future<void> setCourse(Course course) async {
+    _logger.i('Setting course: ${course.name}');
+    state = const SelectCourseState.loading();
+    try {
+      // Fetch full course details with tees
+      final courseWithDetails = await _courseRepository.getCourseDetails(course.id);
+      if (courseWithDetails != null) {
+        _logger.i('Loaded course details with ${courseWithDetails.tees.length} tees');
+        state = SelectCourseState.loaded(
+          course: courseWithDetails,
+          isManuallySelected: true,
+        );
+      } else {
+        // Fall back to the course without tees
+        _logger.w('Could not load course details, using basic info');
+        state = SelectCourseState.loaded(
+          course: course,
+          isManuallySelected: true,
+        );
+      }
+    } catch (e, stackTrace) {
+      _logger.e('Error loading course details', error: e, stackTrace: stackTrace);
+      // Fall back to the course without tees
+      state = SelectCourseState.loaded(
+        course: course,
+        isManuallySelected: true,
+      );
+    }
   }
 }

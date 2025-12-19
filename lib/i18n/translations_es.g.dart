@@ -49,6 +49,7 @@ class Translations with BaseTranslations<AppLocale, Translations> {
 	late final TranslationsRoundsEs rounds = TranslationsRoundsEs.internal(_root);
 	late final TranslationsSettingsEs settings = TranslationsSettingsEs.internal(_root);
 	late final TranslationsSelectCourseEs select_course = TranslationsSelectCourseEs.internal(_root);
+	late final TranslationsBrowseCoursesEs browse_courses = TranslationsBrowseCoursesEs.internal(_root);
 	late final TranslationsFeedbackEs feedback = TranslationsFeedbackEs.internal(_root);
 }
 
@@ -92,6 +93,12 @@ class TranslationsHomeEs {
 
 	/// es: 'Abrir ajustes'
 	String get location_required_action => 'Abrir ajustes';
+
+	/// es: 'Jugar sin GPS'
+	String get play_without_gps => 'Jugar sin GPS';
+
+	/// es: 'Sin GPS no podras ver distancias ni registrar la ubicacion de tus golpes.'
+	String get no_gps_warning => 'Sin GPS no podras ver distancias ni registrar la ubicacion de tus golpes.';
 }
 
 // Path: rate_popup
@@ -260,6 +267,57 @@ class TranslationsSelectCourseEs {
 
 	/// es: 'Error al buscar campo'
 	String get error_title => 'Error al buscar campo';
+
+	/// es: 'Reintentar'
+	String get retry => 'Reintentar';
+}
+
+// Path: browse_courses
+class TranslationsBrowseCoursesEs {
+	TranslationsBrowseCoursesEs.internal(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+
+	/// es: 'Seleccionar otro campo'
+	String get title => 'Seleccionar otro campo';
+
+	/// es: 'Cercanos'
+	String get tab_nearby => 'Cercanos';
+
+	/// es: 'Recientes'
+	String get tab_recent => 'Recientes';
+
+	/// es: 'Buscar'
+	String get tab_search => 'Buscar';
+
+	/// es: 'Ciudad o nombre del campo'
+	String get search_placeholder => 'Ciudad o nombre del campo';
+
+	/// es: 'Escribe al menos 3 caracteres'
+	String get search_min_chars => 'Escribe al menos 3 caracteres';
+
+	/// es: 'No se encontraron campos'
+	String get no_results => 'No se encontraron campos';
+
+	/// es: 'No hay campos cercanos'
+	String get empty_nearby => 'No hay campos cercanos';
+
+	/// es: 'No tienes campos recientes'
+	String get empty_recent => 'No tienes campos recientes';
+
+	/// es: 'Los campos donde juegues apareceran aqui'
+	String get empty_recent_hint => 'Los campos donde juegues apareceran aqui';
+
+	/// es: 'Inicia sesion para ver tus campos recientes'
+	String get login_required => 'Inicia sesion para ver tus campos recientes';
+
+	/// es: 'Iniciar sesion'
+	String get login_action => 'Iniciar sesion';
+
+	/// es: 'Error al cargar campos'
+	String get error_loading => 'Error al cargar campos';
 
 	/// es: 'Reintentar'
 	String get retry => 'Reintentar';
@@ -665,6 +723,8 @@ extension on Translations {
 			'home.location_required_title' => 'Ubicacion requerida',
 			'home.location_required_message' => 'TalkCaddy necesita acceso a tu ubicacion para calcular distancias y registrar tus golpes durante la ronda.',
 			'home.location_required_action' => 'Abrir ajustes',
+			'home.play_without_gps' => 'Jugar sin GPS',
+			'home.no_gps_warning' => 'Sin GPS no podras ver distancias ni registrar la ubicacion de tus golpes.',
 			'rate_popup.title' => 'Tienes 15 segundos para valorarnos?',
 			'rate_popup.description' => 'Es rapido y nos ayuda mucho! Gracias!',
 			'rate_popup.cancel_button' => 'Quiza luego',
@@ -768,6 +828,20 @@ extension on Translations {
 			'select_course.no_course_found_hint' => 'Asegurate de estar en un campo de golf o intenta de nuevo',
 			'select_course.error_title' => 'Error al buscar campo',
 			'select_course.retry' => 'Reintentar',
+			'browse_courses.title' => 'Seleccionar otro campo',
+			'browse_courses.tab_nearby' => 'Cercanos',
+			'browse_courses.tab_recent' => 'Recientes',
+			'browse_courses.tab_search' => 'Buscar',
+			'browse_courses.search_placeholder' => 'Ciudad o nombre del campo',
+			'browse_courses.search_min_chars' => 'Escribe al menos 3 caracteres',
+			'browse_courses.no_results' => 'No se encontraron campos',
+			'browse_courses.empty_nearby' => 'No hay campos cercanos',
+			'browse_courses.empty_recent' => 'No tienes campos recientes',
+			'browse_courses.empty_recent_hint' => 'Los campos donde juegues apareceran aqui',
+			'browse_courses.login_required' => 'Inicia sesion para ver tus campos recientes',
+			'browse_courses.login_action' => 'Iniciar sesion',
+			'browse_courses.error_loading' => 'Error al cargar campos',
+			'browse_courses.retry' => 'Reintentar',
 			'feedback.title' => 'Enviar comentarios',
 			'feedback.subtitle' => 'Tus comentarios nos ayudan a mejorar TalkCaddy',
 			'feedback.category_label' => 'Categoria',
