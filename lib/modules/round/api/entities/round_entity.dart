@@ -60,13 +60,31 @@ sealed class RoundResponse with _$RoundResponse {
 sealed class RoundsListResponse with _$RoundsListResponse {
   const factory RoundsListResponse({
     required List<RoundEntity> rounds,
-    required int total,
-    @Default(20) int limit,
-    @Default(0) int offset,
+    @JsonKey(fromJson: _parseIntOrString) @Default(0) int total,
+    @JsonKey(fromJson: _parseIntOrStringWithDefault20) @Default(20) int limit,
+    @JsonKey(fromJson: _parseIntOrString) @Default(0) int offset,
   }) = RoundsListResponseData;
 
   const RoundsListResponse._();
 
   factory RoundsListResponse.fromJson(Map<String, Object?> json) =>
       _$RoundsListResponseFromJson(json);
+}
+
+/// Parse int from either int or string, defaulting to 0
+int _parseIntOrString(dynamic value) {
+  if (value == null) return 0;
+  if (value is int) return value;
+  if (value is String) return int.tryParse(value) ?? 0;
+  if (value is num) return value.toInt();
+  return 0;
+}
+
+/// Parse int from either int or string, defaulting to 20
+int _parseIntOrStringWithDefault20(dynamic value) {
+  if (value == null) return 20;
+  if (value is int) return value;
+  if (value is String) return int.tryParse(value) ?? 20;
+  if (value is num) return value.toInt();
+  return 20;
 }

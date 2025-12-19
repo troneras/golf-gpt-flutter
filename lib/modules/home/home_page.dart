@@ -1,10 +1,15 @@
 import 'package:apparence_kit/core/theme/extensions/theme_extension.dart';
 import 'package:apparence_kit/i18n/translations.g.dart';
+import 'package:apparence_kit/modules/round/domain/round.dart';
+import 'package:apparence_kit/modules/round/providers/active_round_check_provider.dart';
+import 'package:apparence_kit/modules/round/providers/active_round_notifier.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:permission_handler/permission_handler.dart';
+
+const activeRoundNotifierProvider = activeRoundProvider;
 
 class HomePage extends ConsumerStatefulWidget {
   const HomePage({super.key});
@@ -15,11 +20,38 @@ class HomePage extends ConsumerStatefulWidget {
 
 class _HomePageState extends ConsumerState<HomePage> with WidgetsBindingObserver {
   bool _isCheckingPermission = false;
+  bool _hasCheckedActiveRound = false;
 
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
+    _checkForActiveRound();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    super.didChangeAppLifecycleState(state);
+    if (state == AppLifecycleState.resumed) {
+      // Re-check when app comes back to foreground
+      _hasCheckedActiveRound = false;
+      _checkForActiveRound();
+    }
+  }
+
+  void _checkForActiveRound() {
+    if (_hasCheckedActiveRound) return;
+    _hasCheckedActiveRound = true;
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      if (!mounted) return;
+      // Invalidate to get fresh data
+      ref.invalidate(activeRoundCheckProvider);
+      final activeRound = await ref.read(activeRoundCheckProvider.future);
+      if (!mounted) return;
+      if (activeRound != null) {
+        _showActiveRoundDialog(activeRound);
+      }
+    });
   }
 
   @override
@@ -116,6 +148,64 @@ class _HomePageState extends ConsumerState<HomePage> with WidgetsBindingObserver
   void _startRoundWithoutGps() {
     HapticFeedback.mediumImpact();
     context.push('/select-course', extra: {'gpsEnabled': false});
+  }
+
+  void _showActiveRoundDialog(Round activeRound) {
+    final tr = Translations.of(context).active_round;
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (dialogContext) => AlertDialog(
+        title: Text(tr.title),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              tr.message(courseName: activeRound.course.name),
+              style: context.textTheme.bodyLarge,
+            ),
+            const SizedBox(height: 8),
+            Text(
+              tr.holes_played(count: activeRound.holesPlayed),
+              style: context.textTheme.bodyMedium?.copyWith(
+                color: context.colors.onSurface.withValues(alpha: 0.6),
+              ),
+            ),
+          ],
+        ),
+        actions: [
+          TextButton(
+            onPressed: () {
+              Navigator.of(dialogContext).pop();
+              _finishActiveRound(activeRound);
+            },
+            child: Text(tr.finish),
+          ),
+          FilledButton(
+            onPressed: () {
+              Navigator.of(dialogContext).pop();
+              _resumeActiveRound(activeRound);
+            },
+            child: Text(tr.resume),
+          ),
+        ],
+      ),
+    );
+  }
+
+  void _resumeActiveRound(Round activeRound) {
+    HapticFeedback.mediumImpact();
+    context.push('/round-in-progress', extra: {'roundId': activeRound.id});
+  }
+
+  Future<void> _finishActiveRound(Round activeRound) async {
+    HapticFeedback.mediumImpact();
+    // Load the round into the notifier first
+    await ref.read(activeRoundNotifierProvider.notifier).loadRound(activeRound.id);
+    if (!mounted) return;
+    // Then navigate to round summary via the finish flow
+    context.push('/round-in-progress', extra: {'roundId': activeRound.id});
   }
 
   @override

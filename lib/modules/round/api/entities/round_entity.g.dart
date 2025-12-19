@@ -82,9 +82,11 @@ RoundsListResponseData _$RoundsListResponseDataFromJson(Map json) =>
       rounds: (json['rounds'] as List<dynamic>)
           .map((e) => RoundEntity.fromJson(Map<String, Object?>.from(e as Map)))
           .toList(),
-      total: (json['total'] as num).toInt(),
-      limit: (json['limit'] as num?)?.toInt() ?? 20,
-      offset: (json['offset'] as num?)?.toInt() ?? 0,
+      total: json['total'] == null ? 0 : _parseIntOrString(json['total']),
+      limit: json['limit'] == null
+          ? 20
+          : _parseIntOrStringWithDefault20(json['limit']),
+      offset: json['offset'] == null ? 0 : _parseIntOrString(json['offset']),
     );
 
 Map<String, dynamic> _$RoundsListResponseDataToJson(

@@ -688,7 +688,7 @@ RoundsListResponse _$RoundsListResponseFromJson(
 /// @nodoc
 mixin _$RoundsListResponse {
 
- List<RoundEntity> get rounds; int get total; int get limit; int get offset;
+ List<RoundEntity> get rounds;@JsonKey(fromJson: _parseIntOrString) int get total;@JsonKey(fromJson: _parseIntOrStringWithDefault20) int get limit;@JsonKey(fromJson: _parseIntOrString) int get offset;
 /// Create a copy of RoundsListResponse
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -721,7 +721,7 @@ abstract mixin class $RoundsListResponseCopyWith<$Res>  {
   factory $RoundsListResponseCopyWith(RoundsListResponse value, $Res Function(RoundsListResponse) _then) = _$RoundsListResponseCopyWithImpl;
 @useResult
 $Res call({
- List<RoundEntity> rounds, int total, int limit, int offset
+ List<RoundEntity> rounds,@JsonKey(fromJson: _parseIntOrString) int total,@JsonKey(fromJson: _parseIntOrStringWithDefault20) int limit,@JsonKey(fromJson: _parseIntOrString) int offset
 });
 
 
@@ -826,7 +826,7 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( List<RoundEntity> rounds,  int total,  int limit,  int offset)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( List<RoundEntity> rounds, @JsonKey(fromJson: _parseIntOrString)  int total, @JsonKey(fromJson: _parseIntOrStringWithDefault20)  int limit, @JsonKey(fromJson: _parseIntOrString)  int offset)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case RoundsListResponseData() when $default != null:
 return $default(_that.rounds,_that.total,_that.limit,_that.offset);case _:
@@ -847,7 +847,7 @@ return $default(_that.rounds,_that.total,_that.limit,_that.offset);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( List<RoundEntity> rounds,  int total,  int limit,  int offset)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( List<RoundEntity> rounds, @JsonKey(fromJson: _parseIntOrString)  int total, @JsonKey(fromJson: _parseIntOrStringWithDefault20)  int limit, @JsonKey(fromJson: _parseIntOrString)  int offset)  $default,) {final _that = this;
 switch (_that) {
 case RoundsListResponseData():
 return $default(_that.rounds,_that.total,_that.limit,_that.offset);}
@@ -864,7 +864,7 @@ return $default(_that.rounds,_that.total,_that.limit,_that.offset);}
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( List<RoundEntity> rounds,  int total,  int limit,  int offset)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( List<RoundEntity> rounds, @JsonKey(fromJson: _parseIntOrString)  int total, @JsonKey(fromJson: _parseIntOrStringWithDefault20)  int limit, @JsonKey(fromJson: _parseIntOrString)  int offset)?  $default,) {final _that = this;
 switch (_that) {
 case RoundsListResponseData() when $default != null:
 return $default(_that.rounds,_that.total,_that.limit,_that.offset);case _:
@@ -879,7 +879,7 @@ return $default(_that.rounds,_that.total,_that.limit,_that.offset);case _:
 @JsonSerializable()
 
 class RoundsListResponseData extends RoundsListResponse {
-  const RoundsListResponseData({required final  List<RoundEntity> rounds, required this.total, this.limit = 20, this.offset = 0}): _rounds = rounds,super._();
+  const RoundsListResponseData({required final  List<RoundEntity> rounds, @JsonKey(fromJson: _parseIntOrString) this.total = 0, @JsonKey(fromJson: _parseIntOrStringWithDefault20) this.limit = 20, @JsonKey(fromJson: _parseIntOrString) this.offset = 0}): _rounds = rounds,super._();
   factory RoundsListResponseData.fromJson(Map<String, dynamic> json) => _$RoundsListResponseDataFromJson(json);
 
  final  List<RoundEntity> _rounds;
@@ -889,9 +889,9 @@ class RoundsListResponseData extends RoundsListResponse {
   return EqualUnmodifiableListView(_rounds);
 }
 
-@override final  int total;
-@override@JsonKey() final  int limit;
-@override@JsonKey() final  int offset;
+@override@JsonKey(fromJson: _parseIntOrString) final  int total;
+@override@JsonKey(fromJson: _parseIntOrStringWithDefault20) final  int limit;
+@override@JsonKey(fromJson: _parseIntOrString) final  int offset;
 
 /// Create a copy of RoundsListResponse
 /// with the given fields replaced by the non-null parameter values.
@@ -926,7 +926,7 @@ abstract mixin class $RoundsListResponseDataCopyWith<$Res> implements $RoundsLis
   factory $RoundsListResponseDataCopyWith(RoundsListResponseData value, $Res Function(RoundsListResponseData) _then) = _$RoundsListResponseDataCopyWithImpl;
 @override @useResult
 $Res call({
- List<RoundEntity> rounds, int total, int limit, int offset
+ List<RoundEntity> rounds,@JsonKey(fromJson: _parseIntOrString) int total,@JsonKey(fromJson: _parseIntOrStringWithDefault20) int limit,@JsonKey(fromJson: _parseIntOrString) int offset
 });
 
 

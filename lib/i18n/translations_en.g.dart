@@ -49,6 +49,10 @@ class TranslationsEn extends Translations with BaseTranslations<AppLocale, Trans
 	@override late final _TranslationsSettingsEn settings = _TranslationsSettingsEn._(_root);
 	@override late final _TranslationsSelectCourseEn select_course = _TranslationsSelectCourseEn._(_root);
 	@override late final _TranslationsBrowseCoursesEn browse_courses = _TranslationsBrowseCoursesEn._(_root);
+	@override late final _TranslationsRoundInProgressEn round_in_progress = _TranslationsRoundInProgressEn._(_root);
+	@override late final _TranslationsRoundSummaryEn round_summary = _TranslationsRoundSummaryEn._(_root);
+	@override late final _TranslationsScoreNamesEn score_names = _TranslationsScoreNamesEn._(_root);
+	@override late final _TranslationsActiveRoundEn active_round = _TranslationsActiveRoundEn._(_root);
 	@override late final _TranslationsFeedbackEn feedback = _TranslationsFeedbackEn._(_root);
 }
 
@@ -206,6 +210,92 @@ class _TranslationsBrowseCoursesEn extends TranslationsBrowseCoursesEs {
 	@override String get login_action => 'Sign in';
 	@override String get error_loading => 'Error loading courses';
 	@override String get retry => 'Retry';
+}
+
+// Path: round_in_progress
+class _TranslationsRoundInProgressEn extends TranslationsRoundInProgressEs {
+	_TranslationsRoundInProgressEn._(TranslationsEn root) : this._root = root, super.internal(root);
+
+	final TranslationsEn _root; // ignore: unused_field
+
+	// Translations
+	@override String get title => 'Round in progress';
+	@override String get strokes => 'Strokes';
+	@override String get vs_par => 'vs Par';
+	@override String get holes => 'Holes';
+	@override String get hole => 'Hole';
+	@override String get yards => 'Yds';
+	@override String get par => 'Par';
+	@override String get score => 'Score';
+	@override String get out => 'OUT';
+	@override String get kIn => 'IN';
+	@override String get total => 'TOT';
+	@override String get putts => 'Putts';
+	@override String get penalties => 'Penalties';
+	@override String get save => 'Save';
+	@override String get finish_round => 'Finish Round';
+	@override String get exit_title => 'Leave the round?';
+	@override String get exit_message => 'Your progress will be saved and you can continue later.';
+	@override String get exit_action => 'Leave';
+	@override String get finish_title => 'Finish round?';
+	@override String get finish_message => 'Once finished, you won\'t be able to edit the results.';
+	@override String get finish_action => 'Finish';
+	@override String get notes_label => 'Notes (optional)';
+	@override String get notes_hint => 'Add notes about the round...';
+	@override String get gps_enabled => 'GPS enabled';
+	@override String get gps_disabled => 'GPS disabled';
+	@override String get error_saving => 'Error saving';
+	@override String get retry => 'Retry';
+	@override String get back => 'Back';
+}
+
+// Path: round_summary
+class _TranslationsRoundSummaryEn extends TranslationsRoundSummaryEs {
+	_TranslationsRoundSummaryEn._(TranslationsEn root) : this._root = root, super.internal(root);
+
+	final TranslationsEn _root; // ignore: unused_field
+
+	// Translations
+	@override String get title => 'Round finished!';
+	@override String get subtitle => 'Here\'s your summary';
+	@override String get total_strokes => 'total strokes';
+	@override String get putts => 'Putts';
+	@override String get duration => 'Duration';
+	@override String get fairways => 'Fairways';
+	@override String get gir => 'GIR';
+	@override String get back_home => 'Back to home';
+	@override String get view_details => 'View details';
+}
+
+// Path: score_names
+class _TranslationsScoreNamesEn extends TranslationsScoreNamesEs {
+	_TranslationsScoreNamesEn._(TranslationsEn root) : this._root = root, super.internal(root);
+
+	final TranslationsEn _root; // ignore: unused_field
+
+	// Translations
+	@override String get hole_in_one => 'Hole in One!';
+	@override String get albatross => 'Albatross';
+	@override String get eagle => 'Eagle';
+	@override String get birdie => 'Birdie';
+	@override String get par => 'Par';
+	@override String get bogey => 'Bogey';
+	@override String get double_bogey => 'Double Bogey';
+	@override String get triple_bogey => 'Triple Bogey';
+}
+
+// Path: active_round
+class _TranslationsActiveRoundEn extends TranslationsActiveRoundEs {
+	_TranslationsActiveRoundEn._(TranslationsEn root) : this._root = root, super.internal(root);
+
+	final TranslationsEn _root; // ignore: unused_field
+
+	// Translations
+	@override String get title => 'You have a round in progress';
+	@override String message({required Object courseName}) => 'You left an unfinished round at ${courseName}.';
+	@override String holes_played({required Object count}) => '${count} of 18 holes played';
+	@override String get resume => 'Resume round';
+	@override String get finish => 'Finish round';
 }
 
 // Path: feedback
@@ -539,6 +629,56 @@ extension on TranslationsEn {
 			'browse_courses.login_action' => 'Sign in',
 			'browse_courses.error_loading' => 'Error loading courses',
 			'browse_courses.retry' => 'Retry',
+			'round_in_progress.title' => 'Round in progress',
+			'round_in_progress.strokes' => 'Strokes',
+			'round_in_progress.vs_par' => 'vs Par',
+			'round_in_progress.holes' => 'Holes',
+			'round_in_progress.hole' => 'Hole',
+			'round_in_progress.yards' => 'Yds',
+			'round_in_progress.par' => 'Par',
+			'round_in_progress.score' => 'Score',
+			'round_in_progress.out' => 'OUT',
+			'round_in_progress.kIn' => 'IN',
+			'round_in_progress.total' => 'TOT',
+			'round_in_progress.putts' => 'Putts',
+			'round_in_progress.penalties' => 'Penalties',
+			'round_in_progress.save' => 'Save',
+			'round_in_progress.finish_round' => 'Finish Round',
+			'round_in_progress.exit_title' => 'Leave the round?',
+			'round_in_progress.exit_message' => 'Your progress will be saved and you can continue later.',
+			'round_in_progress.exit_action' => 'Leave',
+			'round_in_progress.finish_title' => 'Finish round?',
+			'round_in_progress.finish_message' => 'Once finished, you won\'t be able to edit the results.',
+			'round_in_progress.finish_action' => 'Finish',
+			'round_in_progress.notes_label' => 'Notes (optional)',
+			'round_in_progress.notes_hint' => 'Add notes about the round...',
+			'round_in_progress.gps_enabled' => 'GPS enabled',
+			'round_in_progress.gps_disabled' => 'GPS disabled',
+			'round_in_progress.error_saving' => 'Error saving',
+			'round_in_progress.retry' => 'Retry',
+			'round_in_progress.back' => 'Back',
+			'round_summary.title' => 'Round finished!',
+			'round_summary.subtitle' => 'Here\'s your summary',
+			'round_summary.total_strokes' => 'total strokes',
+			'round_summary.putts' => 'Putts',
+			'round_summary.duration' => 'Duration',
+			'round_summary.fairways' => 'Fairways',
+			'round_summary.gir' => 'GIR',
+			'round_summary.back_home' => 'Back to home',
+			'round_summary.view_details' => 'View details',
+			'score_names.hole_in_one' => 'Hole in One!',
+			'score_names.albatross' => 'Albatross',
+			'score_names.eagle' => 'Eagle',
+			'score_names.birdie' => 'Birdie',
+			'score_names.par' => 'Par',
+			'score_names.bogey' => 'Bogey',
+			'score_names.double_bogey' => 'Double Bogey',
+			'score_names.triple_bogey' => 'Triple Bogey',
+			'active_round.title' => 'You have a round in progress',
+			'active_round.message' => ({required Object courseName}) => 'You left an unfinished round at ${courseName}.',
+			'active_round.holes_played' => ({required Object count}) => '${count} of 18 holes played',
+			'active_round.resume' => 'Resume round',
+			'active_round.finish' => 'Finish round',
 			'feedback.title' => 'Send feedback',
 			'feedback.subtitle' => 'Your feedback helps us improve TalkCaddy',
 			'feedback.category_label' => 'Category',

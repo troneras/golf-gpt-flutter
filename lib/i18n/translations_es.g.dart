@@ -50,6 +50,10 @@ class Translations with BaseTranslations<AppLocale, Translations> {
 	late final TranslationsSettingsEs settings = TranslationsSettingsEs.internal(_root);
 	late final TranslationsSelectCourseEs select_course = TranslationsSelectCourseEs.internal(_root);
 	late final TranslationsBrowseCoursesEs browse_courses = TranslationsBrowseCoursesEs.internal(_root);
+	late final TranslationsRoundInProgressEs round_in_progress = TranslationsRoundInProgressEs.internal(_root);
+	late final TranslationsRoundSummaryEs round_summary = TranslationsRoundSummaryEs.internal(_root);
+	late final TranslationsScoreNamesEs score_names = TranslationsScoreNamesEs.internal(_root);
+	late final TranslationsActiveRoundEs active_round = TranslationsActiveRoundEs.internal(_root);
 	late final TranslationsFeedbackEs feedback = TranslationsFeedbackEs.internal(_root);
 }
 
@@ -321,6 +325,192 @@ class TranslationsBrowseCoursesEs {
 
 	/// es: 'Reintentar'
 	String get retry => 'Reintentar';
+}
+
+// Path: round_in_progress
+class TranslationsRoundInProgressEs {
+	TranslationsRoundInProgressEs.internal(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+
+	/// es: 'Ronda en curso'
+	String get title => 'Ronda en curso';
+
+	/// es: 'Golpes'
+	String get strokes => 'Golpes';
+
+	/// es: 'vs Par'
+	String get vs_par => 'vs Par';
+
+	/// es: 'Hoyos'
+	String get holes => 'Hoyos';
+
+	/// es: 'Hoyo'
+	String get hole => 'Hoyo';
+
+	/// es: 'Yds'
+	String get yards => 'Yds';
+
+	/// es: 'Par'
+	String get par => 'Par';
+
+	/// es: 'Score'
+	String get score => 'Score';
+
+	/// es: 'OUT'
+	String get out => 'OUT';
+
+	/// es: 'IN'
+	String get kIn => 'IN';
+
+	/// es: 'TOT'
+	String get total => 'TOT';
+
+	/// es: 'Putts'
+	String get putts => 'Putts';
+
+	/// es: 'Penaltis'
+	String get penalties => 'Penaltis';
+
+	/// es: 'Guardar'
+	String get save => 'Guardar';
+
+	/// es: 'Finalizar Ronda'
+	String get finish_round => 'Finalizar Ronda';
+
+	/// es: 'Salir de la ronda?'
+	String get exit_title => 'Salir de la ronda?';
+
+	/// es: 'Tu progreso se guardara y podras continuar mas tarde.'
+	String get exit_message => 'Tu progreso se guardara y podras continuar mas tarde.';
+
+	/// es: 'Salir'
+	String get exit_action => 'Salir';
+
+	/// es: 'Finalizar ronda?'
+	String get finish_title => 'Finalizar ronda?';
+
+	/// es: 'Una vez finalizada, no podras editar los resultados.'
+	String get finish_message => 'Una vez finalizada, no podras editar los resultados.';
+
+	/// es: 'Finalizar'
+	String get finish_action => 'Finalizar';
+
+	/// es: 'Notas (opcional)'
+	String get notes_label => 'Notas (opcional)';
+
+	/// es: 'Agrega notas sobre la ronda...'
+	String get notes_hint => 'Agrega notas sobre la ronda...';
+
+	/// es: 'GPS activado'
+	String get gps_enabled => 'GPS activado';
+
+	/// es: 'GPS desactivado'
+	String get gps_disabled => 'GPS desactivado';
+
+	/// es: 'Error al guardar'
+	String get error_saving => 'Error al guardar';
+
+	/// es: 'Reintentar'
+	String get retry => 'Reintentar';
+
+	/// es: 'Volver'
+	String get back => 'Volver';
+}
+
+// Path: round_summary
+class TranslationsRoundSummaryEs {
+	TranslationsRoundSummaryEs.internal(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+
+	/// es: 'Ronda finalizada!'
+	String get title => 'Ronda finalizada!';
+
+	/// es: 'Aqui esta tu resumen'
+	String get subtitle => 'Aqui esta tu resumen';
+
+	/// es: 'golpes totales'
+	String get total_strokes => 'golpes totales';
+
+	/// es: 'Putts'
+	String get putts => 'Putts';
+
+	/// es: 'Duracion'
+	String get duration => 'Duracion';
+
+	/// es: 'Fairways'
+	String get fairways => 'Fairways';
+
+	/// es: 'GIR'
+	String get gir => 'GIR';
+
+	/// es: 'Volver al inicio'
+	String get back_home => 'Volver al inicio';
+
+	/// es: 'Ver detalles'
+	String get view_details => 'Ver detalles';
+}
+
+// Path: score_names
+class TranslationsScoreNamesEs {
+	TranslationsScoreNamesEs.internal(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+
+	/// es: 'Hole in One!'
+	String get hole_in_one => 'Hole in One!';
+
+	/// es: 'Albatros'
+	String get albatross => 'Albatros';
+
+	/// es: 'Eagle'
+	String get eagle => 'Eagle';
+
+	/// es: 'Birdie'
+	String get birdie => 'Birdie';
+
+	/// es: 'Par'
+	String get par => 'Par';
+
+	/// es: 'Bogey'
+	String get bogey => 'Bogey';
+
+	/// es: 'Doble Bogey'
+	String get double_bogey => 'Doble Bogey';
+
+	/// es: 'Triple Bogey'
+	String get triple_bogey => 'Triple Bogey';
+}
+
+// Path: active_round
+class TranslationsActiveRoundEs {
+	TranslationsActiveRoundEs.internal(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+
+	/// es: 'Tienes una ronda en curso'
+	String get title => 'Tienes una ronda en curso';
+
+	/// es: 'Dejaste una ronda sin terminar en $courseName.'
+	String message({required Object courseName}) => 'Dejaste una ronda sin terminar en ${courseName}.';
+
+	/// es: '$count de 18 hoyos jugados'
+	String holes_played({required Object count}) => '${count} de 18 hoyos jugados';
+
+	/// es: 'Continuar ronda'
+	String get resume => 'Continuar ronda';
+
+	/// es: 'Finalizar ronda'
+	String get finish => 'Finalizar ronda';
 }
 
 // Path: feedback
@@ -842,6 +1032,56 @@ extension on Translations {
 			'browse_courses.login_action' => 'Iniciar sesion',
 			'browse_courses.error_loading' => 'Error al cargar campos',
 			'browse_courses.retry' => 'Reintentar',
+			'round_in_progress.title' => 'Ronda en curso',
+			'round_in_progress.strokes' => 'Golpes',
+			'round_in_progress.vs_par' => 'vs Par',
+			'round_in_progress.holes' => 'Hoyos',
+			'round_in_progress.hole' => 'Hoyo',
+			'round_in_progress.yards' => 'Yds',
+			'round_in_progress.par' => 'Par',
+			'round_in_progress.score' => 'Score',
+			'round_in_progress.out' => 'OUT',
+			'round_in_progress.kIn' => 'IN',
+			'round_in_progress.total' => 'TOT',
+			'round_in_progress.putts' => 'Putts',
+			'round_in_progress.penalties' => 'Penaltis',
+			'round_in_progress.save' => 'Guardar',
+			'round_in_progress.finish_round' => 'Finalizar Ronda',
+			'round_in_progress.exit_title' => 'Salir de la ronda?',
+			'round_in_progress.exit_message' => 'Tu progreso se guardara y podras continuar mas tarde.',
+			'round_in_progress.exit_action' => 'Salir',
+			'round_in_progress.finish_title' => 'Finalizar ronda?',
+			'round_in_progress.finish_message' => 'Una vez finalizada, no podras editar los resultados.',
+			'round_in_progress.finish_action' => 'Finalizar',
+			'round_in_progress.notes_label' => 'Notas (opcional)',
+			'round_in_progress.notes_hint' => 'Agrega notas sobre la ronda...',
+			'round_in_progress.gps_enabled' => 'GPS activado',
+			'round_in_progress.gps_disabled' => 'GPS desactivado',
+			'round_in_progress.error_saving' => 'Error al guardar',
+			'round_in_progress.retry' => 'Reintentar',
+			'round_in_progress.back' => 'Volver',
+			'round_summary.title' => 'Ronda finalizada!',
+			'round_summary.subtitle' => 'Aqui esta tu resumen',
+			'round_summary.total_strokes' => 'golpes totales',
+			'round_summary.putts' => 'Putts',
+			'round_summary.duration' => 'Duracion',
+			'round_summary.fairways' => 'Fairways',
+			'round_summary.gir' => 'GIR',
+			'round_summary.back_home' => 'Volver al inicio',
+			'round_summary.view_details' => 'Ver detalles',
+			'score_names.hole_in_one' => 'Hole in One!',
+			'score_names.albatross' => 'Albatros',
+			'score_names.eagle' => 'Eagle',
+			'score_names.birdie' => 'Birdie',
+			'score_names.par' => 'Par',
+			'score_names.bogey' => 'Bogey',
+			'score_names.double_bogey' => 'Doble Bogey',
+			'score_names.triple_bogey' => 'Triple Bogey',
+			'active_round.title' => 'Tienes una ronda en curso',
+			'active_round.message' => ({required Object courseName}) => 'Dejaste una ronda sin terminar en ${courseName}.',
+			'active_round.holes_played' => ({required Object count}) => '${count} de 18 hoyos jugados',
+			'active_round.resume' => 'Continuar ronda',
+			'active_round.finish' => 'Finalizar ronda',
 			'feedback.title' => 'Enviar comentarios',
 			'feedback.subtitle' => 'Tus comentarios nos ayudan a mejorar TalkCaddy',
 			'feedback.category_label' => 'Categoria',

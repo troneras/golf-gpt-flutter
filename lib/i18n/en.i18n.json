@@ -220,6 +220,13 @@
         "double_bogey": "Double Bogey",
         "triple_bogey": "Triple Bogey"
     },
+    "active_round": {
+        "title": "You have a round in progress",
+        "message": "You left an unfinished round at $courseName.",
+        "holes_played": "$count of 18 holes played",
+        "resume": "Resume round",
+        "finish": "Finish round"
+    },
     "feedback": {
         "title": "Send feedback",
         "subtitle": "Your feedback helps us improve TalkCaddy",
