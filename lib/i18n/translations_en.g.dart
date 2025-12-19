@@ -54,6 +54,7 @@ class TranslationsEn extends Translations with BaseTranslations<AppLocale, Trans
 	@override late final _TranslationsScoreNamesEn score_names = _TranslationsScoreNamesEn._(_root);
 	@override late final _TranslationsActiveRoundEn active_round = _TranslationsActiveRoundEn._(_root);
 	@override late final _TranslationsFeedbackEn feedback = _TranslationsFeedbackEn._(_root);
+	@override late final _TranslationsGpsEn gps = _TranslationsGpsEn._(_root);
 }
 
 // Path: home
@@ -337,6 +338,16 @@ class _TranslationsFeedbackEn extends TranslationsFeedbackEs {
 	@override String get back => 'Go back';
 }
 
+// Path: gps
+class _TranslationsGpsEn extends TranslationsGpsEs {
+	_TranslationsGpsEn._(TranslationsEn root) : this._root = root, super.internal(root);
+
+	final TranslationsEn _root; // ignore: unused_field
+
+	// Translations
+	@override late final _TranslationsGpsTrackingEn tracking = _TranslationsGpsTrackingEn._(_root);
+}
+
 // Path: onboarding.welcome
 class _TranslationsOnboardingWelcomeEn extends TranslationsOnboardingWelcomeEs {
 	_TranslationsOnboardingWelcomeEn._(TranslationsEn root) : this._root = root, super.internal(root);
@@ -499,6 +510,23 @@ class _TranslationsSettingsLocationPermissionEn extends TranslationsSettingsLoca
 	@override String get granted => 'Allowed';
 	@override String get denied => 'Denied';
 	@override String get open_settings => 'Open settings';
+}
+
+// Path: gps.tracking
+class _TranslationsGpsTrackingEn extends TranslationsGpsTrackingEs {
+	_TranslationsGpsTrackingEn._(TranslationsEn root) : this._root = root, super.internal(root);
+
+	final TranslationsEn _root; // ignore: unused_field
+
+	// Translations
+	@override String get notification_title => 'Round in progress';
+	@override String get notification_text => 'TalkCaddy is tracking your route';
+	@override String get permission_title => 'Background Location';
+	@override String get permission_message => 'To track your route while using other apps, TalkCaddy needs background location access.';
+	@override String get permission_denied => 'Without background location access, GPS will only work while the app is open.';
+	@override String get started => 'GPS tracking started';
+	@override String get stopped => 'GPS tracking stopped';
+	@override String get error => 'GPS error';
 }
 
 /// The flat map containing all translations for locale <en>.
@@ -719,6 +747,14 @@ extension on TranslationsEn {
 			'feedback.success_title' => 'Message sent',
 			'feedback.success_message' => 'Thank you for your feedback. We will respond shortly.',
 			'feedback.back' => 'Go back',
+			'gps.tracking.notification_title' => 'Round in progress',
+			'gps.tracking.notification_text' => 'TalkCaddy is tracking your route',
+			'gps.tracking.permission_title' => 'Background Location',
+			'gps.tracking.permission_message' => 'To track your route while using other apps, TalkCaddy needs background location access.',
+			'gps.tracking.permission_denied' => 'Without background location access, GPS will only work while the app is open.',
+			'gps.tracking.started' => 'GPS tracking started',
+			'gps.tracking.stopped' => 'GPS tracking stopped',
+			'gps.tracking.error' => 'GPS error',
 			_ => null,
 		};
 	}

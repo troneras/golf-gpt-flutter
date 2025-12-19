@@ -258,5 +258,17 @@
         "success_title": "Mensaje enviado",
         "success_message": "Gracias por tus comentarios. Te responderemos pronto.",
         "back": "Volver"
+    },
+    "gps": {
+        "tracking": {
+            "notification_title": "Ronda en progreso",
+            "notification_text": "TalkCaddy esta rastreando tu recorrido",
+            "permission_title": "Ubicacion en segundo plano",
+            "permission_message": "Para rastrear tu recorrido mientras usas otras apps, TalkCaddy necesita acceso a tu ubicacion en segundo plano.",
+            "permission_denied": "Sin acceso a ubicacion en segundo plano, el GPS solo funcionara mientras la app este abierta.",
+            "started": "Rastreo GPS iniciado",
+            "stopped": "Rastreo GPS detenido",
+            "error": "Error de GPS"
+        }
     }
 }

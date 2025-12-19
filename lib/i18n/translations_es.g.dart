@@ -55,6 +55,7 @@ class Translations with BaseTranslations<AppLocale, Translations> {
 	late final TranslationsScoreNamesEs score_names = TranslationsScoreNamesEs.internal(_root);
 	late final TranslationsActiveRoundEs active_round = TranslationsActiveRoundEs.internal(_root);
 	late final TranslationsFeedbackEs feedback = TranslationsFeedbackEs.internal(_root);
+	late final TranslationsGpsEs gps = TranslationsGpsEs.internal(_root);
 }
 
 // Path: home
@@ -612,6 +613,16 @@ class TranslationsFeedbackEs {
 	String get back => 'Volver';
 }
 
+// Path: gps
+class TranslationsGpsEs {
+	TranslationsGpsEs.internal(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+	late final TranslationsGpsTrackingEs tracking = TranslationsGpsTrackingEs.internal(_root);
+}
+
 // Path: onboarding.welcome
 class TranslationsOnboardingWelcomeEs {
 	TranslationsOnboardingWelcomeEs.internal(this._root);
@@ -924,6 +935,39 @@ class TranslationsSettingsLocationPermissionEs {
 	String get open_settings => 'Abrir ajustes';
 }
 
+// Path: gps.tracking
+class TranslationsGpsTrackingEs {
+	TranslationsGpsTrackingEs.internal(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+
+	/// es: 'Ronda en progreso'
+	String get notification_title => 'Ronda en progreso';
+
+	/// es: 'TalkCaddy esta rastreando tu recorrido'
+	String get notification_text => 'TalkCaddy esta rastreando tu recorrido';
+
+	/// es: 'Ubicacion en segundo plano'
+	String get permission_title => 'Ubicacion en segundo plano';
+
+	/// es: 'Para rastrear tu recorrido mientras usas otras apps, TalkCaddy necesita acceso a tu ubicacion en segundo plano.'
+	String get permission_message => 'Para rastrear tu recorrido mientras usas otras apps, TalkCaddy necesita acceso a tu ubicacion en segundo plano.';
+
+	/// es: 'Sin acceso a ubicacion en segundo plano, el GPS solo funcionara mientras la app este abierta.'
+	String get permission_denied => 'Sin acceso a ubicacion en segundo plano, el GPS solo funcionara mientras la app este abierta.';
+
+	/// es: 'Rastreo GPS iniciado'
+	String get started => 'Rastreo GPS iniciado';
+
+	/// es: 'Rastreo GPS detenido'
+	String get stopped => 'Rastreo GPS detenido';
+
+	/// es: 'Error de GPS'
+	String get error => 'Error de GPS';
+}
+
 /// The flat map containing all translations for locale <es>.
 /// Only for edge cases! For simple maps, use the map function of this library.
 ///
@@ -1142,6 +1186,14 @@ extension on Translations {
 			'feedback.success_title' => 'Mensaje enviado',
 			'feedback.success_message' => 'Gracias por tus comentarios. Te responderemos pronto.',
 			'feedback.back' => 'Volver',
+			'gps.tracking.notification_title' => 'Ronda en progreso',
+			'gps.tracking.notification_text' => 'TalkCaddy esta rastreando tu recorrido',
+			'gps.tracking.permission_title' => 'Ubicacion en segundo plano',
+			'gps.tracking.permission_message' => 'Para rastrear tu recorrido mientras usas otras apps, TalkCaddy necesita acceso a tu ubicacion en segundo plano.',
+			'gps.tracking.permission_denied' => 'Sin acceso a ubicacion en segundo plano, el GPS solo funcionara mientras la app este abierta.',
+			'gps.tracking.started' => 'Rastreo GPS iniciado',
+			'gps.tracking.stopped' => 'Rastreo GPS detenido',
+			'gps.tracking.error' => 'Error de GPS',
 			_ => null,
 		};
 	}

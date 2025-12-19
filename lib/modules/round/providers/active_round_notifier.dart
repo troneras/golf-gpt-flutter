@@ -1,5 +1,8 @@
+import 'package:apparence_kit/modules/gps/providers/gps_tracking_notifier.dart';
+import 'package:apparence_kit/modules/gps/services/gps_tracking_service.dart';
 import 'package:apparence_kit/modules/round/providers/models/active_round_state.dart';
 import 'package:apparence_kit/modules/round/repositories/round_repository.dart';
+import 'package:flutter/widgets.dart';
 import 'package:logger/logger.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -40,6 +43,12 @@ class ActiveRoundNotifier extends _$ActiveRoundNotifier {
         round: round,
         currentHole: round.currentHole,
       );
+
+      // Start GPS tracking if enabled
+      if (round.gpsEnabled) {
+        _logger.i('Starting GPS tracking for round');
+        ref.read(gpsTrackingProvider.notifier).startTracking();
+      }
     } catch (e, stackTrace) {
       _logger.e('Error starting round', error: e, stackTrace: stackTrace);
       if (!ref.mounted) return;
@@ -70,6 +79,12 @@ class ActiveRoundNotifier extends _$ActiveRoundNotifier {
         round: round,
         currentHole: round.currentHole,
       );
+
+      // Start GPS tracking if enabled for resumed round
+      if (round.gpsEnabled) {
+        _logger.i('Starting GPS tracking for resumed round');
+        ref.read(gpsTrackingProvider.notifier).startTracking();
+      }
     } catch (e, stackTrace) {
       _logger.e('Error loading round', error: e, stackTrace: stackTrace);
       if (!ref.mounted) return;
@@ -221,6 +236,16 @@ class ActiveRoundNotifier extends _$ActiveRoundNotifier {
         round: updatedRound,
       );
       _logger.i('GPS setting updated');
+
+      // Start or stop GPS tracking based on new setting
+      final gpsNotifier = ref.read(gpsTrackingProvider.notifier);
+      if (enabled) {
+        _logger.i('Starting GPS tracking');
+        gpsNotifier.startTracking();
+      } else {
+        _logger.i('Stopping GPS tracking');
+        gpsNotifier.stopTracking();
+      }
     } catch (e, stackTrace) {
       _logger.e('Error updating GPS setting', error: e, stackTrace: stackTrace);
     }
@@ -237,6 +262,10 @@ class ActiveRoundNotifier extends _$ActiveRoundNotifier {
     _logger.i('Finishing round: ${currentState.round.id}');
     state = currentState.copyWith(isSaving: true);
 
+    // Stop GPS tracking before finishing round
+    _logger.i('Stopping GPS tracking for finished round');
+    await ref.read(gpsTrackingProvider.notifier).stopTracking();
+
     try {
       final summary = await _roundRepository.finishRound(notes: notes);
       if (!ref.mounted) return;
@@ -252,6 +281,35 @@ class ActiveRoundNotifier extends _$ActiveRoundNotifier {
         isSaving: false,
         savingError: e.toString(),
       );
+    }
+  }
+
+  /// Handle app lifecycle changes for GPS tracking.
+  ///
+  /// Called when app transitions between foreground/background states.
+  /// For background tracking, we don't need to pause/resume since the
+  /// foreground service keeps tracking active.
+  void handleAppLifecycleChange(AppLifecycleState lifecycleState) {
+    final currentState = state;
+    if (currentState is! ActiveRoundStateActive) return;
+    if (!currentState.round.gpsEnabled) return;
+
+    switch (lifecycleState) {
+      case AppLifecycleState.paused:
+      case AppLifecycleState.inactive:
+        // Keep tracking in background - foreground service handles this
+        _logger.d('App paused/inactive - GPS tracking continues in background');
+      case AppLifecycleState.resumed:
+        // Ensure tracking is still active when app resumes
+        final gpsStatus = ref.read(gpsTrackingProvider);
+        if (gpsStatus != GpsTrackingStatus.tracking) {
+          _logger.i('App resumed - restarting GPS tracking');
+          ref.read(gpsTrackingProvider.notifier).startTracking();
+        }
+      case AppLifecycleState.detached:
+      case AppLifecycleState.hidden:
+        // App being destroyed - tracking will stop with the process
+        _logger.d('App detached/hidden');
     }
   }
 

@@ -258,5 +258,17 @@
         "success_title": "Message sent",
         "success_message": "Thank you for your feedback. We will respond shortly.",
         "back": "Go back"
+    },
+    "gps": {
+        "tracking": {
+            "notification_title": "Round in progress",
+            "notification_text": "TalkCaddy is tracking your route",
+            "permission_title": "Background Location",
+            "permission_message": "To track your route while using other apps, TalkCaddy needs background location access.",
+            "permission_denied": "Without background location access, GPS will only work while the app is open.",
+            "started": "GPS tracking started",
+            "stopped": "GPS tracking stopped",
+            "error": "GPS error"
+        }
     }
 }

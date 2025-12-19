@@ -1,5 +1,5 @@
 import 'package:apparence_kit/core/data/api/analytics_api.dart';
-
+import 'package:apparence_kit/modules/round/providers/active_round_notifier.dart';
 
 import 'package:apparence_kit/core/initializer/onstart_widget.dart';
 import 'package:apparence_kit/core/shared_preferences/shared_preferences.dart';
@@ -77,8 +77,10 @@ void main() async {
 void run(SharedPreferences prefs) => runApp(
       TranslationProvider(
         child: ProviderScope(
-          child: MyApp(
-            sharedPreferences: prefs,
+          child: AppLifecycleObserver(
+            child: MyApp(
+              sharedPreferences: prefs,
+            ),
           ),
         ),
       ),
@@ -227,7 +229,7 @@ class InitializationErrorPage extends StatelessWidget {
                 color: context.colors.grey3,
               ),
             ),
-            if (kDebugMode) 
+            if (kDebugMode)
               Text(
                 "developper mode error: $error",
                 style: context.textTheme.bodyLarge?.copyWith(
@@ -239,4 +241,40 @@ class InitializationErrorPage extends StatelessWidget {
       ),
     );
   }
+}
+
+/// Widget that observes app lifecycle changes and notifies GPS tracking.
+///
+/// This ensures GPS tracking is properly managed when the app goes to
+/// background or returns to foreground.
+class AppLifecycleObserver extends ConsumerStatefulWidget {
+  final Widget child;
+
+  const AppLifecycleObserver({super.key, required this.child});
+
+  @override
+  ConsumerState<AppLifecycleObserver> createState() => _AppLifecycleObserverState();
+}
+
+class _AppLifecycleObserverState extends ConsumerState<AppLifecycleObserver>
+    with WidgetsBindingObserver {
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addObserver(this);
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    ref.read(activeRoundProvider.notifier).handleAppLifecycleChange(state);
+  }
+
+  @override
+  Widget build(BuildContext context) => widget.child;
 }
