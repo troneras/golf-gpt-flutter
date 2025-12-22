@@ -15,8 +15,8 @@ CourseEntityData _$CourseEntityDataFromJson(Map json) => CourseEntityData(
   city: json['city'] as String?,
   state: json['state'] as String?,
   country: json['country'] as String?,
-  latitude: (json['latitude'] as num?)?.toDouble(),
-  longitude: (json['longitude'] as num?)?.toDouble(),
+  latitude: (_extractLatitude(json, 'latitude') as num?)?.toDouble(),
+  longitude: (_extractLongitude(json, 'longitude') as num?)?.toDouble(),
   distanceKm: (json['distance_km'] as num?)?.toDouble(),
   tees:
       (json['tees'] as List<dynamic>?)

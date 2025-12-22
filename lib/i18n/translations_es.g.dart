@@ -473,6 +473,9 @@ class TranslationsRoundInProgressEs {
 	/// es: 'Error al guardar'
 	String get error_saving => 'Error al guardar';
 
+	/// es: 'La ronda fue finalizada desde el caddie de voz'
+	String get round_finished_externally => 'La ronda fue finalizada desde el caddie de voz';
+
 	/// es: 'Reintentar'
 	String get retry => 'Reintentar';
 
@@ -1498,6 +1501,7 @@ extension on Translations {
 			'round_in_progress.gps_enabled' => 'GPS activado',
 			'round_in_progress.gps_disabled' => 'GPS desactivado',
 			'round_in_progress.error_saving' => 'Error al guardar',
+			'round_in_progress.round_finished_externally' => 'La ronda fue finalizada desde el caddie de voz',
 			'round_in_progress.retry' => 'Reintentar',
 			'round_in_progress.back' => 'Volver',
 			'round_summary.title' => 'Ronda finalizada!',

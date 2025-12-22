@@ -15,16 +15,38 @@ final _logger = Logger(printer: PrettyPrinter(methodCount: 0));
 class SelectCourseNotifier extends _$SelectCourseNotifier {
   CourseRepository get _courseRepository => ref.read(courseRepositoryProvider);
 
+  /// Cached user position from initial load - reused for distance calculations
+  Position? _cachedPosition;
+
   @override
   SelectCourseState build() {
     _loadClosestCourse();
     return const SelectCourseState.loading();
   }
 
-  /// Check if the course is too far for GPS tracking
+  /// Check if the course is too far for GPS tracking based on distanceKm field
   bool _isCourseToFar(Course course) {
     if (course.distanceKm == null) return false;
     return course.distanceKm! > kMaxGpsDistanceKm;
+  }
+
+  /// Calculate distance in km between cached position and course
+  double? _calculateDistanceToCourse(Course course) {
+    if (course.latitude == null || course.longitude == null) {
+      _logger.w('Course has no coordinates, cannot calculate distance');
+      return null;
+    }
+    if (_cachedPosition == null) {
+      _logger.w('No cached position available, cannot calculate distance');
+      return null;
+    }
+    final distanceMeters = Geolocator.distanceBetween(
+      _cachedPosition!.latitude,
+      _cachedPosition!.longitude,
+      course.latitude!,
+      course.longitude!,
+    );
+    return distanceMeters / 1000; // Convert to km
   }
 
   Future<void> _loadClosestCourse() async {
@@ -37,6 +59,8 @@ class SelectCourseNotifier extends _$SelectCourseNotifier {
           accuracy: LocationAccuracy.high,
         ),
       );
+      // Cache position for later distance calculations
+      _cachedPosition = position;
       _logger.i('GPS position: lat=${position.latitude}, lng=${position.longitude}');
       _logger.i('Fetching closest course from API...');
       final course = await _courseRepository.getClosestCourse(
@@ -98,39 +122,40 @@ class SelectCourseNotifier extends _$SelectCourseNotifier {
     try {
       // Check GPS permission to set default gpsEnabled value
       final hasGpsPermission = await Permission.locationWhenInUse.isGranted;
-      // Fetch full course details with tees
+
+      // Fetch full course details with tees first (it has coordinates)
       final courseWithDetails = await _courseRepository.getCourseDetails(course.id);
       final effectiveCourse = courseWithDetails ?? course;
-      final isTooFar = _isCourseToFar(effectiveCourse);
+
+      // Calculate distance using cached position (no new GPS request)
+      final distanceKm = _calculateDistanceToCourse(effectiveCourse);
+      final isTooFar = distanceKm != null && distanceKm > kMaxGpsDistanceKm;
       if (isTooFar) {
-        _logger.w('Manually selected course is too far for GPS tracking (${effectiveCourse.distanceKm?.toStringAsFixed(2)} km > $kMaxGpsDistanceKm km)');
+        _logger.w('Manually selected course is too far for GPS tracking (${distanceKm.toStringAsFixed(2)} km > $kMaxGpsDistanceKm km)');
+      } else if (distanceKm != null) {
+        _logger.i('Distance to course: ${distanceKm.toStringAsFixed(2)} km');
       }
-      if (courseWithDetails != null) {
-        _logger.i('Loaded course details with ${courseWithDetails.tees.length} tees');
-        state = SelectCourseState.loaded(
-          course: courseWithDetails,
-          isManuallySelected: true,
-          gpsEnabled: hasGpsPermission && !isTooFar,
-          gpsTooFar: isTooFar,
-        );
-      } else {
-        // Fall back to the course without tees
-        _logger.w('Could not load course details, using basic info');
-        state = SelectCourseState.loaded(
-          course: course,
-          isManuallySelected: true,
-          gpsEnabled: hasGpsPermission && !isTooFar,
-          gpsTooFar: isTooFar,
-        );
-      }
+
+      // Update course with calculated distance for UI display
+      final finalCourse = effectiveCourse.copyWith(distanceKm: distanceKm);
+
+      _logger.i('Loaded course details with ${finalCourse.tees.length} tees');
+      state = SelectCourseState.loaded(
+        course: finalCourse,
+        isManuallySelected: true,
+        gpsEnabled: hasGpsPermission && !isTooFar,
+        gpsTooFar: isTooFar,
+      );
     } catch (e, stackTrace) {
       _logger.e('Error loading course details', error: e, stackTrace: stackTrace);
       // Check GPS permission even on error fallback
       final hasGpsPermission = await Permission.locationWhenInUse.isGranted;
-      final isTooFar = _isCourseToFar(course);
+      // Try to calculate distance using cached position
+      final distanceKm = _calculateDistanceToCourse(course);
+      final isTooFar = distanceKm != null && distanceKm > kMaxGpsDistanceKm;
       // Fall back to the course without tees
       state = SelectCourseState.loaded(
-        course: course,
+        course: course.copyWith(distanceKm: distanceKm),
         isManuallySelected: true,
         gpsEnabled: hasGpsPermission && !isTooFar,
         gpsTooFar: isTooFar,

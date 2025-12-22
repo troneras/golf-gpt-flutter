@@ -192,6 +192,25 @@ class ActiveRoundNotifier extends _$ActiveRoundNotifier {
     } catch (e, stackTrace) {
       _logger.e('Error saving score', error: e, stackTrace: stackTrace);
       if (!ref.mounted) return;
+
+      // Check if round was already finished (e.g., via ChatGPT voice caddy)
+      try {
+        final round = await _roundRepository.getRound(currentState.round.id);
+        if (!ref.mounted) return;
+        if (round.isFinished) {
+          _logger.i('Round was already finished externally, navigating to summary');
+          await ref.read(gpsTrackingProvider.notifier).stopTracking();
+          final summary = RoundSummary.fromRound(round);
+          state = ActiveRoundState.finished(
+            roundId: round.id,
+            summary: summary,
+          );
+          return;
+        }
+      } catch (_) {
+        // Failed to fetch round, show original error
+      }
+
       state = currentState.copyWith(
         isSaving: false,
         savingError: e.toString(),

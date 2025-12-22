@@ -48,7 +48,7 @@ final class ActiveRoundNotifierProvider
 }
 
 String _$activeRoundNotifierHash() =>
-    r'd50fbc97702d76d665574bdbeded26902299ce11';
+    r'a8c50c73de75eaa3107426aa41b71f09bbfe3dfd';
 
 /// Provider for managing the active round state.
 /// keepAlive: true ensures the state persists across navigation.

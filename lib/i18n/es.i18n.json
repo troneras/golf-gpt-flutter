@@ -215,6 +215,7 @@
         "gps_enabled": "GPS activado",
         "gps_disabled": "GPS desactivado",
         "error_saving": "Error al guardar",
+        "round_finished_externally": "La ronda fue finalizada desde el caddie de voz",
         "retry": "Reintentar",
         "back": "Volver"
     },

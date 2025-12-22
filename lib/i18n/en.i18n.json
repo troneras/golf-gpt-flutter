@@ -215,6 +215,7 @@
         "gps_enabled": "GPS enabled",
         "gps_disabled": "GPS disabled",
         "error_saving": "Error saving",
+        "round_finished_externally": "Round was finished from the voice caddy",
         "retry": "Retry",
         "back": "Back"
     },

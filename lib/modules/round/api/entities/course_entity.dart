@@ -6,6 +6,34 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 part 'course_entity.freezed.dart';
 part 'course_entity.g.dart';
 
+/// Helper to extract latitude from nested location object or flat field
+double? _extractLatitude(Map<dynamic, dynamic> json, String key) {
+  // First check for flat latitude field
+  if (json['latitude'] != null) {
+    return (json['latitude'] as num).toDouble();
+  }
+  // Then check for nested location.lat
+  final location = json['location'];
+  if (location is Map && location['lat'] != null) {
+    return (location['lat'] as num).toDouble();
+  }
+  return null;
+}
+
+/// Helper to extract longitude from nested location object or flat field
+double? _extractLongitude(Map<dynamic, dynamic> json, String key) {
+  // First check for flat longitude field
+  if (json['longitude'] != null) {
+    return (json['longitude'] as num).toDouble();
+  }
+  // Then check for nested location.lng
+  final location = json['location'];
+  if (location is Map && location['lng'] != null) {
+    return (location['lng'] as num).toDouble();
+  }
+  return null;
+}
+
 @freezed
 sealed class CourseEntity with _$CourseEntity {
   const factory CourseEntity({
@@ -17,8 +45,8 @@ sealed class CourseEntity with _$CourseEntity {
     String? city,
     String? state,
     String? country,
-    double? latitude,
-    double? longitude,
+    @JsonKey(readValue: _extractLatitude) double? latitude,
+    @JsonKey(readValue: _extractLongitude) double? longitude,
     @JsonKey(name: 'distance_km') double? distanceKm,
     @Default([]) List<TeeEntity> tees,
     int? holes,

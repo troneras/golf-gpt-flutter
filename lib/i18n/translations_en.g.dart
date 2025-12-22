@@ -267,6 +267,7 @@ class _TranslationsRoundInProgressEn extends TranslationsRoundInProgressEs {
 	@override String get gps_enabled => 'GPS enabled';
 	@override String get gps_disabled => 'GPS disabled';
 	@override String get error_saving => 'Error saving';
+	@override String get round_finished_externally => 'Round was finished from the voice caddy';
 	@override String get retry => 'Retry';
 	@override String get back => 'Back';
 }
@@ -901,6 +902,7 @@ extension on TranslationsEn {
 			'round_in_progress.gps_enabled' => 'GPS enabled',
 			'round_in_progress.gps_disabled' => 'GPS disabled',
 			'round_in_progress.error_saving' => 'Error saving',
+			'round_in_progress.round_finished_externally' => 'Round was finished from the voice caddy',
 			'round_in_progress.retry' => 'Retry',
 			'round_in_progress.back' => 'Back',
 			'round_summary.title' => 'Round finished!',

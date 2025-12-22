@@ -22,7 +22,7 @@ CourseEntity _$CourseEntityFromJson(
 /// @nodoc
 mixin _$CourseEntity {
 
- String get id;@JsonKey(name: 'external_course_id') String? get externalCourseId; String get name;@JsonKey(name: 'club_name') String? get clubName; String? get address; String? get city; String? get state; String? get country; double? get latitude; double? get longitude;@JsonKey(name: 'distance_km') double? get distanceKm; List<TeeEntity> get tees; int? get holes; int? get par;@JsonKey(name: 'measure_unit') String? get measureUnit;@JsonKey(name: 'has_gps') bool? get hasGps;@JsonKey(name: 'pars_men') List<int>? get parsMen;@JsonKey(name: 'indexes_men') List<int>? get indexesMen;
+ String get id;@JsonKey(name: 'external_course_id') String? get externalCourseId; String get name;@JsonKey(name: 'club_name') String? get clubName; String? get address; String? get city; String? get state; String? get country;@JsonKey(readValue: _extractLatitude) double? get latitude;@JsonKey(readValue: _extractLongitude) double? get longitude;@JsonKey(name: 'distance_km') double? get distanceKm; List<TeeEntity> get tees; int? get holes; int? get par;@JsonKey(name: 'measure_unit') String? get measureUnit;@JsonKey(name: 'has_gps') bool? get hasGps;@JsonKey(name: 'pars_men') List<int>? get parsMen;@JsonKey(name: 'indexes_men') List<int>? get indexesMen;
 /// Create a copy of CourseEntity
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -55,7 +55,7 @@ abstract mixin class $CourseEntityCopyWith<$Res>  {
   factory $CourseEntityCopyWith(CourseEntity value, $Res Function(CourseEntity) _then) = _$CourseEntityCopyWithImpl;
 @useResult
 $Res call({
- String id,@JsonKey(name: 'external_course_id') String? externalCourseId, String name,@JsonKey(name: 'club_name') String? clubName, String? address, String? city, String? state, String? country, double? latitude, double? longitude,@JsonKey(name: 'distance_km') double? distanceKm, List<TeeEntity> tees, int? holes, int? par,@JsonKey(name: 'measure_unit') String? measureUnit,@JsonKey(name: 'has_gps') bool? hasGps,@JsonKey(name: 'pars_men') List<int>? parsMen,@JsonKey(name: 'indexes_men') List<int>? indexesMen
+ String id,@JsonKey(name: 'external_course_id') String? externalCourseId, String name,@JsonKey(name: 'club_name') String? clubName, String? address, String? city, String? state, String? country,@JsonKey(readValue: _extractLatitude) double? latitude,@JsonKey(readValue: _extractLongitude) double? longitude,@JsonKey(name: 'distance_km') double? distanceKm, List<TeeEntity> tees, int? holes, int? par,@JsonKey(name: 'measure_unit') String? measureUnit,@JsonKey(name: 'has_gps') bool? hasGps,@JsonKey(name: 'pars_men') List<int>? parsMen,@JsonKey(name: 'indexes_men') List<int>? indexesMen
 });
 
 
@@ -174,7 +174,7 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id, @JsonKey(name: 'external_course_id')  String? externalCourseId,  String name, @JsonKey(name: 'club_name')  String? clubName,  String? address,  String? city,  String? state,  String? country,  double? latitude,  double? longitude, @JsonKey(name: 'distance_km')  double? distanceKm,  List<TeeEntity> tees,  int? holes,  int? par, @JsonKey(name: 'measure_unit')  String? measureUnit, @JsonKey(name: 'has_gps')  bool? hasGps, @JsonKey(name: 'pars_men')  List<int>? parsMen, @JsonKey(name: 'indexes_men')  List<int>? indexesMen)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id, @JsonKey(name: 'external_course_id')  String? externalCourseId,  String name, @JsonKey(name: 'club_name')  String? clubName,  String? address,  String? city,  String? state,  String? country, @JsonKey(readValue: _extractLatitude)  double? latitude, @JsonKey(readValue: _extractLongitude)  double? longitude, @JsonKey(name: 'distance_km')  double? distanceKm,  List<TeeEntity> tees,  int? holes,  int? par, @JsonKey(name: 'measure_unit')  String? measureUnit, @JsonKey(name: 'has_gps')  bool? hasGps, @JsonKey(name: 'pars_men')  List<int>? parsMen, @JsonKey(name: 'indexes_men')  List<int>? indexesMen)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case CourseEntityData() when $default != null:
 return $default(_that.id,_that.externalCourseId,_that.name,_that.clubName,_that.address,_that.city,_that.state,_that.country,_that.latitude,_that.longitude,_that.distanceKm,_that.tees,_that.holes,_that.par,_that.measureUnit,_that.hasGps,_that.parsMen,_that.indexesMen);case _:
@@ -195,7 +195,7 @@ return $default(_that.id,_that.externalCourseId,_that.name,_that.clubName,_that.
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id, @JsonKey(name: 'external_course_id')  String? externalCourseId,  String name, @JsonKey(name: 'club_name')  String? clubName,  String? address,  String? city,  String? state,  String? country,  double? latitude,  double? longitude, @JsonKey(name: 'distance_km')  double? distanceKm,  List<TeeEntity> tees,  int? holes,  int? par, @JsonKey(name: 'measure_unit')  String? measureUnit, @JsonKey(name: 'has_gps')  bool? hasGps, @JsonKey(name: 'pars_men')  List<int>? parsMen, @JsonKey(name: 'indexes_men')  List<int>? indexesMen)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id, @JsonKey(name: 'external_course_id')  String? externalCourseId,  String name, @JsonKey(name: 'club_name')  String? clubName,  String? address,  String? city,  String? state,  String? country, @JsonKey(readValue: _extractLatitude)  double? latitude, @JsonKey(readValue: _extractLongitude)  double? longitude, @JsonKey(name: 'distance_km')  double? distanceKm,  List<TeeEntity> tees,  int? holes,  int? par, @JsonKey(name: 'measure_unit')  String? measureUnit, @JsonKey(name: 'has_gps')  bool? hasGps, @JsonKey(name: 'pars_men')  List<int>? parsMen, @JsonKey(name: 'indexes_men')  List<int>? indexesMen)  $default,) {final _that = this;
 switch (_that) {
 case CourseEntityData():
 return $default(_that.id,_that.externalCourseId,_that.name,_that.clubName,_that.address,_that.city,_that.state,_that.country,_that.latitude,_that.longitude,_that.distanceKm,_that.tees,_that.holes,_that.par,_that.measureUnit,_that.hasGps,_that.parsMen,_that.indexesMen);}
@@ -212,7 +212,7 @@ return $default(_that.id,_that.externalCourseId,_that.name,_that.clubName,_that.
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id, @JsonKey(name: 'external_course_id')  String? externalCourseId,  String name, @JsonKey(name: 'club_name')  String? clubName,  String? address,  String? city,  String? state,  String? country,  double? latitude,  double? longitude, @JsonKey(name: 'distance_km')  double? distanceKm,  List<TeeEntity> tees,  int? holes,  int? par, @JsonKey(name: 'measure_unit')  String? measureUnit, @JsonKey(name: 'has_gps')  bool? hasGps, @JsonKey(name: 'pars_men')  List<int>? parsMen, @JsonKey(name: 'indexes_men')  List<int>? indexesMen)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id, @JsonKey(name: 'external_course_id')  String? externalCourseId,  String name, @JsonKey(name: 'club_name')  String? clubName,  String? address,  String? city,  String? state,  String? country, @JsonKey(readValue: _extractLatitude)  double? latitude, @JsonKey(readValue: _extractLongitude)  double? longitude, @JsonKey(name: 'distance_km')  double? distanceKm,  List<TeeEntity> tees,  int? holes,  int? par, @JsonKey(name: 'measure_unit')  String? measureUnit, @JsonKey(name: 'has_gps')  bool? hasGps, @JsonKey(name: 'pars_men')  List<int>? parsMen, @JsonKey(name: 'indexes_men')  List<int>? indexesMen)?  $default,) {final _that = this;
 switch (_that) {
 case CourseEntityData() when $default != null:
 return $default(_that.id,_that.externalCourseId,_that.name,_that.clubName,_that.address,_that.city,_that.state,_that.country,_that.latitude,_that.longitude,_that.distanceKm,_that.tees,_that.holes,_that.par,_that.measureUnit,_that.hasGps,_that.parsMen,_that.indexesMen);case _:
@@ -227,7 +227,7 @@ return $default(_that.id,_that.externalCourseId,_that.name,_that.clubName,_that.
 @JsonSerializable()
 
 class CourseEntityData extends CourseEntity {
-  const CourseEntityData({required this.id, @JsonKey(name: 'external_course_id') this.externalCourseId, required this.name, @JsonKey(name: 'club_name') this.clubName, this.address, this.city, this.state, this.country, this.latitude, this.longitude, @JsonKey(name: 'distance_km') this.distanceKm, final  List<TeeEntity> tees = const [], this.holes, this.par, @JsonKey(name: 'measure_unit') this.measureUnit, @JsonKey(name: 'has_gps') this.hasGps, @JsonKey(name: 'pars_men') final  List<int>? parsMen, @JsonKey(name: 'indexes_men') final  List<int>? indexesMen}): _tees = tees,_parsMen = parsMen,_indexesMen = indexesMen,super._();
+  const CourseEntityData({required this.id, @JsonKey(name: 'external_course_id') this.externalCourseId, required this.name, @JsonKey(name: 'club_name') this.clubName, this.address, this.city, this.state, this.country, @JsonKey(readValue: _extractLatitude) this.latitude, @JsonKey(readValue: _extractLongitude) this.longitude, @JsonKey(name: 'distance_km') this.distanceKm, final  List<TeeEntity> tees = const [], this.holes, this.par, @JsonKey(name: 'measure_unit') this.measureUnit, @JsonKey(name: 'has_gps') this.hasGps, @JsonKey(name: 'pars_men') final  List<int>? parsMen, @JsonKey(name: 'indexes_men') final  List<int>? indexesMen}): _tees = tees,_parsMen = parsMen,_indexesMen = indexesMen,super._();
   factory CourseEntityData.fromJson(Map<String, dynamic> json) => _$CourseEntityDataFromJson(json);
 
 @override final  String id;
@@ -238,8 +238,8 @@ class CourseEntityData extends CourseEntity {
 @override final  String? city;
 @override final  String? state;
 @override final  String? country;
-@override final  double? latitude;
-@override final  double? longitude;
+@override@JsonKey(readValue: _extractLatitude) final  double? latitude;
+@override@JsonKey(readValue: _extractLongitude) final  double? longitude;
 @override@JsonKey(name: 'distance_km') final  double? distanceKm;
  final  List<TeeEntity> _tees;
 @override@JsonKey() List<TeeEntity> get tees {
@@ -304,7 +304,7 @@ abstract mixin class $CourseEntityDataCopyWith<$Res> implements $CourseEntityCop
   factory $CourseEntityDataCopyWith(CourseEntityData value, $Res Function(CourseEntityData) _then) = _$CourseEntityDataCopyWithImpl;
 @override @useResult
 $Res call({
- String id,@JsonKey(name: 'external_course_id') String? externalCourseId, String name,@JsonKey(name: 'club_name') String? clubName, String? address, String? city, String? state, String? country, double? latitude, double? longitude,@JsonKey(name: 'distance_km') double? distanceKm, List<TeeEntity> tees, int? holes, int? par,@JsonKey(name: 'measure_unit') String? measureUnit,@JsonKey(name: 'has_gps') bool? hasGps,@JsonKey(name: 'pars_men') List<int>? parsMen,@JsonKey(name: 'indexes_men') List<int>? indexesMen
+ String id,@JsonKey(name: 'external_course_id') String? externalCourseId, String name,@JsonKey(name: 'club_name') String? clubName, String? address, String? city, String? state, String? country,@JsonKey(readValue: _extractLatitude) double? latitude,@JsonKey(readValue: _extractLongitude) double? longitude,@JsonKey(name: 'distance_km') double? distanceKm, List<TeeEntity> tees, int? holes, int? par,@JsonKey(name: 'measure_unit') String? measureUnit,@JsonKey(name: 'has_gps') bool? hasGps,@JsonKey(name: 'pars_men') List<int>? parsMen,@JsonKey(name: 'indexes_men') List<int>? indexesMen
 });
 
 
