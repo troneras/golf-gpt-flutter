@@ -20,6 +20,7 @@ UserEntityData _$UserEntityDataFromJson(Map json) => UserEntityData(
   onboarded: json['onboarded'] as bool?,
   locale: json['locale'] as String?,
   hasCompletedGptOauth: json['has_completed_gpt_oauth'] as bool? ?? false,
+  isBeta: json['is_beta'] as bool? ?? false,
 );
 
 Map<String, dynamic> _$UserEntityDataToJson(UserEntityData instance) =>
@@ -33,4 +34,5 @@ Map<String, dynamic> _$UserEntityDataToJson(UserEntityData instance) =>
       'onboarded': instance.onboarded,
       'locale': instance.locale,
       'has_completed_gpt_oauth': instance.hasCompletedGptOauth,
+      'is_beta': instance.isBeta,
     };

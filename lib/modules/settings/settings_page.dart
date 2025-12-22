@@ -28,6 +28,10 @@ class SettingsPage extends ConsumerWidget {
       AuthenticatedUserData(:final email) => email,
       _ => '',
     };
+    final isBeta = switch (user) {
+      AuthenticatedUserData(:final isBeta) => isBeta,
+      _ => false,
+    };
     return SafeArea(
       child: Padding(
         padding: const EdgeInsets.fromLTRB(16, 40, 16, 8),
@@ -44,6 +48,7 @@ class SettingsPage extends ConsumerWidget {
             ProfileTile(
               title: userName,
               subtitle: userEmail,
+              isBeta: isBeta,
             ),
             const SizedBox(height: 24),
             SettingsContainer(
@@ -153,11 +158,13 @@ class SettingsContainer extends StatelessWidget {
 class ProfileTile extends StatelessWidget {
   final String title;
   final String subtitle;
+  final bool isBeta;
 
   const ProfileTile({
     super.key,
     required this.title,
     required this.subtitle,
+    this.isBeta = false,
   });
 
   @override
@@ -175,11 +182,34 @@ class ProfileTile extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  title,
-                  style: Theme.of(context).textTheme.titleLarge!.copyWith(
-                        color: Theme.of(context).colorScheme.onSurface,
+                Row(
+                  children: [
+                    Flexible(
+                      child: Text(
+                        title,
+                        style: Theme.of(context).textTheme.titleLarge!.copyWith(
+                              color: Theme.of(context).colorScheme.onSurface,
+                            ),
+                        overflow: TextOverflow.ellipsis,
                       ),
+                    ),
+                    if (isBeta) ...[
+                      const SizedBox(width: 8),
+                      Container(
+                        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                        decoration: BoxDecoration(
+                          color: Theme.of(context).colorScheme.primaryContainer,
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        child: Text(
+                          '🧪 Beta tester',
+                          style: Theme.of(context).textTheme.labelSmall!.copyWith(
+                                color: Theme.of(context).colorScheme.onPrimaryContainer,
+                              ),
+                        ),
+                      ),
+                    ],
+                  ],
                 ),
                 const SizedBox(height: 2),
                 Text(

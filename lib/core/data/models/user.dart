@@ -20,6 +20,8 @@ sealed class User with _$User {
     Subscription? subscription,
     // Whether the user has connected their account to the ChatGPT CustomGPT
     @Default(false) bool hasCompletedGptOauth,
+    // Whether the user is a beta tester
+    @Default(false) bool isBeta,
   }) = AuthenticatedUserData;
 
   const factory User.loading() = LoadingUserData;
@@ -47,6 +49,7 @@ sealed class User with _$User {
         lastUpdateDate: entity.lastUpdateDate,
         locale: entity.locale,
         hasCompletedGptOauth: entity.hasCompletedGptOauth,
+        isBeta: entity.isBeta,
       );
     } catch (e, trace) {
       Logger().e(e, stackTrace: trace);
@@ -66,6 +69,7 @@ sealed class User with _$User {
         lastUpdateDate: value.lastUpdateDate,
         locale: value.locale,
         hasCompletedGptOauth: value.hasCompletedGptOauth,
+        isBeta: value.isBeta,
       ),
       LoadingUserData() => throw "user is loading",
       UnauthenticatedUserData() => throw "user is not authenticated",

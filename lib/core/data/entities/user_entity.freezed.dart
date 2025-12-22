@@ -22,7 +22,7 @@ UserEntity _$UserEntityFromJson(
 /// @nodoc
 mixin _$UserEntity {
 
-@JsonKey(includeIfNull: false) String? get id;@JsonKey(name: 'creation_date') DateTime? get creationDate;@JsonKey(name: 'last_update_date') DateTime? get lastUpdateDate; String? get email; String? get name; String? get avatarPath; bool? get onboarded; String? get locale;@JsonKey(name: 'has_completed_gpt_oauth') bool get hasCompletedGptOauth;
+@JsonKey(includeIfNull: false) String? get id;@JsonKey(name: 'creation_date') DateTime? get creationDate;@JsonKey(name: 'last_update_date') DateTime? get lastUpdateDate; String? get email; String? get name; String? get avatarPath; bool? get onboarded; String? get locale;@JsonKey(name: 'has_completed_gpt_oauth') bool get hasCompletedGptOauth;@JsonKey(name: 'is_beta') bool get isBeta;
 /// Create a copy of UserEntity
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -35,16 +35,16 @@ $UserEntityCopyWith<UserEntity> get copyWith => _$UserEntityCopyWithImpl<UserEnt
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is UserEntity&&(identical(other.id, id) || other.id == id)&&(identical(other.creationDate, creationDate) || other.creationDate == creationDate)&&(identical(other.lastUpdateDate, lastUpdateDate) || other.lastUpdateDate == lastUpdateDate)&&(identical(other.email, email) || other.email == email)&&(identical(other.name, name) || other.name == name)&&(identical(other.avatarPath, avatarPath) || other.avatarPath == avatarPath)&&(identical(other.onboarded, onboarded) || other.onboarded == onboarded)&&(identical(other.locale, locale) || other.locale == locale)&&(identical(other.hasCompletedGptOauth, hasCompletedGptOauth) || other.hasCompletedGptOauth == hasCompletedGptOauth));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is UserEntity&&(identical(other.id, id) || other.id == id)&&(identical(other.creationDate, creationDate) || other.creationDate == creationDate)&&(identical(other.lastUpdateDate, lastUpdateDate) || other.lastUpdateDate == lastUpdateDate)&&(identical(other.email, email) || other.email == email)&&(identical(other.name, name) || other.name == name)&&(identical(other.avatarPath, avatarPath) || other.avatarPath == avatarPath)&&(identical(other.onboarded, onboarded) || other.onboarded == onboarded)&&(identical(other.locale, locale) || other.locale == locale)&&(identical(other.hasCompletedGptOauth, hasCompletedGptOauth) || other.hasCompletedGptOauth == hasCompletedGptOauth)&&(identical(other.isBeta, isBeta) || other.isBeta == isBeta));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,creationDate,lastUpdateDate,email,name,avatarPath,onboarded,locale,hasCompletedGptOauth);
+int get hashCode => Object.hash(runtimeType,id,creationDate,lastUpdateDate,email,name,avatarPath,onboarded,locale,hasCompletedGptOauth,isBeta);
 
 @override
 String toString() {
-  return 'UserEntity(id: $id, creationDate: $creationDate, lastUpdateDate: $lastUpdateDate, email: $email, name: $name, avatarPath: $avatarPath, onboarded: $onboarded, locale: $locale, hasCompletedGptOauth: $hasCompletedGptOauth)';
+  return 'UserEntity(id: $id, creationDate: $creationDate, lastUpdateDate: $lastUpdateDate, email: $email, name: $name, avatarPath: $avatarPath, onboarded: $onboarded, locale: $locale, hasCompletedGptOauth: $hasCompletedGptOauth, isBeta: $isBeta)';
 }
 
 
@@ -55,7 +55,7 @@ abstract mixin class $UserEntityCopyWith<$Res>  {
   factory $UserEntityCopyWith(UserEntity value, $Res Function(UserEntity) _then) = _$UserEntityCopyWithImpl;
 @useResult
 $Res call({
-@JsonKey(includeIfNull: false) String? id,@JsonKey(name: 'creation_date') DateTime? creationDate,@JsonKey(name: 'last_update_date') DateTime? lastUpdateDate, String? email, String? name, String? avatarPath, bool? onboarded, String? locale,@JsonKey(name: 'has_completed_gpt_oauth') bool hasCompletedGptOauth
+@JsonKey(includeIfNull: false) String? id,@JsonKey(name: 'creation_date') DateTime? creationDate,@JsonKey(name: 'last_update_date') DateTime? lastUpdateDate, String? email, String? name, String? avatarPath, bool? onboarded, String? locale,@JsonKey(name: 'has_completed_gpt_oauth') bool hasCompletedGptOauth,@JsonKey(name: 'is_beta') bool isBeta
 });
 
 
@@ -72,7 +72,7 @@ class _$UserEntityCopyWithImpl<$Res>
 
 /// Create a copy of UserEntity
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = freezed,Object? creationDate = freezed,Object? lastUpdateDate = freezed,Object? email = freezed,Object? name = freezed,Object? avatarPath = freezed,Object? onboarded = freezed,Object? locale = freezed,Object? hasCompletedGptOauth = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = freezed,Object? creationDate = freezed,Object? lastUpdateDate = freezed,Object? email = freezed,Object? name = freezed,Object? avatarPath = freezed,Object? onboarded = freezed,Object? locale = freezed,Object? hasCompletedGptOauth = null,Object? isBeta = null,}) {
   return _then(_self.copyWith(
 id: freezed == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String?,creationDate: freezed == creationDate ? _self.creationDate : creationDate // ignore: cast_nullable_to_non_nullable
@@ -83,6 +83,7 @@ as String?,avatarPath: freezed == avatarPath ? _self.avatarPath : avatarPath // 
 as String?,onboarded: freezed == onboarded ? _self.onboarded : onboarded // ignore: cast_nullable_to_non_nullable
 as bool?,locale: freezed == locale ? _self.locale : locale // ignore: cast_nullable_to_non_nullable
 as String?,hasCompletedGptOauth: null == hasCompletedGptOauth ? _self.hasCompletedGptOauth : hasCompletedGptOauth // ignore: cast_nullable_to_non_nullable
+as bool,isBeta: null == isBeta ? _self.isBeta : isBeta // ignore: cast_nullable_to_non_nullable
 as bool,
   ));
 }
@@ -165,10 +166,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function(@JsonKey(includeIfNull: false)  String? id, @JsonKey(name: 'creation_date')  DateTime? creationDate, @JsonKey(name: 'last_update_date')  DateTime? lastUpdateDate,  String? email,  String? name,  String? avatarPath,  bool? onboarded,  String? locale, @JsonKey(name: 'has_completed_gpt_oauth')  bool hasCompletedGptOauth)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function(@JsonKey(includeIfNull: false)  String? id, @JsonKey(name: 'creation_date')  DateTime? creationDate, @JsonKey(name: 'last_update_date')  DateTime? lastUpdateDate,  String? email,  String? name,  String? avatarPath,  bool? onboarded,  String? locale, @JsonKey(name: 'has_completed_gpt_oauth')  bool hasCompletedGptOauth, @JsonKey(name: 'is_beta')  bool isBeta)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case UserEntityData() when $default != null:
-return $default(_that.id,_that.creationDate,_that.lastUpdateDate,_that.email,_that.name,_that.avatarPath,_that.onboarded,_that.locale,_that.hasCompletedGptOauth);case _:
+return $default(_that.id,_that.creationDate,_that.lastUpdateDate,_that.email,_that.name,_that.avatarPath,_that.onboarded,_that.locale,_that.hasCompletedGptOauth,_that.isBeta);case _:
   return orElse();
 
 }
@@ -186,10 +187,10 @@ return $default(_that.id,_that.creationDate,_that.lastUpdateDate,_that.email,_th
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function(@JsonKey(includeIfNull: false)  String? id, @JsonKey(name: 'creation_date')  DateTime? creationDate, @JsonKey(name: 'last_update_date')  DateTime? lastUpdateDate,  String? email,  String? name,  String? avatarPath,  bool? onboarded,  String? locale, @JsonKey(name: 'has_completed_gpt_oauth')  bool hasCompletedGptOauth)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function(@JsonKey(includeIfNull: false)  String? id, @JsonKey(name: 'creation_date')  DateTime? creationDate, @JsonKey(name: 'last_update_date')  DateTime? lastUpdateDate,  String? email,  String? name,  String? avatarPath,  bool? onboarded,  String? locale, @JsonKey(name: 'has_completed_gpt_oauth')  bool hasCompletedGptOauth, @JsonKey(name: 'is_beta')  bool isBeta)  $default,) {final _that = this;
 switch (_that) {
 case UserEntityData():
-return $default(_that.id,_that.creationDate,_that.lastUpdateDate,_that.email,_that.name,_that.avatarPath,_that.onboarded,_that.locale,_that.hasCompletedGptOauth);}
+return $default(_that.id,_that.creationDate,_that.lastUpdateDate,_that.email,_that.name,_that.avatarPath,_that.onboarded,_that.locale,_that.hasCompletedGptOauth,_that.isBeta);}
 }
 /// A variant of `when` that fallback to returning `null`
 ///
@@ -203,10 +204,10 @@ return $default(_that.id,_that.creationDate,_that.lastUpdateDate,_that.email,_th
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function(@JsonKey(includeIfNull: false)  String? id, @JsonKey(name: 'creation_date')  DateTime? creationDate, @JsonKey(name: 'last_update_date')  DateTime? lastUpdateDate,  String? email,  String? name,  String? avatarPath,  bool? onboarded,  String? locale, @JsonKey(name: 'has_completed_gpt_oauth')  bool hasCompletedGptOauth)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function(@JsonKey(includeIfNull: false)  String? id, @JsonKey(name: 'creation_date')  DateTime? creationDate, @JsonKey(name: 'last_update_date')  DateTime? lastUpdateDate,  String? email,  String? name,  String? avatarPath,  bool? onboarded,  String? locale, @JsonKey(name: 'has_completed_gpt_oauth')  bool hasCompletedGptOauth, @JsonKey(name: 'is_beta')  bool isBeta)?  $default,) {final _that = this;
 switch (_that) {
 case UserEntityData() when $default != null:
-return $default(_that.id,_that.creationDate,_that.lastUpdateDate,_that.email,_that.name,_that.avatarPath,_that.onboarded,_that.locale,_that.hasCompletedGptOauth);case _:
+return $default(_that.id,_that.creationDate,_that.lastUpdateDate,_that.email,_that.name,_that.avatarPath,_that.onboarded,_that.locale,_that.hasCompletedGptOauth,_that.isBeta);case _:
   return null;
 
 }
@@ -218,7 +219,7 @@ return $default(_that.id,_that.creationDate,_that.lastUpdateDate,_that.email,_th
 @JsonSerializable()
 
 class UserEntityData extends UserEntity {
-  const UserEntityData({@JsonKey(includeIfNull: false) this.id, @JsonKey(name: 'creation_date') this.creationDate, @JsonKey(name: 'last_update_date') this.lastUpdateDate, this.email, this.name, this.avatarPath, this.onboarded, this.locale, @JsonKey(name: 'has_completed_gpt_oauth') this.hasCompletedGptOauth = false}): super._();
+  const UserEntityData({@JsonKey(includeIfNull: false) this.id, @JsonKey(name: 'creation_date') this.creationDate, @JsonKey(name: 'last_update_date') this.lastUpdateDate, this.email, this.name, this.avatarPath, this.onboarded, this.locale, @JsonKey(name: 'has_completed_gpt_oauth') this.hasCompletedGptOauth = false, @JsonKey(name: 'is_beta') this.isBeta = false}): super._();
   factory UserEntityData.fromJson(Map<String, dynamic> json) => _$UserEntityDataFromJson(json);
 
 @override@JsonKey(includeIfNull: false) final  String? id;
@@ -230,6 +231,7 @@ class UserEntityData extends UserEntity {
 @override final  bool? onboarded;
 @override final  String? locale;
 @override@JsonKey(name: 'has_completed_gpt_oauth') final  bool hasCompletedGptOauth;
+@override@JsonKey(name: 'is_beta') final  bool isBeta;
 
 /// Create a copy of UserEntity
 /// with the given fields replaced by the non-null parameter values.
@@ -244,16 +246,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is UserEntityData&&(identical(other.id, id) || other.id == id)&&(identical(other.creationDate, creationDate) || other.creationDate == creationDate)&&(identical(other.lastUpdateDate, lastUpdateDate) || other.lastUpdateDate == lastUpdateDate)&&(identical(other.email, email) || other.email == email)&&(identical(other.name, name) || other.name == name)&&(identical(other.avatarPath, avatarPath) || other.avatarPath == avatarPath)&&(identical(other.onboarded, onboarded) || other.onboarded == onboarded)&&(identical(other.locale, locale) || other.locale == locale)&&(identical(other.hasCompletedGptOauth, hasCompletedGptOauth) || other.hasCompletedGptOauth == hasCompletedGptOauth));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is UserEntityData&&(identical(other.id, id) || other.id == id)&&(identical(other.creationDate, creationDate) || other.creationDate == creationDate)&&(identical(other.lastUpdateDate, lastUpdateDate) || other.lastUpdateDate == lastUpdateDate)&&(identical(other.email, email) || other.email == email)&&(identical(other.name, name) || other.name == name)&&(identical(other.avatarPath, avatarPath) || other.avatarPath == avatarPath)&&(identical(other.onboarded, onboarded) || other.onboarded == onboarded)&&(identical(other.locale, locale) || other.locale == locale)&&(identical(other.hasCompletedGptOauth, hasCompletedGptOauth) || other.hasCompletedGptOauth == hasCompletedGptOauth)&&(identical(other.isBeta, isBeta) || other.isBeta == isBeta));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,creationDate,lastUpdateDate,email,name,avatarPath,onboarded,locale,hasCompletedGptOauth);
+int get hashCode => Object.hash(runtimeType,id,creationDate,lastUpdateDate,email,name,avatarPath,onboarded,locale,hasCompletedGptOauth,isBeta);
 
 @override
 String toString() {
-  return 'UserEntity(id: $id, creationDate: $creationDate, lastUpdateDate: $lastUpdateDate, email: $email, name: $name, avatarPath: $avatarPath, onboarded: $onboarded, locale: $locale, hasCompletedGptOauth: $hasCompletedGptOauth)';
+  return 'UserEntity(id: $id, creationDate: $creationDate, lastUpdateDate: $lastUpdateDate, email: $email, name: $name, avatarPath: $avatarPath, onboarded: $onboarded, locale: $locale, hasCompletedGptOauth: $hasCompletedGptOauth, isBeta: $isBeta)';
 }
 
 
@@ -264,7 +266,7 @@ abstract mixin class $UserEntityDataCopyWith<$Res> implements $UserEntityCopyWit
   factory $UserEntityDataCopyWith(UserEntityData value, $Res Function(UserEntityData) _then) = _$UserEntityDataCopyWithImpl;
 @override @useResult
 $Res call({
-@JsonKey(includeIfNull: false) String? id,@JsonKey(name: 'creation_date') DateTime? creationDate,@JsonKey(name: 'last_update_date') DateTime? lastUpdateDate, String? email, String? name, String? avatarPath, bool? onboarded, String? locale,@JsonKey(name: 'has_completed_gpt_oauth') bool hasCompletedGptOauth
+@JsonKey(includeIfNull: false) String? id,@JsonKey(name: 'creation_date') DateTime? creationDate,@JsonKey(name: 'last_update_date') DateTime? lastUpdateDate, String? email, String? name, String? avatarPath, bool? onboarded, String? locale,@JsonKey(name: 'has_completed_gpt_oauth') bool hasCompletedGptOauth,@JsonKey(name: 'is_beta') bool isBeta
 });
 
 
@@ -281,7 +283,7 @@ class _$UserEntityDataCopyWithImpl<$Res>
 
 /// Create a copy of UserEntity
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = freezed,Object? creationDate = freezed,Object? lastUpdateDate = freezed,Object? email = freezed,Object? name = freezed,Object? avatarPath = freezed,Object? onboarded = freezed,Object? locale = freezed,Object? hasCompletedGptOauth = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = freezed,Object? creationDate = freezed,Object? lastUpdateDate = freezed,Object? email = freezed,Object? name = freezed,Object? avatarPath = freezed,Object? onboarded = freezed,Object? locale = freezed,Object? hasCompletedGptOauth = null,Object? isBeta = null,}) {
   return _then(UserEntityData(
 id: freezed == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String?,creationDate: freezed == creationDate ? _self.creationDate : creationDate // ignore: cast_nullable_to_non_nullable
@@ -292,6 +294,7 @@ as String?,avatarPath: freezed == avatarPath ? _self.avatarPath : avatarPath // 
 as String?,onboarded: freezed == onboarded ? _self.onboarded : onboarded // ignore: cast_nullable_to_non_nullable
 as bool?,locale: freezed == locale ? _self.locale : locale // ignore: cast_nullable_to_non_nullable
 as String?,hasCompletedGptOauth: null == hasCompletedGptOauth ? _self.hasCompletedGptOauth : hasCompletedGptOauth // ignore: cast_nullable_to_non_nullable
+as bool,isBeta: null == isBeta ? _self.isBeta : isBeta // ignore: cast_nullable_to_non_nullable
 as bool,
   ));
 }

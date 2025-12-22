@@ -17,6 +17,7 @@ sealed class UserEntity with _$UserEntity {
     bool? onboarded,
     String? locale,
     @JsonKey(name: 'has_completed_gpt_oauth') @Default(false) bool hasCompletedGptOauth,
+    @JsonKey(name: 'is_beta') @Default(false) bool isBeta,
   }) = UserEntityData;
 
   const UserEntity._();
