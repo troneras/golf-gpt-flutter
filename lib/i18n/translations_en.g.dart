@@ -203,6 +203,8 @@ class _TranslationsSelectCourseEn extends TranslationsSelectCourseEs {
 	@override String get settings_section => 'Settings';
 	@override String get gps_tracking => 'GPS Tracking';
 	@override String get gps_tracking_description => 'Measure distances to green and hazards';
+	@override String get gps_too_far => 'GPS disabled: you\'re {distance} from the course';
+	@override String get gps_too_far_error => 'GPS only works when you\'re near the course';
 	@override String get no_course_found => 'No courses found nearby';
 	@override String get no_course_found_hint => 'Make sure you\'re at a golf course or try again';
 	@override String get error_title => 'Error searching course';
@@ -853,6 +855,8 @@ extension on TranslationsEn {
 			'select_course.settings_section' => 'Settings',
 			'select_course.gps_tracking' => 'GPS Tracking',
 			'select_course.gps_tracking_description' => 'Measure distances to green and hazards',
+			'select_course.gps_too_far' => 'GPS disabled: you\'re {distance} from the course',
+			'select_course.gps_too_far_error' => 'GPS only works when you\'re near the course',
 			'select_course.no_course_found' => 'No courses found nearby',
 			'select_course.no_course_found_hint' => 'Make sure you\'re at a golf course or try again',
 			'select_course.error_title' => 'Error searching course',

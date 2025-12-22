@@ -21,6 +21,12 @@ class SelectCourseNotifier extends _$SelectCourseNotifier {
     return const SelectCourseState.loading();
   }
 
+  /// Check if the course is too far for GPS tracking
+  bool _isCourseToFar(Course course) {
+    if (course.distanceKm == null) return false;
+    return course.distanceKm! > kMaxGpsDistanceKm;
+  }
+
   Future<void> _loadClosestCourse() async {
     try {
       // Check GPS permission to set default gpsEnabled value
@@ -44,7 +50,15 @@ class SelectCourseNotifier extends _$SelectCourseNotifier {
       }
       _logger.i('Found course: ${course.name} at ${course.distanceKm?.toStringAsFixed(2)} km');
       _logger.d('Course tees: ${course.tees.map((t) => t.name).join(', ')}');
-      state = SelectCourseState.loaded(course: course, gpsEnabled: hasGpsPermission);
+      final isTooFar = _isCourseToFar(course);
+      if (isTooFar) {
+        _logger.w('Course is too far for GPS tracking (${course.distanceKm?.toStringAsFixed(2)} km > $kMaxGpsDistanceKm km)');
+      }
+      state = SelectCourseState.loaded(
+        course: course,
+        gpsEnabled: hasGpsPermission && !isTooFar,
+        gpsTooFar: isTooFar,
+      );
     } catch (e, stackTrace) {
       _logger.e('Error loading closest course', error: e, stackTrace: stackTrace);
       state = SelectCourseState.error(message: e.toString());
@@ -58,11 +72,19 @@ class SelectCourseNotifier extends _$SelectCourseNotifier {
     }
   }
 
-  void toggleGps() {
+  /// Toggle GPS setting. Returns false if GPS cannot be enabled (course too far).
+  bool toggleGps() {
     final currentState = state;
     if (currentState is SelectCourseStateLoaded) {
+      // If trying to enable GPS but course is too far, prevent it
+      if (!currentState.gpsEnabled && currentState.gpsTooFar) {
+        _logger.w('Cannot enable GPS: course is too far');
+        return false;
+      }
       state = currentState.copyWith(gpsEnabled: !currentState.gpsEnabled);
+      return true;
     }
+    return false;
   }
 
   void retry() {
@@ -78,12 +100,18 @@ class SelectCourseNotifier extends _$SelectCourseNotifier {
       final hasGpsPermission = await Permission.locationWhenInUse.isGranted;
       // Fetch full course details with tees
       final courseWithDetails = await _courseRepository.getCourseDetails(course.id);
+      final effectiveCourse = courseWithDetails ?? course;
+      final isTooFar = _isCourseToFar(effectiveCourse);
+      if (isTooFar) {
+        _logger.w('Manually selected course is too far for GPS tracking (${effectiveCourse.distanceKm?.toStringAsFixed(2)} km > $kMaxGpsDistanceKm km)');
+      }
       if (courseWithDetails != null) {
         _logger.i('Loaded course details with ${courseWithDetails.tees.length} tees');
         state = SelectCourseState.loaded(
           course: courseWithDetails,
           isManuallySelected: true,
-          gpsEnabled: hasGpsPermission,
+          gpsEnabled: hasGpsPermission && !isTooFar,
+          gpsTooFar: isTooFar,
         );
       } else {
         // Fall back to the course without tees
@@ -91,18 +119,21 @@ class SelectCourseNotifier extends _$SelectCourseNotifier {
         state = SelectCourseState.loaded(
           course: course,
           isManuallySelected: true,
-          gpsEnabled: hasGpsPermission,
+          gpsEnabled: hasGpsPermission && !isTooFar,
+          gpsTooFar: isTooFar,
         );
       }
     } catch (e, stackTrace) {
       _logger.e('Error loading course details', error: e, stackTrace: stackTrace);
       // Check GPS permission even on error fallback
       final hasGpsPermission = await Permission.locationWhenInUse.isGranted;
+      final isTooFar = _isCourseToFar(course);
       // Fall back to the course without tees
       state = SelectCourseState.loaded(
         course: course,
         isManuallySelected: true,
-        gpsEnabled: hasGpsPermission,
+        gpsEnabled: hasGpsPermission && !isTooFar,
+        gpsTooFar: isTooFar,
       );
     }
   }

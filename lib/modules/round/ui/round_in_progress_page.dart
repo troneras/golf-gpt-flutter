@@ -1,4 +1,5 @@
 import 'package:apparence_kit/core/theme/extensions/theme_extension.dart';
+import 'package:apparence_kit/i18n/translations.g.dart';
 import 'package:apparence_kit/modules/round/providers/active_round_notifier.dart';
 import 'package:apparence_kit/modules/round/providers/models/active_round_state.dart';
 import 'package:apparence_kit/modules/round/ui/widgets/round_header.dart';
@@ -182,15 +183,28 @@ class _RoundInProgressPageState extends ConsumerState<RoundInProgressPage> {
     if (state is! ActiveRoundStateActive) return;
 
     final newValue = !state.round.gpsEnabled;
-    await ref.read(activeRoundNotifierProvider.notifier).setGpsEnabled(newValue);
+    final success = await ref.read(activeRoundNotifierProvider.notifier).setGpsEnabled(newValue);
 
     if (mounted) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(newValue ? 'GPS activado' : 'GPS desactivado'),
-          duration: const Duration(seconds: 2),
-        ),
-      );
+      if (success) {
+        final tr = Translations.of(context).round_in_progress;
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(newValue ? tr.gps_enabled : tr.gps_disabled),
+            duration: const Duration(seconds: 2),
+          ),
+        );
+      } else if (newValue) {
+        // GPS enable was blocked (likely due to distance)
+        final tr = Translations.of(context).select_course;
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(tr.gps_too_far_error),
+            backgroundColor: Colors.orange,
+            duration: const Duration(seconds: 3),
+          ),
+        );
+      }
     }
   }
 

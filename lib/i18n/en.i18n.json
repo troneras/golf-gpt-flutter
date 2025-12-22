@@ -165,6 +165,8 @@
         "settings_section": "Settings",
         "gps_tracking": "GPS Tracking",
         "gps_tracking_description": "Measure distances to green and hazards",
+        "gps_too_far": "GPS disabled: you're {distance} from the course",
+        "gps_too_far_error": "GPS only works when you're near the course",
         "no_course_found": "No courses found nearby",
         "no_course_found_hint": "Make sure you're at a golf course or try again",
         "error_title": "Error searching course",

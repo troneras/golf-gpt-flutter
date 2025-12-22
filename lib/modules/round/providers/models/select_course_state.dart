@@ -4,6 +4,10 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'select_course_state.freezed.dart';
 
+/// Maximum distance in km from course to allow GPS tracking.
+/// 10km is a safe threshold - only blocks GPS for obviously wrong course selections.
+const double kMaxGpsDistanceKm = 10.0;
+
 @freezed
 sealed class SelectCourseState with _$SelectCourseState {
   const factory SelectCourseState.loading() = SelectCourseStateLoading;
@@ -13,6 +17,7 @@ sealed class SelectCourseState with _$SelectCourseState {
     Tee? selectedTee,
     @Default(false) bool isManuallySelected,
     @Default(true) bool gpsEnabled,
+    @Default(false) bool gpsTooFar,
   }) = SelectCourseStateLoaded;
 
   const factory SelectCourseState.noCourseFound() = SelectCourseStateNoCourseFound;

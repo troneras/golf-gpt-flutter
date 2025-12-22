@@ -41,17 +41,27 @@ class SelectCoursePage extends ConsumerWidget {
       ),
       body: switch (state) {
         SelectCourseStateLoading() => const _LoadingView(),
-        SelectCourseStateLoaded(:final course, :final selectedTee, :final isManuallySelected, :final gpsEnabled) =>
+        SelectCourseStateLoaded(:final course, :final selectedTee, :final isManuallySelected, :final gpsEnabled, :final gpsTooFar) =>
           _LoadedView(
             course: course,
             selectedTee: selectedTee,
             isManuallySelected: isManuallySelected,
             gpsEnabled: gpsEnabled,
+            gpsTooFar: gpsTooFar,
             onTeeSelected: (tee) {
               ref.read(selectCourseProvider.notifier).selectTee(tee);
             },
             onGpsToggle: () {
-              ref.read(selectCourseProvider.notifier).toggleGps();
+              final success = ref.read(selectCourseProvider.notifier).toggleGps();
+              if (!success && context.mounted) {
+                final tr = Translations.of(context).select_course;
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text(tr.gps_too_far_error),
+                    backgroundColor: Colors.orange,
+                  ),
+                );
+              }
             },
             onCancel: () => context.pop(),
             onStartRound: () async {
@@ -138,6 +148,7 @@ class _LoadedView extends StatelessWidget {
   final Tee? selectedTee;
   final bool isManuallySelected;
   final bool gpsEnabled;
+  final bool gpsTooFar;
   final void Function(Tee) onTeeSelected;
   final VoidCallback onGpsToggle;
   final VoidCallback onCancel;
@@ -149,6 +160,7 @@ class _LoadedView extends StatelessWidget {
     required this.selectedTee,
     required this.isManuallySelected,
     required this.gpsEnabled,
+    required this.gpsTooFar,
     required this.onTeeSelected,
     required this.onGpsToggle,
     required this.onCancel,
@@ -222,6 +234,8 @@ class _LoadedView extends StatelessWidget {
                 const SizedBox(height: 12),
                 _GpsToggleCard(
                   isEnabled: gpsEnabled,
+                  isTooFar: gpsTooFar,
+                  distanceKm: course.distanceKm,
                   onToggle: onGpsToggle,
                 ),
               ],
@@ -403,22 +417,41 @@ class _TeeCard extends StatelessWidget {
 
 class _GpsToggleCard extends StatelessWidget {
   final bool isEnabled;
+  final bool isTooFar;
+  final double? distanceKm;
   final VoidCallback onToggle;
 
   const _GpsToggleCard({
     required this.isEnabled,
+    required this.isTooFar,
+    required this.distanceKm,
     required this.onToggle,
   });
+
+  String _formatDistance(double? km) {
+    if (km == null) return '';
+    if (km < 1) {
+      return '${(km * 1000).round()} m';
+    }
+    return '${km.toStringAsFixed(1)} km';
+  }
 
   @override
   Widget build(BuildContext context) {
     final tr = Translations.of(context).select_course;
+    final description = isTooFar
+        ? tr.gps_too_far.replaceAll('{distance}', _formatDistance(distanceKm))
+        : tr.gps_tracking_description;
     return Container(
       decoration: BoxDecoration(
-        color: context.colors.surface,
+        color: isTooFar
+            ? Colors.orange.withValues(alpha: 0.1)
+            : context.colors.surface,
         borderRadius: BorderRadius.circular(12),
         border: Border.all(
-          color: context.colors.onSurface.withValues(alpha: 0.1),
+          color: isTooFar
+              ? Colors.orange.withValues(alpha: 0.3)
+              : context.colors.onSurface.withValues(alpha: 0.1),
         ),
       ),
       child: InkWell(
@@ -429,9 +462,11 @@ class _GpsToggleCard extends StatelessWidget {
           child: Row(
             children: [
               Icon(
-                Icons.gps_fixed,
+                isTooFar ? Icons.gps_off : Icons.gps_fixed,
                 size: 24,
-                color: isEnabled ? context.colors.primary : context.colors.onSurface.withValues(alpha: 0.4),
+                color: isTooFar
+                    ? Colors.orange
+                    : (isEnabled ? context.colors.primary : context.colors.onSurface.withValues(alpha: 0.4)),
               ),
               const SizedBox(width: 12),
               Expanded(
@@ -445,9 +480,11 @@ class _GpsToggleCard extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      tr.gps_tracking_description,
+                      description,
                       style: context.textTheme.bodySmall?.copyWith(
-                        color: context.colors.onSurface.withValues(alpha: 0.6),
+                        color: isTooFar
+                            ? Colors.orange.shade700
+                            : context.colors.onSurface.withValues(alpha: 0.6),
                       ),
                     ),
                   ],

@@ -2,8 +2,10 @@ import 'package:apparence_kit/modules/gps/providers/gps_tracking_notifier.dart';
 import 'package:apparence_kit/modules/gps/services/gps_tracking_service.dart';
 import 'package:apparence_kit/modules/round/domain/running_score.dart';
 import 'package:apparence_kit/modules/round/providers/models/active_round_state.dart';
+import 'package:apparence_kit/modules/round/providers/models/select_course_state.dart';
 import 'package:apparence_kit/modules/round/repositories/round_repository.dart';
 import 'package:flutter/widgets.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:logger/logger.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -230,12 +232,53 @@ class ActiveRoundNotifier extends _$ActiveRoundNotifier {
     );
   }
 
-  /// Set GPS enabled/disabled for the round
-  Future<void> setGpsEnabled(bool enabled) async {
+  /// Calculate distance in km between two coordinates using Haversine formula
+  double _calculateDistanceKm(
+    double lat1,
+    double lon1,
+    double lat2,
+    double lon2,
+  ) {
+    return Geolocator.distanceBetween(lat1, lon1, lat2, lon2) / 1000;
+  }
+
+  /// Set GPS enabled/disabled for the round.
+  /// Returns true if the operation was successful, false if GPS cannot be enabled
+  /// (e.g., user is too far from the course).
+  Future<bool> setGpsEnabled(bool enabled) async {
     final currentState = state;
     if (currentState is! ActiveRoundStateActive) {
       _logger.w('Cannot toggle GPS: no active round');
-      return;
+      return false;
+    }
+
+    // If trying to enable GPS, check if user is close enough to the course
+    if (enabled) {
+      final course = currentState.round.course;
+      if (course.latitude != null && course.longitude != null) {
+        try {
+          final position = await Geolocator.getCurrentPosition(
+            locationSettings: const LocationSettings(
+              accuracy: LocationAccuracy.medium,
+              timeLimit: Duration(seconds: 5),
+            ),
+          );
+          final distanceKm = _calculateDistanceKm(
+            position.latitude,
+            position.longitude,
+            course.latitude!,
+            course.longitude!,
+          );
+          _logger.i('Distance to course: ${distanceKm.toStringAsFixed(2)} km');
+          if (distanceKm > kMaxGpsDistanceKm) {
+            _logger.w('Cannot enable GPS: too far from course ($distanceKm km > $kMaxGpsDistanceKm km)');
+            return false;
+          }
+        } catch (e) {
+          _logger.w('Could not get current position to check distance: $e');
+          // Allow enabling GPS if we can't check the distance
+        }
+      }
     }
 
     _logger.i('Setting GPS enabled: $enabled');
@@ -245,7 +288,7 @@ class ActiveRoundNotifier extends _$ActiveRoundNotifier {
         currentState.round.id,
         gpsEnabled: enabled,
       );
-      if (!ref.mounted) return;
+      if (!ref.mounted) return true;
       state = currentState.copyWith(
         round: updatedRound,
       );
@@ -260,8 +303,10 @@ class ActiveRoundNotifier extends _$ActiveRoundNotifier {
         _logger.i('Stopping GPS tracking');
         gpsNotifier.stopTracking();
       }
+      return true;
     } catch (e, stackTrace) {
       _logger.e('Error updating GPS setting', error: e, stackTrace: stackTrace);
+      return false;
     }
   }
 
