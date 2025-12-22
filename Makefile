@@ -8,14 +8,26 @@ endif
 # Default values (override in .env file)
 BACKEND_URL ?= http://localhost:8888
 GOOGLE_SERVER_CLIENT_ID ?=
+SENTRY_DSN ?=
+SENTRY_AUTH_TOKEN ?=
+MIXPANEL_TOKEN ?=
 
-# Build dart-define flags
+# Build dart-define flags (dev mode)
 DART_DEFINES = --dart-define=BACKEND_URL=$(BACKEND_URL)
 ifneq ($(GOOGLE_SERVER_CLIENT_ID),)
     DART_DEFINES += --dart-define=GOOGLE_SERVER_CLIENT_ID=$(GOOGLE_SERVER_CLIENT_ID)
 endif
+ifneq ($(MIXPANEL_TOKEN),)
+    DART_DEFINES += --dart-define=MIXPANEL_TOKEN=$(MIXPANEL_TOKEN)
+endif
 
-.PHONY: help run run-release build-apk build-ios clean test analyze gen gen-watch icons splash
+# Build dart-define flags (prod mode - includes Sentry)
+DART_DEFINES_PROD = $(DART_DEFINES) --dart-define=ENV=prod
+ifneq ($(SENTRY_DSN),)
+    DART_DEFINES_PROD += --dart-define=SENTRY_DSN=$(SENTRY_DSN)
+endif
+
+.PHONY: help run run-release run-prod build-apk build-ios build-apk-prod build-appbundle-prod build-ios-prod build-ipa-prod clean test analyze gen gen-watch icons splash
 
 help: ## Show this help
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-20s\033[0m %s\n", $$1, $$2}'
@@ -50,6 +62,39 @@ build-ios: ## Build iOS app (release)
 
 build-ipa: ## Build iOS IPA (for App Store)
 	flutter build ipa --release $(DART_DEFINES)
+
+# ==================== Production Builds (with Sentry) ====================
+
+run-prod: ## Run app in production mode (with Sentry enabled)
+	flutter run $(DART_DEFINES_PROD)
+
+build-apk-prod: ## Build Android APK for production (with Sentry)
+	flutter build apk --release $(DART_DEFINES_PROD)
+	@if [ -n "$(SENTRY_AUTH_TOKEN)" ]; then \
+		echo "Uploading debug symbols to Sentry..."; \
+		SENTRY_AUTH_TOKEN=$(SENTRY_AUTH_TOKEN) dart run sentry_dart_plugin; \
+	fi
+
+build-appbundle-prod: ## Build Android App Bundle for production (with Sentry)
+	flutter build appbundle --release $(DART_DEFINES_PROD)
+	@if [ -n "$(SENTRY_AUTH_TOKEN)" ]; then \
+		echo "Uploading debug symbols to Sentry..."; \
+		SENTRY_AUTH_TOKEN=$(SENTRY_AUTH_TOKEN) dart run sentry_dart_plugin; \
+	fi
+
+build-ios-prod: ## Build iOS app for production (with Sentry)
+	flutter build ios --release $(DART_DEFINES_PROD)
+	@if [ -n "$(SENTRY_AUTH_TOKEN)" ]; then \
+		echo "Uploading debug symbols to Sentry..."; \
+		SENTRY_AUTH_TOKEN=$(SENTRY_AUTH_TOKEN) dart run sentry_dart_plugin; \
+	fi
+
+build-ipa-prod: ## Build iOS IPA for production (with Sentry)
+	flutter build ipa --release $(DART_DEFINES_PROD)
+	@if [ -n "$(SENTRY_AUTH_TOKEN)" ]; then \
+		echo "Uploading debug symbols to Sentry..."; \
+		SENTRY_AUTH_TOKEN=$(SENTRY_AUTH_TOKEN) dart run sentry_dart_plugin; \
+	fi
 
 # ==================== Code Generation ====================
 

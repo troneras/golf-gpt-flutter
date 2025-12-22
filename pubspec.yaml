@@ -90,6 +90,7 @@ dev_dependencies:
   json_serializable: ^6.11.2
   riverpod_generator: ^3.0.3
   lint: ^2.8.0
+  sentry_dart_plugin: ^2.3.0
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
@@ -121,6 +122,15 @@ flutter_native_splash:
   android_12:
     color: "#FFFFFF"
     image: assets/images/splashscreen.png
+
+# Sentry debug symbols upload configuration
+# Set SENTRY_AUTH_TOKEN environment variable before building
+# Generate token at: https://sentry.io/settings/auth-tokens/
+sentry:
+  upload_debug_symbols: true
+  upload_source_maps: true
+  project: flutter
+  org: talkcaddy
 
   # To add assets to your application, add an assets section, like this:
   # assets:

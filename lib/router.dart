@@ -3,6 +3,8 @@ import 'package:apparence_kit/core/data/api/analytics_api.dart';
 import 'package:apparence_kit/core/guards/authenticated_guard.dart';
 import 'package:apparence_kit/core/guards/user_info_guard.dart';
 import 'package:apparence_kit/core/widgets/page_not_found.dart';
+import 'package:apparence_kit/environnements.dart';
+import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:apparence_kit/modules/authentication/ui/email_verification_page.dart';
 import 'package:apparence_kit/modules/authentication/ui/phone_auth_page.dart';
 import 'package:apparence_kit/modules/authentication/ui/recover_password_page.dart';
@@ -27,7 +29,14 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 final goRouterProvider = Provider<GoRouter>(
-  (ref) => generateRouter(),
+  (ref) {
+    final env = ref.read(environmentProvider);
+    return generateRouter(
+      observers: [
+        if (env is ProdEnvironment) SentryNavigatorObserver(),
+      ],
+    );
+  },
 );
 
 extension GoRouterRiverpod on Ref {

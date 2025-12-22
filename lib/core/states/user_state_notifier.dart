@@ -2,12 +2,14 @@ import 'package:apparence_kit/core/data/models/user.dart';
 import 'package:apparence_kit/core/data/repositories/user_repository.dart';
 import 'package:apparence_kit/core/initializer/onstart_service.dart';
 import 'package:apparence_kit/core/states/models/user_state.dart';
+import 'package:apparence_kit/environnements.dart';
 import 'package:apparence_kit/modules/authentication/repositories/authentication_repository.dart';
 import 'package:apparence_kit/modules/notifications/providers/models/device.dart';
 import 'package:apparence_kit/modules/notifications/repositories/device_repository.dart';
 import 'package:logger/logger.dart';
-
+import 'package:permission_handler/permission_handler.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:sentry_flutter/sentry_flutter.dart';
 
 
 part 'user_state_notifier.g.dart';
@@ -80,6 +82,7 @@ class UserStateNotifier extends _$UserStateNotifier implements OnStartService {
     _deviceRepository.removeTokenUpdateListener();
     await _deviceRepository.unregister(userId);
     await _authenticationRepository.logout();
+    _clearSentryUser();
     state = const UserState(
       user: User.unauthenticated(),
     );
@@ -144,6 +147,7 @@ If you are using supabase
         ''');
       }
       state = state.copyWith(user: user);
+      await _setSentryUser(user);
     }
   }
 
@@ -171,5 +175,33 @@ If you are using supabase
   /// It will update the token in the database
   Future<void> _onUpdateToken(Device device) async {
     await _deviceRepository.updateToken(device.token);
+  }
+
+  /// Set Sentry user context for error tracking (production only)
+  Future<void> _setSentryUser(User user) async {
+    if (ref.read(environmentProvider) is! ProdEnvironment) return;
+    final authenticatedUser = user as AuthenticatedUserData;
+    final locationStatus = await Permission.locationWhenInUse.status;
+    final notificationStatus = await Permission.notification.status;
+    Sentry.configureScope((scope) {
+      scope.setUser(SentryUser(
+        id: authenticatedUser.id,
+        email: authenticatedUser.email,
+        username: authenticatedUser.name,
+      ));
+      scope.setTag('gpt_connected', authenticatedUser.hasCompletedGptOauth.toString());
+      scope.setTag('is_beta', authenticatedUser.isBeta.toString());
+      scope.setTag('onboarded', authenticatedUser.onboarded.toString());
+      scope.setTag('location_permission', locationStatus.name);
+      scope.setTag('notification_permission', notificationStatus.name);
+    });
+  }
+
+  /// Clear Sentry user context on logout (production only)
+  void _clearSentryUser() {
+    if (ref.read(environmentProvider) is! ProdEnvironment) return;
+    Sentry.configureScope((scope) {
+      scope.setUser(null);
+    });
   }
 }
