@@ -19,6 +19,7 @@ import 'package:apparence_kit/modules/bag/ui/bag_page.dart';
 
 import 'package:apparence_kit/modules/onboarding/ui/onboarding_page.dart';
 import 'package:apparence_kit/modules/onboarding/ui/complete_page.dart';
+import 'package:apparence_kit/modules/voice_caddy/ui/voice_caddy_flow_page.dart';
 
 
 import 'package:flutter/material.dart';
@@ -104,6 +105,15 @@ GoRouter generateRouter({
         name: 'bag',
         path: '/bag',
         builder: (context, state) => const BagPage(),
+      ),
+      GoRoute(
+        name: 'voice_caddy_setup',
+        path: '/voice-caddy-setup',
+        builder: (context, state) {
+          final extra = state.extra as Map<String, dynamic>?;
+          final allowSkip = extra?['allowSkip'] as bool? ?? true;
+          return VoiceCaddyFlowPage(allowSkip: allowSkip);
+        },
       ),
       GoRoute(
         name: 'select_course',

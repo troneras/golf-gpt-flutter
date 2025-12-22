@@ -3,6 +3,7 @@ import 'package:apparence_kit/i18n/translations.g.dart';
 import 'package:apparence_kit/modules/round/domain/round.dart';
 import 'package:apparence_kit/modules/round/providers/active_round_check_provider.dart';
 import 'package:apparence_kit/modules/round/providers/active_round_notifier.dart';
+import 'package:apparence_kit/modules/voice_caddy/ui/widgets/voice_caddy_prompt_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -294,6 +295,9 @@ class _HomePageState extends ConsumerState<HomePage> with WidgetsBindingObserver
                   padding: const EdgeInsets.symmetric(horizontal: 24),
                   child: Column(
                     children: [
+                      // Voice Caddy Connection Card
+                      const VoiceCaddyPromptCard(),
+                      const SizedBox(height: 16),
                       // Start Round Button
                       _StartRoundButton(
                         onPressed: _isCheckingPermission ? null : _handleStartRound,

@@ -6,6 +6,7 @@ import 'package:apparence_kit/i18n/translations.g.dart';
 import 'package:apparence_kit/modules/settings/ui/components/delete_user_component.dart';
 import 'package:apparence_kit/modules/settings/ui/widgets/location_permission_tile.dart';
 import 'package:apparence_kit/modules/settings/ui/widgets/settings_tile.dart';
+import 'package:apparence_kit/modules/voice_caddy/ui/widgets/voice_caddy_settings_tile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -51,6 +52,8 @@ class SettingsPage extends ConsumerWidget {
                   const ThemeSwitcher(),
                   Divider(color: Colors.blueGrey.withValues(alpha: .10)),
                   const LocationPermissionTile(),
+                  Divider(color: Colors.blueGrey.withValues(alpha: .10)),
+                  const VoiceCaddySettingsTile(),
                   Divider(color: Colors.blueGrey.withValues(alpha: .10)),
                   SettingsTile(
                     icon: Icons.golf_course,

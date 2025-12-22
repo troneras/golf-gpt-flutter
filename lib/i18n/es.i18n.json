@@ -292,5 +292,82 @@
         "distance_hint": "Ej: 150",
         "distance_unit": "yds",
         "save": "Guardar"
+    },
+    "voice_caddy": {
+        "intro": {
+            "title": "Tu Caddie por Voz",
+            "subtitle": "TalkCaddy usa el modo de voz de ChatGPT como tu caddie personal.",
+            "bullet_1": "Pide distancias de forma natural",
+            "bullet_2": "Anota golpes sin tocar el movil",
+            "bullet_3": "Recibe recomendaciones de palos basadas en tu juego",
+            "cta": "Configurar Caddie de Voz",
+            "skip": "Ahora no"
+        },
+        "prerequisites": {
+            "title": "Antes de empezar",
+            "subtitle": "Necesitas la app de ChatGPT con modo de voz.",
+            "chatgpt_label": "ChatGPT de OpenAI",
+            "get_app": "Descargar",
+            "cta": "Ya tengo ChatGPT",
+            "hint": "El modo de voz funciona mejor con ChatGPT Plus, pero el plan gratuito tambien tiene voz limitada"
+        },
+        "how_it_works": {
+            "title": "Como funciona",
+            "step_1_title": "TalkCaddy rastrea tu GPS",
+            "step_1_subtitle": "y conoce el campo",
+            "step_2_title": "ChatGPT es tu interfaz de voz",
+            "step_2_subtitle": "con el caddie",
+            "step_3_title": "Se sincronizan automaticamente",
+            "step_3_subtitle": "tu solo habla",
+            "cta": "Continuar"
+        },
+        "connect": {
+            "title": "Conecta tu caddie de voz",
+            "subtitle": "Abriremos ChatGPT con tu caddie personal listo.",
+            "step_1": "Toca \"Iniciar sesion\" cuando se te pida conectar tu cuenta TalkCaddy",
+            "step_2": "Vuelve aqui cuando termines",
+            "cta": "Abrir TalkCaddy en ChatGPT",
+            "check_connection": "Ya lo he conectado",
+            "fallback": "El enlace no funciona?",
+            "manual_title": "Abrir manualmente",
+            "manual_step_1": "Abre la app de ChatGPT",
+            "manual_step_2": "Toca \"Explorar GPTs\" abajo a la izquierda",
+            "manual_step_3": "Busca \"TalkCaddy\"",
+            "manual_step_4": "Abre e inicia sesion cuando se te pida"
+        },
+        "waiting": {
+            "title": "Esperando conexion...",
+            "subtitle": "Completa el inicio de sesion en ChatGPT y vuelve aqui.",
+            "cta": "Ya he conectado",
+            "help": "Tienes problemas?"
+        },
+        "success": {
+            "title": "Caddie de Voz Conectado",
+            "subtitle": "Todo listo. Una cosa mas:",
+            "tip": "Para hablar con tu caddie, toca el icono de audifonos en ChatGPT",
+            "example": "Prueba diciendo: \"Hola, en que me puedes ayudar en el campo?\"",
+            "cta_primary": "Iniciar una ronda",
+            "cta_secondary": "Ir al inicio"
+        },
+        "error": {
+            "not_completed_title": "Conexion no completada",
+            "not_completed_subtitle": "Parece que el inicio de sesion no se completo en ChatGPT.",
+            "why_needed": "El caddie de voz necesita acceso a tu cuenta TalkCaddy para conocer tu ubicacion y distancias de palos.",
+            "try_again": "Intentar de nuevo",
+            "why_link": "Por que es necesario?"
+        },
+        "home_card": {
+            "not_connected_title": "Configura tu Caddie de Voz",
+            "not_connected_subtitle": "Conecta ChatGPT para hablar con tu caddie sin usar las manos",
+            "not_connected_cta": "Configurar",
+            "connected_title": "Caddie de voz listo",
+            "connected_subtitle": "Abre ChatGPT y toca el icono de audifonos para empezar",
+            "connected_cta": "Abrir"
+        },
+        "settings": {
+            "title": "Caddie de Voz",
+            "connected": "Conectado",
+            "not_connected": "No conectado"
+        }
     }
 }

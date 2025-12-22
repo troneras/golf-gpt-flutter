@@ -19,6 +19,7 @@ UserEntityData _$UserEntityDataFromJson(Map json) => UserEntityData(
   avatarPath: json['avatarPath'] as String?,
   onboarded: json['onboarded'] as bool?,
   locale: json['locale'] as String?,
+  hasCompletedGptOauth: json['has_completed_gpt_oauth'] as bool? ?? false,
 );
 
 Map<String, dynamic> _$UserEntityDataToJson(UserEntityData instance) =>
@@ -31,4 +32,5 @@ Map<String, dynamic> _$UserEntityDataToJson(UserEntityData instance) =>
       'avatarPath': instance.avatarPath,
       'onboarded': instance.onboarded,
       'locale': instance.locale,
+      'has_completed_gpt_oauth': instance.hasCompletedGptOauth,
     };

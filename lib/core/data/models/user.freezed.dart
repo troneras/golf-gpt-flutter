@@ -122,10 +122,10 @@ return unauthenticated(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function( String email,  String? name,  String? id,  DateTime? creationDate,  DateTime? lastUpdateDate,  String? avatarPath,  bool onboarded,  String? locale,  Subscription? subscription)?  authenticated,TResult Function()?  loading,TResult Function()?  unauthenticated,required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function( String email,  String? name,  String? id,  DateTime? creationDate,  DateTime? lastUpdateDate,  String? avatarPath,  bool onboarded,  String? locale,  Subscription? subscription,  bool hasCompletedGptOauth)?  authenticated,TResult Function()?  loading,TResult Function()?  unauthenticated,required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case AuthenticatedUserData() when authenticated != null:
-return authenticated(_that.email,_that.name,_that.id,_that.creationDate,_that.lastUpdateDate,_that.avatarPath,_that.onboarded,_that.locale,_that.subscription);case LoadingUserData() when loading != null:
+return authenticated(_that.email,_that.name,_that.id,_that.creationDate,_that.lastUpdateDate,_that.avatarPath,_that.onboarded,_that.locale,_that.subscription,_that.hasCompletedGptOauth);case LoadingUserData() when loading != null:
 return loading();case UnauthenticatedUserData() when unauthenticated != null:
 return unauthenticated();case _:
   return orElse();
@@ -145,10 +145,10 @@ return unauthenticated();case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function( String email,  String? name,  String? id,  DateTime? creationDate,  DateTime? lastUpdateDate,  String? avatarPath,  bool onboarded,  String? locale,  Subscription? subscription)  authenticated,required TResult Function()  loading,required TResult Function()  unauthenticated,}) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function( String email,  String? name,  String? id,  DateTime? creationDate,  DateTime? lastUpdateDate,  String? avatarPath,  bool onboarded,  String? locale,  Subscription? subscription,  bool hasCompletedGptOauth)  authenticated,required TResult Function()  loading,required TResult Function()  unauthenticated,}) {final _that = this;
 switch (_that) {
 case AuthenticatedUserData():
-return authenticated(_that.email,_that.name,_that.id,_that.creationDate,_that.lastUpdateDate,_that.avatarPath,_that.onboarded,_that.locale,_that.subscription);case LoadingUserData():
+return authenticated(_that.email,_that.name,_that.id,_that.creationDate,_that.lastUpdateDate,_that.avatarPath,_that.onboarded,_that.locale,_that.subscription,_that.hasCompletedGptOauth);case LoadingUserData():
 return loading();case UnauthenticatedUserData():
 return unauthenticated();}
 }
@@ -164,10 +164,10 @@ return unauthenticated();}
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function( String email,  String? name,  String? id,  DateTime? creationDate,  DateTime? lastUpdateDate,  String? avatarPath,  bool onboarded,  String? locale,  Subscription? subscription)?  authenticated,TResult? Function()?  loading,TResult? Function()?  unauthenticated,}) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function( String email,  String? name,  String? id,  DateTime? creationDate,  DateTime? lastUpdateDate,  String? avatarPath,  bool onboarded,  String? locale,  Subscription? subscription,  bool hasCompletedGptOauth)?  authenticated,TResult? Function()?  loading,TResult? Function()?  unauthenticated,}) {final _that = this;
 switch (_that) {
 case AuthenticatedUserData() when authenticated != null:
-return authenticated(_that.email,_that.name,_that.id,_that.creationDate,_that.lastUpdateDate,_that.avatarPath,_that.onboarded,_that.locale,_that.subscription);case LoadingUserData() when loading != null:
+return authenticated(_that.email,_that.name,_that.id,_that.creationDate,_that.lastUpdateDate,_that.avatarPath,_that.onboarded,_that.locale,_that.subscription,_that.hasCompletedGptOauth);case LoadingUserData() when loading != null:
 return loading();case UnauthenticatedUserData() when unauthenticated != null:
 return unauthenticated();case _:
   return null;
@@ -181,7 +181,7 @@ return unauthenticated();case _:
 
 
 class AuthenticatedUserData extends User {
-  const AuthenticatedUserData({required this.email, this.name, this.id, this.creationDate, this.lastUpdateDate, this.avatarPath, required this.onboarded, this.locale, this.subscription}): super._();
+  const AuthenticatedUserData({required this.email, this.name, this.id, this.creationDate, this.lastUpdateDate, this.avatarPath, required this.onboarded, this.locale, this.subscription, this.hasCompletedGptOauth = false}): super._();
   
 
  final  String email;
@@ -194,6 +194,8 @@ class AuthenticatedUserData extends User {
  final  String? locale;
 // this will be empty only if you don't use the Subscription module
  final  Subscription? subscription;
+// Whether the user has connected their account to the ChatGPT CustomGPT
+@JsonKey() final  bool hasCompletedGptOauth;
 
 /// Create a copy of User
 /// with the given fields replaced by the non-null parameter values.
@@ -205,16 +207,16 @@ $AuthenticatedUserDataCopyWith<AuthenticatedUserData> get copyWith => _$Authenti
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is AuthenticatedUserData&&(identical(other.email, email) || other.email == email)&&(identical(other.name, name) || other.name == name)&&(identical(other.id, id) || other.id == id)&&(identical(other.creationDate, creationDate) || other.creationDate == creationDate)&&(identical(other.lastUpdateDate, lastUpdateDate) || other.lastUpdateDate == lastUpdateDate)&&(identical(other.avatarPath, avatarPath) || other.avatarPath == avatarPath)&&(identical(other.onboarded, onboarded) || other.onboarded == onboarded)&&(identical(other.locale, locale) || other.locale == locale)&&(identical(other.subscription, subscription) || other.subscription == subscription));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is AuthenticatedUserData&&(identical(other.email, email) || other.email == email)&&(identical(other.name, name) || other.name == name)&&(identical(other.id, id) || other.id == id)&&(identical(other.creationDate, creationDate) || other.creationDate == creationDate)&&(identical(other.lastUpdateDate, lastUpdateDate) || other.lastUpdateDate == lastUpdateDate)&&(identical(other.avatarPath, avatarPath) || other.avatarPath == avatarPath)&&(identical(other.onboarded, onboarded) || other.onboarded == onboarded)&&(identical(other.locale, locale) || other.locale == locale)&&(identical(other.subscription, subscription) || other.subscription == subscription)&&(identical(other.hasCompletedGptOauth, hasCompletedGptOauth) || other.hasCompletedGptOauth == hasCompletedGptOauth));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,email,name,id,creationDate,lastUpdateDate,avatarPath,onboarded,locale,subscription);
+int get hashCode => Object.hash(runtimeType,email,name,id,creationDate,lastUpdateDate,avatarPath,onboarded,locale,subscription,hasCompletedGptOauth);
 
 @override
 String toString() {
-  return 'User.authenticated(email: $email, name: $name, id: $id, creationDate: $creationDate, lastUpdateDate: $lastUpdateDate, avatarPath: $avatarPath, onboarded: $onboarded, locale: $locale, subscription: $subscription)';
+  return 'User.authenticated(email: $email, name: $name, id: $id, creationDate: $creationDate, lastUpdateDate: $lastUpdateDate, avatarPath: $avatarPath, onboarded: $onboarded, locale: $locale, subscription: $subscription, hasCompletedGptOauth: $hasCompletedGptOauth)';
 }
 
 
@@ -225,7 +227,7 @@ abstract mixin class $AuthenticatedUserDataCopyWith<$Res> implements $UserCopyWi
   factory $AuthenticatedUserDataCopyWith(AuthenticatedUserData value, $Res Function(AuthenticatedUserData) _then) = _$AuthenticatedUserDataCopyWithImpl;
 @useResult
 $Res call({
- String email, String? name, String? id, DateTime? creationDate, DateTime? lastUpdateDate, String? avatarPath, bool onboarded, String? locale, Subscription? subscription
+ String email, String? name, String? id, DateTime? creationDate, DateTime? lastUpdateDate, String? avatarPath, bool onboarded, String? locale, Subscription? subscription, bool hasCompletedGptOauth
 });
 
 
@@ -242,7 +244,7 @@ class _$AuthenticatedUserDataCopyWithImpl<$Res>
 
 /// Create a copy of User
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') $Res call({Object? email = null,Object? name = freezed,Object? id = freezed,Object? creationDate = freezed,Object? lastUpdateDate = freezed,Object? avatarPath = freezed,Object? onboarded = null,Object? locale = freezed,Object? subscription = freezed,}) {
+@pragma('vm:prefer-inline') $Res call({Object? email = null,Object? name = freezed,Object? id = freezed,Object? creationDate = freezed,Object? lastUpdateDate = freezed,Object? avatarPath = freezed,Object? onboarded = null,Object? locale = freezed,Object? subscription = freezed,Object? hasCompletedGptOauth = null,}) {
   return _then(AuthenticatedUserData(
 email: null == email ? _self.email : email // ignore: cast_nullable_to_non_nullable
 as String,name: freezed == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
@@ -253,7 +255,8 @@ as DateTime?,avatarPath: freezed == avatarPath ? _self.avatarPath : avatarPath /
 as String?,onboarded: null == onboarded ? _self.onboarded : onboarded // ignore: cast_nullable_to_non_nullable
 as bool,locale: freezed == locale ? _self.locale : locale // ignore: cast_nullable_to_non_nullable
 as String?,subscription: freezed == subscription ? _self.subscription : subscription // ignore: cast_nullable_to_non_nullable
-as Subscription?,
+as Subscription?,hasCompletedGptOauth: null == hasCompletedGptOauth ? _self.hasCompletedGptOauth : hasCompletedGptOauth // ignore: cast_nullable_to_non_nullable
+as bool,
   ));
 }
 

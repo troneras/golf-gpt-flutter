@@ -18,7 +18,7 @@ RoundEntityData _$RoundEntityDataFromJson(Map json) => RoundEntityData(
   totalPutts: (json['total_putts'] as num?)?.toInt(),
   totalPenalties: (json['total_penalties'] as num?)?.toInt(),
   scoreRelativeToPar: (json['score_relative_to_par'] as num?)?.toInt(),
-  distanceWalked: (json['distance_walked'] as num?)?.toDouble(),
+  distanceWalked: _parseDoubleOrString(json['distance_walked']),
   fairwaysHit: (json['fairways_hit'] as num?)?.toInt(),
   fairwaysTotal: (json['fairways_total'] as num?)?.toInt(),
   greensInRegulation: (json['greens_in_regulation'] as num?)?.toInt(),

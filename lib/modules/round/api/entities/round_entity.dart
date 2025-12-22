@@ -22,7 +22,7 @@ sealed class RoundEntity with _$RoundEntity {
     @JsonKey(name: 'total_putts') int? totalPutts,
     @JsonKey(name: 'total_penalties') int? totalPenalties,
     @JsonKey(name: 'score_relative_to_par') int? scoreRelativeToPar,
-    @JsonKey(name: 'distance_walked') double? distanceWalked,
+    @JsonKey(name: 'distance_walked', fromJson: _parseDoubleOrString) double? distanceWalked,
     @JsonKey(name: 'fairways_hit') int? fairwaysHit,
     @JsonKey(name: 'fairways_total') int? fairwaysTotal,
     @JsonKey(name: 'greens_in_regulation') int? greensInRegulation,
@@ -87,4 +87,14 @@ int _parseIntOrStringWithDefault20(dynamic value) {
   if (value is String) return int.tryParse(value) ?? 20;
   if (value is num) return value.toInt();
   return 20;
+}
+
+/// Parse double from either num or string
+double? _parseDoubleOrString(dynamic value) {
+  if (value == null) return null;
+  if (value is double) return value;
+  if (value is int) return value.toDouble();
+  if (value is num) return value.toDouble();
+  if (value is String) return double.tryParse(value);
+  return null;
 }

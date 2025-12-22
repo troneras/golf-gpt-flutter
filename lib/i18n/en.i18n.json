@@ -292,5 +292,82 @@
         "distance_hint": "E.g.: 150",
         "distance_unit": "yds",
         "save": "Save"
+    },
+    "voice_caddy": {
+        "intro": {
+            "title": "Your Voice Caddy",
+            "subtitle": "TalkCaddy uses ChatGPT's voice mode as your personal caddy.",
+            "bullet_1": "Ask for distances naturally",
+            "bullet_2": "Log shots without touching your phone",
+            "bullet_3": "Get club recommendations based on your game",
+            "cta": "Set Up Voice Caddy",
+            "skip": "Not now"
+        },
+        "prerequisites": {
+            "title": "Before we start",
+            "subtitle": "You'll need the ChatGPT app with voice mode.",
+            "chatgpt_label": "ChatGPT by OpenAI",
+            "get_app": "Download",
+            "cta": "I have ChatGPT",
+            "hint": "Voice mode works best with ChatGPT Plus, but free tier has limited voice too"
+        },
+        "how_it_works": {
+            "title": "How it works",
+            "step_1_title": "TalkCaddy tracks your GPS",
+            "step_1_subtitle": "and knows the course",
+            "step_2_title": "ChatGPT is your voice interface",
+            "step_2_subtitle": "to the caddy",
+            "step_3_title": "They sync automatically",
+            "step_3_subtitle": "you just talk",
+            "cta": "Continue"
+        },
+        "connect": {
+            "title": "Connect your voice caddy",
+            "subtitle": "We'll open ChatGPT with your personal caddy ready to go.",
+            "step_1": "Tap \"Sign in\" when asked to connect your TalkCaddy account",
+            "step_2": "Return here when done",
+            "cta": "Open TalkCaddy in ChatGPT",
+            "check_connection": "I've already connected",
+            "fallback": "Link not working?",
+            "manual_title": "Open manually",
+            "manual_step_1": "Open the ChatGPT app",
+            "manual_step_2": "Tap \"Explore GPTs\" at the bottom left",
+            "manual_step_3": "Search for \"TalkCaddy\"",
+            "manual_step_4": "Open and sign in when prompted"
+        },
+        "waiting": {
+            "title": "Waiting for connection...",
+            "subtitle": "Complete the sign-in in ChatGPT, then come back here.",
+            "cta": "I've connected",
+            "help": "Having trouble?"
+        },
+        "success": {
+            "title": "Voice Caddy Connected",
+            "subtitle": "You're all set. One last thing:",
+            "tip": "To talk to your caddy, tap the headphone icon in ChatGPT",
+            "example": "Try saying: \"Hey, what can you help me with on the course?\"",
+            "cta_primary": "Start a round",
+            "cta_secondary": "Go to home"
+        },
+        "error": {
+            "not_completed_title": "Connection not completed",
+            "not_completed_subtitle": "It looks like the sign-in wasn't completed in ChatGPT.",
+            "why_needed": "The voice caddy needs access to your TalkCaddy account to know your location and club distances.",
+            "try_again": "Try again",
+            "why_link": "Why is this needed?"
+        },
+        "home_card": {
+            "not_connected_title": "Set up Voice Caddy",
+            "not_connected_subtitle": "Connect ChatGPT to talk to your caddy hands-free",
+            "not_connected_cta": "Set up",
+            "connected_title": "Voice caddy ready",
+            "connected_subtitle": "Open ChatGPT and tap the headphone icon to start",
+            "connected_cta": "Open"
+        },
+        "settings": {
+            "title": "Voice Caddy",
+            "connected": "Connected",
+            "not_connected": "Not connected"
+        }
     }
 }

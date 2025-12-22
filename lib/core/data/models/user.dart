@@ -18,6 +18,8 @@ sealed class User with _$User {
     String? locale,
     // this will be empty only if you don't use the Subscription module
     Subscription? subscription,
+    // Whether the user has connected their account to the ChatGPT CustomGPT
+    @Default(false) bool hasCompletedGptOauth,
   }) = AuthenticatedUserData;
 
   const factory User.loading() = LoadingUserData;
@@ -44,6 +46,7 @@ sealed class User with _$User {
         creationDate: entity.creationDate,
         lastUpdateDate: entity.lastUpdateDate,
         locale: entity.locale,
+        hasCompletedGptOauth: entity.hasCompletedGptOauth,
       );
     } catch (e, trace) {
       Logger().e(e, stackTrace: trace);
@@ -62,6 +65,7 @@ sealed class User with _$User {
         creationDate: value.creationDate,
         lastUpdateDate: value.lastUpdateDate,
         locale: value.locale,
+        hasCompletedGptOauth: value.hasCompletedGptOauth,
       ),
       LoadingUserData() => throw "user is loading",
       UnauthenticatedUserData() => throw "user is not authenticated",
@@ -94,6 +98,12 @@ sealed class User with _$User {
 
   bool get isOnboarded => switch (this) {
     AuthenticatedUserData(:final onboarded) => onboarded,
+    LoadingUserData() => false,
+    UnauthenticatedUserData() => false,
+  };
+
+  bool get isGptConnected => switch (this) {
+    AuthenticatedUserData(:final hasCompletedGptOauth) => hasCompletedGptOauth,
     LoadingUserData() => false,
     UnauthenticatedUserData() => false,
   };

@@ -56,6 +56,7 @@ class TranslationsEn extends Translations with BaseTranslations<AppLocale, Trans
 	@override late final _TranslationsFeedbackEn feedback = _TranslationsFeedbackEn._(_root);
 	@override late final _TranslationsGpsEn gps = _TranslationsGpsEn._(_root);
 	@override late final _TranslationsBagEn bag = _TranslationsBagEn._(_root);
+	@override late final _TranslationsVoiceCaddyEn voice_caddy = _TranslationsVoiceCaddyEn._(_root);
 }
 
 // Path: home
@@ -378,6 +379,24 @@ class _TranslationsBagEn extends TranslationsBagEs {
 	@override String get save => 'Save';
 }
 
+// Path: voice_caddy
+class _TranslationsVoiceCaddyEn extends TranslationsVoiceCaddyEs {
+	_TranslationsVoiceCaddyEn._(TranslationsEn root) : this._root = root, super.internal(root);
+
+	final TranslationsEn _root; // ignore: unused_field
+
+	// Translations
+	@override late final _TranslationsVoiceCaddyIntroEn intro = _TranslationsVoiceCaddyIntroEn._(_root);
+	@override late final _TranslationsVoiceCaddyPrerequisitesEn prerequisites = _TranslationsVoiceCaddyPrerequisitesEn._(_root);
+	@override late final _TranslationsVoiceCaddyHowItWorksEn how_it_works = _TranslationsVoiceCaddyHowItWorksEn._(_root);
+	@override late final _TranslationsVoiceCaddyConnectEn connect = _TranslationsVoiceCaddyConnectEn._(_root);
+	@override late final _TranslationsVoiceCaddyWaitingEn waiting = _TranslationsVoiceCaddyWaitingEn._(_root);
+	@override late final _TranslationsVoiceCaddySuccessEn success = _TranslationsVoiceCaddySuccessEn._(_root);
+	@override late final _TranslationsVoiceCaddyErrorEn error = _TranslationsVoiceCaddyErrorEn._(_root);
+	@override late final _TranslationsVoiceCaddyHomeCardEn home_card = _TranslationsVoiceCaddyHomeCardEn._(_root);
+	@override late final _TranslationsVoiceCaddySettingsEn settings = _TranslationsVoiceCaddySettingsEn._(_root);
+}
+
 // Path: onboarding.welcome
 class _TranslationsOnboardingWelcomeEn extends TranslationsOnboardingWelcomeEs {
 	_TranslationsOnboardingWelcomeEn._(TranslationsEn root) : this._root = root, super.internal(root);
@@ -557,6 +576,144 @@ class _TranslationsGpsTrackingEn extends TranslationsGpsTrackingEs {
 	@override String get started => 'GPS tracking started';
 	@override String get stopped => 'GPS tracking stopped';
 	@override String get error => 'GPS error';
+}
+
+// Path: voice_caddy.intro
+class _TranslationsVoiceCaddyIntroEn extends TranslationsVoiceCaddyIntroEs {
+	_TranslationsVoiceCaddyIntroEn._(TranslationsEn root) : this._root = root, super.internal(root);
+
+	final TranslationsEn _root; // ignore: unused_field
+
+	// Translations
+	@override String get title => 'Your Voice Caddy';
+	@override String get subtitle => 'TalkCaddy uses ChatGPT\'s voice mode as your personal caddy.';
+	@override String get bullet_1 => 'Ask for distances naturally';
+	@override String get bullet_2 => 'Log shots without touching your phone';
+	@override String get bullet_3 => 'Get club recommendations based on your game';
+	@override String get cta => 'Set Up Voice Caddy';
+	@override String get skip => 'Not now';
+}
+
+// Path: voice_caddy.prerequisites
+class _TranslationsVoiceCaddyPrerequisitesEn extends TranslationsVoiceCaddyPrerequisitesEs {
+	_TranslationsVoiceCaddyPrerequisitesEn._(TranslationsEn root) : this._root = root, super.internal(root);
+
+	final TranslationsEn _root; // ignore: unused_field
+
+	// Translations
+	@override String get title => 'Before we start';
+	@override String get subtitle => 'You\'ll need the ChatGPT app with voice mode.';
+	@override String get chatgpt_label => 'ChatGPT by OpenAI';
+	@override String get get_app => 'Download';
+	@override String get cta => 'I have ChatGPT';
+	@override String get hint => 'Voice mode works best with ChatGPT Plus, but free tier has limited voice too';
+}
+
+// Path: voice_caddy.how_it_works
+class _TranslationsVoiceCaddyHowItWorksEn extends TranslationsVoiceCaddyHowItWorksEs {
+	_TranslationsVoiceCaddyHowItWorksEn._(TranslationsEn root) : this._root = root, super.internal(root);
+
+	final TranslationsEn _root; // ignore: unused_field
+
+	// Translations
+	@override String get title => 'How it works';
+	@override String get step_1_title => 'TalkCaddy tracks your GPS';
+	@override String get step_1_subtitle => 'and knows the course';
+	@override String get step_2_title => 'ChatGPT is your voice interface';
+	@override String get step_2_subtitle => 'to the caddy';
+	@override String get step_3_title => 'They sync automatically';
+	@override String get step_3_subtitle => 'you just talk';
+	@override String get cta => 'Continue';
+}
+
+// Path: voice_caddy.connect
+class _TranslationsVoiceCaddyConnectEn extends TranslationsVoiceCaddyConnectEs {
+	_TranslationsVoiceCaddyConnectEn._(TranslationsEn root) : this._root = root, super.internal(root);
+
+	final TranslationsEn _root; // ignore: unused_field
+
+	// Translations
+	@override String get title => 'Connect your voice caddy';
+	@override String get subtitle => 'We\'ll open ChatGPT with your personal caddy ready to go.';
+	@override String get step_1 => 'Tap "Sign in" when asked to connect your TalkCaddy account';
+	@override String get step_2 => 'Return here when done';
+	@override String get cta => 'Open TalkCaddy in ChatGPT';
+	@override String get check_connection => 'I\'ve already connected';
+	@override String get fallback => 'Link not working?';
+	@override String get manual_title => 'Open manually';
+	@override String get manual_step_1 => 'Open the ChatGPT app';
+	@override String get manual_step_2 => 'Tap "Explore GPTs" at the bottom left';
+	@override String get manual_step_3 => 'Search for "TalkCaddy"';
+	@override String get manual_step_4 => 'Open and sign in when prompted';
+}
+
+// Path: voice_caddy.waiting
+class _TranslationsVoiceCaddyWaitingEn extends TranslationsVoiceCaddyWaitingEs {
+	_TranslationsVoiceCaddyWaitingEn._(TranslationsEn root) : this._root = root, super.internal(root);
+
+	final TranslationsEn _root; // ignore: unused_field
+
+	// Translations
+	@override String get title => 'Waiting for connection...';
+	@override String get subtitle => 'Complete the sign-in in ChatGPT, then come back here.';
+	@override String get cta => 'I\'ve connected';
+	@override String get help => 'Having trouble?';
+}
+
+// Path: voice_caddy.success
+class _TranslationsVoiceCaddySuccessEn extends TranslationsVoiceCaddySuccessEs {
+	_TranslationsVoiceCaddySuccessEn._(TranslationsEn root) : this._root = root, super.internal(root);
+
+	final TranslationsEn _root; // ignore: unused_field
+
+	// Translations
+	@override String get title => 'Voice Caddy Connected';
+	@override String get subtitle => 'You\'re all set. One last thing:';
+	@override String get tip => 'To talk to your caddy, tap the headphone icon in ChatGPT';
+	@override String get example => 'Try saying: "Hey, what can you help me with on the course?"';
+	@override String get cta_primary => 'Start a round';
+	@override String get cta_secondary => 'Go to home';
+}
+
+// Path: voice_caddy.error
+class _TranslationsVoiceCaddyErrorEn extends TranslationsVoiceCaddyErrorEs {
+	_TranslationsVoiceCaddyErrorEn._(TranslationsEn root) : this._root = root, super.internal(root);
+
+	final TranslationsEn _root; // ignore: unused_field
+
+	// Translations
+	@override String get not_completed_title => 'Connection not completed';
+	@override String get not_completed_subtitle => 'It looks like the sign-in wasn\'t completed in ChatGPT.';
+	@override String get why_needed => 'The voice caddy needs access to your TalkCaddy account to know your location and club distances.';
+	@override String get try_again => 'Try again';
+	@override String get why_link => 'Why is this needed?';
+}
+
+// Path: voice_caddy.home_card
+class _TranslationsVoiceCaddyHomeCardEn extends TranslationsVoiceCaddyHomeCardEs {
+	_TranslationsVoiceCaddyHomeCardEn._(TranslationsEn root) : this._root = root, super.internal(root);
+
+	final TranslationsEn _root; // ignore: unused_field
+
+	// Translations
+	@override String get not_connected_title => 'Set up Voice Caddy';
+	@override String get not_connected_subtitle => 'Connect ChatGPT to talk to your caddy hands-free';
+	@override String get not_connected_cta => 'Set up';
+	@override String get connected_title => 'Voice caddy ready';
+	@override String get connected_subtitle => 'Open ChatGPT and tap the headphone icon to start';
+	@override String get connected_cta => 'Open';
+}
+
+// Path: voice_caddy.settings
+class _TranslationsVoiceCaddySettingsEn extends TranslationsVoiceCaddySettingsEs {
+	_TranslationsVoiceCaddySettingsEn._(TranslationsEn root) : this._root = root, super.internal(root);
+
+	final TranslationsEn _root; // ignore: unused_field
+
+	// Translations
+	@override String get title => 'Voice Caddy';
+	@override String get connected => 'Connected';
+	@override String get not_connected => 'Not connected';
 }
 
 /// The flat map containing all translations for locale <en>.
@@ -805,6 +962,63 @@ extension on TranslationsEn {
 			'bag.distance_hint' => 'E.g.: 150',
 			'bag.distance_unit' => 'yds',
 			'bag.save' => 'Save',
+			'voice_caddy.intro.title' => 'Your Voice Caddy',
+			'voice_caddy.intro.subtitle' => 'TalkCaddy uses ChatGPT\'s voice mode as your personal caddy.',
+			'voice_caddy.intro.bullet_1' => 'Ask for distances naturally',
+			'voice_caddy.intro.bullet_2' => 'Log shots without touching your phone',
+			'voice_caddy.intro.bullet_3' => 'Get club recommendations based on your game',
+			'voice_caddy.intro.cta' => 'Set Up Voice Caddy',
+			'voice_caddy.intro.skip' => 'Not now',
+			'voice_caddy.prerequisites.title' => 'Before we start',
+			'voice_caddy.prerequisites.subtitle' => 'You\'ll need the ChatGPT app with voice mode.',
+			'voice_caddy.prerequisites.chatgpt_label' => 'ChatGPT by OpenAI',
+			'voice_caddy.prerequisites.get_app' => 'Download',
+			'voice_caddy.prerequisites.cta' => 'I have ChatGPT',
+			'voice_caddy.prerequisites.hint' => 'Voice mode works best with ChatGPT Plus, but free tier has limited voice too',
+			'voice_caddy.how_it_works.title' => 'How it works',
+			'voice_caddy.how_it_works.step_1_title' => 'TalkCaddy tracks your GPS',
+			'voice_caddy.how_it_works.step_1_subtitle' => 'and knows the course',
+			'voice_caddy.how_it_works.step_2_title' => 'ChatGPT is your voice interface',
+			'voice_caddy.how_it_works.step_2_subtitle' => 'to the caddy',
+			'voice_caddy.how_it_works.step_3_title' => 'They sync automatically',
+			'voice_caddy.how_it_works.step_3_subtitle' => 'you just talk',
+			'voice_caddy.how_it_works.cta' => 'Continue',
+			'voice_caddy.connect.title' => 'Connect your voice caddy',
+			'voice_caddy.connect.subtitle' => 'We\'ll open ChatGPT with your personal caddy ready to go.',
+			'voice_caddy.connect.step_1' => 'Tap "Sign in" when asked to connect your TalkCaddy account',
+			'voice_caddy.connect.step_2' => 'Return here when done',
+			'voice_caddy.connect.cta' => 'Open TalkCaddy in ChatGPT',
+			'voice_caddy.connect.check_connection' => 'I\'ve already connected',
+			'voice_caddy.connect.fallback' => 'Link not working?',
+			'voice_caddy.connect.manual_title' => 'Open manually',
+			'voice_caddy.connect.manual_step_1' => 'Open the ChatGPT app',
+			'voice_caddy.connect.manual_step_2' => 'Tap "Explore GPTs" at the bottom left',
+			'voice_caddy.connect.manual_step_3' => 'Search for "TalkCaddy"',
+			'voice_caddy.connect.manual_step_4' => 'Open and sign in when prompted',
+			'voice_caddy.waiting.title' => 'Waiting for connection...',
+			'voice_caddy.waiting.subtitle' => 'Complete the sign-in in ChatGPT, then come back here.',
+			'voice_caddy.waiting.cta' => 'I\'ve connected',
+			'voice_caddy.waiting.help' => 'Having trouble?',
+			'voice_caddy.success.title' => 'Voice Caddy Connected',
+			'voice_caddy.success.subtitle' => 'You\'re all set. One last thing:',
+			'voice_caddy.success.tip' => 'To talk to your caddy, tap the headphone icon in ChatGPT',
+			'voice_caddy.success.example' => 'Try saying: "Hey, what can you help me with on the course?"',
+			'voice_caddy.success.cta_primary' => 'Start a round',
+			'voice_caddy.success.cta_secondary' => 'Go to home',
+			'voice_caddy.error.not_completed_title' => 'Connection not completed',
+			'voice_caddy.error.not_completed_subtitle' => 'It looks like the sign-in wasn\'t completed in ChatGPT.',
+			'voice_caddy.error.why_needed' => 'The voice caddy needs access to your TalkCaddy account to know your location and club distances.',
+			'voice_caddy.error.try_again' => 'Try again',
+			'voice_caddy.error.why_link' => 'Why is this needed?',
+			'voice_caddy.home_card.not_connected_title' => 'Set up Voice Caddy',
+			'voice_caddy.home_card.not_connected_subtitle' => 'Connect ChatGPT to talk to your caddy hands-free',
+			'voice_caddy.home_card.not_connected_cta' => 'Set up',
+			'voice_caddy.home_card.connected_title' => 'Voice caddy ready',
+			'voice_caddy.home_card.connected_subtitle' => 'Open ChatGPT and tap the headphone icon to start',
+			'voice_caddy.home_card.connected_cta' => 'Open',
+			'voice_caddy.settings.title' => 'Voice Caddy',
+			'voice_caddy.settings.connected' => 'Connected',
+			'voice_caddy.settings.not_connected' => 'Not connected',
 			_ => null,
 		};
 	}
