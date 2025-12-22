@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:apparence_kit/core/data/api/analytics_api.dart';
 import 'package:apparence_kit/core/states/user_state_notifier.dart';
 import 'package:apparence_kit/modules/authentication/providers/models/email.dart';
 import 'package:apparence_kit/modules/authentication/providers/models/password.dart';
@@ -17,6 +18,8 @@ class SignupStateNotifier extends _$SignupStateNotifier {
 
   UserStateNotifier get _userStateNotifier =>
       ref.read(userStateNotifierProvider.notifier);
+
+  AnalyticsApi get _analyticsApi => ref.read(analyticsApiProvider);
 
   @override
   SignupState build() {
@@ -46,14 +49,21 @@ class SignupStateNotifier extends _$SignupStateNotifier {
     try {
       state.email.validate();
       state.password.validate();
+      await _analyticsApi.logEvent('signup_started', {'method': 'email'});
       state = SignupState.sending(email: state.email, password: state.password);
       final locale = PlatformDispatcher.instance.locale.languageCode;
       await _authRepository.signup(state.email.value, state.password.value, locale: locale);
       // lets fake a delay to prevent spamming the signup button
       await Future.delayed(const Duration(milliseconds: 1500));
       await _userStateNotifier.onSignin();
+      await _analyticsApi.logEvent('signup_completed', {'method': 'email'});
+      await _analyticsApi.setUserProperties({'signup_source': 'app'});
     } catch (e, trace) {
       debugPrint("Error while signing up: $e, $trace");
+      await _analyticsApi.logEvent('signup_failed', {
+        'method': 'email',
+        'error': e.toString(),
+      });
       state = SignupState(email: state.email, password: state.password);
       rethrow;
     }

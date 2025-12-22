@@ -1,3 +1,4 @@
+import 'package:apparence_kit/core/data/api/analytics_api.dart';
 import 'package:apparence_kit/modules/round/api/round_api.dart';
 import 'package:apparence_kit/modules/round/domain/round.dart';
 import 'package:apparence_kit/modules/rounds/providers/models/rounds_page_state.dart';
@@ -11,6 +12,8 @@ class RoundsPageNotifier extends _$RoundsPageNotifier {
 
   @override
   FutureOr<RoundsPageState> build() async {
+    // Track page view
+    ref.read(analyticsApiProvider).logEvent('round_history_viewed', {});
     return _loadRounds(offset: 0);
   }
 

@@ -1,3 +1,4 @@
+import 'package:apparence_kit/core/data/api/analytics_api.dart';
 import 'package:apparence_kit/core/theme/extensions/theme_extension.dart';
 import 'package:apparence_kit/i18n/translations.g.dart';
 import 'package:apparence_kit/modules/onboarding/ui/widgets/onboarding_background.dart';
@@ -5,9 +6,10 @@ import 'package:apparence_kit/modules/voice_caddy/ui/widgets/vc_bullet_point.dar
 import 'package:apparence_kit/modules/voice_caddy/ui/widgets/vc_progress.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 /// Screen 1: Introduction - Voice Caddy overview
-class VcIntroStep extends StatelessWidget {
+class VcIntroStep extends ConsumerStatefulWidget {
   final String nextRoute;
   final bool allowSkip;
   final VoidCallback? onSkip;
@@ -18,6 +20,31 @@ class VcIntroStep extends StatelessWidget {
     this.allowSkip = true,
     this.onSkip,
   });
+
+  @override
+  ConsumerState<VcIntroStep> createState() => _VcIntroStepState();
+}
+
+class _VcIntroStepState extends ConsumerState<VcIntroStep> {
+  late DateTime _startTime;
+
+  @override
+  void initState() {
+    super.initState();
+    _startTime = DateTime.now();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      ref.read(analyticsApiProvider).logEvent('gpt_setup_started', {});
+    });
+  }
+
+  void _handleSkip() {
+    final duration = DateTime.now().difference(_startTime).inSeconds;
+    ref.read(analyticsApiProvider).logEvent('gpt_setup_abandoned', {
+      'last_screen': 'intro',
+      'duration_seconds': duration,
+    });
+    widget.onSkip?.call();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -145,13 +172,13 @@ class VcIntroStep extends StatelessWidget {
                 ],
                 child: ElevatedButton(
                   onPressed: () {
-                    Navigator.of(context).pushReplacementNamed(nextRoute);
+                    Navigator.of(context).pushReplacementNamed(widget.nextRoute);
                   },
                   child: Text(tr.cta),
                 ),
               ),
             ),
-            if (allowSkip) ...[
+            if (widget.allowSkip) ...[
               const SizedBox(height: 8),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 32),
@@ -163,7 +190,7 @@ class VcIntroStep extends StatelessWidget {
                     ),
                   ],
                   child: TextButton(
-                    onPressed: onSkip,
+                    onPressed: _handleSkip,
                     child: Text(tr.skip),
                   ),
                 ),

@@ -1,3 +1,4 @@
+import 'package:apparence_kit/core/data/api/analytics_api.dart';
 import 'package:apparence_kit/core/theme/extensions/theme_extension.dart';
 import 'package:apparence_kit/i18n/translations.g.dart';
 import 'package:apparence_kit/modules/onboarding/ui/widgets/onboarding_background.dart';
@@ -26,6 +27,7 @@ class _VcWaitingStepState extends ConsumerState<VcWaitingStep> {
     super.initState();
     // Start polling when this screen is shown
     WidgetsBinding.instance.addPostFrameCallback((_) {
+      ref.read(analyticsApiProvider).logEvent('gpt_setup_waiting', {});
       ref.read(voiceCaddyProvider.notifier).startPolling();
     });
   }

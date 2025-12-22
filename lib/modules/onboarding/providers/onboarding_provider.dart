@@ -37,10 +37,12 @@ class OnboardingNotifier extends _$OnboardingNotifier {
 
   Future<void> setupNotifications() async {
     final userStateNotifier = ref.read(userStateNotifierProvider.notifier);
-    // save analytics event
-    await ref
-        .read(analyticsApiProvider)
-        .logEvent('setup_notifications_accepted', {});
+    final analytics = ref.read(analyticsApiProvider);
+
+    // Track permission granted event
+    await analytics.logEvent('permission_granted', {
+      'permission_type': 'notification',
+    });
 
     // Uncomment and create translations to schedule daily notification after user accept permissions
     // --

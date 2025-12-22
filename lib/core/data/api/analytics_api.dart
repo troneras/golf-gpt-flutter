@@ -1,14 +1,15 @@
+import 'dart:io';
+
 import 'package:apparence_kit/core/data/models/user.dart';
 import 'package:apparence_kit/core/initializer/onstart_service.dart';
 import 'package:apparence_kit/environnements.dart';
 import 'package:flutter/material.dart';
-
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mixpanel_flutter/mixpanel_flutter.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 
 final analyticsApiProvider = Provider<AnalyticsApi>(
   (ref) => MixpanelAnalyticsApi.instance(),
-  
 );
 
 abstract class AnalyticsApi implements OnStartService {
@@ -20,12 +21,26 @@ abstract class AnalyticsApi implements OnStartService {
 
   /// Identify a user to your analytics platform
   Future<void> identify(User user);
-}
 
+  /// Set user properties (profile data)
+  Future<void> setUserProperties(Map<String, dynamic> properties);
+
+  /// Increment a user property (e.g., rounds_played)
+  Future<void> incrementUserProperty(String property, [int value = 1]);
+
+  /// Register super properties (attached to every event)
+  Future<void> registerSuperProperties(Map<String, dynamic> properties);
+
+  /// Update a single super property
+  Future<void> setSuperProperty(String key, dynamic value);
+}
 
 class MixpanelAnalyticsApi implements AnalyticsApi {
   final Environment environment;
   Mixpanel? mixpanel;
+  String? _appVersion;
+  String? _platform;
+
   MixpanelAnalyticsApi._({
     required this.environment,
   });
@@ -47,10 +62,27 @@ class MixpanelAnalyticsApi implements AnalyticsApi {
     try {
       mixpanel = await Mixpanel.init(
         environment.mixpanelToken!,
-        trackAutomaticEvents: true,
+        trackAutomaticEvents: false,
       );
+      await _initSuperProperties();
     } catch (e, s) {
       debugPrint('Error initializing Mixpanel: $e\n$s');
+    }
+  }
+
+  Future<void> _initSuperProperties() async {
+    try {
+      final packageInfo = await PackageInfo.fromPlatform();
+      _appVersion = packageInfo.version;
+      _platform = Platform.isIOS ? 'ios' : 'android';
+
+      await registerSuperProperties({
+        'platform': _platform,
+        'app_version': _appVersion,
+        'environment': environment.name,
+      });
+    } catch (e) {
+      debugPrint('Error setting super properties: $e');
     }
   }
 
@@ -61,22 +93,65 @@ class MixpanelAnalyticsApi implements AnalyticsApi {
 
   @override
   Future<void> logSignout() async {
-    mixpanel?.reset();
     mixpanel?.track('logout');
+    mixpanel?.reset();
   }
 
   @override
   Future<void> identify(User user) async {
-    mixpanel?.track('login');
     final userId = user.idOrNull;
-    if (userId != null) {
-      mixpanel?.identify(userId);
+    if (userId == null) return;
+
+    mixpanel?.identify(userId);
+
+    // Set user properties
+    if (user is AuthenticatedUserData) {
+      final properties = <String, dynamic>{
+        r'$email': user.email,
+        'platform': _platform ?? (Platform.isIOS ? 'ios' : 'android'),
+        'app_version': _appVersion,
+        'gpt_connected': user.hasCompletedGptOauth,
+        'is_beta': user.isBeta,
+        'onboarded': user.onboarded,
+      };
+
+      if (user.name != null) {
+        properties[r'$name'] = user.name;
+      }
+
+      if (user.creationDate != null) {
+        properties[r'$created'] = user.creationDate!.toIso8601String();
+      }
+
+      await setUserProperties(properties);
+
+      // Update super property for gpt_connected
+      await setSuperProperty('gpt_connected', user.hasCompletedGptOauth);
     }
   }
+
+  @override
+  Future<void> setUserProperties(Map<String, dynamic> properties) async {
+    for (final entry in properties.entries) {
+      mixpanel?.getPeople().set(entry.key, entry.value);
+    }
+  }
+
+  @override
+  Future<void> incrementUserProperty(String property, [int value = 1]) async {
+    mixpanel?.getPeople().increment(property, value.toDouble());
+  }
+
+  @override
+  Future<void> registerSuperProperties(Map<String, dynamic> properties) async {
+    mixpanel?.registerSuperProperties(properties);
+  }
+
+  @override
+  Future<void> setSuperProperty(String key, dynamic value) async {
+    mixpanel?.registerSuperProperties({key: value});
+  }
 }
-
-
-
 
 class AnalyticsObserver extends RouteObserver<ModalRoute<dynamic>> {
   final AnalyticsApi analyticsApi;
@@ -89,7 +164,6 @@ class AnalyticsObserver extends RouteObserver<ModalRoute<dynamic>> {
 
   @override
   void didPush(Route<dynamic> route, Route<dynamic>? previousRoute) {
-    // debugPrint('didPush $prefix${route.settings.name} ');
     if (route.settings.name != null && prefix != null) {
       analyticsApi.logEvent('$prefix${route.settings.name}', {});
     } else if (route.settings.name != null && prefix == null) {
@@ -99,7 +173,6 @@ class AnalyticsObserver extends RouteObserver<ModalRoute<dynamic>> {
 
   @override
   void didReplace({Route<dynamic>? newRoute, Route<dynamic>? oldRoute}) {
-    // debugPrint('didReplace ${newRoute?.settings.name}');
     if (newRoute?.settings.name != null && prefix != null) {
       analyticsApi.logEvent('$prefix${newRoute!.settings.name!}', {});
     } else if (newRoute?.settings.name != null && prefix == null) {
@@ -122,4 +195,3 @@ class AnalyticsObserver extends RouteObserver<ModalRoute<dynamic>> {
   @override
   void didStopUserGesture() {}
 }
-

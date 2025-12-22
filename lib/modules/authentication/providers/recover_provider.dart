@@ -1,3 +1,4 @@
+import 'package:apparence_kit/core/data/api/analytics_api.dart';
 import 'package:apparence_kit/modules/authentication/providers/models/email.dart';
 import 'package:apparence_kit/modules/authentication/providers/models/recover_state.dart';
 import 'package:apparence_kit/modules/authentication/repositories/authentication_repository.dart';
@@ -11,6 +12,8 @@ part 'recover_provider.g.dart';
 class RecoverStateNotifier extends _$RecoverStateNotifier {
   AuthenticationRepository get authRepository =>
       ref.read(authRepositoryProvider);
+
+  AnalyticsApi get _analyticsApi => ref.read(analyticsApiProvider);
 
   @override
   RecoverState build() {
@@ -49,6 +52,7 @@ class RecoverStateNotifier extends _$RecoverStateNotifier {
       currentState.email.validate();
       state = RecoverState.sending(email: currentState.email);
       await authRepository.forgotPassword(currentState.email.value);
+      await _analyticsApi.logEvent('password_reset_requested', {});
       state = RecoverState.codeEntry(email: currentState.email);
     } on EmailException catch (e) {
       debugPrint('Email validation error: $e');
@@ -57,6 +61,7 @@ class RecoverStateNotifier extends _$RecoverStateNotifier {
       debugPrint('Error requesting password reset: $e');
       // Don't show error to prevent email enumeration
       // Backend always returns success
+      await _analyticsApi.logEvent('password_reset_requested', {});
       state = RecoverState.codeEntry(email: currentState.email);
     } catch (e, trace) {
       debugPrint('Error requesting password reset: $e, $trace');

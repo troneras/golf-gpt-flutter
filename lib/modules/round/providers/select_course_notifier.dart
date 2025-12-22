@@ -1,3 +1,4 @@
+import 'package:apparence_kit/core/data/api/analytics_api.dart';
 import 'package:apparence_kit/modules/round/domain/course.dart';
 import 'package:apparence_kit/modules/round/domain/tee.dart';
 import 'package:apparence_kit/modules/round/providers/models/select_course_state.dart';
@@ -14,6 +15,7 @@ final _logger = Logger(printer: PrettyPrinter(methodCount: 0));
 @riverpod
 class SelectCourseNotifier extends _$SelectCourseNotifier {
   CourseRepository get _courseRepository => ref.read(courseRepositoryProvider);
+  AnalyticsApi get _analyticsApi => ref.read(analyticsApiProvider);
 
   /// Cached user position from initial load - reused for distance calculations
   Position? _cachedPosition;
@@ -116,9 +118,17 @@ class SelectCourseNotifier extends _$SelectCourseNotifier {
     _loadClosestCourse();
   }
 
-  Future<void> setCourse(Course course) async {
+  Future<void> setCourse(Course course, {String? searchQuery}) async {
     _logger.i('Setting course: ${course.name}');
     state = const SelectCourseState.loading();
+
+    // Track course selection
+    await _analyticsApi.logEvent('course_selected', {
+      'course_id': course.id,
+      'course_name': course.name,
+      if (searchQuery != null) 'search_query': searchQuery,
+    });
+
     try {
       // Check GPS permission to set default gpsEnabled value
       final hasGpsPermission = await Permission.locationWhenInUse.isGranted;

@@ -1,3 +1,4 @@
+import 'package:apparence_kit/core/data/api/analytics_api.dart';
 import 'package:apparence_kit/core/states/user_state_notifier.dart';
 import 'package:apparence_kit/modules/round/providers/models/browse_courses_state.dart';
 import 'package:apparence_kit/modules/round/repositories/course_repository.dart';
@@ -12,6 +13,7 @@ final _logger = Logger(printer: PrettyPrinter(methodCount: 0));
 @riverpod
 class BrowseCoursesNotifier extends _$BrowseCoursesNotifier {
   CourseRepository get _courseRepository => ref.read(courseRepositoryProvider);
+  AnalyticsApi get _analyticsApi => ref.read(analyticsApiProvider);
   Position? _cachedPosition;
 
   @override
@@ -114,6 +116,13 @@ class BrowseCoursesNotifier extends _$BrowseCoursesNotifier {
       final courses = await _courseRepository.search(query);
       if (state.searchQuery == query) {
         _logger.i('Search returned ${courses.length} courses for query: $query');
+
+        // Track course search analytics
+        await _analyticsApi.logEvent('course_search', {
+          'query': query,
+          'results_count': courses.length,
+        });
+
         state = state.copyWith(
           searchResults: courses,
           isLoadingSearch: false,

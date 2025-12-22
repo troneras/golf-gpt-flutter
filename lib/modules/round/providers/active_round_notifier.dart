@@ -348,6 +348,7 @@ class ActiveRoundNotifier extends _$ActiveRoundNotifier {
       final summary = await _roundRepository.finishRound(notes: notes);
       if (!ref.mounted) return;
       _logger.i('Round finished: ${summary.totalStrokes} strokes');
+
       state = ActiveRoundState.finished(
         roundId: currentState.round.id,
         summary: summary,

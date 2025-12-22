@@ -1,3 +1,4 @@
+import 'package:apparence_kit/core/data/api/analytics_api.dart';
 import 'package:apparence_kit/core/theme/extensions/theme_extension.dart';
 import 'package:apparence_kit/i18n/translations.g.dart';
 import 'package:apparence_kit/modules/onboarding/ui/widgets/onboarding_background.dart';
@@ -22,8 +23,10 @@ class VcSuccessStep extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final tr = Translations.of(context).voice_caddy.success;
 
-    // Mark flow as completed
+    // Mark flow as completed and track analytics
     WidgetsBinding.instance.addPostFrameCallback((_) {
+      ref.read(analyticsApiProvider).logEvent('gpt_setup_completed', {});
+      ref.read(analyticsApiProvider).setSuperProperty('gpt_connected', true);
       ref.read(voiceCaddyProvider.notifier).completeFlow();
     });
 

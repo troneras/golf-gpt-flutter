@@ -1,19 +1,40 @@
+import 'package:apparence_kit/core/data/api/analytics_api.dart';
 import 'package:apparence_kit/i18n/translations.g.dart';
 import 'package:apparence_kit/core/theme/extensions/theme_extension.dart';
 import 'package:apparence_kit/modules/onboarding/ui/widgets/onboarding_background.dart';
 import 'package:apparence_kit/modules/onboarding/ui/widgets/onboarding_progress.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 /// Screen 1: Welcome - Voice Caddie intro
-class OnboardingWelcomeStep extends StatelessWidget {
+class OnboardingWelcomeStep extends ConsumerStatefulWidget {
   final String nextRoute;
 
   const OnboardingWelcomeStep({
     super.key,
     required this.nextRoute,
   });
+
+  @override
+  ConsumerState<OnboardingWelcomeStep> createState() =>
+      _OnboardingWelcomeStepState();
+}
+
+class _OnboardingWelcomeStepState extends ConsumerState<OnboardingWelcomeStep> {
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      final analytics = ref.read(analyticsApiProvider);
+      analytics.logEvent('onboarding_started', {});
+      analytics.logEvent('onboarding_screen_viewed', {
+        'screen_name': 'welcome',
+        'screen_index': 0,
+      });
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -108,7 +129,7 @@ class OnboardingWelcomeStep extends StatelessWidget {
                 ],
                 child: ElevatedButton(
                   onPressed: () {
-                    Navigator.of(context).pushReplacementNamed(nextRoute);
+                    Navigator.of(context).pushReplacementNamed(widget.nextRoute);
                   },
                   child: Text(tr.action),
                 ),
@@ -123,13 +144,31 @@ class OnboardingWelcomeStep extends StatelessWidget {
 }
 
 /// Screen 2: App Purpose - What the app does
-class OnboardingAppPurposeStep extends StatelessWidget {
+class OnboardingAppPurposeStep extends ConsumerStatefulWidget {
   final String nextRoute;
 
   const OnboardingAppPurposeStep({
     super.key,
     required this.nextRoute,
   });
+
+  @override
+  ConsumerState<OnboardingAppPurposeStep> createState() =>
+      _OnboardingAppPurposeStepState();
+}
+
+class _OnboardingAppPurposeStepState
+    extends ConsumerState<OnboardingAppPurposeStep> {
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      ref.read(analyticsApiProvider).logEvent('onboarding_screen_viewed', {
+        'screen_name': 'app_purpose',
+        'screen_index': 1,
+      });
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -233,7 +272,7 @@ class OnboardingAppPurposeStep extends StatelessWidget {
                 ],
                 child: ElevatedButton(
                   onPressed: () {
-                    Navigator.of(context).pushReplacementNamed(nextRoute);
+                    Navigator.of(context).pushReplacementNamed(widget.nextRoute);
                   },
                   child: Text(tr.action),
                 ),
@@ -248,7 +287,7 @@ class OnboardingAppPurposeStep extends StatelessWidget {
 }
 
 /// Screen 3: Location Permission
-class OnboardingLocationPermissionStep extends StatelessWidget {
+class OnboardingLocationPermissionStep extends ConsumerStatefulWidget {
   final String nextRoute;
 
   const OnboardingLocationPermissionStep({
@@ -256,11 +295,62 @@ class OnboardingLocationPermissionStep extends StatelessWidget {
     required this.nextRoute,
   });
 
+  @override
+  ConsumerState<OnboardingLocationPermissionStep> createState() =>
+      _OnboardingLocationPermissionStepState();
+}
+
+class _OnboardingLocationPermissionStepState
+    extends ConsumerState<OnboardingLocationPermissionStep> {
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      ref.read(analyticsApiProvider).logEvent('onboarding_screen_viewed', {
+        'screen_name': 'location_permission',
+        'screen_index': 2,
+      });
+    });
+  }
+
   Future<void> _requestPermission(BuildContext context) async {
+    final analytics = ref.read(analyticsApiProvider);
+    await analytics.logEvent('permission_requested', {
+      'permission_type': 'location',
+    });
+
     final status = await Permission.locationWhenInUse.request();
-    if (context.mounted) {
-      Navigator.of(context).pushReplacementNamed(nextRoute);
+
+    if (status.isGranted) {
+      // Check if precise location is granted
+      final preciseStatus = await Permission.locationWhenInUse.serviceStatus;
+      await analytics.logEvent('permission_granted', {
+        'permission_type': 'location',
+        'precision': preciseStatus == ServiceStatus.enabled ? 'precise' : 'approximate',
+      });
+    } else if (status.isDenied || status.isPermanentlyDenied) {
+      await analytics.logEvent('permission_denied', {
+        'permission_type': 'location',
+      });
     }
+
+    await analytics.logEvent('onboarding_completed', {});
+
+    if (context.mounted) {
+      Navigator.of(context).pushReplacementNamed(widget.nextRoute);
+    }
+  }
+
+  void _skipPermission() {
+    final analytics = ref.read(analyticsApiProvider);
+    analytics.logEvent('onboarding_skipped', {
+      'screen_name': 'location_permission',
+    });
+    analytics.logEvent('permission_denied', {
+      'permission_type': 'location',
+    });
+    analytics.logEvent('onboarding_completed', {});
+    Navigator.of(context).pushReplacementNamed(widget.nextRoute);
   }
 
   @override
@@ -399,9 +489,7 @@ class OnboardingLocationPermissionStep extends StatelessWidget {
                   ),
                 ],
                 child: TextButton(
-                  onPressed: () {
-                    Navigator.of(context).pushReplacementNamed(nextRoute);
-                  },
+                  onPressed: _skipPermission,
                   child: Text(tr.skip),
                 ),
               ),

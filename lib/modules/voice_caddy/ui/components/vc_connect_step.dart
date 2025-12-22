@@ -1,3 +1,4 @@
+import 'package:apparence_kit/core/data/api/analytics_api.dart';
 import 'package:apparence_kit/core/theme/extensions/theme_extension.dart';
 import 'package:apparence_kit/i18n/translations.g.dart';
 import 'package:apparence_kit/modules/onboarding/ui/widgets/onboarding_background.dart';
@@ -25,6 +26,9 @@ class _VcConnectStepState extends ConsumerState<VcConnectStep> {
   bool _isCheckingConnection = false;
 
   Future<void> _openChatGPT() async {
+    await ref.read(analyticsApiProvider).logEvent('gpt_setup_chatgpt_opened', {
+      'method': 'deeplink',
+    });
     final success = await ref.read(voiceCaddyProvider.notifier).openChatGPT();
     if (success && mounted) {
       Navigator.of(context).pushReplacementNamed(widget.nextRoute);

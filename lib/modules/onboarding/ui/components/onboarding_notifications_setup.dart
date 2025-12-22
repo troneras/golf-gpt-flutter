@@ -77,6 +77,10 @@ class NotificationsPermissionStep extends ConsumerWidget {
                   padding: const EdgeInsets.symmetric(horizontal: 32.0),
                   child: ElevatedButton(
                     onPressed: () async {
+                      final analytics = ref.read(analyticsApiProvider);
+                      await analytics.logEvent('permission_requested', {
+                        'permission_type': 'notification',
+                      });
                       permission
                           .maybeAsk()
                           .then(
@@ -96,10 +100,10 @@ class NotificationsPermissionStep extends ConsumerWidget {
                   padding: const EdgeInsets.symmetric(horizontal: 32.0),
                   child: TextButton(
                     onPressed: () {
-                      // save analytics event
-                      ref
-                          .read(analyticsApiProvider)
-                          .logEvent('setup_notifications_refused', {});
+                      // Track permission denied event
+                      ref.read(analyticsApiProvider).logEvent('permission_denied', {
+                        'permission_type': 'notification',
+                      });
                       Navigator.of(context).pushNamed(nextRoute);
                     },
                     child: Text(

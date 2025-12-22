@@ -1,3 +1,4 @@
+import 'package:apparence_kit/core/data/api/analytics_api.dart';
 import 'package:apparence_kit/core/data/models/user.dart';
 import 'package:apparence_kit/core/data/repositories/user_repository.dart';
 import 'package:apparence_kit/core/initializer/onstart_service.dart';
@@ -30,6 +31,8 @@ class UserStateNotifier extends _$UserStateNotifier implements OnStartService {
 
   UserRepository get _userRepository => ref.read(userRepositoryProvider);
 
+  AnalyticsApi get _analyticsApi => ref.read(analyticsApiProvider);
+
   @override
   UserState build() {
     return const UserState(user: User.loading());
@@ -54,6 +57,9 @@ class UserStateNotifier extends _$UserStateNotifier implements OnStartService {
     }
     await _initDeviceRegistration();
     _deviceRepository.onTokenUpdate(_onUpdateToken);
+    if (state.user is AuthenticatedUserData) {
+      await _analyticsApi.identify(state.user);
+    }
   }
 
   /// This function is called when the user click on the signin button
@@ -65,6 +71,7 @@ class UserStateNotifier extends _$UserStateNotifier implements OnStartService {
     );
     await _loadState();
     await _initDeviceRegistration();
+    await _analyticsApi.identify(state.user);
   }
 
   /// Set the user as onboarded in the database
@@ -82,6 +89,7 @@ class UserStateNotifier extends _$UserStateNotifier implements OnStartService {
     _deviceRepository.removeTokenUpdateListener();
     await _deviceRepository.unregister(userId);
     await _authenticationRepository.logout();
+    await _analyticsApi.logSignout();
     _clearSentryUser();
     state = const UserState(
       user: User.unauthenticated(),

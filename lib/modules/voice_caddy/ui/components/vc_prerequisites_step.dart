@@ -1,21 +1,37 @@
 import 'dart:io';
 
+import 'package:apparence_kit/core/data/api/analytics_api.dart';
 import 'package:apparence_kit/core/theme/extensions/theme_extension.dart';
 import 'package:apparence_kit/i18n/translations.g.dart';
 import 'package:apparence_kit/modules/onboarding/ui/widgets/onboarding_background.dart';
 import 'package:apparence_kit/modules/voice_caddy/ui/widgets/vc_progress.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 /// Screen 2: Prerequisites - ChatGPT app check
-class VcPrerequisitesStep extends StatelessWidget {
+class VcPrerequisitesStep extends ConsumerStatefulWidget {
   final String nextRoute;
 
   const VcPrerequisitesStep({
     super.key,
     required this.nextRoute,
   });
+
+  @override
+  ConsumerState<VcPrerequisitesStep> createState() =>
+      _VcPrerequisitesStepState();
+}
+
+class _VcPrerequisitesStepState extends ConsumerState<VcPrerequisitesStep> {
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      ref.read(analyticsApiProvider).logEvent('gpt_setup_prerequisites_viewed', {});
+    });
+  }
 
   Future<void> _openAppStore() async {
     final url = Platform.isIOS
@@ -189,7 +205,7 @@ class VcPrerequisitesStep extends StatelessWidget {
                 ],
                 child: ElevatedButton(
                   onPressed: () {
-                    Navigator.of(context).pushReplacementNamed(nextRoute);
+                    Navigator.of(context).pushReplacementNamed(widget.nextRoute);
                   },
                   child: Text(tr.cta),
                 ),

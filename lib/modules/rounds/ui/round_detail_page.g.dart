@@ -58,7 +58,7 @@ final class RoundDetailProvider
   }
 }
 
-String _$roundDetailHash() => r'86fa4997cf9f45953128ec0091599355b148461f';
+String _$roundDetailHash() => r'a10823cee4b29c6854a9e06b078c6b7a61e4f47a';
 
 final class RoundDetailFamily extends $Family
     with $FunctionalFamilyOverride<FutureOr<Round>, String> {

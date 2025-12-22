@@ -1,3 +1,4 @@
+import 'package:apparence_kit/core/data/api/analytics_api.dart';
 import 'package:apparence_kit/core/theme/extensions/theme_extension.dart';
 import 'package:apparence_kit/i18n/translations.g.dart';
 import 'package:apparence_kit/modules/round/domain/hole_score.dart';
@@ -14,7 +15,16 @@ part 'round_detail_page.g.dart';
 @riverpod
 Future<Round> roundDetail(Ref ref, String roundId) async {
   final repository = ref.read(roundRepositoryProvider);
-  return repository.getRound(roundId);
+  final round = await repository.getRound(roundId);
+
+  // Track analytics
+  final ageDays = DateTime.now().difference(round.startTime).inDays;
+  ref.read(analyticsApiProvider).logEvent('round_detail_viewed', {
+    'round_id': roundId,
+    'age_days': ageDays,
+  });
+
+  return round;
 }
 
 class RoundDetailPage extends ConsumerWidget {

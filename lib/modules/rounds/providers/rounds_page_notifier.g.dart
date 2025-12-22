@@ -34,7 +34,7 @@ final class RoundsPageNotifierProvider
 }
 
 String _$roundsPageNotifierHash() =>
-    r'0c0b281650a845aeb5971ecd129deb6f4b3e2fa3';
+    r'9e7c1a99dc65ddf8449fc3017ff6baedf6793c19';
 
 abstract class _$RoundsPageNotifier extends $AsyncNotifier<RoundsPageState> {
   FutureOr<RoundsPageState> build();

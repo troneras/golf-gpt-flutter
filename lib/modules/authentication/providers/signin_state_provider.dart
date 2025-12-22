@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:apparence_kit/core/data/api/analytics_api.dart';
 import 'package:apparence_kit/core/states/user_state_notifier.dart';
 import 'package:apparence_kit/modules/authentication/providers/models/email.dart';
 import 'package:apparence_kit/modules/authentication/providers/models/password.dart';
@@ -18,6 +19,8 @@ class SigninStateNotifier extends _$SigninStateNotifier {
 
   UserStateNotifier get _userStateNotifier =>
       ref.read(userStateNotifierProvider.notifier);
+
+  AnalyticsApi get _analyticsApi => ref.read(analyticsApiProvider);
 
   @override
   SigninState build() {
@@ -52,8 +55,13 @@ class SigninStateNotifier extends _$SigninStateNotifier {
       // lets fake a delay to prevent spamming the signup button
       await Future.delayed(const Duration(milliseconds: 1500));
       await _userStateNotifier.onSignin();
+      await _analyticsApi.logEvent('login_completed', {'method': 'email'});
     } catch (e, trace) {
       debugPrint("Error while signing up: $e, $trace");
+      await _analyticsApi.logEvent('login_failed', {
+        'method': 'email',
+        'error': e.toString(),
+      });
       state = SigninState(email: state.email, password: state.password);
       rethrow;
     }
@@ -70,8 +78,13 @@ class SigninStateNotifier extends _$SigninStateNotifier {
       // lets fake a delay to prevent spamming the signup button
       await Future.delayed(const Duration(milliseconds: 1500));
       await _userStateNotifier.onSignin();
+      await _analyticsApi.logEvent('login_completed', {'method': 'google'});
     } catch (e, trace) {
       debugPrint("Error while signing up: $e, $trace");
+      await _analyticsApi.logEvent('login_failed', {
+        'method': 'google',
+        'error': e.toString(),
+      });
       state = SigninState(email: state.email, password: state.password);
       rethrow;
     }
@@ -87,8 +100,13 @@ class SigninStateNotifier extends _$SigninStateNotifier {
       // lets fake a delay to prevent spamming the signup button
       await Future.delayed(const Duration(milliseconds: 1500));
       await _userStateNotifier.onSignin();
+      await _analyticsApi.logEvent('login_completed', {'method': 'google_play_games'});
     } catch (e, trace) {
       debugPrint("Error while signing up: $e, $trace");
+      await _analyticsApi.logEvent('login_failed', {
+        'method': 'google_play_games',
+        'error': e.toString(),
+      });
       state = SigninState(email: state.email, password: state.password);
       rethrow;
     }
@@ -104,8 +122,13 @@ class SigninStateNotifier extends _$SigninStateNotifier {
       // lets fake a delay to prevent spamming the signup button
       await Future.delayed(const Duration(milliseconds: 1500));
       await _userStateNotifier.onSignin();
+      await _analyticsApi.logEvent('login_completed', {'method': 'apple'});
     } catch (e, trace) {
       debugPrint("Error while signing up: $e, $trace");
+      await _analyticsApi.logEvent('login_failed', {
+        'method': 'apple',
+        'error': e.toString(),
+      });
       state = SigninState(email: state.email, password: state.password);
       rethrow;
     }
@@ -121,8 +144,13 @@ class SigninStateNotifier extends _$SigninStateNotifier {
       // lets fake a delay to prevent spamming the signup button
       await Future.delayed(const Duration(milliseconds: 1500));
       await _userStateNotifier.onSignin();
+      await _analyticsApi.logEvent('login_completed', {'method': 'facebook'});
     } catch (e, trace) {
       debugPrint("Error while signing up: $e, $trace");
+      await _analyticsApi.logEvent('login_failed', {
+        'method': 'facebook',
+        'error': e.toString(),
+      });
       state = SigninState(email: state.email, password: state.password);
       rethrow;
     }

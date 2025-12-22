@@ -23,7 +23,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
 import 'package:logger/logger.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -258,10 +257,20 @@ class AppLifecycleObserver extends ConsumerStatefulWidget {
 
 class _AppLifecycleObserverState extends ConsumerState<AppLifecycleObserver>
     with WidgetsBindingObserver {
+  DateTime? _backgroundTime;
+  bool _hasTrackedInitialOpen = false;
+
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
+    // Track initial app open (cold start)
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!_hasTrackedInitialOpen) {
+        _hasTrackedInitialOpen = true;
+        ref.read(analyticsApiProvider).logEvent('app_opened', {'source': 'cold'});
+      }
+    });
   }
 
   @override
@@ -273,6 +282,29 @@ class _AppLifecycleObserverState extends ConsumerState<AppLifecycleObserver>
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
     ref.read(activeRoundProvider.notifier).handleAppLifecycleChange(state);
+
+    // Track app lifecycle events
+    final analytics = ref.read(analyticsApiProvider);
+    switch (state) {
+      case AppLifecycleState.paused:
+      case AppLifecycleState.inactive:
+        _backgroundTime = DateTime.now();
+      case AppLifecycleState.resumed:
+        if (_backgroundTime != null) {
+          final sessionDuration = DateTime.now().difference(_backgroundTime!).inSeconds;
+          if (sessionDuration > 1) {
+            // Only track if app was in background for more than 1 second
+            analytics.logEvent('app_opened', {'source': 'warm'});
+          }
+        }
+        _backgroundTime = null;
+      case AppLifecycleState.detached:
+      case AppLifecycleState.hidden:
+        if (_backgroundTime != null) {
+          final sessionDuration = DateTime.now().difference(_backgroundTime!).inSeconds;
+          analytics.logEvent('app_backgrounded', {'session_duration_seconds': sessionDuration});
+        }
+    }
   }
 
   @override
