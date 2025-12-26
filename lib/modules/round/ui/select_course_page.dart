@@ -511,17 +511,19 @@ class _GpsToggleCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final tr = Translations.of(context).select_course;
-    final description = isTooFar
+    // Show warning only if far AND GPS is disabled
+    final showWarning = isTooFar && !isEnabled;
+    final description = showWarning
         ? tr.gps_too_far.replaceAll('{distance}', _formatDistance(distanceKm))
         : tr.gps_tracking_description;
     return Container(
       decoration: BoxDecoration(
-        color: isTooFar
+        color: showWarning
             ? Colors.orange.withValues(alpha: 0.1)
             : context.colors.surface,
         borderRadius: BorderRadius.circular(12),
         border: Border.all(
-          color: isTooFar
+          color: showWarning
               ? Colors.orange.withValues(alpha: 0.3)
               : context.colors.onSurface.withValues(alpha: 0.1),
         ),
@@ -534,11 +536,11 @@ class _GpsToggleCard extends StatelessWidget {
           child: Row(
             children: [
               Icon(
-                isTooFar ? Icons.gps_off : Icons.gps_fixed,
+                isEnabled ? Icons.gps_fixed : Icons.gps_off,
                 size: 24,
-                color: isTooFar
-                    ? Colors.orange
-                    : (isEnabled ? context.colors.primary : context.colors.onSurface.withValues(alpha: 0.4)),
+                color: isEnabled
+                    ? context.colors.primary
+                    : (showWarning ? Colors.orange : context.colors.onSurface.withValues(alpha: 0.4)),
               ),
               const SizedBox(width: 12),
               Expanded(
@@ -554,7 +556,7 @@ class _GpsToggleCard extends StatelessWidget {
                     Text(
                       description,
                       style: context.textTheme.bodySmall?.copyWith(
-                        color: isTooFar
+                        color: showWarning
                             ? Colors.orange.shade700
                             : context.colors.onSurface.withValues(alpha: 0.6),
                       ),

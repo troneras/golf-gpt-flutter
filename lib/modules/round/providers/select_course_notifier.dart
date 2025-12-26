@@ -60,11 +60,34 @@ class SelectCourseNotifier extends _$SelectCourseNotifier {
         _logger.i('Found recent course: ${recentCourse.name}');
         // Check GPS permission to set default gpsEnabled value
         final hasGpsPermission = await Permission.locationWhenInUse.isGranted;
+
+        // Try to get position and calculate distance for recent course
+        double? distanceKm;
+        bool isTooFar = false;
+        if (hasGpsPermission) {
+          try {
+            _logger.i('Getting GPS position for recent course distance...');
+            _cachedPosition = await Geolocator.getCurrentPosition(
+              locationSettings: const LocationSettings(
+                accuracy: LocationAccuracy.medium,
+                timeLimit: Duration(seconds: 5),
+              ),
+            );
+            distanceKm = _calculateDistanceToCourse(recentCourse);
+            isTooFar = distanceKm != null && distanceKm > kMaxGpsDistanceKm;
+            if (distanceKm != null) {
+              _logger.i('Distance to recent course: ${distanceKm.toStringAsFixed(2)} km');
+            }
+          } catch (e) {
+            _logger.w('Could not get GPS position for recent course: $e');
+          }
+        }
+
         state = SelectCourseState.loaded(
-          course: recentCourse,
+          course: recentCourse.copyWith(distanceKm: distanceKm),
           isRecentCourse: true,
-          gpsEnabled: hasGpsPermission,
-          gpsTooFar: false,
+          gpsEnabled: hasGpsPermission && !isTooFar,
+          gpsTooFar: isTooFar,
         );
         return;
       }
