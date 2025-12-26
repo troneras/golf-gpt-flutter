@@ -86,6 +86,13 @@ class SelectCoursePage extends ConsumerWidget {
               HapticFeedback.mediumImpact();
               if (selectedTee == null) return;
 
+              // Check if course is far away and show confirmation
+              final isFarAway = course.distanceKm != null && course.distanceKm! > kMaxGpsDistanceKm;
+              if (isFarAway) {
+                final confirmed = await _showFarCourseConfirmation(context, course.distanceKm!);
+                if (!confirmed || !context.mounted) return;
+              }
+
               // Start the round
               await ref.read(activeRoundNotifierProvider.notifier).startRound(
                 courseId: course.id,
@@ -158,6 +165,33 @@ class SelectCoursePage extends ConsumerWidget {
       },
     );
   }
+}
+
+/// Shows a confirmation dialog when the selected course is far from the user's location.
+Future<bool> _showFarCourseConfirmation(BuildContext context, double distanceKm) async {
+  final tr = Translations.of(context).select_course;
+  final formattedDistance = distanceKm < 1
+      ? '${(distanceKm * 1000).round()} m'
+      : '${distanceKm.toStringAsFixed(1)} km';
+
+  final result = await showDialog<bool>(
+    context: context,
+    builder: (context) => AlertDialog(
+      title: Text(tr.far_course_title),
+      content: Text(tr.far_course_message.replaceAll('{distance}', formattedDistance)),
+      actions: [
+        TextButton(
+          onPressed: () => Navigator.of(context).pop(false),
+          child: Text(tr.far_course_cancel),
+        ),
+        FilledButton(
+          onPressed: () => Navigator.of(context).pop(true),
+          child: Text(tr.far_course_confirm),
+        ),
+      ],
+    ),
+  );
+  return result ?? false;
 }
 
 class _LoadingView extends StatelessWidget {

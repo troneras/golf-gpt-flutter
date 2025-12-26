@@ -209,6 +209,10 @@ class _TranslationsSelectCourseEn extends TranslationsSelectCourseEs {
 	@override String get gps_too_far_error => 'GPS only works when you\'re near the course';
 	@override String get gps_permission_required => 'Location permission required for GPS';
 	@override String get open_settings => 'Settings';
+	@override String get far_course_title => 'Course is far away';
+	@override String get far_course_message => 'You\'re {distance} from the selected course. Are you sure you want to continue?';
+	@override String get far_course_cancel => 'Change course';
+	@override String get far_course_confirm => 'Continue';
 	@override String get no_course_found => 'No courses found nearby';
 	@override String get no_course_found_hint => 'Make sure you\'re at a golf course or try again';
 	@override String get search_course => 'Search course';
@@ -884,6 +888,10 @@ extension on TranslationsEn {
 			'select_course.gps_too_far_error' => 'GPS only works when you\'re near the course',
 			'select_course.gps_permission_required' => 'Location permission required for GPS',
 			'select_course.open_settings' => 'Settings',
+			'select_course.far_course_title' => 'Course is far away',
+			'select_course.far_course_message' => 'You\'re {distance} from the selected course. Are you sure you want to continue?',
+			'select_course.far_course_cancel' => 'Change course',
+			'select_course.far_course_confirm' => 'Continue',
 			'select_course.no_course_found' => 'No courses found nearby',
 			'select_course.no_course_found_hint' => 'Make sure you\'re at a golf course or try again',
 			'select_course.search_course' => 'Search course',
