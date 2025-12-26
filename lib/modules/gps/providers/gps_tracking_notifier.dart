@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:apparence_kit/modules/gps/services/gps_tracking_service.dart';
+import 'package:apparence_kit/modules/notifications/api/local_notifier.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'gps_tracking_notifier.g.dart';
@@ -22,6 +25,16 @@ class GpsTrackingNotifier extends _$GpsTrackingNotifier {
     return _service.status;
   }
 
+  /// Check current location permission status
+  Future<LocationPermissionResult> checkPermission() {
+    return _service.checkPermission();
+  }
+
+  /// Request location permission for GPS tracking
+  Future<LocationPermissionResult> requestPermission() {
+    return _service.requestPermission();
+  }
+
   /// Check if background location permission is granted
   Future<bool> hasBackgroundPermission() {
     return _service.hasBackgroundPermission();
@@ -33,7 +46,14 @@ class GpsTrackingNotifier extends _$GpsTrackingNotifier {
   }
 
   /// Start GPS tracking
+  ///
+  /// On Android 14+, this will request notification permission first
+  /// to ensure the foreground service notification can be displayed.
   Future<void> startTracking() async {
+    // On Android, request notification permission for foreground service notification
+    if (Platform.isAndroid) {
+      await ref.read(notificationsSettingsProvider).askPermission();
+    }
     await _service.start();
   }
 

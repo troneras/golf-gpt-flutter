@@ -59,15 +59,12 @@
 		<key>UIApplicationSupportsIndirectInputEvents</key>
 		<true/>
 		<key>NSLocationWhenInUseUsageDescription</key>
-		<string>Necesitamos tu ubicación para calcular distancias en el campo de golf</string>
+		<string>Usamos tu ubicación para calcular distancias al green y a los obstáculos mientras juegas una ronda de golf.</string>
 		<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-		<string>TalkCaddy necesita acceso a tu ubicación en segundo plano para seguir tu recorrido durante la ronda de golf</string>
-		<key>NSLocationAlwaysUsageDescription</key>
-		<string>TalkCaddy necesita acceso a tu ubicación en segundo plano para seguir tu recorrido durante la ronda de golf</string>
+		<string>Durante una ronda activa, TalkCaddy usa tu ubicación incluso con el móvil bloqueado o en el bolsillo para calcular distancias y registrar golpes. El seguimiento se detiene automáticamente al finalizar la ronda.</string>
 		<key>UIBackgroundModes</key>
 		<array>
 			<string>location</string>
-			<string>fetch</string>
 		</array>
 		<key>UIStatusBarHidden</key>
 		<true/>

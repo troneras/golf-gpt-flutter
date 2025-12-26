@@ -372,5 +372,13 @@
             "connected": "Conectado",
             "not_connected": "No conectado"
         }
+    },
+    "forgotten_round": {
+        "notification_title": "Sigues jugando?",
+        "notification_body": "Tu ronda lleva activa {hours} horas",
+        "dialog_title": "Finalizar ronda?",
+        "dialog_body": "Tu ronda en {courseName} lleva activa un buen rato.",
+        "action_end": "Finalizar",
+        "action_continue": "Seguir jugando"
     }
 }

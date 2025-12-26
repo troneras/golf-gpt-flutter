@@ -4,6 +4,7 @@ import 'package:apparence_kit/modules/round/domain/running_score.dart';
 import 'package:apparence_kit/modules/round/providers/models/active_round_state.dart';
 import 'package:apparence_kit/modules/round/providers/models/select_course_state.dart';
 import 'package:apparence_kit/modules/round/repositories/round_repository.dart';
+import 'package:apparence_kit/modules/round/services/forgotten_round_service.dart';
 import 'package:flutter/widgets.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:logger/logger.dart';
@@ -18,6 +19,8 @@ final _logger = Logger(printer: PrettyPrinter(methodCount: 0));
 @Riverpod(keepAlive: true)
 class ActiveRoundNotifier extends _$ActiveRoundNotifier {
   RoundRepository get _roundRepository => ref.read(roundRepositoryProvider);
+  ForgottenRoundService get _forgottenRoundService =>
+      ref.read(forgottenRoundServiceProvider);
 
   @override
   ActiveRoundState build() {
@@ -52,6 +55,12 @@ class ActiveRoundNotifier extends _$ActiveRoundNotifier {
         _logger.i('Starting GPS tracking for round');
         ref.read(gpsTrackingProvider.notifier).startTracking();
       }
+
+      // Schedule forgotten round reminder
+      _forgottenRoundService.scheduleReminder(
+        roundId: round.id,
+        courseName: round.course.name,
+      );
     } catch (e, stackTrace) {
       _logger.e('Error starting round', error: e, stackTrace: stackTrace);
       if (!ref.mounted) return;
@@ -88,6 +97,12 @@ class ActiveRoundNotifier extends _$ActiveRoundNotifier {
         _logger.i('Starting GPS tracking for resumed round');
         ref.read(gpsTrackingProvider.notifier).startTracking();
       }
+
+      // Schedule forgotten round reminder for resumed round
+      _forgottenRoundService.scheduleReminder(
+        roundId: round.id,
+        courseName: round.course.name,
+      );
     } catch (e, stackTrace) {
       _logger.e('Error loading round', error: e, stackTrace: stackTrace);
       if (!ref.mounted) return;
@@ -112,6 +127,7 @@ class ActiveRoundNotifier extends _$ActiveRoundNotifier {
       // Check if round was finished externally (e.g., via ChatGPT)
       if (round.isFinished) {
         _logger.i('Round was finished externally, navigating to summary');
+        await _forgottenRoundService.cancelReminder();
         await ref.read(gpsTrackingProvider.notifier).stopTracking();
         final summary = RoundSummary.fromRound(round);
         state = ActiveRoundState.finished(
@@ -340,6 +356,9 @@ class ActiveRoundNotifier extends _$ActiveRoundNotifier {
     _logger.i('Finishing round: ${currentState.round.id}');
     state = currentState.copyWith(isSaving: true);
 
+    // Cancel forgotten round reminder
+    await _forgottenRoundService.cancelReminder();
+
     // Stop GPS tracking before finishing round
     _logger.i('Stopping GPS tracking for finished round');
     await ref.read(gpsTrackingProvider.notifier).stopTracking();
@@ -408,6 +427,22 @@ class ActiveRoundNotifier extends _$ActiveRoundNotifier {
         // App being destroyed - tracking will stop with the process
         _logger.d('App detached/hidden');
     }
+  }
+
+  /// Snooze the forgotten round reminder.
+  ///
+  /// Called when user taps "Keep Playing" on the reminder dialog.
+  Future<void> snoozeReminder() async {
+    final currentState = state;
+    if (currentState is! ActiveRoundStateActive) {
+      _logger.w('Cannot snooze: no active round');
+      return;
+    }
+
+    _logger.i('Snoozing forgotten round reminder');
+    await _forgottenRoundService.snoozeReminder(
+      courseName: currentState.round.course.name,
+    );
   }
 
   /// Clear the current round state

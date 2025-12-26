@@ -1,5 +1,6 @@
 import 'package:apparence_kit/core/theme/extensions/theme_extension.dart';
 import 'package:apparence_kit/i18n/translations.g.dart';
+import 'package:apparence_kit/modules/notifications/api/local_notifier.dart';
 import 'package:apparence_kit/modules/round/providers/active_round_notifier.dart';
 import 'package:apparence_kit/modules/round/providers/models/active_round_state.dart';
 import 'package:apparence_kit/modules/round/ui/widgets/round_header.dart';
@@ -28,10 +29,14 @@ class RoundInProgressPage extends ConsumerStatefulWidget {
 
 class _RoundInProgressPageState extends ConsumerState<RoundInProgressPage> {
   final _scrollController = ScrollController();
+  ForgottenRoundHandler? _forgottenRoundHandler;
 
   @override
   void initState() {
     super.initState();
+    // Register handler for forgotten round notifications
+    _forgottenRoundHandler = ForgottenRoundHandler(_showForgottenRoundDialog);
+
     // Load round if roundId is provided
     if (widget.roundId != null) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -42,6 +47,7 @@ class _RoundInProgressPageState extends ConsumerState<RoundInProgressPage> {
 
   @override
   void dispose() {
+    _forgottenRoundHandler?.dispose();
     _scrollController.dispose();
     super.dispose();
   }
@@ -219,6 +225,28 @@ class _RoundInProgressPageState extends ConsumerState<RoundInProgressPage> {
       builder: (context) => _FinishRoundDialog(
         onFinish: (notes) {
           ref.read(activeRoundNotifierProvider.notifier).finishRound(notes: notes);
+        },
+      ),
+    );
+  }
+
+  void _showForgottenRoundDialog() {
+    if (!mounted) return;
+
+    final state = ref.read(activeRoundNotifierProvider);
+    if (state is! ActiveRoundStateActive) return;
+
+    showDialog(
+      context: context,
+      builder: (dialogContext) => _ForgottenRoundDialog(
+        courseName: state.round.course.name,
+        onEnd: () {
+          Navigator.pop(dialogContext);
+          ref.read(activeRoundNotifierProvider.notifier).finishRound();
+        },
+        onContinue: () {
+          Navigator.pop(dialogContext);
+          ref.read(activeRoundNotifierProvider.notifier).snoozeReminder();
         },
       ),
     );
@@ -481,6 +509,40 @@ class _FinishRoundDialogState extends State<_FinishRoundDialog> {
             widget.onFinish(notes.isNotEmpty ? notes : null);
           },
           child: const Text('Finalizar'),
+        ),
+      ],
+    );
+  }
+}
+
+class _ForgottenRoundDialog extends StatelessWidget {
+  final String courseName;
+  final VoidCallback onEnd;
+  final VoidCallback onContinue;
+
+  const _ForgottenRoundDialog({
+    required this.courseName,
+    required this.onEnd,
+    required this.onContinue,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final tr = Translations.of(context).forgotten_round;
+    // Replace placeholder since slang doesn't support this format
+    final body = tr.dialog_body.replaceAll('{courseName}', courseName);
+
+    return AlertDialog(
+      title: Text(tr.dialog_title),
+      content: Text(body),
+      actions: [
+        TextButton(
+          onPressed: onContinue,
+          child: Text(tr.action_continue),
+        ),
+        FilledButton(
+          onPressed: onEnd,
+          child: Text(tr.action_end),
         ),
       ],
     );

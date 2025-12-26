@@ -3,18 +3,44 @@ import 'dart:io';
 
 import 'package:apparence_kit/modules/gps/domain/gps_point.dart';
 import 'package:apparence_kit/modules/gps/repositories/gps_tracking_repository.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:logger/logger.dart';
-import 'package:permission_handler/permission_handler.dart';
 
 final _logger = Logger(printer: PrettyPrinter(methodCount: 0));
+
+/// MethodChannel for native Android geolocator workarounds
+const _geolocatorChannel = MethodChannel('io.talkcaddy/geolocator');
 
 /// Interval between GPS tracking calls
 const Duration kTrackingInterval = Duration(seconds: 10);
 
+/// Distance filter for GPS updates (meters)
+/// Using 5m reduces battery usage while maintaining accuracy for golf
+const int kDistanceFilterMeters = 5;
+
 /// Maximum points to buffer when offline
 const int kMaxBufferSize = 100;
+
+/// Result of a location permission request
+enum LocationPermissionResult {
+  /// Full background permission granted (Always)
+  granted,
+
+  /// Only foreground permission granted (When In Use)
+  /// Background tracking may be interrupted on iOS
+  limitedToForeground,
+
+  /// Permission denied by user
+  denied,
+
+  /// Permission permanently denied - must open settings
+  deniedForever,
+
+  /// Location services are disabled system-wide
+  serviceDisabled,
+}
 
 final gpsTrackingServiceProvider = Provider<GpsTrackingService>((ref) {
   return GpsTrackingService(
@@ -57,29 +83,95 @@ class GpsTrackingService {
   GpsTrackingService({required GpsTrackingRepository repository})
       : _repository = repository;
 
-  /// Check if background location permission is granted
-  Future<bool> hasBackgroundPermission() async {
-    final status = await Permission.locationAlways.status;
-    return status.isGranted;
+  /// Check current location permission status
+  Future<LocationPermissionResult> checkPermission() async {
+    // Check if location services are enabled
+    final serviceEnabled = await Geolocator.isLocationServiceEnabled();
+    if (!serviceEnabled) {
+      return LocationPermissionResult.serviceDisabled;
+    }
+
+    final permission = await Geolocator.checkPermission();
+    return _mapPermission(permission);
   }
 
-  /// Request background location permission
+  /// Request location permission for GPS tracking.
+  ///
+  /// On iOS, this will first request "When In Use", then attempt to upgrade
+  /// to "Always" for background tracking. If the user only grants "When In Use",
+  /// tracking will work but may be interrupted when the app is backgrounded.
+  ///
+  /// On Android, "When In Use" is sufficient for foreground service tracking.
+  Future<LocationPermissionResult> requestPermission() async {
+    // Check if location services are enabled
+    final serviceEnabled = await Geolocator.isLocationServiceEnabled();
+    if (!serviceEnabled) {
+      _logger.w('Location services are disabled');
+      return LocationPermissionResult.serviceDisabled;
+    }
+
+    var permission = await Geolocator.checkPermission();
+
+    // If denied, request permission
+    if (permission == LocationPermission.denied) {
+      permission = await Geolocator.requestPermission();
+      if (permission == LocationPermission.denied) {
+        _logger.w('Location permission denied');
+        return LocationPermissionResult.denied;
+      }
+    }
+
+    if (permission == LocationPermission.deniedForever) {
+      _logger.w('Location permission permanently denied');
+      return LocationPermissionResult.deniedForever;
+    }
+
+    // On iOS, try to upgrade to "Always" for reliable background tracking
+    // On Android, "whileInUse" + foreground service is sufficient
+    if (Platform.isIOS && permission == LocationPermission.whileInUse) {
+      _logger.i('iOS: Requesting upgrade to Always permission');
+      // Request again - iOS will show the "upgrade to Always" dialog
+      permission = await Geolocator.requestPermission();
+    }
+
+    return _mapPermission(permission);
+  }
+
+  /// Check if we have background permission (Always on iOS, any on Android)
+  Future<bool> hasBackgroundPermission() async {
+    final result = await checkPermission();
+    if (Platform.isIOS) {
+      return result == LocationPermissionResult.granted;
+    }
+    // On Android, foreground service works with whileInUse
+    return result == LocationPermissionResult.granted ||
+        result == LocationPermissionResult.limitedToForeground;
+  }
+
+  /// Request background permission and return success
   Future<bool> requestBackgroundPermission() async {
-    // First ensure we have "when in use" permission
-    final whenInUse = await Permission.locationWhenInUse.request();
-    if (!whenInUse.isGranted) {
-      _logger.w('Location "when in use" permission denied');
-      return false;
+    final result = await requestPermission();
+    if (Platform.isIOS) {
+      return result == LocationPermissionResult.granted;
     }
+    // On Android, foreground service works with whileInUse
+    return result == LocationPermissionResult.granted ||
+        result == LocationPermissionResult.limitedToForeground;
+  }
 
-    // Then request "always" permission for background
-    final always = await Permission.locationAlways.request();
-    if (!always.isGranted) {
-      _logger.w('Background location permission denied');
-      return false;
+  LocationPermissionResult _mapPermission(LocationPermission permission) {
+    switch (permission) {
+      case LocationPermission.always:
+        return LocationPermissionResult.granted;
+      case LocationPermission.whileInUse:
+        return LocationPermissionResult.limitedToForeground;
+      case LocationPermission.denied:
+        return LocationPermissionResult.denied;
+      case LocationPermission.deniedForever:
+        return LocationPermissionResult.deniedForever;
+      case LocationPermission.unableToDetermine:
+        return LocationPermissionResult.denied;
     }
-
-    return true;
   }
 
   /// Start GPS tracking
@@ -147,7 +239,7 @@ class GpsTrackingService {
     if (Platform.isAndroid) {
       return AndroidSettings(
         accuracy: LocationAccuracy.high,
-        distanceFilter: 0, // Get all updates
+        distanceFilter: kDistanceFilterMeters,
         forceLocationManager: false,
         intervalDuration: kTrackingInterval,
         foregroundNotificationConfig: const ForegroundNotificationConfig(
@@ -164,14 +256,14 @@ class GpsTrackingService {
       return AppleSettings(
         accuracy: LocationAccuracy.high,
         activityType: ActivityType.fitness,
-        distanceFilter: 0,
+        distanceFilter: kDistanceFilterMeters,
         pauseLocationUpdatesAutomatically: false,
         showBackgroundLocationIndicator: true,
       );
     } else {
-      return const LocationSettings(
+      return LocationSettings(
         accuracy: LocationAccuracy.high,
-        distanceFilter: 0,
+        distanceFilter: kDistanceFilterMeters,
       );
     }
   }
@@ -190,6 +282,17 @@ class GpsTrackingService {
 
     // Try to flush retry buffer before stopping
     await _flushRetryBuffer();
+
+    // Workaround for geolocator bug: force-stop the Android foreground service
+    // See: https://github.com/Baseflow/flutter-geolocator/issues/1682
+    if (Platform.isAndroid) {
+      try {
+        await _geolocatorChannel.invokeMethod('stopGeolocatorService');
+        _logger.i('Force-stopped Android foreground service');
+      } catch (e) {
+        _logger.w('Could not force-stop foreground service: $e');
+      }
+    }
 
     _setStatus(GpsTrackingStatus.stopped);
     _logger.i('GPS tracking stopped');

@@ -57,6 +57,7 @@ class TranslationsEn extends Translations with BaseTranslations<AppLocale, Trans
 	@override late final _TranslationsGpsEn gps = _TranslationsGpsEn._(_root);
 	@override late final _TranslationsBagEn bag = _TranslationsBagEn._(_root);
 	@override late final _TranslationsVoiceCaddyEn voice_caddy = _TranslationsVoiceCaddyEn._(_root);
+	@override late final _TranslationsForgottenRoundEn forgotten_round = _TranslationsForgottenRoundEn._(_root);
 }
 
 // Path: home
@@ -398,6 +399,21 @@ class _TranslationsVoiceCaddyEn extends TranslationsVoiceCaddyEs {
 	@override late final _TranslationsVoiceCaddyErrorEn error = _TranslationsVoiceCaddyErrorEn._(_root);
 	@override late final _TranslationsVoiceCaddyHomeCardEn home_card = _TranslationsVoiceCaddyHomeCardEn._(_root);
 	@override late final _TranslationsVoiceCaddySettingsEn settings = _TranslationsVoiceCaddySettingsEn._(_root);
+}
+
+// Path: forgotten_round
+class _TranslationsForgottenRoundEn extends TranslationsForgottenRoundEs {
+	_TranslationsForgottenRoundEn._(TranslationsEn root) : this._root = root, super.internal(root);
+
+	final TranslationsEn _root; // ignore: unused_field
+
+	// Translations
+	@override String get notification_title => 'Still playing?';
+	@override String get notification_body => 'Your round has been active for {hours} hours';
+	@override String get dialog_title => 'End your round?';
+	@override String get dialog_body => 'Your round at {courseName} has been active for a while.';
+	@override String get action_end => 'End Round';
+	@override String get action_continue => 'Keep Playing';
 }
 
 // Path: onboarding.welcome
@@ -1025,6 +1041,12 @@ extension on TranslationsEn {
 			'voice_caddy.settings.title' => 'Voice Caddy',
 			'voice_caddy.settings.connected' => 'Connected',
 			'voice_caddy.settings.not_connected' => 'Not connected',
+			'forgotten_round.notification_title' => 'Still playing?',
+			'forgotten_round.notification_body' => 'Your round has been active for {hours} hours',
+			'forgotten_round.dialog_title' => 'End your round?',
+			'forgotten_round.dialog_body' => 'Your round at {courseName} has been active for a while.',
+			'forgotten_round.action_end' => 'End Round',
+			'forgotten_round.action_continue' => 'Keep Playing',
 			_ => null,
 		};
 	}

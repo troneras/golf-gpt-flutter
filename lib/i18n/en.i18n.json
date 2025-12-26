@@ -372,5 +372,13 @@
             "connected": "Connected",
             "not_connected": "Not connected"
         }
+    },
+    "forgotten_round": {
+        "notification_title": "Still playing?",
+        "notification_body": "Your round has been active for {hours} hours",
+        "dialog_title": "End your round?",
+        "dialog_body": "Your round at {courseName} has been active for a while.",
+        "action_end": "End Round",
+        "action_continue": "Keep Playing"
     }
 }

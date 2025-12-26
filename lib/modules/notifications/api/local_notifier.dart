@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:apparence_kit/core/initializer/onstart_service.dart';
 import 'package:apparence_kit/modules/notifications/providers/models/notification.dart';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -245,10 +246,49 @@ class NotificationSettings implements OnStartService {
     if (notificationResponse.payload == null) {
       return;
     }
-    final json = jsonDecode(
-      notificationResponse.payload!,
-    ) as Map<String, dynamic>;
-    final notification = Notification.fromJson(json);
-    await notification.onTap();
+
+    final payload = notificationResponse.payload!;
+
+    // Handle forgotten round notification (simple string payload)
+    if (payload == 'forgotten_round') {
+      // Navigate to round-in-progress with dialog flag
+      // The navigation is handled by the ForgottenRoundHandler widget
+      ForgottenRoundHandler.instance?.showEndRoundDialog();
+      return;
+    }
+
+    // Handle JSON payloads (standard notifications)
+    try {
+      final json = jsonDecode(payload) as Map<String, dynamic>;
+      final notification = Notification.fromJson(json);
+      await notification.onTap();
+    } catch (e) {
+      // Invalid JSON payload, ignore
+      debugPrint('Invalid notification payload: $payload');
+    }
+  }
+}
+
+/// Singleton handler for forgotten round notifications.
+///
+/// This is registered when RoundInProgressPage is active, allowing
+/// notifications to trigger the end round dialog.
+class ForgottenRoundHandler {
+  static ForgottenRoundHandler? instance;
+
+  final void Function() _showDialog;
+
+  ForgottenRoundHandler(this._showDialog) {
+    instance = this;
+  }
+
+  void showEndRoundDialog() {
+    _showDialog();
+  }
+
+  void dispose() {
+    if (instance == this) {
+      instance = null;
+    }
   }
 }

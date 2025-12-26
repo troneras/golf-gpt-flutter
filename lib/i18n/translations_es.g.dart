@@ -58,6 +58,7 @@ class Translations with BaseTranslations<AppLocale, Translations> {
 	late final TranslationsGpsEs gps = TranslationsGpsEs.internal(_root);
 	late final TranslationsBagEs bag = TranslationsBagEs.internal(_root);
 	late final TranslationsVoiceCaddyEs voice_caddy = TranslationsVoiceCaddyEs.internal(_root);
+	late final TranslationsForgottenRoundEs forgotten_round = TranslationsForgottenRoundEs.internal(_root);
 }
 
 // Path: home
@@ -719,6 +720,33 @@ class TranslationsVoiceCaddyEs {
 	late final TranslationsVoiceCaddyErrorEs error = TranslationsVoiceCaddyErrorEs.internal(_root);
 	late final TranslationsVoiceCaddyHomeCardEs home_card = TranslationsVoiceCaddyHomeCardEs.internal(_root);
 	late final TranslationsVoiceCaddySettingsEs settings = TranslationsVoiceCaddySettingsEs.internal(_root);
+}
+
+// Path: forgotten_round
+class TranslationsForgottenRoundEs {
+	TranslationsForgottenRoundEs.internal(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+
+	/// es: 'Sigues jugando?'
+	String get notification_title => 'Sigues jugando?';
+
+	/// es: 'Tu ronda lleva activa {hours} horas'
+	String get notification_body => 'Tu ronda lleva activa {hours} horas';
+
+	/// es: 'Finalizar ronda?'
+	String get dialog_title => 'Finalizar ronda?';
+
+	/// es: 'Tu ronda en {courseName} lleva activa un buen rato.'
+	String get dialog_body => 'Tu ronda en {courseName} lleva activa un buen rato.';
+
+	/// es: 'Finalizar'
+	String get action_end => 'Finalizar';
+
+	/// es: 'Seguir jugando'
+	String get action_continue => 'Seguir jugando';
 }
 
 // Path: onboarding.welcome
@@ -1624,6 +1652,12 @@ extension on Translations {
 			'voice_caddy.settings.title' => 'Caddie de Voz',
 			'voice_caddy.settings.connected' => 'Conectado',
 			'voice_caddy.settings.not_connected' => 'No conectado',
+			'forgotten_round.notification_title' => 'Sigues jugando?',
+			'forgotten_round.notification_body' => 'Tu ronda lleva activa {hours} horas',
+			'forgotten_round.dialog_title' => 'Finalizar ronda?',
+			'forgotten_round.dialog_body' => 'Tu ronda en {courseName} lleva activa un buen rato.',
+			'forgotten_round.action_end' => 'Finalizar',
+			'forgotten_round.action_continue' => 'Seguir jugando',
 			_ => null,
 		};
 	}

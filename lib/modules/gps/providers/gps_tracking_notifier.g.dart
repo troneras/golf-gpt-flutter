@@ -60,7 +60,7 @@ final class GpsTrackingNotifierProvider
 }
 
 String _$gpsTrackingNotifierHash() =>
-    r'9686635c615cd51c04777b3dea4c3f8d48c757bf';
+    r'1c2d7fb90f3505e6886136b92559087ab40794f5';
 
 /// Riverpod notifier that wraps the GPS tracking service.
 ///
