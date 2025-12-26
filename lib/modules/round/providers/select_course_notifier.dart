@@ -184,11 +184,26 @@ class SelectCourseNotifier extends _$SelectCourseNotifier {
       // Check GPS permission to set default gpsEnabled value
       final hasGpsPermission = await Permission.locationWhenInUse.isGranted;
 
+      // Try to get position if not cached and we have permission
+      if (_cachedPosition == null && hasGpsPermission) {
+        _logger.i('Getting GPS position for distance calculation...');
+        try {
+          _cachedPosition = await Geolocator.getCurrentPosition(
+            locationSettings: const LocationSettings(
+              accuracy: LocationAccuracy.medium,
+              timeLimit: Duration(seconds: 5),
+            ),
+          );
+        } catch (e) {
+          _logger.w('Could not get GPS position for distance: $e');
+        }
+      }
+
       // Fetch full course details with tees first (it has coordinates)
       final courseWithDetails = await _courseRepository.getCourseDetails(course.id);
       final effectiveCourse = courseWithDetails ?? course;
 
-      // Calculate distance using cached position (no new GPS request)
+      // Calculate distance using cached position
       final distanceKm = _calculateDistanceToCourse(effectiveCourse);
       final isTooFar = distanceKm != null && distanceKm > kMaxGpsDistanceKm;
       if (isTooFar) {
