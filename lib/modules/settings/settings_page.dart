@@ -80,27 +80,7 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
           ),
           const SizedBox(height: 24),
 
-          // Permissions Section
-          _SettingsSection(
-            title: tr.settings.sections.permissions,
-            children: const [
-              LocationPermissionTile(),
-              NotificationPermissionTile(),
-            ],
-          ),
-          const SizedBox(height: 16),
-
-          // Preferences Section
-          _SettingsSection(
-            title: tr.settings.sections.preferences,
-            children: [
-              const _ThemeSwitcherTile(),
-              const VoiceCaddySettingsTile(),
-            ],
-          ),
-          const SizedBox(height: 16),
-
-          // Golf Section
+          // Golf Section - Core app functionality first
           _SettingsSection(
             title: tr.settings.sections.golf,
             children: [
@@ -109,6 +89,26 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
                 title: tr.settings.my_bag,
                 onTap: () => context.push('/bag'),
               ),
+              const VoiceCaddySettingsTile(),
+            ],
+          ),
+          const SizedBox(height: 16),
+
+          // Preferences Section - Customization
+          _SettingsSection(
+            title: tr.settings.sections.preferences,
+            children: const [
+              _ThemeSwitcherTile(),
+            ],
+          ),
+          const SizedBox(height: 16),
+
+          // Permissions Section - Technical settings
+          _SettingsSection(
+            title: tr.settings.sections.permissions,
+            children: const [
+              LocationPermissionTile(),
+              NotificationPermissionTile(),
             ],
           ),
           const SizedBox(height: 16),
@@ -140,7 +140,7 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
           ),
           const SizedBox(height: 16),
 
-          // Account Section
+          // Account Section - Destructive actions last
           _SettingsSection(
             title: tr.settings.sections.account,
             children: [
