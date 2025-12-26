@@ -327,6 +327,12 @@ class TranslationsSelectCourseEs {
 	/// es: 'El GPS solo funciona cuando estas cerca del campo'
 	String get gps_too_far_error => 'El GPS solo funciona cuando estas cerca del campo';
 
+	/// es: 'Se requiere permiso de ubicacion para el GPS'
+	String get gps_permission_required => 'Se requiere permiso de ubicacion para el GPS';
+
+	/// es: 'Ajustes'
+	String get open_settings => 'Ajustes';
+
 	/// es: 'No encontramos campos cerca'
 	String get no_course_found => 'No encontramos campos cerca';
 
@@ -1501,6 +1507,8 @@ extension on Translations {
 			'select_course.gps_tracking_description' => 'Mide distancias al green y obstaculos',
 			'select_course.gps_too_far' => 'GPS desactivado: estas a {distance} del campo',
 			'select_course.gps_too_far_error' => 'El GPS solo funciona cuando estas cerca del campo',
+			'select_course.gps_permission_required' => 'Se requiere permiso de ubicacion para el GPS',
+			'select_course.open_settings' => 'Ajustes',
 			'select_course.no_course_found' => 'No encontramos campos cerca',
 			'select_course.no_course_found_hint' => 'Asegurate de estar en un campo de golf o intenta de nuevo',
 			'select_course.search_course' => 'Buscar campo',

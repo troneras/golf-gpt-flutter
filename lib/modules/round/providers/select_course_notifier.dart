@@ -140,19 +140,28 @@ class SelectCourseNotifier extends _$SelectCourseNotifier {
     }
   }
 
-  /// Toggle GPS setting. Returns false if GPS cannot be enabled (course too far).
-  bool toggleGps() {
+  /// Toggle GPS setting. Returns result indicating success or reason for failure.
+  Future<GpsToggleResult> toggleGps() async {
     final currentState = state;
     if (currentState is SelectCourseStateLoaded) {
-      // If trying to enable GPS but course is too far, prevent it
-      if (!currentState.gpsEnabled && currentState.gpsTooFar) {
-        _logger.w('Cannot enable GPS: course is too far');
-        return false;
+      // If trying to enable GPS, check conditions
+      if (!currentState.gpsEnabled) {
+        // Check if course is too far
+        if (currentState.gpsTooFar) {
+          _logger.w('Cannot enable GPS: course is too far');
+          return GpsToggleResult.tooFar;
+        }
+        // Check location permission
+        final hasPermission = await Permission.locationWhenInUse.isGranted;
+        if (!hasPermission) {
+          _logger.w('Cannot enable GPS: location permission denied');
+          return GpsToggleResult.permissionDenied;
+        }
       }
       state = currentState.copyWith(gpsEnabled: !currentState.gpsEnabled);
-      return true;
+      return GpsToggleResult.success;
     }
-    return false;
+    return GpsToggleResult.success;
   }
 
   void retry() {

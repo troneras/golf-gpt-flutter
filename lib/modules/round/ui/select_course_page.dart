@@ -11,6 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 // Alias for the generated provider
 const activeRoundNotifierProvider = activeRoundProvider;
@@ -52,16 +53,32 @@ class SelectCoursePage extends ConsumerWidget {
             onTeeSelected: (tee) {
               ref.read(selectCourseProvider.notifier).selectTee(tee);
             },
-            onGpsToggle: () {
-              final success = ref.read(selectCourseProvider.notifier).toggleGps();
-              if (!success && context.mounted) {
-                final tr = Translations.of(context).select_course;
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(
-                    content: Text(tr.gps_too_far_error),
-                    backgroundColor: Colors.orange,
-                  ),
-                );
+            onGpsToggle: () async {
+              final result = await ref.read(selectCourseProvider.notifier).toggleGps();
+              if (!context.mounted) return;
+              final tr = Translations.of(context).select_course;
+              switch (result) {
+                case GpsToggleResult.success:
+                  break;
+                case GpsToggleResult.tooFar:
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text(tr.gps_too_far_error),
+                      backgroundColor: Colors.orange,
+                    ),
+                  );
+                case GpsToggleResult.permissionDenied:
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text(tr.gps_permission_required),
+                      backgroundColor: Colors.orange,
+                      action: SnackBarAction(
+                        label: tr.open_settings,
+                        textColor: Colors.white,
+                        onPressed: () => openAppSettings(),
+                      ),
+                    ),
+                  );
               }
             },
             onCancel: () => context.pop(),

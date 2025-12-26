@@ -168,6 +168,8 @@
         "gps_tracking_description": "Mide distancias al green y obstaculos",
         "gps_too_far": "GPS desactivado: estas a {distance} del campo",
         "gps_too_far_error": "El GPS solo funciona cuando estas cerca del campo",
+        "gps_permission_required": "Se requiere permiso de ubicacion para el GPS",
+        "open_settings": "Ajustes",
         "no_course_found": "No encontramos campos cerca",
         "no_course_found_hint": "Asegurate de estar en un campo de golf o intenta de nuevo",
         "search_course": "Buscar campo",

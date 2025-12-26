@@ -8,6 +8,13 @@ part 'select_course_state.freezed.dart';
 /// 10km is a safe threshold - only blocks GPS for obviously wrong course selections.
 const double kMaxGpsDistanceKm = 10.0;
 
+/// Result of attempting to toggle GPS setting.
+enum GpsToggleResult {
+  success,
+  tooFar,
+  permissionDenied,
+}
+
 @freezed
 sealed class SelectCourseState with _$SelectCourseState {
   const factory SelectCourseState.loading() = SelectCourseStateLoading;
