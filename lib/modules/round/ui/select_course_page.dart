@@ -67,7 +67,7 @@ class SelectCoursePage extends ConsumerWidget {
                     // User cancelled - disable GPS
                     ref.read(selectCourseProvider.notifier).disableGps();
                   }
-                case GpsToggleResult.permissionDenied:
+                case GpsToggleResult.locationPermissionDenied:
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
                       content: Text(tr.gps_permission_required),
@@ -79,12 +79,38 @@ class SelectCoursePage extends ConsumerWidget {
                       ),
                     ),
                   );
+                case GpsToggleResult.notificationPermissionDenied:
+                  // Show dialog for notification permission
+                  final enableAnyway = await _showNotificationPermissionDialog(context);
+                  if (enableAnyway && context.mounted) {
+                    // User wants to enable GPS anyway - force enable
+                    ref.read(selectCourseProvider.notifier).forceEnableGps();
+                  }
               }
             },
             onCancel: () => context.pop(),
             onStartRound: () async {
               HapticFeedback.mediumImpact();
               if (selectedTee == null) return;
+
+              // If GPS is enabled, check notification permission on Android
+              if (gpsEnabled) {
+                final hasNotificationPerm = await ref
+                    .read(selectCourseProvider.notifier)
+                    .hasNotificationPermission();
+                if (!hasNotificationPerm && context.mounted) {
+                  final proceed = await _showNotificationPermissionDialog(context);
+                  if (!proceed) {
+                    // User chose to disable GPS or open settings
+                    if (context.mounted) {
+                      ref.read(selectCourseProvider.notifier).disableGps();
+                    }
+                    return;
+                  }
+                }
+              }
+
+              if (!context.mounted) return;
 
               // Start the round
               await ref.read(activeRoundNotifierProvider.notifier).startRound(
@@ -158,6 +184,40 @@ class SelectCoursePage extends ConsumerWidget {
       },
     );
   }
+}
+
+/// Shows a dialog when notification permission is denied on Android.
+/// Returns true if user wants to enable GPS anyway, false otherwise.
+Future<bool> _showNotificationPermissionDialog(BuildContext context) async {
+  final tr = Translations.of(context).select_course;
+
+  final result = await showDialog<String>(
+    context: context,
+    builder: (context) => AlertDialog(
+      title: Text(tr.notification_permission_title),
+      content: Text(tr.notification_permission_message),
+      actions: [
+        TextButton(
+          onPressed: () => Navigator.of(context).pop('cancel'),
+          child: Text(tr.notification_permission_cancel),
+        ),
+        TextButton(
+          onPressed: () => Navigator.of(context).pop('settings'),
+          child: Text(tr.notification_permission_settings),
+        ),
+        FilledButton(
+          onPressed: () => Navigator.of(context).pop('continue'),
+          child: Text(tr.notification_permission_continue),
+        ),
+      ],
+    ),
+  );
+
+  if (result == 'settings') {
+    await openAppSettings();
+    return false;
+  }
+  return result == 'continue';
 }
 
 /// Shows a confirmation dialog when enabling GPS for a course far from user's location.

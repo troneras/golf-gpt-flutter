@@ -213,6 +213,11 @@ class _TranslationsSelectCourseEn extends TranslationsSelectCourseEs {
 	@override String get far_course_gps_message => 'You\'re {distance} from the course. GPS may not work correctly at this distance. Enable it anyway?';
 	@override String get far_course_gps_disable => 'Disable GPS';
 	@override String get far_course_gps_enable => 'Enable GPS';
+	@override String get notification_permission_title => 'Notifications required';
+	@override String get notification_permission_message => 'To keep GPS tracking working when the app is in the background, we need to show a notification. Without it, tracking may stop unexpectedly.';
+	@override String get notification_permission_cancel => 'No GPS';
+	@override String get notification_permission_settings => 'Settings';
+	@override String get notification_permission_continue => 'Continue';
 	@override String get no_course_found => 'No courses found nearby';
 	@override String get no_course_found_hint => 'Make sure you\'re at a golf course or try again';
 	@override String get search_course => 'Search course';
@@ -892,6 +897,11 @@ extension on TranslationsEn {
 			'select_course.far_course_gps_message' => 'You\'re {distance} from the course. GPS may not work correctly at this distance. Enable it anyway?',
 			'select_course.far_course_gps_disable' => 'Disable GPS',
 			'select_course.far_course_gps_enable' => 'Enable GPS',
+			'select_course.notification_permission_title' => 'Notifications required',
+			'select_course.notification_permission_message' => 'To keep GPS tracking working when the app is in the background, we need to show a notification. Without it, tracking may stop unexpectedly.',
+			'select_course.notification_permission_cancel' => 'No GPS',
+			'select_course.notification_permission_settings' => 'Settings',
+			'select_course.notification_permission_continue' => 'Continue',
 			'select_course.no_course_found' => 'No courses found nearby',
 			'select_course.no_course_found_hint' => 'Make sure you\'re at a golf course or try again',
 			'select_course.search_course' => 'Search course',

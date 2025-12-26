@@ -345,6 +345,21 @@ class TranslationsSelectCourseEs {
 	/// es: 'Activar GPS'
 	String get far_course_gps_enable => 'Activar GPS';
 
+	/// es: 'Notificaciones requeridas'
+	String get notification_permission_title => 'Notificaciones requeridas';
+
+	/// es: 'Para que el GPS funcione cuando la app esta en segundo plano, necesitamos mostrar una notificacion. Sin ella, el seguimiento puede detenerse inesperadamente.'
+	String get notification_permission_message => 'Para que el GPS funcione cuando la app esta en segundo plano, necesitamos mostrar una notificacion. Sin ella, el seguimiento puede detenerse inesperadamente.';
+
+	/// es: 'Sin GPS'
+	String get notification_permission_cancel => 'Sin GPS';
+
+	/// es: 'Ajustes'
+	String get notification_permission_settings => 'Ajustes';
+
+	/// es: 'Continuar'
+	String get notification_permission_continue => 'Continuar';
+
 	/// es: 'No encontramos campos cerca'
 	String get no_course_found => 'No encontramos campos cerca';
 
@@ -1525,6 +1540,11 @@ extension on Translations {
 			'select_course.far_course_gps_message' => 'Estas a {distance} del campo. El GPS puede no funcionar correctamente a esta distancia. Deseas activarlo de todos modos?',
 			'select_course.far_course_gps_disable' => 'Desactivar GPS',
 			'select_course.far_course_gps_enable' => 'Activar GPS',
+			'select_course.notification_permission_title' => 'Notificaciones requeridas',
+			'select_course.notification_permission_message' => 'Para que el GPS funcione cuando la app esta en segundo plano, necesitamos mostrar una notificacion. Sin ella, el seguimiento puede detenerse inesperadamente.',
+			'select_course.notification_permission_cancel' => 'Sin GPS',
+			'select_course.notification_permission_settings' => 'Ajustes',
+			'select_course.notification_permission_continue' => 'Continuar',
 			'select_course.no_course_found' => 'No encontramos campos cerca',
 			'select_course.no_course_found_hint' => 'Asegurate de estar en un campo de golf o intenta de nuevo',
 			'select_course.search_course' => 'Buscar campo',

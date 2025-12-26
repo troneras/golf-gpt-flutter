@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:apparence_kit/core/data/api/analytics_api.dart';
 import 'package:apparence_kit/modules/round/domain/course.dart';
 import 'package:apparence_kit/modules/round/domain/tee.dart';
@@ -170,10 +172,18 @@ class SelectCourseNotifier extends _$SelectCourseNotifier {
       // If trying to enable GPS, check conditions
       if (!currentState.gpsEnabled) {
         // Check location permission first
-        final hasPermission = await Permission.locationWhenInUse.isGranted;
-        if (!hasPermission) {
+        final hasLocationPermission = await Permission.locationWhenInUse.isGranted;
+        if (!hasLocationPermission) {
           _logger.w('Cannot enable GPS: location permission denied');
-          return GpsToggleResult.permissionDenied;
+          return GpsToggleResult.locationPermissionDenied;
+        }
+        // On Android, check notification permission for foreground service
+        if (Platform.isAndroid) {
+          final hasNotificationPermission = await Permission.notification.isGranted;
+          if (!hasNotificationPermission) {
+            _logger.w('Notification permission denied - GPS tracking may not work in background');
+            return GpsToggleResult.notificationPermissionDenied;
+          }
         }
         // Enable GPS
         state = currentState.copyWith(gpsEnabled: true);
@@ -197,6 +207,20 @@ class SelectCourseNotifier extends _$SelectCourseNotifier {
     if (currentState is SelectCourseStateLoaded) {
       state = currentState.copyWith(gpsEnabled: false);
     }
+  }
+
+  /// Force enable GPS (used when user accepts notification warning)
+  void forceEnableGps() {
+    final currentState = state;
+    if (currentState is SelectCourseStateLoaded) {
+      state = currentState.copyWith(gpsEnabled: true);
+    }
+  }
+
+  /// Check if notification permission is granted (Android only)
+  Future<bool> hasNotificationPermission() async {
+    if (!Platform.isAndroid) return true;
+    return await Permission.notification.isGranted;
   }
 
   void retry() {
