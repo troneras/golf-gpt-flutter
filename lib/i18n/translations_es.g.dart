@@ -334,16 +334,16 @@ class TranslationsSelectCourseEs {
 	String get open_settings => 'Ajustes';
 
 	/// es: 'Campo lejano'
-	String get far_course_title => 'Campo lejano';
+	String get far_course_gps_title => 'Campo lejano';
 
-	/// es: 'Estas a {distance} del campo seleccionado. Seguro que quieres continuar?'
-	String get far_course_message => 'Estas a {distance} del campo seleccionado. Seguro que quieres continuar?';
+	/// es: 'Estas a {distance} del campo. El GPS puede no funcionar correctamente a esta distancia. Deseas activarlo de todos modos?'
+	String get far_course_gps_message => 'Estas a {distance} del campo. El GPS puede no funcionar correctamente a esta distancia. Deseas activarlo de todos modos?';
 
-	/// es: 'Cambiar campo'
-	String get far_course_cancel => 'Cambiar campo';
+	/// es: 'Desactivar GPS'
+	String get far_course_gps_disable => 'Desactivar GPS';
 
-	/// es: 'Continuar'
-	String get far_course_confirm => 'Continuar';
+	/// es: 'Activar GPS'
+	String get far_course_gps_enable => 'Activar GPS';
 
 	/// es: 'No encontramos campos cerca'
 	String get no_course_found => 'No encontramos campos cerca';
@@ -1521,10 +1521,10 @@ extension on Translations {
 			'select_course.gps_too_far_error' => 'El GPS solo funciona cuando estas cerca del campo',
 			'select_course.gps_permission_required' => 'Se requiere permiso de ubicacion para el GPS',
 			'select_course.open_settings' => 'Ajustes',
-			'select_course.far_course_title' => 'Campo lejano',
-			'select_course.far_course_message' => 'Estas a {distance} del campo seleccionado. Seguro que quieres continuar?',
-			'select_course.far_course_cancel' => 'Cambiar campo',
-			'select_course.far_course_confirm' => 'Continuar',
+			'select_course.far_course_gps_title' => 'Campo lejano',
+			'select_course.far_course_gps_message' => 'Estas a {distance} del campo. El GPS puede no funcionar correctamente a esta distancia. Deseas activarlo de todos modos?',
+			'select_course.far_course_gps_disable' => 'Desactivar GPS',
+			'select_course.far_course_gps_enable' => 'Activar GPS',
 			'select_course.no_course_found' => 'No encontramos campos cerca',
 			'select_course.no_course_found_hint' => 'Asegurate de estar en un campo de golf o intenta de nuevo',
 			'select_course.search_course' => 'Buscar campo',

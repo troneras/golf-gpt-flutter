@@ -11,8 +11,9 @@ const double kMaxGpsDistanceKm = 10.0;
 /// Result of attempting to toggle GPS setting.
 enum GpsToggleResult {
   success,
-  tooFar,
   permissionDenied,
+  /// GPS was enabled but course is far - UI should show confirmation
+  confirmFarCourse,
 }
 
 @freezed

@@ -60,13 +60,13 @@ class SelectCoursePage extends ConsumerWidget {
               switch (result) {
                 case GpsToggleResult.success:
                   break;
-                case GpsToggleResult.tooFar:
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(
-                      content: Text(tr.gps_too_far_error),
-                      backgroundColor: Colors.orange,
-                    ),
-                  );
+                case GpsToggleResult.confirmFarCourse:
+                  // GPS was enabled but course is far - ask for confirmation
+                  final confirmed = await _showFarCourseGpsConfirmation(context, course.distanceKm ?? 0);
+                  if (!confirmed) {
+                    // User cancelled - disable GPS
+                    ref.read(selectCourseProvider.notifier).disableGps();
+                  }
                 case GpsToggleResult.permissionDenied:
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
@@ -85,13 +85,6 @@ class SelectCoursePage extends ConsumerWidget {
             onStartRound: () async {
               HapticFeedback.mediumImpact();
               if (selectedTee == null) return;
-
-              // Check if course is far away and show confirmation
-              final isFarAway = course.distanceKm != null && course.distanceKm! > kMaxGpsDistanceKm;
-              if (isFarAway) {
-                final confirmed = await _showFarCourseConfirmation(context, course.distanceKm!);
-                if (!confirmed || !context.mounted) return;
-              }
 
               // Start the round
               await ref.read(activeRoundNotifierProvider.notifier).startRound(
@@ -167,8 +160,8 @@ class SelectCoursePage extends ConsumerWidget {
   }
 }
 
-/// Shows a confirmation dialog when the selected course is far from the user's location.
-Future<bool> _showFarCourseConfirmation(BuildContext context, double distanceKm) async {
+/// Shows a confirmation dialog when enabling GPS for a course far from user's location.
+Future<bool> _showFarCourseGpsConfirmation(BuildContext context, double distanceKm) async {
   final tr = Translations.of(context).select_course;
   final formattedDistance = distanceKm < 1
       ? '${(distanceKm * 1000).round()} m'
@@ -177,16 +170,16 @@ Future<bool> _showFarCourseConfirmation(BuildContext context, double distanceKm)
   final result = await showDialog<bool>(
     context: context,
     builder: (context) => AlertDialog(
-      title: Text(tr.far_course_title),
-      content: Text(tr.far_course_message.replaceAll('{distance}', formattedDistance)),
+      title: Text(tr.far_course_gps_title),
+      content: Text(tr.far_course_gps_message.replaceAll('{distance}', formattedDistance)),
       actions: [
         TextButton(
           onPressed: () => Navigator.of(context).pop(false),
-          child: Text(tr.far_course_cancel),
+          child: Text(tr.far_course_gps_disable),
         ),
         FilledButton(
           onPressed: () => Navigator.of(context).pop(true),
-          child: Text(tr.far_course_confirm),
+          child: Text(tr.far_course_gps_enable),
         ),
       ],
     ),

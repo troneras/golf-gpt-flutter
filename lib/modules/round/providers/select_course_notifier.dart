@@ -146,22 +146,34 @@ class SelectCourseNotifier extends _$SelectCourseNotifier {
     if (currentState is SelectCourseStateLoaded) {
       // If trying to enable GPS, check conditions
       if (!currentState.gpsEnabled) {
-        // Check if course is too far
-        if (currentState.gpsTooFar) {
-          _logger.w('Cannot enable GPS: course is too far');
-          return GpsToggleResult.tooFar;
-        }
-        // Check location permission
+        // Check location permission first
         final hasPermission = await Permission.locationWhenInUse.isGranted;
         if (!hasPermission) {
           _logger.w('Cannot enable GPS: location permission denied');
           return GpsToggleResult.permissionDenied;
         }
+        // Enable GPS
+        state = currentState.copyWith(gpsEnabled: true);
+        // If course is far, signal that confirmation is needed
+        if (currentState.gpsTooFar) {
+          _logger.i('GPS enabled for far course - confirmation needed');
+          return GpsToggleResult.confirmFarCourse;
+        }
+      } else {
+        // Disabling GPS - always allowed
+        state = currentState.copyWith(gpsEnabled: false);
       }
-      state = currentState.copyWith(gpsEnabled: !currentState.gpsEnabled);
       return GpsToggleResult.success;
     }
     return GpsToggleResult.success;
+  }
+
+  /// Disable GPS (used when user cancels far course confirmation)
+  void disableGps() {
+    final currentState = state;
+    if (currentState is SelectCourseStateLoaded) {
+      state = currentState.copyWith(gpsEnabled: false);
+    }
   }
 
   void retry() {
