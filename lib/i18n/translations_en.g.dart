@@ -187,6 +187,7 @@ class _TranslationsSettingsEn extends TranslationsSettingsEs {
 	@override String get disconnect_confirm => 'Are you sure you want to disconnect?';
 	@override String get theme_mode => 'Light/Dark mode';
 	@override late final _TranslationsSettingsLocationPermissionEn location_permission = _TranslationsSettingsLocationPermissionEn._(_root);
+	@override late final _TranslationsSettingsNotificationPermissionEn notification_permission = _TranslationsSettingsNotificationPermissionEn._(_root);
 }
 
 // Path: select_course
@@ -596,6 +597,18 @@ class _TranslationsSettingsLocationPermissionEn extends TranslationsSettingsLoca
 	@override String get open_settings => 'Open settings';
 }
 
+// Path: settings.notification_permission
+class _TranslationsSettingsNotificationPermissionEn extends TranslationsSettingsNotificationPermissionEs {
+	_TranslationsSettingsNotificationPermissionEn._(TranslationsEn root) : this._root = root, super.internal(root);
+
+	final TranslationsEn _root; // ignore: unused_field
+
+	// Translations
+	@override String get title => 'Notifications';
+	@override String get granted => 'Allowed';
+	@override String get open_settings => 'Open settings';
+}
+
 // Path: gps.tracking
 class _TranslationsGpsTrackingEn extends TranslationsGpsTrackingEs {
 	_TranslationsGpsTrackingEn._(TranslationsEn root) : this._root = root, super.internal(root);
@@ -880,6 +893,9 @@ extension on TranslationsEn {
 			'settings.location_permission.granted' => 'Allowed',
 			'settings.location_permission.denied' => 'Denied',
 			'settings.location_permission.open_settings' => 'Open settings',
+			'settings.notification_permission.title' => 'Notifications',
+			'settings.notification_permission.granted' => 'Allowed',
+			'settings.notification_permission.open_settings' => 'Open settings',
 			'select_course.title' => 'Select the course',
 			'select_course.loading' => 'Searching for nearby course...',
 			'select_course.closest_course' => 'Closest course',

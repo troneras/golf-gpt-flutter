@@ -284,6 +284,7 @@ class TranslationsSettingsEs {
 	String get theme_mode => 'Modo claro/oscuro';
 
 	late final TranslationsSettingsLocationPermissionEs location_permission = TranslationsSettingsLocationPermissionEs.internal(_root);
+	late final TranslationsSettingsNotificationPermissionEs notification_permission = TranslationsSettingsNotificationPermissionEs.internal(_root);
 }
 
 // Path: select_course
@@ -1109,6 +1110,24 @@ class TranslationsSettingsLocationPermissionEs {
 	String get open_settings => 'Abrir ajustes';
 }
 
+// Path: settings.notification_permission
+class TranslationsSettingsNotificationPermissionEs {
+	TranslationsSettingsNotificationPermissionEs.internal(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+
+	/// es: 'Notificaciones'
+	String get title => 'Notificaciones';
+
+	/// es: 'Permitido'
+	String get granted => 'Permitido';
+
+	/// es: 'Abrir ajustes'
+	String get open_settings => 'Abrir ajustes';
+}
+
 // Path: gps.tracking
 class TranslationsGpsTrackingEs {
 	TranslationsGpsTrackingEs.internal(this._root);
@@ -1523,6 +1542,9 @@ extension on Translations {
 			'settings.location_permission.granted' => 'Permitido',
 			'settings.location_permission.denied' => 'Denegado',
 			'settings.location_permission.open_settings' => 'Abrir ajustes',
+			'settings.notification_permission.title' => 'Notificaciones',
+			'settings.notification_permission.granted' => 'Permitido',
+			'settings.notification_permission.open_settings' => 'Abrir ajustes',
 			'select_course.title' => 'Selecciona el campo',
 			'select_course.loading' => 'Buscando campo cercano...',
 			'select_course.closest_course' => 'Campo mas cercano',

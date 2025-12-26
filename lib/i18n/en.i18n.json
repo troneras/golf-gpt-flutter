@@ -154,6 +154,11 @@
             "granted": "Allowed",
             "denied": "Denied",
             "open_settings": "Open settings"
+        },
+        "notification_permission": {
+            "title": "Notifications",
+            "granted": "Allowed",
+            "open_settings": "Open settings"
         }
     },
     "select_course": {
