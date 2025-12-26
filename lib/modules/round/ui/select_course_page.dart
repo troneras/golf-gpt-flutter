@@ -41,11 +41,12 @@ class SelectCoursePage extends ConsumerWidget {
       ),
       body: switch (state) {
         SelectCourseStateLoading() => const _LoadingView(),
-        SelectCourseStateLoaded(:final course, :final selectedTee, :final isManuallySelected, :final gpsEnabled, :final gpsTooFar) =>
+        SelectCourseStateLoaded(:final course, :final selectedTee, :final isManuallySelected, :final isRecentCourse, :final gpsEnabled, :final gpsTooFar) =>
           _LoadedView(
             course: course,
             selectedTee: selectedTee,
             isManuallySelected: isManuallySelected,
+            isRecentCourse: isRecentCourse,
             gpsEnabled: gpsEnabled,
             gpsTooFar: gpsTooFar,
             onTeeSelected: (tee) {
@@ -106,6 +107,29 @@ class SelectCoursePage extends ConsumerWidget {
               ref.read(selectCourseProvider.notifier).retry();
             },
             onCancel: () => context.pop(),
+            onSearchCourse: () async {
+              final selectedCourse = await context.push<Course>('/browse-courses');
+              if (selectedCourse != null) {
+                ref.read(selectCourseProvider.notifier).setCourse(selectedCourse);
+              }
+            },
+          ),
+        SelectCourseStateRedirectToSearch() => _RedirectToSearchView(
+            onNavigate: () async {
+              // Navigate to browse courses with search tab (index 2)
+              final selectedCourse = await context.push<Course>(
+                '/browse-courses',
+                extra: {'initialTab': 2},
+              );
+              if (selectedCourse != null) {
+                ref.read(selectCourseProvider.notifier).setCourse(selectedCourse);
+              } else {
+                // User cancelled, go back
+                if (context.mounted) {
+                  context.pop();
+                }
+              }
+            },
           ),
         SelectCourseStateError(:final message) => _ErrorView(
             message: message,
@@ -147,6 +171,7 @@ class _LoadedView extends StatelessWidget {
   final Course course;
   final Tee? selectedTee;
   final bool isManuallySelected;
+  final bool isRecentCourse;
   final bool gpsEnabled;
   final bool gpsTooFar;
   final void Function(Tee) onTeeSelected;
@@ -159,6 +184,7 @@ class _LoadedView extends StatelessWidget {
     required this.course,
     required this.selectedTee,
     required this.isManuallySelected,
+    required this.isRecentCourse,
     required this.gpsEnabled,
     required this.gpsTooFar,
     required this.onTeeSelected,
@@ -179,18 +205,20 @@ class _LoadedView extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                // Closest course section - only show if not manually selected
+                // Course label section - only show if not manually selected
                 if (!isManuallySelected) ...[
                   Row(
                     children: [
                       Image.asset(
-                        'assets/images/icons/ic_gps_pin.png',
+                        isRecentCourse
+                            ? 'assets/images/icons/ic_flag.png'
+                            : 'assets/images/icons/ic_gps_pin.png',
                         width: 20,
                         height: 20,
                       ),
                       const SizedBox(width: 8),
                       Text(
-                        tr.closest_course,
+                        isRecentCourse ? tr.recent_course : tr.closest_course,
                         style: context.textTheme.bodyMedium?.copyWith(
                           color: context.colors.onBackground.withValues(alpha: 0.7),
                         ),
@@ -601,10 +629,12 @@ class _BottomButtons extends StatelessWidget {
 class _NoCourseFoundView extends StatelessWidget {
   final VoidCallback onRetry;
   final VoidCallback onCancel;
+  final VoidCallback onSearchCourse;
 
   const _NoCourseFoundView({
     required this.onRetry,
     required this.onCancel,
+    required this.onSearchCourse,
   });
 
   @override
@@ -637,6 +667,16 @@ class _NoCourseFoundView extends StatelessWidget {
             textAlign: TextAlign.center,
           ),
           const SizedBox(height: 32),
+          // Primary action: Search for a course
+          SizedBox(
+            width: double.infinity,
+            child: FilledButton.icon(
+              onPressed: onSearchCourse,
+              icon: const Icon(Icons.search),
+              label: Text(tr.search_course),
+            ),
+          ),
+          const SizedBox(height: 16),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -645,7 +685,7 @@ class _NoCourseFoundView extends StatelessWidget {
                 child: Text(Translations.of(context).common.cancel),
               ),
               const SizedBox(width: 16),
-              FilledButton(
+              TextButton(
                 onPressed: onRetry,
                 child: Text(tr.retry),
               ),
@@ -654,6 +694,34 @@ class _NoCourseFoundView extends StatelessWidget {
         ],
       ),
     );
+  }
+}
+
+/// A view that automatically triggers navigation to the search tab.
+/// This is displayed briefly while the redirect happens.
+class _RedirectToSearchView extends StatefulWidget {
+  final Future<void> Function() onNavigate;
+
+  const _RedirectToSearchView({required this.onNavigate});
+
+  @override
+  State<_RedirectToSearchView> createState() => _RedirectToSearchViewState();
+}
+
+class _RedirectToSearchViewState extends State<_RedirectToSearchView> {
+  @override
+  void initState() {
+    super.initState();
+    // Trigger navigation after the first frame
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      widget.onNavigate();
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    // Show loading while redirecting
+    return const _LoadingView();
   }
 }
 

@@ -303,6 +303,9 @@ class TranslationsSelectCourseEs {
 	/// es: 'Campo mas cercano'
 	String get closest_course => 'Campo mas cercano';
 
+	/// es: 'Campo reciente'
+	String get recent_course => 'Campo reciente';
+
 	/// es: 'Seleccionar otro campo'
 	String get select_other_course => 'Seleccionar otro campo';
 
@@ -329,6 +332,9 @@ class TranslationsSelectCourseEs {
 
 	/// es: 'Asegurate de estar en un campo de golf o intenta de nuevo'
 	String get no_course_found_hint => 'Asegurate de estar en un campo de golf o intenta de nuevo';
+
+	/// es: 'Buscar campo'
+	String get search_course => 'Buscar campo';
 
 	/// es: 'Error al buscar campo'
 	String get error_title => 'Error al buscar campo';
@@ -368,6 +374,15 @@ class TranslationsBrowseCoursesEs {
 
 	/// es: 'No hay campos cercanos'
 	String get empty_nearby => 'No hay campos cercanos';
+
+	/// es: 'Ubicacion no disponible'
+	String get location_permission_required => 'Ubicacion no disponible';
+
+	/// es: 'Permite el acceso a tu ubicacion para ver campos cercanos, o usa la busqueda'
+	String get location_permission_hint => 'Permite el acceso a tu ubicacion para ver campos cercanos, o usa la busqueda';
+
+	/// es: 'Abrir ajustes'
+	String get open_settings => 'Abrir ajustes';
 
 	/// es: 'No tienes campos recientes'
 	String get empty_recent => 'No tienes campos recientes';
@@ -1478,6 +1493,7 @@ extension on Translations {
 			'select_course.title' => 'Selecciona el campo',
 			'select_course.loading' => 'Buscando campo cercano...',
 			'select_course.closest_course' => 'Campo mas cercano',
+			'select_course.recent_course' => 'Campo reciente',
 			'select_course.select_other_course' => 'Seleccionar otro campo',
 			'select_course.tees_section' => 'Tees de salida',
 			'select_course.settings_section' => 'Ajustes',
@@ -1487,6 +1503,7 @@ extension on Translations {
 			'select_course.gps_too_far_error' => 'El GPS solo funciona cuando estas cerca del campo',
 			'select_course.no_course_found' => 'No encontramos campos cerca',
 			'select_course.no_course_found_hint' => 'Asegurate de estar en un campo de golf o intenta de nuevo',
+			'select_course.search_course' => 'Buscar campo',
 			'select_course.error_title' => 'Error al buscar campo',
 			'select_course.retry' => 'Reintentar',
 			'browse_courses.title' => 'Seleccionar otro campo',
@@ -1497,6 +1514,9 @@ extension on Translations {
 			'browse_courses.search_min_chars' => 'Escribe al menos 3 caracteres',
 			'browse_courses.no_results' => 'No se encontraron campos',
 			'browse_courses.empty_nearby' => 'No hay campos cercanos',
+			'browse_courses.location_permission_required' => 'Ubicacion no disponible',
+			'browse_courses.location_permission_hint' => 'Permite el acceso a tu ubicacion para ver campos cercanos, o usa la busqueda',
+			'browse_courses.open_settings' => 'Abrir ajustes',
 			'browse_courses.empty_recent' => 'No tienes campos recientes',
 			'browse_courses.empty_recent_hint' => 'Los campos donde juegues apareceran aqui',
 			'browse_courses.login_required' => 'Inicia sesion para ver tus campos recientes',

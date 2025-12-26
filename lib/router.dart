@@ -132,7 +132,11 @@ GoRouter generateRouter({
       GoRoute(
         name: 'browse_courses',
         path: '/browse-courses',
-        builder: (context, state) => const BrowseCoursesPage(),
+        builder: (context, state) {
+          final extra = state.extra as Map<String, dynamic>?;
+          final initialTab = extra?['initialTab'] as int? ?? 0;
+          return BrowseCoursesPage(initialTab: initialTab);
+        },
       ),
       GoRoute(
         name: 'round_in_progress',

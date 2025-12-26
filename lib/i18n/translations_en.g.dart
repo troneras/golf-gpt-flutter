@@ -199,6 +199,7 @@ class _TranslationsSelectCourseEn extends TranslationsSelectCourseEs {
 	@override String get title => 'Select the course';
 	@override String get loading => 'Searching for nearby course...';
 	@override String get closest_course => 'Closest course';
+	@override String get recent_course => 'Recent course';
 	@override String get select_other_course => 'Select another course';
 	@override String get tees_section => 'Tee boxes';
 	@override String get settings_section => 'Settings';
@@ -208,6 +209,7 @@ class _TranslationsSelectCourseEn extends TranslationsSelectCourseEs {
 	@override String get gps_too_far_error => 'GPS only works when you\'re near the course';
 	@override String get no_course_found => 'No courses found nearby';
 	@override String get no_course_found_hint => 'Make sure you\'re at a golf course or try again';
+	@override String get search_course => 'Search course';
 	@override String get error_title => 'Error searching course';
 	@override String get retry => 'Retry';
 }
@@ -227,6 +229,9 @@ class _TranslationsBrowseCoursesEn extends TranslationsBrowseCoursesEs {
 	@override String get search_min_chars => 'Type at least 3 characters';
 	@override String get no_results => 'No courses found';
 	@override String get empty_nearby => 'No nearby courses';
+	@override String get location_permission_required => 'Location not available';
+	@override String get location_permission_hint => 'Allow location access to see nearby courses, or use the search';
+	@override String get open_settings => 'Open settings';
 	@override String get empty_recent => 'No recent courses';
 	@override String get empty_recent_hint => 'Courses you play will appear here';
 	@override String get login_required => 'Sign in to see your recent courses';
@@ -867,6 +872,7 @@ extension on TranslationsEn {
 			'select_course.title' => 'Select the course',
 			'select_course.loading' => 'Searching for nearby course...',
 			'select_course.closest_course' => 'Closest course',
+			'select_course.recent_course' => 'Recent course',
 			'select_course.select_other_course' => 'Select another course',
 			'select_course.tees_section' => 'Tee boxes',
 			'select_course.settings_section' => 'Settings',
@@ -876,6 +882,7 @@ extension on TranslationsEn {
 			'select_course.gps_too_far_error' => 'GPS only works when you\'re near the course',
 			'select_course.no_course_found' => 'No courses found nearby',
 			'select_course.no_course_found_hint' => 'Make sure you\'re at a golf course or try again',
+			'select_course.search_course' => 'Search course',
 			'select_course.error_title' => 'Error searching course',
 			'select_course.retry' => 'Retry',
 			'browse_courses.title' => 'Select another course',
@@ -886,6 +893,9 @@ extension on TranslationsEn {
 			'browse_courses.search_min_chars' => 'Type at least 3 characters',
 			'browse_courses.no_results' => 'No courses found',
 			'browse_courses.empty_nearby' => 'No nearby courses',
+			'browse_courses.location_permission_required' => 'Location not available',
+			'browse_courses.location_permission_hint' => 'Allow location access to see nearby courses, or use the search',
+			'browse_courses.open_settings' => 'Open settings',
 			'browse_courses.empty_recent' => 'No recent courses',
 			'browse_courses.empty_recent_hint' => 'Courses you play will appear here',
 			'browse_courses.login_required' => 'Sign in to see your recent courses',

@@ -16,11 +16,16 @@ sealed class SelectCourseState with _$SelectCourseState {
     required Course course,
     Tee? selectedTee,
     @Default(false) bool isManuallySelected,
+    @Default(false) bool isRecentCourse,
     @Default(true) bool gpsEnabled,
     @Default(false) bool gpsTooFar,
   }) = SelectCourseStateLoaded;
 
   const factory SelectCourseState.noCourseFound() = SelectCourseStateNoCourseFound;
+
+  /// State that signals the UI to redirect to the browse courses search tab.
+  /// Used when no recent course found and no GPS permission/nearby course.
+  const factory SelectCourseState.redirectToSearch() = SelectCourseStateRedirectToSearch;
 
   const factory SelectCourseState.error({
     required String message,

@@ -53,8 +53,32 @@ class SelectCourseNotifier extends _$SelectCourseNotifier {
 
   Future<void> _loadClosestCourse() async {
     try {
-      // Check GPS permission to set default gpsEnabled value
+      // Step 1: Try to get the most recent course first
+      _logger.i('Checking for recent courses...');
+      final recentCourse = await _tryGetRecentCourse();
+      if (recentCourse != null) {
+        _logger.i('Found recent course: ${recentCourse.name}');
+        // Check GPS permission to set default gpsEnabled value
+        final hasGpsPermission = await Permission.locationWhenInUse.isGranted;
+        state = SelectCourseState.loaded(
+          course: recentCourse,
+          isRecentCourse: true,
+          gpsEnabled: hasGpsPermission,
+          gpsTooFar: false,
+        );
+        return;
+      }
+      _logger.i('No recent courses found, trying GPS...');
+
+      // Step 2: Check GPS permission before attempting to get position
       final hasGpsPermission = await Permission.locationWhenInUse.isGranted;
+      if (!hasGpsPermission) {
+        _logger.w('Location permission not granted, redirecting to search');
+        state = const SelectCourseState.redirectToSearch();
+        return;
+      }
+
+      // Step 3: Try to get closest course via GPS
       _logger.i('Getting current GPS position...');
       final position = await Geolocator.getCurrentPosition(
         locationSettings: const LocationSettings(
@@ -70,8 +94,8 @@ class SelectCourseNotifier extends _$SelectCourseNotifier {
         longitude: position.longitude,
       );
       if (course == null) {
-        _logger.w('No course found nearby');
-        state = const SelectCourseState.noCourseFound();
+        _logger.w('No course found nearby, redirecting to search');
+        state = const SelectCourseState.redirectToSearch();
         return;
       }
       _logger.i('Found course: ${course.name} at ${course.distanceKm?.toStringAsFixed(2)} km');
@@ -86,8 +110,26 @@ class SelectCourseNotifier extends _$SelectCourseNotifier {
         gpsTooFar: isTooFar,
       );
     } catch (e, stackTrace) {
-      _logger.e('Error loading closest course', error: e, stackTrace: stackTrace);
+      _logger.e('Error loading course', error: e, stackTrace: stackTrace);
       state = SelectCourseState.error(message: e.toString());
+    }
+  }
+
+  /// Attempts to get the most recent course the user has played.
+  /// Returns null if no recent courses or if there's an error.
+  Future<Course?> _tryGetRecentCourse() async {
+    try {
+      final recentCourses = await _courseRepository.getRecent();
+      if (recentCourses.isEmpty) {
+        return null;
+      }
+      // Get full course details (with tees) for the most recent course
+      final mostRecent = recentCourses.first;
+      final courseWithDetails = await _courseRepository.getCourseDetails(mostRecent.id);
+      return courseWithDetails ?? mostRecent;
+    } catch (e) {
+      _logger.w('Error fetching recent courses: $e');
+      return null;
     }
   }
 

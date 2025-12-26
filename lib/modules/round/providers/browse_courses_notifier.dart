@@ -4,6 +4,7 @@ import 'package:apparence_kit/modules/round/providers/models/browse_courses_stat
 import 'package:apparence_kit/modules/round/repositories/course_repository.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:logger/logger.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'browse_courses_notifier.g.dart';
@@ -43,6 +44,16 @@ class BrowseCoursesNotifier extends _$BrowseCoursesNotifier {
     _logger.i('Loading nearby courses...');
     state = state.copyWith(isLoadingNearby: true, nearbyError: null);
     try {
+      // Check location permission first
+      final hasPermission = await Permission.locationWhenInUse.isGranted;
+      if (!hasPermission) {
+        _logger.w('Location permission not granted');
+        state = state.copyWith(
+          isLoadingNearby: false,
+          nearbyError: 'location_permission_required',
+        );
+        return;
+      }
       if (_cachedPosition == null) {
         // Try last known position first (instant)
         _logger.i('Checking last known position...');

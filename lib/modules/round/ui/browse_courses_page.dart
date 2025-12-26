@@ -8,9 +8,12 @@ import 'package:apparence_kit/modules/round/providers/models/browse_courses_stat
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 class BrowseCoursesPage extends ConsumerStatefulWidget {
-  const BrowseCoursesPage({super.key});
+  final int initialTab;
+
+  const BrowseCoursesPage({super.key, this.initialTab = 0});
 
   @override
   ConsumerState<BrowseCoursesPage> createState() => _BrowseCoursesPageState();
@@ -24,7 +27,11 @@ class _BrowseCoursesPageState extends ConsumerState<BrowseCoursesPage>
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(length: 3, vsync: this);
+    _tabController = TabController(
+      length: 3,
+      vsync: this,
+      initialIndex: widget.initialTab.clamp(0, 2),
+    );
     _tabController.addListener(_onTabChanged);
   }
 
@@ -93,6 +100,7 @@ class _BrowseCoursesPageState extends ConsumerState<BrowseCoursesPage>
             state: state,
             onCourseSelected: _onCourseSelected,
             onRetry: () => ref.read(browseCoursesProvider.notifier).retry(),
+            onOpenSettings: () => openAppSettings(),
           ),
           _RecentTab(
             state: state,
@@ -116,11 +124,13 @@ class _NearbyTab extends StatelessWidget {
   final BrowseCoursesState state;
   final void Function(Course) onCourseSelected;
   final VoidCallback onRetry;
+  final VoidCallback onOpenSettings;
 
   const _NearbyTab({
     required this.state,
     required this.onCourseSelected,
     required this.onRetry,
+    required this.onOpenSettings,
   });
 
   @override
@@ -128,6 +138,14 @@ class _NearbyTab extends StatelessWidget {
     final tr = Translations.of(context).browse_courses;
     if (state.isLoadingNearby) {
       return const Center(child: CircularProgressIndicator());
+    }
+    if (state.nearbyError == 'location_permission_required') {
+      return _LocationPermissionRequiredView(
+        message: tr.location_permission_required,
+        hint: tr.location_permission_hint,
+        actionLabel: tr.open_settings,
+        onOpenSettings: onOpenSettings,
+      );
     }
     if (state.nearbyError != null) {
       return _ErrorView(
@@ -507,6 +525,61 @@ class _LoginRequiredView extends StatelessWidget {
             FilledButton(
               onPressed: onLogin,
               child: Text(actionLabel),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _LocationPermissionRequiredView extends StatelessWidget {
+  final String message;
+  final String hint;
+  final String actionLabel;
+  final VoidCallback onOpenSettings;
+
+  const _LocationPermissionRequiredView({
+    required this.message,
+    required this.hint,
+    required this.actionLabel,
+    required this.onOpenSettings,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Padding(
+        padding: const EdgeInsets.all(32),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(
+              Icons.location_off_outlined,
+              size: 64,
+              color: context.colors.onSurface.withValues(alpha: 0.3),
+            ),
+            const SizedBox(height: 16),
+            Text(
+              message,
+              style: context.textTheme.bodyLarge?.copyWith(
+                color: context.colors.onSurface.withValues(alpha: 0.6),
+              ),
+              textAlign: TextAlign.center,
+            ),
+            const SizedBox(height: 8),
+            Text(
+              hint,
+              style: context.textTheme.bodySmall?.copyWith(
+                color: context.colors.onSurface.withValues(alpha: 0.4),
+              ),
+              textAlign: TextAlign.center,
+            ),
+            const SizedBox(height: 24),
+            FilledButton.icon(
+              onPressed: onOpenSettings,
+              icon: const Icon(Icons.settings),
+              label: Text(actionLabel),
             ),
           ],
         ),
