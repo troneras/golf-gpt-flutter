@@ -285,6 +285,11 @@ class _TranslationsRoundInProgressEn extends TranslationsRoundInProgressEs {
 	@override String get finish_action => 'Finish';
 	@override String get notes_label => 'Notes (optional)';
 	@override String get notes_hint => 'Add notes about the round...';
+	@override String get discard_title => 'Discard round?';
+	@override String get discard_message => 'The round will be abandoned without saving statistics. This action cannot be undone.';
+	@override String get discard_action => 'Discard';
+	@override String get save_action => 'Save round';
+	@override String get round_discarded => 'Round discarded';
 	@override String get gps_enabled => 'GPS enabled';
 	@override String get gps_disabled => 'GPS disabled';
 	@override String get error_saving => 'Error saving';
@@ -991,6 +996,11 @@ extension on TranslationsEn {
 			'round_in_progress.finish_action' => 'Finish',
 			'round_in_progress.notes_label' => 'Notes (optional)',
 			'round_in_progress.notes_hint' => 'Add notes about the round...',
+			'round_in_progress.discard_title' => 'Discard round?',
+			'round_in_progress.discard_message' => 'The round will be abandoned without saving statistics. This action cannot be undone.',
+			'round_in_progress.discard_action' => 'Discard',
+			'round_in_progress.save_action' => 'Save round',
+			'round_in_progress.round_discarded' => 'Round discarded',
 			'round_in_progress.gps_enabled' => 'GPS enabled',
 			'round_in_progress.gps_disabled' => 'GPS disabled',
 			'round_in_progress.error_saving' => 'Error saving',

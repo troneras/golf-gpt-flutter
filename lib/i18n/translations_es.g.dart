@@ -522,6 +522,21 @@ class TranslationsRoundInProgressEs {
 	/// es: 'Agrega notas sobre la ronda...'
 	String get notes_hint => 'Agrega notas sobre la ronda...';
 
+	/// es: 'Descartar ronda?'
+	String get discard_title => 'Descartar ronda?';
+
+	/// es: 'La ronda se abandonara sin guardar estadisticas. Esta accion no se puede deshacer.'
+	String get discard_message => 'La ronda se abandonara sin guardar estadisticas. Esta accion no se puede deshacer.';
+
+	/// es: 'Descartar'
+	String get discard_action => 'Descartar';
+
+	/// es: 'Guardar ronda'
+	String get save_action => 'Guardar ronda';
+
+	/// es: 'Ronda descartada'
+	String get round_discarded => 'Ronda descartada';
+
 	/// es: 'GPS activado'
 	String get gps_enabled => 'GPS activado';
 
@@ -1659,6 +1674,11 @@ extension on Translations {
 			'round_in_progress.finish_action' => 'Finalizar',
 			'round_in_progress.notes_label' => 'Notas (opcional)',
 			'round_in_progress.notes_hint' => 'Agrega notas sobre la ronda...',
+			'round_in_progress.discard_title' => 'Descartar ronda?',
+			'round_in_progress.discard_message' => 'La ronda se abandonara sin guardar estadisticas. Esta accion no se puede deshacer.',
+			'round_in_progress.discard_action' => 'Descartar',
+			'round_in_progress.save_action' => 'Guardar ronda',
+			'round_in_progress.round_discarded' => 'Ronda descartada',
 			'round_in_progress.gps_enabled' => 'GPS activado',
 			'round_in_progress.gps_disabled' => 'GPS desactivado',
 			'round_in_progress.error_saving' => 'Error al guardar',

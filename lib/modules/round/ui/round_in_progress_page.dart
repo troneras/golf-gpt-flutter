@@ -111,6 +111,18 @@ class _RoundInProgressPageState extends ConsumerState<RoundInProgressPage> {
           return const _LoadingView();
         },
       ),
+      ActiveRoundStateDiscarded() => Builder(
+        builder: (ctx) {
+          WidgetsBinding.instance.addPostFrameCallback((_) {
+            final tr = Translations.of(context).round_in_progress;
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(content: Text(tr.round_discarded)),
+            );
+            context.go('/');
+          });
+          return const _LoadingView();
+        },
+      ),
       ActiveRoundStateError(:final message, :final roundId) => _ErrorView(
         message: message,
         onRetry: () {
@@ -222,10 +234,53 @@ class _RoundInProgressPageState extends ConsumerState<RoundInProgressPage> {
   void _showFinishDialog(BuildContext context) {
     showDialog(
       context: context,
+      builder: (dialogContext) => _FinishRoundOptionsDialog(
+        onSave: () {
+          Navigator.pop(dialogContext);
+          _showSaveRoundDialog(context);
+        },
+        onDiscard: () {
+          Navigator.pop(dialogContext);
+          _showDiscardConfirmDialog(context);
+        },
+      ),
+    );
+  }
+
+  void _showSaveRoundDialog(BuildContext context) {
+    showDialog(
+      context: context,
       builder: (context) => _FinishRoundDialog(
         onFinish: (notes) {
           ref.read(activeRoundNotifierProvider.notifier).finishRound(notes: notes);
         },
+      ),
+    );
+  }
+
+  void _showDiscardConfirmDialog(BuildContext context) {
+    final tr = Translations.of(context).round_in_progress;
+    showDialog(
+      context: context,
+      builder: (dialogContext) => AlertDialog(
+        title: Text(tr.discard_title),
+        content: Text(tr.discard_message),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(dialogContext),
+            child: Text(tr.back),
+          ),
+          FilledButton(
+            style: FilledButton.styleFrom(
+              backgroundColor: Colors.red,
+            ),
+            onPressed: () {
+              Navigator.pop(dialogContext);
+              ref.read(activeRoundNotifierProvider.notifier).discardRound();
+            },
+            child: Text(tr.discard_action),
+          ),
+        ],
       ),
     );
   }
@@ -455,6 +510,43 @@ class _ErrorView extends StatelessWidget {
           ),
         ],
       ),
+    );
+  }
+}
+
+class _FinishRoundOptionsDialog extends StatelessWidget {
+  final VoidCallback onSave;
+  final VoidCallback onDiscard;
+
+  const _FinishRoundOptionsDialog({
+    required this.onSave,
+    required this.onDiscard,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final tr = Translations.of(context).round_in_progress;
+    return AlertDialog(
+      title: Text(tr.finish_title),
+      content: Text(tr.finish_message),
+      actions: [
+        TextButton(
+          onPressed: () => Navigator.pop(context),
+          child: Text(Translations.of(context).common.cancel),
+        ),
+        OutlinedButton(
+          style: OutlinedButton.styleFrom(
+            foregroundColor: Colors.red,
+            side: const BorderSide(color: Colors.red),
+          ),
+          onPressed: onDiscard,
+          child: Text(tr.discard_action),
+        ),
+        FilledButton(
+          onPressed: onSave,
+          child: Text(tr.save_action),
+        ),
+      ],
     );
   }
 }

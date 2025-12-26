@@ -26,6 +26,11 @@ sealed class ActiveRoundState with _$ActiveRoundState {
     required RoundSummary summary,
   }) = ActiveRoundStateFinished;
 
+  /// Round has been discarded
+  const factory ActiveRoundState.discarded({
+    required String roundId,
+  }) = ActiveRoundStateDiscarded;
+
   /// Error state
   const factory ActiveRoundState.error({
     required String message,

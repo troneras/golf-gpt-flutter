@@ -42,7 +42,7 @@ final class BrowseCoursesNotifierProvider
 }
 
 String _$browseCoursesNotifierHash() =>
-    r'02bf266d7a0f112b2c6f3885b57b4f737a31fc85';
+    r'c732f50390366e90254db9ca8421a573dfece82c';
 
 abstract class _$BrowseCoursesNotifier extends $Notifier<BrowseCoursesState> {
   BrowseCoursesState build();

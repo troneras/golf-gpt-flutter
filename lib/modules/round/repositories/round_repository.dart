@@ -108,6 +108,12 @@ class RoundRepository {
     );
     return response.rounds.map(Round.fromEntity).toList();
   }
+
+  /// Discard a round without saving statistics
+  Future<Round> discardRound(String roundId) async {
+    final entity = await _roundApi.discardRound(roundId);
+    return Round.fromEntity(entity);
+  }
 }
 
 /// Result of a score upsert operation

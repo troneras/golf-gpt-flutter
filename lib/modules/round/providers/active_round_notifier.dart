@@ -400,6 +400,43 @@ class ActiveRoundNotifier extends _$ActiveRoundNotifier {
     }
   }
 
+  /// Discard the current round without saving statistics
+  Future<void> discardRound() async {
+    final currentState = state;
+    if (currentState is! ActiveRoundStateActive) {
+      _logger.w('Cannot discard: no active round');
+      return;
+    }
+
+    _logger.i('Discarding round: ${currentState.round.id}');
+    state = currentState.copyWith(isSaving: true);
+
+    // Cancel forgotten round reminder
+    await _forgottenRoundService.cancelReminder();
+
+    // Stop GPS tracking before discarding round
+    _logger.i('Stopping GPS tracking for discarded round');
+    await ref.read(gpsTrackingProvider.notifier).stopTracking();
+
+    try {
+      await _roundRepository.discardRound(currentState.round.id);
+      if (!ref.mounted) return;
+      _logger.i('Round discarded');
+
+      state = ActiveRoundState.discarded(
+        roundId: currentState.round.id,
+      );
+    } catch (e, stackTrace) {
+      _logger.e('Error discarding round', error: e, stackTrace: stackTrace);
+      if (!ref.mounted) return;
+
+      state = currentState.copyWith(
+        isSaving: false,
+        savingError: e.toString(),
+      );
+    }
+  }
+
   /// Handle app lifecycle changes for GPS tracking.
   ///
   /// Called when app transitions between foreground/background states.

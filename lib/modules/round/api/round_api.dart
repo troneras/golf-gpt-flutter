@@ -202,4 +202,26 @@ class RoundApi {
       throw ApiError(code: 0, message: e.toString());
     }
   }
+
+  /// Discard a round without saving statistics
+  /// POST /api/rounds/{id}/discard
+  Future<RoundEntity> discardRound(String roundId) async {
+    _logger.i('API Request: POST /rounds/$roundId/discard');
+    try {
+      final response = await _client.post('/rounds/$roundId/discard');
+      _logger.i('API Response: ${response.statusCode}');
+      _logger.d('Response data: ${response.data}');
+      final data = response.data as Map<String, dynamic>;
+      final roundResponse = RoundResponse.fromJson(data);
+      return roundResponse.round;
+    } on DioException catch (e) {
+      _logger.e('DioException: ${e.response?.statusCode} - ${e.message}');
+      throw ApiError.fromDioException(e);
+    } on ApiError {
+      rethrow;
+    } catch (e, stackTrace) {
+      _logger.e('Unexpected error', error: e, stackTrace: stackTrace);
+      throw ApiError(code: 0, message: e.toString());
+    }
+  }
 }

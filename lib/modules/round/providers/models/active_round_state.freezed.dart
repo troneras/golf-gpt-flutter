@@ -55,14 +55,15 @@ extension ActiveRoundStatePatterns on ActiveRoundState {
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( ActiveRoundStateInitial value)?  initial,TResult Function( ActiveRoundStateLoading value)?  loading,TResult Function( ActiveRoundStateActive value)?  active,TResult Function( ActiveRoundStateFinished value)?  finished,TResult Function( ActiveRoundStateError value)?  error,required TResult orElse(),}){
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( ActiveRoundStateInitial value)?  initial,TResult Function( ActiveRoundStateLoading value)?  loading,TResult Function( ActiveRoundStateActive value)?  active,TResult Function( ActiveRoundStateFinished value)?  finished,TResult Function( ActiveRoundStateDiscarded value)?  discarded,TResult Function( ActiveRoundStateError value)?  error,required TResult orElse(),}){
 final _that = this;
 switch (_that) {
 case ActiveRoundStateInitial() when initial != null:
 return initial(_that);case ActiveRoundStateLoading() when loading != null:
 return loading(_that);case ActiveRoundStateActive() when active != null:
 return active(_that);case ActiveRoundStateFinished() when finished != null:
-return finished(_that);case ActiveRoundStateError() when error != null:
+return finished(_that);case ActiveRoundStateDiscarded() when discarded != null:
+return discarded(_that);case ActiveRoundStateError() when error != null:
 return error(_that);case _:
   return orElse();
 
@@ -81,14 +82,15 @@ return error(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( ActiveRoundStateInitial value)  initial,required TResult Function( ActiveRoundStateLoading value)  loading,required TResult Function( ActiveRoundStateActive value)  active,required TResult Function( ActiveRoundStateFinished value)  finished,required TResult Function( ActiveRoundStateError value)  error,}){
+@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( ActiveRoundStateInitial value)  initial,required TResult Function( ActiveRoundStateLoading value)  loading,required TResult Function( ActiveRoundStateActive value)  active,required TResult Function( ActiveRoundStateFinished value)  finished,required TResult Function( ActiveRoundStateDiscarded value)  discarded,required TResult Function( ActiveRoundStateError value)  error,}){
 final _that = this;
 switch (_that) {
 case ActiveRoundStateInitial():
 return initial(_that);case ActiveRoundStateLoading():
 return loading(_that);case ActiveRoundStateActive():
 return active(_that);case ActiveRoundStateFinished():
-return finished(_that);case ActiveRoundStateError():
+return finished(_that);case ActiveRoundStateDiscarded():
+return discarded(_that);case ActiveRoundStateError():
 return error(_that);}
 }
 /// A variant of `map` that fallback to returning `null`.
@@ -103,14 +105,15 @@ return error(_that);}
 /// }
 /// ```
 
-@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( ActiveRoundStateInitial value)?  initial,TResult? Function( ActiveRoundStateLoading value)?  loading,TResult? Function( ActiveRoundStateActive value)?  active,TResult? Function( ActiveRoundStateFinished value)?  finished,TResult? Function( ActiveRoundStateError value)?  error,}){
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( ActiveRoundStateInitial value)?  initial,TResult? Function( ActiveRoundStateLoading value)?  loading,TResult? Function( ActiveRoundStateActive value)?  active,TResult? Function( ActiveRoundStateFinished value)?  finished,TResult? Function( ActiveRoundStateDiscarded value)?  discarded,TResult? Function( ActiveRoundStateError value)?  error,}){
 final _that = this;
 switch (_that) {
 case ActiveRoundStateInitial() when initial != null:
 return initial(_that);case ActiveRoundStateLoading() when loading != null:
 return loading(_that);case ActiveRoundStateActive() when active != null:
 return active(_that);case ActiveRoundStateFinished() when finished != null:
-return finished(_that);case ActiveRoundStateError() when error != null:
+return finished(_that);case ActiveRoundStateDiscarded() when discarded != null:
+return discarded(_that);case ActiveRoundStateError() when error != null:
 return error(_that);case _:
   return null;
 
@@ -128,13 +131,14 @@ return error(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  initial,TResult Function()?  loading,TResult Function( Round round,  int currentHole,  bool isSaving,  String? savingError)?  active,TResult Function( String roundId,  RoundSummary summary)?  finished,TResult Function( String message,  String? roundId)?  error,required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  initial,TResult Function()?  loading,TResult Function( Round round,  int currentHole,  bool isSaving,  String? savingError)?  active,TResult Function( String roundId,  RoundSummary summary)?  finished,TResult Function( String roundId)?  discarded,TResult Function( String message,  String? roundId)?  error,required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case ActiveRoundStateInitial() when initial != null:
 return initial();case ActiveRoundStateLoading() when loading != null:
 return loading();case ActiveRoundStateActive() when active != null:
 return active(_that.round,_that.currentHole,_that.isSaving,_that.savingError);case ActiveRoundStateFinished() when finished != null:
-return finished(_that.roundId,_that.summary);case ActiveRoundStateError() when error != null:
+return finished(_that.roundId,_that.summary);case ActiveRoundStateDiscarded() when discarded != null:
+return discarded(_that.roundId);case ActiveRoundStateError() when error != null:
 return error(_that.message,_that.roundId);case _:
   return orElse();
 
@@ -153,13 +157,14 @@ return error(_that.message,_that.roundId);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  initial,required TResult Function()  loading,required TResult Function( Round round,  int currentHole,  bool isSaving,  String? savingError)  active,required TResult Function( String roundId,  RoundSummary summary)  finished,required TResult Function( String message,  String? roundId)  error,}) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  initial,required TResult Function()  loading,required TResult Function( Round round,  int currentHole,  bool isSaving,  String? savingError)  active,required TResult Function( String roundId,  RoundSummary summary)  finished,required TResult Function( String roundId)  discarded,required TResult Function( String message,  String? roundId)  error,}) {final _that = this;
 switch (_that) {
 case ActiveRoundStateInitial():
 return initial();case ActiveRoundStateLoading():
 return loading();case ActiveRoundStateActive():
 return active(_that.round,_that.currentHole,_that.isSaving,_that.savingError);case ActiveRoundStateFinished():
-return finished(_that.roundId,_that.summary);case ActiveRoundStateError():
+return finished(_that.roundId,_that.summary);case ActiveRoundStateDiscarded():
+return discarded(_that.roundId);case ActiveRoundStateError():
 return error(_that.message,_that.roundId);}
 }
 /// A variant of `when` that fallback to returning `null`
@@ -174,13 +179,14 @@ return error(_that.message,_that.roundId);}
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  initial,TResult? Function()?  loading,TResult? Function( Round round,  int currentHole,  bool isSaving,  String? savingError)?  active,TResult? Function( String roundId,  RoundSummary summary)?  finished,TResult? Function( String message,  String? roundId)?  error,}) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  initial,TResult? Function()?  loading,TResult? Function( Round round,  int currentHole,  bool isSaving,  String? savingError)?  active,TResult? Function( String roundId,  RoundSummary summary)?  finished,TResult? Function( String roundId)?  discarded,TResult? Function( String message,  String? roundId)?  error,}) {final _that = this;
 switch (_that) {
 case ActiveRoundStateInitial() when initial != null:
 return initial();case ActiveRoundStateLoading() when loading != null:
 return loading();case ActiveRoundStateActive() when active != null:
 return active(_that.round,_that.currentHole,_that.isSaving,_that.savingError);case ActiveRoundStateFinished() when finished != null:
-return finished(_that.roundId,_that.summary);case ActiveRoundStateError() when error != null:
+return finished(_that.roundId,_that.summary);case ActiveRoundStateDiscarded() when discarded != null:
+return discarded(_that.roundId);case ActiveRoundStateError() when error != null:
 return error(_that.message,_that.roundId);case _:
   return null;
 
@@ -409,6 +415,72 @@ $RoundSummaryCopyWith<$Res> get summary {
     return _then(_self.copyWith(summary: value));
   });
 }
+}
+
+/// @nodoc
+
+
+class ActiveRoundStateDiscarded extends ActiveRoundState {
+  const ActiveRoundStateDiscarded({required this.roundId}): super._();
+  
+
+ final  String roundId;
+
+/// Create a copy of ActiveRoundState
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+$ActiveRoundStateDiscardedCopyWith<ActiveRoundStateDiscarded> get copyWith => _$ActiveRoundStateDiscardedCopyWithImpl<ActiveRoundStateDiscarded>(this, _$identity);
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is ActiveRoundStateDiscarded&&(identical(other.roundId, roundId) || other.roundId == roundId));
+}
+
+
+@override
+int get hashCode => Object.hash(runtimeType,roundId);
+
+@override
+String toString() {
+  return 'ActiveRoundState.discarded(roundId: $roundId)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class $ActiveRoundStateDiscardedCopyWith<$Res> implements $ActiveRoundStateCopyWith<$Res> {
+  factory $ActiveRoundStateDiscardedCopyWith(ActiveRoundStateDiscarded value, $Res Function(ActiveRoundStateDiscarded) _then) = _$ActiveRoundStateDiscardedCopyWithImpl;
+@useResult
+$Res call({
+ String roundId
+});
+
+
+
+
+}
+/// @nodoc
+class _$ActiveRoundStateDiscardedCopyWithImpl<$Res>
+    implements $ActiveRoundStateDiscardedCopyWith<$Res> {
+  _$ActiveRoundStateDiscardedCopyWithImpl(this._self, this._then);
+
+  final ActiveRoundStateDiscarded _self;
+  final $Res Function(ActiveRoundStateDiscarded) _then;
+
+/// Create a copy of ActiveRoundState
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') $Res call({Object? roundId = null,}) {
+  return _then(ActiveRoundStateDiscarded(
+roundId: null == roundId ? _self.roundId : roundId // ignore: cast_nullable_to_non_nullable
+as String,
+  ));
+}
+
+
 }
 
 /// @nodoc
