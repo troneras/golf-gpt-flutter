@@ -185,17 +185,22 @@ class SelectCourseNotifier extends _$SelectCourseNotifier {
       final hasGpsPermission = await Permission.locationWhenInUse.isGranted;
 
       // Try to get position if not cached and we have permission
-      if (_cachedPosition == null && hasGpsPermission) {
-        _logger.i('Getting GPS position for distance calculation...');
-        try {
-          _cachedPosition = await Geolocator.getCurrentPosition(
-            locationSettings: const LocationSettings(
-              accuracy: LocationAccuracy.medium,
-              timeLimit: Duration(seconds: 5),
-            ),
-          );
-        } catch (e) {
-          _logger.w('Could not get GPS position for distance: $e');
+      if (_cachedPosition == null) {
+        if (hasGpsPermission) {
+          _logger.i('Getting GPS position for distance calculation...');
+          try {
+            _cachedPosition = await Geolocator.getCurrentPosition(
+              locationSettings: const LocationSettings(
+                accuracy: LocationAccuracy.medium,
+                timeLimit: Duration(seconds: 5),
+              ),
+            );
+            _logger.i('Got GPS position: ${_cachedPosition!.latitude}, ${_cachedPosition!.longitude}');
+          } catch (e) {
+            _logger.w('Could not get GPS position for distance: $e');
+          }
+        } else {
+          _logger.w('Cannot get GPS position: permission not granted');
         }
       }
 
