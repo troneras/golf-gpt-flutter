@@ -142,21 +142,32 @@
     },
     "settings": {
         "title": "Ajustes",
+        "sections": {
+            "permissions": "Permisos",
+            "preferences": "Preferencias",
+            "golf": "Golf",
+            "help": "Ayuda y soporte",
+            "account": "Cuenta"
+        },
         "my_bag": "Mi bolsa",
         "send_feedback": "Enviar comentarios",
         "privacy_policy": "Politica de privacidad",
         "support": "Soporte",
         "disconnect": "Desconectar",
         "disconnect_confirm": "Seguro que quieres desconectarte?",
+        "delete_account": "Eliminar cuenta",
+        "delete_account_confirm": "Esta accion es permanente y eliminara todos tus datos. Seguro que quieres continuar?",
         "theme_mode": "Modo claro/oscuro",
         "location_permission": {
-            "title": "Permiso de ubicacion",
+            "title": "Ubicacion",
+            "subtitle": "Para medir distancias y registrar golpes",
             "granted": "Permitido",
             "denied": "Denegado",
             "open_settings": "Abrir ajustes"
         },
         "notification_permission": {
             "title": "Notificaciones",
+            "subtitle": "Requerido para GPS en segundo plano",
             "granted": "Permitido",
             "open_settings": "Abrir ajustes"
         }

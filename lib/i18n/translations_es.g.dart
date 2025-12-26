@@ -262,6 +262,8 @@ class TranslationsSettingsEs {
 	/// es: 'Ajustes'
 	String get title => 'Ajustes';
 
+	late final TranslationsSettingsSectionsEs sections = TranslationsSettingsSectionsEs.internal(_root);
+
 	/// es: 'Mi bolsa'
 	String get my_bag => 'Mi bolsa';
 
@@ -279,6 +281,12 @@ class TranslationsSettingsEs {
 
 	/// es: 'Seguro que quieres desconectarte?'
 	String get disconnect_confirm => 'Seguro que quieres desconectarte?';
+
+	/// es: 'Eliminar cuenta'
+	String get delete_account => 'Eliminar cuenta';
+
+	/// es: 'Esta accion es permanente y eliminara todos tus datos. Seguro que quieres continuar?'
+	String get delete_account_confirm => 'Esta accion es permanente y eliminara todos tus datos. Seguro que quieres continuar?';
 
 	/// es: 'Modo claro/oscuro'
 	String get theme_mode => 'Modo claro/oscuro';
@@ -1089,6 +1097,30 @@ class TranslationsAuthRecoverPasswordEs {
 	String get back_to_signin => 'Ir a iniciar sesion';
 }
 
+// Path: settings.sections
+class TranslationsSettingsSectionsEs {
+	TranslationsSettingsSectionsEs.internal(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+
+	/// es: 'Permisos'
+	String get permissions => 'Permisos';
+
+	/// es: 'Preferencias'
+	String get preferences => 'Preferencias';
+
+	/// es: 'Golf'
+	String get golf => 'Golf';
+
+	/// es: 'Ayuda y soporte'
+	String get help => 'Ayuda y soporte';
+
+	/// es: 'Cuenta'
+	String get account => 'Cuenta';
+}
+
 // Path: settings.location_permission
 class TranslationsSettingsLocationPermissionEs {
 	TranslationsSettingsLocationPermissionEs.internal(this._root);
@@ -1097,8 +1129,11 @@ class TranslationsSettingsLocationPermissionEs {
 
 	// Translations
 
-	/// es: 'Permiso de ubicacion'
-	String get title => 'Permiso de ubicacion';
+	/// es: 'Ubicacion'
+	String get title => 'Ubicacion';
+
+	/// es: 'Para medir distancias y registrar golpes'
+	String get subtitle => 'Para medir distancias y registrar golpes';
 
 	/// es: 'Permitido'
 	String get granted => 'Permitido';
@@ -1120,6 +1155,9 @@ class TranslationsSettingsNotificationPermissionEs {
 
 	/// es: 'Notificaciones'
 	String get title => 'Notificaciones';
+
+	/// es: 'Requerido para GPS en segundo plano'
+	String get subtitle => 'Requerido para GPS en segundo plano';
 
 	/// es: 'Permitido'
 	String get granted => 'Permitido';
@@ -1531,18 +1569,27 @@ extension on Translations {
 			'rounds.detail_title' => 'Detalle de ronda',
 			'rounds.result' => 'Resultado',
 			'settings.title' => 'Ajustes',
+			'settings.sections.permissions' => 'Permisos',
+			'settings.sections.preferences' => 'Preferencias',
+			'settings.sections.golf' => 'Golf',
+			'settings.sections.help' => 'Ayuda y soporte',
+			'settings.sections.account' => 'Cuenta',
 			'settings.my_bag' => 'Mi bolsa',
 			'settings.send_feedback' => 'Enviar comentarios',
 			'settings.privacy_policy' => 'Politica de privacidad',
 			'settings.support' => 'Soporte',
 			'settings.disconnect' => 'Desconectar',
 			'settings.disconnect_confirm' => 'Seguro que quieres desconectarte?',
+			'settings.delete_account' => 'Eliminar cuenta',
+			'settings.delete_account_confirm' => 'Esta accion es permanente y eliminara todos tus datos. Seguro que quieres continuar?',
 			'settings.theme_mode' => 'Modo claro/oscuro',
-			'settings.location_permission.title' => 'Permiso de ubicacion',
+			'settings.location_permission.title' => 'Ubicacion',
+			'settings.location_permission.subtitle' => 'Para medir distancias y registrar golpes',
 			'settings.location_permission.granted' => 'Permitido',
 			'settings.location_permission.denied' => 'Denegado',
 			'settings.location_permission.open_settings' => 'Abrir ajustes',
 			'settings.notification_permission.title' => 'Notificaciones',
+			'settings.notification_permission.subtitle' => 'Requerido para GPS en segundo plano',
 			'settings.notification_permission.granted' => 'Permitido',
 			'settings.notification_permission.open_settings' => 'Abrir ajustes',
 			'select_course.title' => 'Selecciona el campo',

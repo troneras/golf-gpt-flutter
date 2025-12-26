@@ -179,12 +179,15 @@ class _TranslationsSettingsEn extends TranslationsSettingsEs {
 
 	// Translations
 	@override String get title => 'Settings';
+	@override late final _TranslationsSettingsSectionsEn sections = _TranslationsSettingsSectionsEn._(_root);
 	@override String get my_bag => 'My bag';
 	@override String get send_feedback => 'Send feedback';
 	@override String get privacy_policy => 'Privacy policy';
 	@override String get support => 'Support';
 	@override String get disconnect => 'Disconnect';
 	@override String get disconnect_confirm => 'Are you sure you want to disconnect?';
+	@override String get delete_account => 'Delete account';
+	@override String get delete_account_confirm => 'This action is permanent and will delete all your data. Are you sure you want to continue?';
 	@override String get theme_mode => 'Light/Dark mode';
 	@override late final _TranslationsSettingsLocationPermissionEn location_permission = _TranslationsSettingsLocationPermissionEn._(_root);
 	@override late final _TranslationsSettingsNotificationPermissionEn notification_permission = _TranslationsSettingsNotificationPermissionEn._(_root);
@@ -584,6 +587,20 @@ class _TranslationsAuthRecoverPasswordEn extends TranslationsAuthRecoverPassword
 	@override String get back_to_signin => 'Go to sign in';
 }
 
+// Path: settings.sections
+class _TranslationsSettingsSectionsEn extends TranslationsSettingsSectionsEs {
+	_TranslationsSettingsSectionsEn._(TranslationsEn root) : this._root = root, super.internal(root);
+
+	final TranslationsEn _root; // ignore: unused_field
+
+	// Translations
+	@override String get permissions => 'Permissions';
+	@override String get preferences => 'Preferences';
+	@override String get golf => 'Golf';
+	@override String get help => 'Help & Support';
+	@override String get account => 'Account';
+}
+
 // Path: settings.location_permission
 class _TranslationsSettingsLocationPermissionEn extends TranslationsSettingsLocationPermissionEs {
 	_TranslationsSettingsLocationPermissionEn._(TranslationsEn root) : this._root = root, super.internal(root);
@@ -591,7 +608,8 @@ class _TranslationsSettingsLocationPermissionEn extends TranslationsSettingsLoca
 	final TranslationsEn _root; // ignore: unused_field
 
 	// Translations
-	@override String get title => 'Location permission';
+	@override String get title => 'Location';
+	@override String get subtitle => 'To measure distances and record shots';
 	@override String get granted => 'Allowed';
 	@override String get denied => 'Denied';
 	@override String get open_settings => 'Open settings';
@@ -605,6 +623,7 @@ class _TranslationsSettingsNotificationPermissionEn extends TranslationsSettings
 
 	// Translations
 	@override String get title => 'Notifications';
+	@override String get subtitle => 'Required for background GPS tracking';
 	@override String get granted => 'Allowed';
 	@override String get open_settings => 'Open settings';
 }
@@ -882,18 +901,27 @@ extension on TranslationsEn {
 			'rounds.detail_title' => 'Round details',
 			'rounds.result' => 'Result',
 			'settings.title' => 'Settings',
+			'settings.sections.permissions' => 'Permissions',
+			'settings.sections.preferences' => 'Preferences',
+			'settings.sections.golf' => 'Golf',
+			'settings.sections.help' => 'Help & Support',
+			'settings.sections.account' => 'Account',
 			'settings.my_bag' => 'My bag',
 			'settings.send_feedback' => 'Send feedback',
 			'settings.privacy_policy' => 'Privacy policy',
 			'settings.support' => 'Support',
 			'settings.disconnect' => 'Disconnect',
 			'settings.disconnect_confirm' => 'Are you sure you want to disconnect?',
+			'settings.delete_account' => 'Delete account',
+			'settings.delete_account_confirm' => 'This action is permanent and will delete all your data. Are you sure you want to continue?',
 			'settings.theme_mode' => 'Light/Dark mode',
-			'settings.location_permission.title' => 'Location permission',
+			'settings.location_permission.title' => 'Location',
+			'settings.location_permission.subtitle' => 'To measure distances and record shots',
 			'settings.location_permission.granted' => 'Allowed',
 			'settings.location_permission.denied' => 'Denied',
 			'settings.location_permission.open_settings' => 'Open settings',
 			'settings.notification_permission.title' => 'Notifications',
+			'settings.notification_permission.subtitle' => 'Required for background GPS tracking',
 			'settings.notification_permission.granted' => 'Allowed',
 			'settings.notification_permission.open_settings' => 'Open settings',
 			'select_course.title' => 'Select the course',

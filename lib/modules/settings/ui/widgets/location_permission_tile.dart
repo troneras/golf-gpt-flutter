@@ -59,13 +59,25 @@ class _LocationPermissionTileState extends State<LocationPermissionTile>
           ),
           const SizedBox(width: 8),
           Expanded(
-            child: Text(
-              tr.title,
-              style: TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.w400,
-                color: colorScheme.onSurface,
-              ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  tr.title,
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w400,
+                    color: colorScheme.onSurface,
+                  ),
+                ),
+                Text(
+                  tr.subtitle,
+                  style: TextStyle(
+                    fontSize: 12,
+                    color: colorScheme.onSurface.withValues(alpha: 0.6),
+                  ),
+                ),
+              ],
             ),
           ),
           if (_status == null)

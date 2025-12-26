@@ -142,21 +142,32 @@
     },
     "settings": {
         "title": "Settings",
+        "sections": {
+            "permissions": "Permissions",
+            "preferences": "Preferences",
+            "golf": "Golf",
+            "help": "Help & Support",
+            "account": "Account"
+        },
         "my_bag": "My bag",
         "send_feedback": "Send feedback",
         "privacy_policy": "Privacy policy",
         "support": "Support",
         "disconnect": "Disconnect",
         "disconnect_confirm": "Are you sure you want to disconnect?",
+        "delete_account": "Delete account",
+        "delete_account_confirm": "This action is permanent and will delete all your data. Are you sure you want to continue?",
         "theme_mode": "Light/Dark mode",
         "location_permission": {
-            "title": "Location permission",
+            "title": "Location",
+            "subtitle": "To measure distances and record shots",
             "granted": "Allowed",
             "denied": "Denied",
             "open_settings": "Open settings"
         },
         "notification_permission": {
             "title": "Notifications",
+            "subtitle": "Required for background GPS tracking",
             "granted": "Allowed",
             "open_settings": "Open settings"
         }
