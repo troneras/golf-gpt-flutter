@@ -1,15 +1,17 @@
+import 'package:apparence_kit/core/data/api/analytics_api.dart';
 import 'package:apparence_kit/i18n/translations.g.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:permission_handler/permission_handler.dart';
 
-class LocationPermissionTile extends StatefulWidget {
+class LocationPermissionTile extends ConsumerStatefulWidget {
   const LocationPermissionTile({super.key});
 
   @override
-  State<LocationPermissionTile> createState() => _LocationPermissionTileState();
+  ConsumerState<LocationPermissionTile> createState() => _LocationPermissionTileState();
 }
 
-class _LocationPermissionTileState extends State<LocationPermissionTile>
+class _LocationPermissionTileState extends ConsumerState<LocationPermissionTile>
     with WidgetsBindingObserver {
   PermissionStatus? _status;
 
@@ -34,8 +36,18 @@ class _LocationPermissionTileState extends State<LocationPermissionTile>
   }
 
   Future<void> _checkPermission() async {
+    final previousStatus = _status;
     final status = await Permission.locationWhenInUse.status;
     if (mounted) {
+      // Track if permission was just granted (changed from denied to granted)
+      if (previousStatus != null &&
+          !previousStatus.isGranted &&
+          status.isGranted) {
+        ref.read(analyticsApiProvider).logEvent('permission_granted', {
+          'permission_type': 'location',
+          'context': 'settings',
+        });
+      }
       setState(() {
         _status = status;
       });

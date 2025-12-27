@@ -335,6 +335,7 @@ class _OnboardingLocationPermissionStepState
     }
 
     await analytics.logEvent('onboarding_completed', {});
+    await analytics.setUserProperties({'onboarded': true});
 
     if (context.mounted) {
       Navigator.of(context).pushReplacementNamed(widget.nextRoute);
@@ -350,6 +351,7 @@ class _OnboardingLocationPermissionStepState
       'permission_type': 'location',
     });
     analytics.logEvent('onboarding_completed', {});
+    analytics.setUserProperties({'onboarded': true});
     Navigator.of(context).pushReplacementNamed(widget.nextRoute);
   }
 

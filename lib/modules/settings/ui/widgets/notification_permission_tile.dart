@@ -1,20 +1,22 @@
 import 'dart:io';
 
+import 'package:apparence_kit/core/data/api/analytics_api.dart';
 import 'package:apparence_kit/i18n/translations.g.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 /// Shows notification permission status (Android only).
 /// On iOS, this widget returns an empty SizedBox.
-class NotificationPermissionTile extends StatefulWidget {
+class NotificationPermissionTile extends ConsumerStatefulWidget {
   const NotificationPermissionTile({super.key});
 
   @override
-  State<NotificationPermissionTile> createState() =>
+  ConsumerState<NotificationPermissionTile> createState() =>
       _NotificationPermissionTileState();
 }
 
-class _NotificationPermissionTileState extends State<NotificationPermissionTile>
+class _NotificationPermissionTileState extends ConsumerState<NotificationPermissionTile>
     with WidgetsBindingObserver {
   PermissionStatus? _status;
 
@@ -40,8 +42,18 @@ class _NotificationPermissionTileState extends State<NotificationPermissionTile>
 
   Future<void> _checkPermission() async {
     if (!Platform.isAndroid) return;
+    final previousStatus = _status;
     final status = await Permission.notification.status;
     if (mounted) {
+      // Track if permission was just granted (changed from denied to granted)
+      if (previousStatus != null &&
+          !previousStatus.isGranted &&
+          status.isGranted) {
+        ref.read(analyticsApiProvider).logEvent('permission_granted', {
+          'permission_type': 'notification',
+          'context': 'settings',
+        });
+      }
       setState(() {
         _status = status;
       });

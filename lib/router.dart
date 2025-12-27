@@ -1,5 +1,4 @@
 import 'package:apparence_kit/core/bottom_menu/bottom_menu.dart';
-import 'package:apparence_kit/core/data/api/analytics_api.dart';
 import 'package:apparence_kit/core/guards/authenticated_guard.dart';
 import 'package:apparence_kit/core/guards/user_info_guard.dart';
 import 'package:apparence_kit/core/widgets/page_not_found.dart';
@@ -55,10 +54,6 @@ GoRouter generateRouter({
     navigatorKey: navigatorKey,
     errorBuilder: (context, state) => const PageNotFound(),
     observers: [
-      AnalyticsObserver(
-        analyticsApi: MixpanelAnalyticsApi.instance(),
-      ),
-      
       ...?observers,
     ],
     routes: [

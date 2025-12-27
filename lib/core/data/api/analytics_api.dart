@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:apparence_kit/core/data/models/user.dart';
 import 'package:apparence_kit/core/initializer/onstart_service.dart';
 import 'package:apparence_kit/environnements.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mixpanel_flutter/mixpanel_flutter.dart';
 import 'package:package_info_plus/package_info_plus.dart';
@@ -76,11 +76,19 @@ class MixpanelAnalyticsApi implements AnalyticsApi {
       _appVersion = packageInfo.version;
       _platform = Platform.isIOS ? 'ios' : 'android';
 
-      await registerSuperProperties({
+      final properties = <String, dynamic>{
         'platform': _platform,
         'app_version': _appVersion,
         'environment': environment.name,
-      });
+      };
+
+      // Add debug session ID to identify debug sessions in Mixpanel
+      if (kDebugMode) {
+        final sessionId = DateTime.now().millisecondsSinceEpoch % 10000;
+        properties['debug_session'] = 'debug-$_platform-$sessionId';
+      }
+
+      await registerSuperProperties(properties);
     } catch (e) {
       debugPrint('Error setting super properties: $e');
     }
@@ -88,13 +96,27 @@ class MixpanelAnalyticsApi implements AnalyticsApi {
 
   @override
   Future<void> logEvent(String name, Map<String, dynamic> params) async {
-    mixpanel?.track(name, properties: params);
+    final properties = {
+      'source': 'app',
+      ...params,
+    };
+    if (kDebugMode) {
+      debugPrint('📊 [Analytics] Event: $name $properties');
+    }
+    mixpanel?.track(name, properties: properties);
   }
 
   @override
   Future<void> logSignout() async {
-    mixpanel?.track('logout');
-    mixpanel?.reset();
+    if (kDebugMode) {
+      debugPrint('📊 [Analytics] Event: logout');
+    }
+    mixpanel?.track('logout', properties: {'source': 'app'});
+    await mixpanel?.flush();
+    await mixpanel?.reset();
+    if (kDebugMode) {
+      debugPrint('📊 [Analytics] Reset completed');
+    }
   }
 
   @override
@@ -102,6 +124,9 @@ class MixpanelAnalyticsApi implements AnalyticsApi {
     final userId = user.idOrNull;
     if (userId == null) return;
 
+    if (kDebugMode) {
+      debugPrint('📊 [Analytics] Identify: $userId');
+    }
     mixpanel?.identify(userId);
 
     // Set user properties
@@ -125,13 +150,19 @@ class MixpanelAnalyticsApi implements AnalyticsApi {
 
       await setUserProperties(properties);
 
-      // Update super property for gpt_connected
-      await setSuperProperty('gpt_connected', user.hasCompletedGptOauth);
+      // Register super properties for troubleshooting (recommended by Mixpanel)
+      await registerSuperProperties({
+        'user_id': userId,
+        'gpt_connected': user.hasCompletedGptOauth,
+      });
     }
   }
 
   @override
   Future<void> setUserProperties(Map<String, dynamic> properties) async {
+    if (kDebugMode) {
+      debugPrint('📊 [Analytics] Set user properties: $properties');
+    }
     for (final entry in properties.entries) {
       mixpanel?.getPeople().set(entry.key, entry.value);
     }
@@ -151,47 +182,4 @@ class MixpanelAnalyticsApi implements AnalyticsApi {
   Future<void> setSuperProperty(String key, dynamic value) async {
     mixpanel?.registerSuperProperties({key: value});
   }
-}
-
-class AnalyticsObserver extends RouteObserver<ModalRoute<dynamic>> {
-  final AnalyticsApi analyticsApi;
-  final String? prefix;
-
-  AnalyticsObserver({
-    required this.analyticsApi,
-    this.prefix,
-  });
-
-  @override
-  void didPush(Route<dynamic> route, Route<dynamic>? previousRoute) {
-    if (route.settings.name != null && prefix != null) {
-      analyticsApi.logEvent('$prefix${route.settings.name}', {});
-    } else if (route.settings.name != null && prefix == null) {
-      analyticsApi.logEvent('${route.settings.name}', {});
-    }
-  }
-
-  @override
-  void didReplace({Route<dynamic>? newRoute, Route<dynamic>? oldRoute}) {
-    if (newRoute?.settings.name != null && prefix != null) {
-      analyticsApi.logEvent('$prefix${newRoute!.settings.name!}', {});
-    } else if (newRoute?.settings.name != null && prefix == null) {
-      analyticsApi.logEvent(newRoute!.settings.name!, {});
-    }
-  }
-
-  @override
-  void didPop(Route<dynamic> route, Route<dynamic>? previousRoute) {}
-
-  @override
-  void didRemove(Route<dynamic> route, Route<dynamic>? previousRoute) {}
-
-  @override
-  void didStartUserGesture(
-    Route<dynamic> route,
-    Route<dynamic>? previousRoute,
-  ) {}
-
-  @override
-  void didStopUserGesture() {}
 }

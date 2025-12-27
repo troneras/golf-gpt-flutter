@@ -1,4 +1,3 @@
-import 'package:apparence_kit/core/data/api/analytics_api.dart';
 import 'package:apparence_kit/modules/voice_caddy/ui/animations/vc_page_transition.dart';
 import 'package:apparence_kit/modules/voice_caddy/ui/components/vc_connect_step.dart';
 import 'package:apparence_kit/modules/voice_caddy/ui/components/vc_how_it_works_step.dart';
@@ -23,12 +22,6 @@ class VoiceCaddyFlowPage extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return Navigator(
       initialRoute: 'intro',
-      observers: [
-        AnalyticsObserver(
-          prefix: 'voiceCaddySetup/',
-          analyticsApi: MixpanelAnalyticsApi.instance(),
-        ),
-      ],
       onGenerateRoute: (settings) => switch (settings.name) {
         'intro' => VoiceCaddyRouteTransition(
             builder: (context) => VcIntroStep(

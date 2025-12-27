@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:apparence_kit/core/data/api/analytics_api.dart';
 import 'package:apparence_kit/modules/gps/services/gps_tracking_service.dart';
 import 'package:apparence_kit/modules/notifications/api/local_notifier.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -52,7 +53,19 @@ class GpsTrackingNotifier extends _$GpsTrackingNotifier {
   Future<void> startTracking() async {
     // On Android, request notification permission for foreground service notification
     if (Platform.isAndroid) {
-      await ref.read(notificationsSettingsProvider).askPermission();
+      final granted = await ref.read(notificationsSettingsProvider).askPermission();
+      final analytics = ref.read(analyticsApiProvider);
+      if (granted) {
+        analytics.logEvent('permission_granted', {
+          'permission_type': 'notification',
+          'context': 'gps_tracking',
+        });
+      } else {
+        analytics.logEvent('permission_denied', {
+          'permission_type': 'notification',
+          'context': 'gps_tracking',
+        });
+      }
     }
     await _service.start();
   }

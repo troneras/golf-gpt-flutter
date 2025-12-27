@@ -1,3 +1,4 @@
+import 'package:apparence_kit/core/data/api/analytics_api.dart';
 import 'package:apparence_kit/core/theme/extensions/theme_extension.dart';
 import 'package:apparence_kit/i18n/translations.g.dart';
 import 'package:apparence_kit/modules/round/domain/round.dart';
@@ -78,8 +79,16 @@ class _HomePageState extends ConsumerState<HomePage> with WidgetsBindingObserver
       }
       final newStatus = await Permission.locationWhenInUse.request();
       if (newStatus.isGranted) {
+        ref.read(analyticsApiProvider).logEvent('permission_granted', {
+          'permission_type': 'location',
+          'context': 'start_round',
+        });
         _startRound();
       } else if (mounted) {
+        ref.read(analyticsApiProvider).logEvent('permission_denied', {
+          'permission_type': 'location',
+          'context': 'start_round',
+        });
         _showLocationRequiredDialog();
       }
     } finally {

@@ -1,4 +1,3 @@
-import 'package:apparence_kit/core/data/api/analytics_api.dart';
 import 'package:apparence_kit/modules/onboarding/ui/animations/page_transitions.dart';
 import 'package:apparence_kit/modules/onboarding/ui/components/onboarding_steps.dart';
 import 'package:flutter/material.dart';
@@ -12,12 +11,6 @@ class OnboardingPage extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return Navigator(
       initialRoute: 'welcome',
-      observers: [
-        AnalyticsObserver(
-          prefix: 'userOnboarding/',
-          analyticsApi: MixpanelAnalyticsApi.instance(),
-        ),
-      ],
       onGenerateRoute: (settings) => switch (settings.name) {
         'welcome' => OnboardingRouteTransition(
             builder: (context) => const OnboardingWelcomeStep(
