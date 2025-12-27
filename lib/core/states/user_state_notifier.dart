@@ -122,9 +122,12 @@ class UserStateNotifier extends _$UserStateNotifier implements OnStartService {
       await _deviceRepository.unregister(userId);
       await _userRepository.delete();
       await _authenticationRepository.logout();
+      await _analyticsApi.logEvent('account_deleted', {});
+      await _analyticsApi.logSignout();
     } catch (e) {
       _logger.e(e);
     }
+    _clearSentryUser();
     state = const UserState(
       user: User.unauthenticated(),
     );
