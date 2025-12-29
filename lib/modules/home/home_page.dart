@@ -405,7 +405,7 @@ class _HomePageState extends ConsumerState<HomePage> with WidgetsBindingObserver
   }
 }
 
-class _StartRoundButton extends StatelessWidget {
+class _StartRoundButton extends StatefulWidget {
   final VoidCallback? onPressed;
   final bool isLoading;
   final String label;
@@ -417,99 +417,139 @@ class _StartRoundButton extends StatelessWidget {
   });
 
   @override
+  State<_StartRoundButton> createState() => _StartRoundButtonState();
+}
+
+class _StartRoundButtonState extends State<_StartRoundButton>
+    with SingleTickerProviderStateMixin {
+  late AnimationController _controller;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = AnimationController(
+      duration: const Duration(seconds: 3),
+      vsync: this,
+    )..repeat();
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     final colors = context.colors;
     const borderRadius = 14.0;
     const glowColor = Color(0xFF5AA9FF); // Cyan/blue glow
+    const greenGlow = Color(0xFF6BCF9B); // Green accent
 
-    // Centered, not full width
     return Center(
-      child: Container(
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(borderRadius + 2),
-          // Outer glow effect
-          boxShadow: [
-            // Main glow
-            BoxShadow(
-              color: glowColor.withValues(alpha: 0.6),
-              blurRadius: 20,
-              spreadRadius: 0,
+      child: AnimatedBuilder(
+        animation: _controller,
+        builder: (context, child) {
+          // Calculate rotating angle for shimmer effect
+          final angle = _controller.value * 2 * 3.14159;
+
+          return Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(borderRadius + 4),
+              // Animated outer glow
+              boxShadow: [
+                // Pulsing main glow
+                BoxShadow(
+                  color: Color.lerp(
+                    glowColor.withValues(alpha: 0.5),
+                    greenGlow.withValues(alpha: 0.5),
+                    (1 + _controller.value) / 2,
+                  )!,
+                  blurRadius: 24 + (8 * _controller.value),
+                  spreadRadius: 0,
+                ),
+                // Secondary glow
+                BoxShadow(
+                  color: glowColor.withValues(alpha: 0.3),
+                  blurRadius: 12,
+                  spreadRadius: 2,
+                ),
+              ],
             ),
-            // Inner intense glow
-            BoxShadow(
-              color: glowColor.withValues(alpha: 0.4),
-              blurRadius: 8,
-              spreadRadius: 1,
+            child: Container(
+              padding: const EdgeInsets.all(2),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(borderRadius + 2),
+                // Animated rotating gradient border
+                gradient: SweepGradient(
+                  center: Alignment.center,
+                  startAngle: angle,
+                  endAngle: angle + 6.28,
+                  colors: [
+                    glowColor.withValues(alpha: 0.9),
+                    greenGlow.withValues(alpha: 0.7),
+                    glowColor.withValues(alpha: 0.4),
+                    greenGlow.withValues(alpha: 0.7),
+                    glowColor.withValues(alpha: 0.9),
+                  ],
+                  stops: const [0.0, 0.25, 0.5, 0.75, 1.0],
+                ),
+              ),
+              child: child,
             ),
-          ],
-        ),
+          );
+        },
         child: Container(
-          padding: const EdgeInsets.all(2), // Border width
+          height: 52,
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(borderRadius + 2),
-            // Glowing border gradient
+            borderRadius: BorderRadius.circular(borderRadius),
+            // Inner button gradient (blue → green)
             gradient: LinearGradient(
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
+              begin: Alignment.centerLeft,
+              end: Alignment.centerRight,
               colors: [
-                glowColor.withValues(alpha: 0.8),
-                colors.ctaGradientEnd.withValues(alpha: 0.6),
-                glowColor.withValues(alpha: 0.8),
+                colors.ctaGradientStart,
+                colors.ctaGradientEnd,
               ],
             ),
           ),
-          child: Container(
-            height: 52,
-            decoration: BoxDecoration(
+          child: Material(
+            color: Colors.transparent,
+            child: InkWell(
+              onTap: widget.onPressed,
               borderRadius: BorderRadius.circular(borderRadius),
-              // Inner button gradient (blue → green)
-              gradient: LinearGradient(
-                begin: Alignment.centerLeft,
-                end: Alignment.centerRight,
-                colors: [
-                  colors.ctaGradientStart,
-                  colors.ctaGradientEnd,
-                ],
-              ),
-            ),
-            child: Material(
-              color: Colors.transparent,
-              child: InkWell(
-                onTap: onPressed,
-                borderRadius: BorderRadius.circular(borderRadius),
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 32),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      if (isLoading)
-                        const SizedBox(
-                          width: 24,
-                          height: 24,
-                          child: CircularProgressIndicator(
-                            strokeWidth: 2,
-                            color: Colors.white,
-                          ),
-                        )
-                      else ...[
-                        const Icon(
-                          Icons.play_arrow_rounded,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 32),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    if (widget.isLoading)
+                      const SizedBox(
+                        width: 24,
+                        height: 24,
+                        child: CircularProgressIndicator(
+                          strokeWidth: 2,
                           color: Colors.white,
-                          size: 26,
                         ),
-                        const SizedBox(width: 8),
-                        Text(
-                          label,
-                          style: context.textTheme.labelLarge?.copyWith(
-                            color: Colors.white,
-                            fontWeight: FontWeight.w600,
-                            letterSpacing: 0.5,
-                          ),
+                      )
+                    else ...[
+                      const Icon(
+                        Icons.play_arrow_rounded,
+                        color: Colors.white,
+                        size: 26,
+                      ),
+                      const SizedBox(width: 8),
+                      Text(
+                        widget.label,
+                        style: context.textTheme.labelLarge?.copyWith(
+                          color: Colors.white,
+                          fontWeight: FontWeight.w600,
+                          letterSpacing: 0.5,
                         ),
-                      ],
+                      ),
                     ],
-                  ),
+                  ],
                 ),
               ),
             ),
