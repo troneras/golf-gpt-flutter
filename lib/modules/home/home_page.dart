@@ -4,7 +4,6 @@ import 'package:apparence_kit/i18n/translations.g.dart';
 import 'package:apparence_kit/modules/round/domain/round.dart';
 import 'package:apparence_kit/modules/round/providers/active_round_check_provider.dart';
 import 'package:apparence_kit/modules/round/providers/active_round_notifier.dart';
-import 'package:apparence_kit/modules/voice_caddy/ui/widgets/voice_caddy_prompt_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -356,81 +355,49 @@ class _HomePageState extends ConsumerState<HomePage> with WidgetsBindingObserver
         ),
         // Main content
         SafeArea(
-          child: Column(
-            children: [
-              // Header section with mascot
-              Padding(
-                padding: const EdgeInsets.fromLTRB(24, 16, 24, 0),
-                child: Column(
-                  children: [
-                    Image.asset(
-                      'assets/images/foreground.png',
-                      height: 180,
-                    ),
-                    const SizedBox(height: 8),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          tr.title,
-                          style: context.textTheme.headlineSmall?.copyWith(
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
-                        const SizedBox(width: 6),
-                        Text(
-                          tr.title_ready,
-                          style: context.textTheme.headlineSmall?.copyWith(
-                            fontWeight: FontWeight.w600,
-                            color: context.colors.primary,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-              const SizedBox(height: 24),
-              // Content section
-              Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 24),
-                  child: Column(
-                    children: [
-                      // Voice Caddy Connection Card
-                      const VoiceCaddyPromptCard(),
-                      const SizedBox(height: 16),
-                      // Start Round Button
-                      _StartRoundButton(
-                        onPressed: _isCheckingPermission ? null : _handleStartRound,
-                        isLoading: _isCheckingPermission,
-                        label: tr.start_round.toUpperCase(),
-                      ),
-                      const SizedBox(height: 12),
-                      // GPS hint
-                      Text(
-                        tr.gps_hint,
-                        textAlign: TextAlign.center,
-                        style: context.textTheme.bodyMedium?.copyWith(
-                          color: context.colors.onBackground.withValues(alpha: 0.6),
-                        ),
-                      ),
-                      const SizedBox(height: 24),
-                      // Voice commands section
-                      _VoiceCommandsSection(
-                        title: tr.say_things_like,
-                        examples: [
-                          tr.example_1,
-                          tr.example_2,
-                          tr.example_3,
-                        ],
-                      ),
-                      const SizedBox(height: 24),
-                    ],
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 24),
+            child: Column(
+              children: [
+                const SizedBox(height: 24),
+                // Header - TalkCaddy title
+                Text(
+                  tr.title,
+                  style: context.textTheme.displayLarge?.copyWith(
+                    color: context.colors.onBackground,
+                    fontWeight: FontWeight.w600,
                   ),
                 ),
-              ),
-            ],
+                const SizedBox(height: 4),
+                // Subtitle - Voice Caddie
+                Text(
+                  'Voice Caddie',
+                  style: context.textTheme.bodyLarge?.copyWith(
+                    color: context.colors.textSecondary,
+                  ),
+                ),
+                const Spacer(),
+                // Start Round Button
+                _StartRoundButton(
+                  onPressed: _isCheckingPermission ? null : _handleStartRound,
+                  isLoading: _isCheckingPermission,
+                  label: tr.start_round.toUpperCase(),
+                ),
+                const SizedBox(height: 12),
+                // Subtitle below button
+                Text(
+                  'Juega solo con la voz',
+                  textAlign: TextAlign.center,
+                  style: context.textTheme.bodyMedium?.copyWith(
+                    color: context.colors.textSecondary,
+                  ),
+                ),
+                const SizedBox(height: 32),
+                // AI Suggestion card
+                const _SuggestionCard(),
+                const SizedBox(height: 24),
+              ],
+            ),
           ),
         ),
       ],
@@ -518,19 +485,15 @@ class _StartRoundButton extends StatelessWidget {
   }
 }
 
-class _VoiceCommandsSection extends StatelessWidget {
-  final String title;
-  final List<String> examples;
-
-  const _VoiceCommandsSection({
-    required this.title,
-    required this.examples,
-  });
+/// AI Suggestion card with glass effect
+class _SuggestionCard extends StatelessWidget {
+  const _SuggestionCard();
 
   @override
   Widget build(BuildContext context) {
     final colors = context.colors;
     return Container(
+      width: double.infinity,
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
         // Glass effect from design system
@@ -544,46 +507,31 @@ class _VoiceCommandsSection extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Row(
-            children: [
-              Icon(
-                Icons.chat_bubble_outline_rounded,
-                size: 20,
+          // Label
+          Text(
+            'Sugerencia:',
+            style: context.textTheme.bodySmall?.copyWith(
+              color: colors.textTertiary,
+            ),
+          ),
+          const SizedBox(height: 8),
+          // Suggestion text with highlighted part
+          RichText(
+            text: TextSpan(
+              style: context.textTheme.bodyLarge?.copyWith(
                 color: colors.textSecondary,
               ),
-              const SizedBox(width: 8),
-              Text(
-                title,
-                style: context.textTheme.bodyMedium?.copyWith(
-                  color: colors.textSecondary,
-                  fontWeight: FontWeight.w500,
+              children: [
+                const TextSpan(text: 'Pregunta, '),
+                TextSpan(
+                  text: '"¿A qué distancia está el green?"',
+                  style: TextStyle(
+                    color: colors.primary,
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
-          const SizedBox(height: 12),
-          ...examples.map((example) => Padding(
-                padding: const EdgeInsets.only(bottom: 8),
-                child: Row(
-                  children: [
-                    Container(
-                      width: 4,
-                      height: 4,
-                      decoration: BoxDecoration(
-                        color: colors.primary,
-                        shape: BoxShape.circle,
-                      ),
-                    ),
-                    const SizedBox(width: 12),
-                    Text(
-                      example,
-                      style: context.textTheme.bodyMedium?.copyWith(
-                        color: colors.onBackground,
-                      ),
-                    ),
-                  ],
-                ),
-              )),
         ],
       ),
     );
