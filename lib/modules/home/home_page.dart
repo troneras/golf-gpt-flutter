@@ -1,6 +1,7 @@
 import 'package:apparence_kit/core/data/api/analytics_api.dart';
 import 'package:apparence_kit/core/theme/extensions/theme_extension.dart';
 import 'package:apparence_kit/core/widgets/glow_button.dart';
+import 'package:apparence_kit/core/widgets/suggestion_card.dart';
 import 'package:apparence_kit/i18n/translations.g.dart';
 import 'package:apparence_kit/modules/round/domain/round.dart';
 import 'package:apparence_kit/modules/round/providers/active_round_check_provider.dart';
@@ -395,64 +396,14 @@ class _HomePageState extends ConsumerState<HomePage> with WidgetsBindingObserver
                   ),
                 ),
                 const SizedBox(height: 24),
-                // AI Suggestion card
-                const _SuggestionCard(),
+                // AI Suggestion card with rotating suggestions
+                const SuggestionCard(),
                 const Spacer(),
               ],
             ),
           ),
         ),
       ],
-    );
-  }
-}
-
-/// AI Suggestion card with glass effect
-class _SuggestionCard extends StatelessWidget {
-  const _SuggestionCard();
-
-  @override
-  Widget build(BuildContext context) {
-    final colors = context.colors;
-    return Container(
-      width: double.infinity,
-      padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        // Glass effect from design system
-        color: colors.glassBg,
-        borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: colors.glassBorder),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          // Label
-          Text(
-            'Sugerencia:',
-            style: context.textTheme.bodySmall?.copyWith(
-              color: colors.textTertiary,
-            ),
-          ),
-          const SizedBox(height: 8),
-          // Suggestion text with highlighted part
-          RichText(
-            text: TextSpan(
-              style: context.textTheme.bodyLarge?.copyWith(
-                color: colors.textSecondary,
-              ),
-              children: [
-                const TextSpan(text: 'Pregunta, '),
-                TextSpan(
-                  text: '"¿A qué distancia está el green?"',
-                  style: TextStyle(
-                    color: colors.primary,
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
     );
   }
 }
