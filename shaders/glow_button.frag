@@ -75,20 +75,23 @@ void main() {
     vec3 cyanDeep = vec3(0.0, 0.4, 0.6);
     vec3 white = vec3(1.0);
 
-    // Smooth breathing
+    // Smooth breathing (with bright peak)
     float breathe = sin(uTime * 1.2) * 0.5 + 0.5;
+    float breatheBright = pow(breathe, 0.5); // Brighter peaks
     float gentlePulse = sin(uTime * 3.0) * 0.5 + 0.5;
 
     vec3 color = vec3(0.0);
     float alpha = 0.0;
 
-    // === OUTER GLOW (soft, elegant) ===
+    // === OUTER GLOW (soft, elegant, with bright peaks) ===
     if (dist > 0.0) {
         float glow = exp(-dist * 0.05);
-        float glowIntensity = glow * (0.5 + breathe * 0.25);
+        float glowIntensity = glow * (0.6 + breatheBright * 0.5);
 
-        color = cyanMid * glowIntensity;
-        alpha = glowIntensity * 0.5;
+        // Add white during bright peaks
+        vec3 glowColor = mix(cyanMid, white, breatheBright * 0.4);
+        color = glowColor * glowIntensity;
+        alpha = glowIntensity * 0.6;
 
         // Fade at canvas edge
         alpha *= smoothstep(maxGlowDist, 0.0, dist);
@@ -113,16 +116,18 @@ void main() {
 
         // Inner glow from border (the "energy" feel)
         float innerGlow = exp(-innerDist * 0.07);
-        float glowStrength = innerGlow * (0.4 + breathe * 0.2);
+        float glowStrength = innerGlow * (0.5 + breatheBright * 0.5);
 
         // Combine
         color = glassColor;
         color += cyanDeep * smoke * 0.5;
         color += cyanBright * pts * 0.5;
-        color += cyanMid * glowStrength;
+        // Add white to inner glow during bright peaks
+        vec3 innerGlowColor = mix(cyanMid, white, breatheBright * 0.5);
+        color += innerGlowColor * glowStrength;
 
         alpha = glassAlpha;
-        alpha += innerGlow * 0.15;
+        alpha += innerGlow * 0.2;
     }
 
     // === NEON BORDER (refined, white-hot core) ===
@@ -149,12 +154,15 @@ void main() {
         // Build neon color
         vec3 neonColor = cyanMid * outerGlow;
         neonColor = mix(neonColor, cyanBright, neonLine);
-        neonColor = mix(neonColor, white, hotCore * 0.85);
+        neonColor = mix(neonColor, white, hotCore * 0.9);
         neonColor += cyanBright * flow;
         neonColor += white * sparkle;
 
-        // Gentle pulse
-        neonColor *= (0.9 + gentlePulse * 0.1);
+        // Bright pulse - goes whiter at peaks
+        float brightPulse = 0.85 + breatheBright * 0.4;
+        neonColor *= brightPulse;
+        // Extra white bloom during peaks
+        neonColor = mix(neonColor, white * 1.2, breatheBright * hotCore * 0.5);
 
         float neonAlpha = max(outerGlow, neonLine);
         neonAlpha = max(neonAlpha, hotCore);
