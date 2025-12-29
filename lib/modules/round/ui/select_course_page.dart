@@ -213,7 +213,8 @@ class SelectCoursePage extends ConsumerWidget {
 }
 
 /// Shows a dialog when notification permission is denied on Android.
-/// Returns true if user wants to enable GPS anyway, false otherwise.
+/// If user clicks continue, requests the actual system permission and waits for result.
+/// Returns true if user clicked "continue" (regardless of permission outcome).
 Future<bool> _showNotificationPermissionDialog(BuildContext context) async {
   final tr = Translations.of(context).select_course;
 
@@ -242,8 +243,12 @@ Future<bool> _showNotificationPermissionDialog(BuildContext context) async {
   if (result == 'settings') {
     await openAppSettings();
     return false;
+  } else if (result == 'continue') {
+    // Request the actual system notification permission and wait for user decision
+    await Permission.notification.request();
+    return true;
   }
-  return result == 'continue';
+  return false;
 }
 
 /// Shows a confirmation dialog when enabling GPS for a course far from user's location.
