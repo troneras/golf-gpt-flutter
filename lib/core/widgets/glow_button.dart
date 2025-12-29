@@ -82,57 +82,63 @@ class _GlowButtonState extends State<GlowButton>
     const glowPaddingV = 20.0;
     const glowPaddingH = 4.0;
 
+    final totalHeight = widget.height + glowPaddingV * 2;
+
     return GestureDetector(
       onTap: widget.isLoading ? null : widget.onPressed,
-      child: AnimatedBuilder(
-        animation: _controller,
-        builder: (context, child) {
-          return CustomPaint(
-            painter: _GlowButtonPainter(
-              shader: _shader,
-              time: _controller.value * 20,
-              glowPaddingH: glowPaddingH,
-              glowPaddingV: glowPaddingV,
+      child: SizedBox(
+        width: double.infinity,
+        height: totalHeight,
+        child: AnimatedBuilder(
+          animation: _controller,
+          builder: (context, child) {
+            return CustomPaint(
+              painter: _GlowButtonPainter(
+                shader: _shader,
+                time: _controller.value * 20,
+                glowPaddingH: glowPaddingH,
+                glowPaddingV: glowPaddingV,
+              ),
+              child: child,
+            );
+          },
+          child: Padding(
+            padding: const EdgeInsets.symmetric(
+              horizontal: glowPaddingH,
+              vertical: glowPaddingV,
             ),
-            child: child,
-          );
-        },
-        child: Padding(
-          padding: const EdgeInsets.symmetric(
-            horizontal: glowPaddingH,
-            vertical: glowPaddingV,
-          ),
-          child: SizedBox(
-            width: double.infinity,
-            height: widget.height,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                if (widget.isLoading)
-                  const SizedBox(
-                    width: 24,
-                    height: 24,
-                    child: CircularProgressIndicator(
-                      strokeWidth: 2,
-                      color: Colors.white,
+            child: SizedBox(
+              width: double.infinity,
+              height: widget.height,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  if (widget.isLoading)
+                    const SizedBox(
+                      width: 24,
+                      height: 24,
+                      child: CircularProgressIndicator(
+                        strokeWidth: 2,
+                        color: Colors.white,
+                      ),
+                    )
+                  else ...[
+                    if (widget.icon != null) ...[
+                      Icon(widget.icon, color: Colors.white, size: 28),
+                      const SizedBox(width: 8),
+                    ],
+                    Text(
+                      widget.text,
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 17,
+                        fontWeight: FontWeight.w600,
+                        letterSpacing: 0.5,
+                      ),
                     ),
-                  )
-                else ...[
-                  if (widget.icon != null) ...[
-                    Icon(widget.icon, color: Colors.white, size: 28),
-                    const SizedBox(width: 8),
                   ],
-                  Text(
-                    widget.text,
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontSize: 17,
-                      fontWeight: FontWeight.w600,
-                      letterSpacing: 0.5,
-                    ),
-                  ),
                 ],
-              ],
+              ),
             ),
           ),
         ),

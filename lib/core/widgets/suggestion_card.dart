@@ -158,47 +158,74 @@ class _SuggestionCardState extends State<SuggestionCard> {
 
     return Container(
       width: double.infinity,
-      padding: const EdgeInsets.fromLTRB(16, 16, 16, 12),
       decoration: BoxDecoration(
         color: colors.glassBg,
         borderRadius: BorderRadius.circular(16),
         border: Border.all(color: colors.glassBorder),
       ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          // Header row with label and dots
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                'Sugerencia:',
-                style: context.textTheme.bodySmall?.copyWith(
-                  color: colors.textTertiary,
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(15),
+        child: Stack(
+          children: [
+            // Inset shadow effect - top and left darker
+            Positioned.fill(
+              child: DecoratedBox(
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                    colors: [
+                      Colors.black.withValues(alpha: 0.3),
+                      Colors.black.withValues(alpha: 0.1),
+                      Colors.transparent,
+                    ],
+                    stops: const [0.0, 0.3, 0.6],
+                  ),
                 ),
               ),
-              // Pagination dots
-              _PaginationDots(
-                count: widget.suggestions.length,
-                currentIndex: _currentIndex,
+            ),
+            // Content
+            Padding(
+              padding: const EdgeInsets.fromLTRB(16, 16, 16, 12),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  // Header row with label and dots
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        'Sugerencia:',
+                        style: context.textTheme.bodySmall?.copyWith(
+                          color: colors.textTertiary,
+                        ),
+                      ),
+                      // Pagination dots
+                      _PaginationDots(
+                        count: widget.suggestions.length,
+                        currentIndex: _currentIndex,
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 10),
+                  // Typewriter suggestion text with voice waveform
+                  _TypewriterText(
+                    suggestion: suggestion,
+                    visibleCharacters: _visibleCharacters,
+                    isTyping: _isTyping,
+                    isErasing: _isErasing,
+                  ),
+                  const SizedBox(height: 2),
+                  // Reflection
+                  _ReflectionText(
+                    suggestion: suggestion,
+                    visibleCharacters: _visibleCharacters,
+                  ),
+                ],
               ),
-            ],
-          ),
-          const SizedBox(height: 10),
-          // Typewriter suggestion text with voice waveform
-          _TypewriterText(
-            suggestion: suggestion,
-            visibleCharacters: _visibleCharacters,
-            isTyping: _isTyping,
-            isErasing: _isErasing,
-          ),
-          const SizedBox(height: 2),
-          // Reflection
-          _ReflectionText(
-            suggestion: suggestion,
-            visibleCharacters: _visibleCharacters,
-          ),
-        ],
+            ),
+          ],
+        ),
       ),
     );
   }
