@@ -785,9 +785,7 @@ class TranslationsVoiceCaddyEs {
 	final Translations _root; // ignore: unused_field
 
 	// Translations
-	late final TranslationsVoiceCaddyIntroEs intro = TranslationsVoiceCaddyIntroEs.internal(_root);
 	late final TranslationsVoiceCaddyPrerequisitesEs prerequisites = TranslationsVoiceCaddyPrerequisitesEs.internal(_root);
-	late final TranslationsVoiceCaddyHowItWorksEs how_it_works = TranslationsVoiceCaddyHowItWorksEs.internal(_root);
 	late final TranslationsVoiceCaddyConnectEs connect = TranslationsVoiceCaddyConnectEs.internal(_root);
 	late final TranslationsVoiceCaddyWaitingEs waiting = TranslationsVoiceCaddyWaitingEs.internal(_root);
 	late final TranslationsVoiceCaddySuccessEs success = TranslationsVoiceCaddySuccessEs.internal(_root);
@@ -1209,36 +1207,6 @@ class TranslationsGpsTrackingEs {
 	String get error => 'Error de GPS';
 }
 
-// Path: voice_caddy.intro
-class TranslationsVoiceCaddyIntroEs {
-	TranslationsVoiceCaddyIntroEs.internal(this._root);
-
-	final Translations _root; // ignore: unused_field
-
-	// Translations
-
-	/// es: 'Tu Caddie por Voz'
-	String get title => 'Tu Caddie por Voz';
-
-	/// es: 'TalkCaddy usa el modo de voz de ChatGPT como tu caddie personal.'
-	String get subtitle => 'TalkCaddy usa el modo de voz de ChatGPT como tu caddie personal.';
-
-	/// es: 'Pide distancias de forma natural'
-	String get bullet_1 => 'Pide distancias de forma natural';
-
-	/// es: 'Anota golpes sin tocar el movil'
-	String get bullet_2 => 'Anota golpes sin tocar el movil';
-
-	/// es: 'Recibe recomendaciones de palos basadas en tu juego'
-	String get bullet_3 => 'Recibe recomendaciones de palos basadas en tu juego';
-
-	/// es: 'Configurar Caddie de Voz'
-	String get cta => 'Configurar Caddie de Voz';
-
-	/// es: 'Ahora no'
-	String get skip => 'Ahora no';
-}
-
 // Path: voice_caddy.prerequisites
 class TranslationsVoiceCaddyPrerequisitesEs {
 	TranslationsVoiceCaddyPrerequisitesEs.internal(this._root);
@@ -1264,39 +1232,9 @@ class TranslationsVoiceCaddyPrerequisitesEs {
 
 	/// es: 'El modo de voz funciona mejor con ChatGPT Plus, pero el plan gratuito tambien tiene voz limitada'
 	String get hint => 'El modo de voz funciona mejor con ChatGPT Plus, pero el plan gratuito tambien tiene voz limitada';
-}
 
-// Path: voice_caddy.how_it_works
-class TranslationsVoiceCaddyHowItWorksEs {
-	TranslationsVoiceCaddyHowItWorksEs.internal(this._root);
-
-	final Translations _root; // ignore: unused_field
-
-	// Translations
-
-	/// es: 'Como funciona'
-	String get title => 'Como funciona';
-
-	/// es: 'TalkCaddy rastrea tu GPS'
-	String get step_1_title => 'TalkCaddy rastrea tu GPS';
-
-	/// es: 'y conoce el campo'
-	String get step_1_subtitle => 'y conoce el campo';
-
-	/// es: 'ChatGPT es tu interfaz de voz'
-	String get step_2_title => 'ChatGPT es tu interfaz de voz';
-
-	/// es: 'con el caddie'
-	String get step_2_subtitle => 'con el caddie';
-
-	/// es: 'Se sincronizan automaticamente'
-	String get step_3_title => 'Se sincronizan automaticamente';
-
-	/// es: 'tu solo habla'
-	String get step_3_subtitle => 'tu solo habla';
-
-	/// es: 'Continuar'
-	String get cta => 'Continuar';
+	/// es: 'Ahora no'
+	String get skip => 'Ahora no';
 }
 
 // Path: voice_caddy.connect
@@ -1783,27 +1721,13 @@ extension on Translations {
 			'bag.distance_hint' => 'Ej: 150',
 			'bag.distance_unit' => 'yds',
 			'bag.save' => 'Guardar',
-			'voice_caddy.intro.title' => 'Tu Caddie por Voz',
-			'voice_caddy.intro.subtitle' => 'TalkCaddy usa el modo de voz de ChatGPT como tu caddie personal.',
-			'voice_caddy.intro.bullet_1' => 'Pide distancias de forma natural',
-			'voice_caddy.intro.bullet_2' => 'Anota golpes sin tocar el movil',
-			'voice_caddy.intro.bullet_3' => 'Recibe recomendaciones de palos basadas en tu juego',
-			'voice_caddy.intro.cta' => 'Configurar Caddie de Voz',
-			'voice_caddy.intro.skip' => 'Ahora no',
 			'voice_caddy.prerequisites.title' => 'Antes de empezar',
 			'voice_caddy.prerequisites.subtitle' => 'Necesitas la app de ChatGPT con modo de voz.',
 			'voice_caddy.prerequisites.chatgpt_label' => 'ChatGPT de OpenAI',
 			'voice_caddy.prerequisites.get_app' => 'Descargar',
 			'voice_caddy.prerequisites.cta' => 'Ya tengo ChatGPT',
 			'voice_caddy.prerequisites.hint' => 'El modo de voz funciona mejor con ChatGPT Plus, pero el plan gratuito tambien tiene voz limitada',
-			'voice_caddy.how_it_works.title' => 'Como funciona',
-			'voice_caddy.how_it_works.step_1_title' => 'TalkCaddy rastrea tu GPS',
-			'voice_caddy.how_it_works.step_1_subtitle' => 'y conoce el campo',
-			'voice_caddy.how_it_works.step_2_title' => 'ChatGPT es tu interfaz de voz',
-			'voice_caddy.how_it_works.step_2_subtitle' => 'con el caddie',
-			'voice_caddy.how_it_works.step_3_title' => 'Se sincronizan automaticamente',
-			'voice_caddy.how_it_works.step_3_subtitle' => 'tu solo habla',
-			'voice_caddy.how_it_works.cta' => 'Continuar',
+			'voice_caddy.prerequisites.skip' => 'Ahora no',
 			'voice_caddy.connect.title' => 'Conecta tu caddie de voz',
 			'voice_caddy.connect.subtitle' => 'Abriremos ChatGPT con tu caddie personal listo.',
 			'voice_caddy.connect.step_1' => 'Toca "Iniciar sesion" cuando se te pida conectar tu cuenta TalkCaddy',

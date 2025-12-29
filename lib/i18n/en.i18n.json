@@ -333,32 +333,14 @@
         "save": "Save"
     },
     "voice_caddy": {
-        "intro": {
-            "title": "Your Voice Caddy",
-            "subtitle": "TalkCaddy uses ChatGPT's voice mode as your personal caddy.",
-            "bullet_1": "Ask for distances naturally",
-            "bullet_2": "Log shots without touching your phone",
-            "bullet_3": "Get club recommendations based on your game",
-            "cta": "Set Up Voice Caddy",
-            "skip": "Not now"
-        },
         "prerequisites": {
             "title": "Before we start",
             "subtitle": "You'll need the ChatGPT app with voice mode.",
             "chatgpt_label": "ChatGPT by OpenAI",
             "get_app": "Download",
             "cta": "I have ChatGPT",
-            "hint": "Voice mode works best with ChatGPT Plus, but free tier has limited voice too"
-        },
-        "how_it_works": {
-            "title": "How it works",
-            "step_1_title": "TalkCaddy tracks your GPS",
-            "step_1_subtitle": "and knows the course",
-            "step_2_title": "ChatGPT is your voice interface",
-            "step_2_subtitle": "to the caddy",
-            "step_3_title": "They sync automatically",
-            "step_3_subtitle": "you just talk",
-            "cta": "Continue"
+            "hint": "Voice mode works best with ChatGPT Plus, but free tier has limited voice too",
+            "skip": "Not now"
         },
         "connect": {
             "title": "Connect your voice caddy",

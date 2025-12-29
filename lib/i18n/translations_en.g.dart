@@ -415,9 +415,7 @@ class _TranslationsVoiceCaddyEn extends TranslationsVoiceCaddyEs {
 	final TranslationsEn _root; // ignore: unused_field
 
 	// Translations
-	@override late final _TranslationsVoiceCaddyIntroEn intro = _TranslationsVoiceCaddyIntroEn._(_root);
 	@override late final _TranslationsVoiceCaddyPrerequisitesEn prerequisites = _TranslationsVoiceCaddyPrerequisitesEn._(_root);
-	@override late final _TranslationsVoiceCaddyHowItWorksEn how_it_works = _TranslationsVoiceCaddyHowItWorksEn._(_root);
 	@override late final _TranslationsVoiceCaddyConnectEn connect = _TranslationsVoiceCaddyConnectEn._(_root);
 	@override late final _TranslationsVoiceCaddyWaitingEn waiting = _TranslationsVoiceCaddyWaitingEn._(_root);
 	@override late final _TranslationsVoiceCaddySuccessEn success = _TranslationsVoiceCaddySuccessEn._(_root);
@@ -643,22 +641,6 @@ class _TranslationsGpsTrackingEn extends TranslationsGpsTrackingEs {
 	@override String get error => 'GPS error';
 }
 
-// Path: voice_caddy.intro
-class _TranslationsVoiceCaddyIntroEn extends TranslationsVoiceCaddyIntroEs {
-	_TranslationsVoiceCaddyIntroEn._(TranslationsEn root) : this._root = root, super.internal(root);
-
-	final TranslationsEn _root; // ignore: unused_field
-
-	// Translations
-	@override String get title => 'Your Voice Caddy';
-	@override String get subtitle => 'TalkCaddy uses ChatGPT\'s voice mode as your personal caddy.';
-	@override String get bullet_1 => 'Ask for distances naturally';
-	@override String get bullet_2 => 'Log shots without touching your phone';
-	@override String get bullet_3 => 'Get club recommendations based on your game';
-	@override String get cta => 'Set Up Voice Caddy';
-	@override String get skip => 'Not now';
-}
-
 // Path: voice_caddy.prerequisites
 class _TranslationsVoiceCaddyPrerequisitesEn extends TranslationsVoiceCaddyPrerequisitesEs {
 	_TranslationsVoiceCaddyPrerequisitesEn._(TranslationsEn root) : this._root = root, super.internal(root);
@@ -672,23 +654,7 @@ class _TranslationsVoiceCaddyPrerequisitesEn extends TranslationsVoiceCaddyPrere
 	@override String get get_app => 'Download';
 	@override String get cta => 'I have ChatGPT';
 	@override String get hint => 'Voice mode works best with ChatGPT Plus, but free tier has limited voice too';
-}
-
-// Path: voice_caddy.how_it_works
-class _TranslationsVoiceCaddyHowItWorksEn extends TranslationsVoiceCaddyHowItWorksEs {
-	_TranslationsVoiceCaddyHowItWorksEn._(TranslationsEn root) : this._root = root, super.internal(root);
-
-	final TranslationsEn _root; // ignore: unused_field
-
-	// Translations
-	@override String get title => 'How it works';
-	@override String get step_1_title => 'TalkCaddy tracks your GPS';
-	@override String get step_1_subtitle => 'and knows the course';
-	@override String get step_2_title => 'ChatGPT is your voice interface';
-	@override String get step_2_subtitle => 'to the caddy';
-	@override String get step_3_title => 'They sync automatically';
-	@override String get step_3_subtitle => 'you just talk';
-	@override String get cta => 'Continue';
+	@override String get skip => 'Not now';
 }
 
 // Path: voice_caddy.connect
@@ -1089,27 +1055,13 @@ extension on TranslationsEn {
 			'bag.distance_hint' => 'E.g.: 150',
 			'bag.distance_unit' => 'yds',
 			'bag.save' => 'Save',
-			'voice_caddy.intro.title' => 'Your Voice Caddy',
-			'voice_caddy.intro.subtitle' => 'TalkCaddy uses ChatGPT\'s voice mode as your personal caddy.',
-			'voice_caddy.intro.bullet_1' => 'Ask for distances naturally',
-			'voice_caddy.intro.bullet_2' => 'Log shots without touching your phone',
-			'voice_caddy.intro.bullet_3' => 'Get club recommendations based on your game',
-			'voice_caddy.intro.cta' => 'Set Up Voice Caddy',
-			'voice_caddy.intro.skip' => 'Not now',
 			'voice_caddy.prerequisites.title' => 'Before we start',
 			'voice_caddy.prerequisites.subtitle' => 'You\'ll need the ChatGPT app with voice mode.',
 			'voice_caddy.prerequisites.chatgpt_label' => 'ChatGPT by OpenAI',
 			'voice_caddy.prerequisites.get_app' => 'Download',
 			'voice_caddy.prerequisites.cta' => 'I have ChatGPT',
 			'voice_caddy.prerequisites.hint' => 'Voice mode works best with ChatGPT Plus, but free tier has limited voice too',
-			'voice_caddy.how_it_works.title' => 'How it works',
-			'voice_caddy.how_it_works.step_1_title' => 'TalkCaddy tracks your GPS',
-			'voice_caddy.how_it_works.step_1_subtitle' => 'and knows the course',
-			'voice_caddy.how_it_works.step_2_title' => 'ChatGPT is your voice interface',
-			'voice_caddy.how_it_works.step_2_subtitle' => 'to the caddy',
-			'voice_caddy.how_it_works.step_3_title' => 'They sync automatically',
-			'voice_caddy.how_it_works.step_3_subtitle' => 'you just talk',
-			'voice_caddy.how_it_works.cta' => 'Continue',
+			'voice_caddy.prerequisites.skip' => 'Not now',
 			'voice_caddy.connect.title' => 'Connect your voice caddy',
 			'voice_caddy.connect.subtitle' => 'We\'ll open ChatGPT with your personal caddy ready to go.',
 			'voice_caddy.connect.step_1' => 'Tap "Sign in" when asked to connect your TalkCaddy account',

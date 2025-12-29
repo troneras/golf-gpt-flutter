@@ -1,7 +1,5 @@
 import 'package:apparence_kit/modules/voice_caddy/ui/animations/vc_page_transition.dart';
 import 'package:apparence_kit/modules/voice_caddy/ui/components/vc_connect_step.dart';
-import 'package:apparence_kit/modules/voice_caddy/ui/components/vc_how_it_works_step.dart';
-import 'package:apparence_kit/modules/voice_caddy/ui/components/vc_intro_step.dart';
 import 'package:apparence_kit/modules/voice_caddy/ui/components/vc_prerequisites_step.dart';
 import 'package:apparence_kit/modules/voice_caddy/ui/components/vc_success_step.dart';
 import 'package:apparence_kit/modules/voice_caddy/ui/components/vc_waiting_step.dart';
@@ -23,25 +21,13 @@ class VoiceCaddyFlowPage extends ConsumerWidget {
     return PopScope(
       canPop: allowSkip,
       child: Navigator(
-        initialRoute: 'intro',
+        initialRoute: 'prerequisites',
         onGenerateRoute: (settings) => switch (settings.name) {
-        'intro' => VoiceCaddyRouteTransition(
-            builder: (context) => VcIntroStep(
-              nextRoute: 'prerequisites',
+        'prerequisites' => VoiceCaddyRouteTransition(
+            builder: (context) => VcPrerequisitesStep(
+              nextRoute: 'connect',
               allowSkip: allowSkip,
               onSkip: () => _handleSkip(context),
-            ),
-            settings: settings,
-          ),
-        'prerequisites' => VoiceCaddyRouteTransition(
-            builder: (context) => const VcPrerequisitesStep(
-              nextRoute: 'how_it_works',
-            ),
-            settings: settings,
-          ),
-        'how_it_works' => VoiceCaddyRouteTransition(
-            builder: (context) => const VcHowItWorksStep(
-              nextRoute: 'connect',
             ),
             settings: settings,
           ),

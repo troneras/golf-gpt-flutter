@@ -60,7 +60,7 @@ class _VcConnectStepState extends ConsumerState<VcConnectStep> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              const VcProgress(value: 0.67),
+              const VcProgress(value: 0.5),
               const SizedBox(height: 32),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 32),

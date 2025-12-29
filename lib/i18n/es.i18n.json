@@ -333,32 +333,14 @@
         "save": "Guardar"
     },
     "voice_caddy": {
-        "intro": {
-            "title": "Tu Caddie por Voz",
-            "subtitle": "TalkCaddy usa el modo de voz de ChatGPT como tu caddie personal.",
-            "bullet_1": "Pide distancias de forma natural",
-            "bullet_2": "Anota golpes sin tocar el movil",
-            "bullet_3": "Recibe recomendaciones de palos basadas en tu juego",
-            "cta": "Configurar Caddie de Voz",
-            "skip": "Ahora no"
-        },
         "prerequisites": {
             "title": "Antes de empezar",
             "subtitle": "Necesitas la app de ChatGPT con modo de voz.",
             "chatgpt_label": "ChatGPT de OpenAI",
             "get_app": "Descargar",
             "cta": "Ya tengo ChatGPT",
-            "hint": "El modo de voz funciona mejor con ChatGPT Plus, pero el plan gratuito tambien tiene voz limitada"
-        },
-        "how_it_works": {
-            "title": "Como funciona",
-            "step_1_title": "TalkCaddy rastrea tu GPS",
-            "step_1_subtitle": "y conoce el campo",
-            "step_2_title": "ChatGPT es tu interfaz de voz",
-            "step_2_subtitle": "con el caddie",
-            "step_3_title": "Se sincronizan automaticamente",
-            "step_3_subtitle": "tu solo habla",
-            "cta": "Continuar"
+            "hint": "El modo de voz funciona mejor con ChatGPT Plus, pero el plan gratuito tambien tiene voz limitada",
+            "skip": "Ahora no"
         },
         "connect": {
             "title": "Conecta tu caddie de voz",

@@ -10,13 +10,17 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-/// Screen 2: Prerequisites - ChatGPT app check
+/// Screen 1: Prerequisites - ChatGPT app check
 class VcPrerequisitesStep extends ConsumerStatefulWidget {
   final String nextRoute;
+  final bool allowSkip;
+  final VoidCallback? onSkip;
 
   const VcPrerequisitesStep({
     super.key,
     required this.nextRoute,
+    this.allowSkip = true,
+    this.onSkip,
   });
 
   @override
@@ -48,7 +52,24 @@ class _VcPrerequisitesStepState extends ConsumerState<VcPrerequisitesStep> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            const VcProgress(value: 0.33),
+            Row(
+              children: [
+                const Expanded(child: VcProgress(value: 0.25)),
+                if (widget.allowSkip && widget.onSkip != null)
+                  Padding(
+                    padding: const EdgeInsets.only(right: 16),
+                    child: TextButton(
+                      onPressed: widget.onSkip,
+                      child: Text(
+                        tr.skip,
+                        style: TextStyle(
+                          color: context.colors.onBackground.withOpacity(0.6),
+                        ),
+                      ),
+                    ),
+                  ),
+              ],
+            ),
             const SizedBox(height: 32),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 32),

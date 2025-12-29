@@ -64,7 +64,7 @@ class _VcWaitingStepState extends ConsumerState<VcWaitingStep> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            const VcProgress(value: 0.83),
+            const VcProgress(value: 0.75),
             const Spacer(),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 32),
