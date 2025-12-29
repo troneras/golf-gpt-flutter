@@ -2,7 +2,6 @@ import 'package:apparence_kit/core/guards/guard.dart';
 import 'package:apparence_kit/core/states/user_state_notifier.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
 
 class UserInfosGuard extends ConsumerStatefulWidget {
   final Widget child;
@@ -19,8 +18,6 @@ class UserInfosGuard extends ConsumerStatefulWidget {
 }
 
 class _UserInfosGuardState extends ConsumerState<UserInfosGuard> {
-  bool _isRedirecting = false;
-
   @override
   Widget build(BuildContext context) {
     final authState = ref.watch(userStateNotifierProvider);
@@ -40,25 +37,7 @@ class _UserInfosGuardState extends ConsumerState<UserInfosGuard> {
         child: widget.child,
       );
     }
-    if (!user.isGptConnected) {
-      if (!_isRedirecting) {
-        _isRedirecting = true;
-        WidgetsBinding.instance.addPostFrameCallback((_) {
-          if (mounted) {
-            context.pushReplacement(
-              '/voice-caddy-setup',
-              extra: {'allowSkip': false},
-            );
-          }
-        });
-      }
-      return const Material(
-        color: Colors.white,
-        child: Center(
-          child: CircularProgressIndicator.adaptive(),
-        ),
-      );
-    }
+    // Voice caddy setup is now optional - users can set it up from home page
     return widget.child;
   }
 }

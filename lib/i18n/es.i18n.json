@@ -23,7 +23,9 @@
     "onboarding": {
         "welcome": {
             "title": "Tu caddie por voz",
-            "subtitle": "Juega sin tarjeta, sin apuntar nada.\nSolo habla. Yo me encargo del resto.",
+            "subtitle": "Juega sin tarjeta y sin apuntar nada. Solo habla.",
+            "chatgpt_info": "Te llevamos a ChatGPT para hablar con tu caddie.",
+            "setup_time": "Configuralo en 30 segundos.",
             "action": "Continuar"
         },
         "app_purpose": {
@@ -31,7 +33,9 @@
             "bullet_1": "Permite a TalkCaddy seguirte en el campo",
             "bullet_2": "Calcula distancias automaticamente",
             "bullet_3": "Sincroniza tu ronda y tus golpes",
-            "key_message": "No necesitas usar la app durante la ronda.\nSolo hablar con TalkCaddy.",
+            "key_message_1": "Durante la ronda no tienes que tocar nada.",
+            "key_message_2": "Solo habla con tu caddie en ChatGPT.",
+            "key_message_3": "Esta app guarda la ronda, la ubicacion y tus estadisticas.",
             "action": "Entendido"
         },
         "location_permission": {

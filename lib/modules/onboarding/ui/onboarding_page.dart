@@ -20,12 +20,6 @@ class OnboardingPage extends ConsumerWidget {
           ),
         'app_purpose' => OnboardingRouteTransition(
             builder: (context) => const OnboardingAppPurposeStep(
-              nextRoute: 'location_permission',
-            ),
-            settings: settings,
-          ),
-        'location_permission' => OnboardingRouteTransition(
-            builder: (context) => OnboardingLocationPermissionStep(
               nextRoute: 'login',
             ),
             settings: settings,

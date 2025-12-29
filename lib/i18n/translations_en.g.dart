@@ -451,7 +451,9 @@ class _TranslationsOnboardingWelcomeEn extends TranslationsOnboardingWelcomeEs {
 
 	// Translations
 	@override String get title => 'Your voice caddie';
-	@override String get subtitle => 'Play without a scorecard, without writing anything.\nJust talk. I\'ll take care of the rest.';
+	@override String get subtitle => 'Play without a scorecard and without writing anything. Just talk.';
+	@override String get chatgpt_info => 'We\'ll take you to ChatGPT to talk to your caddie.';
+	@override String get setup_time => 'Set it up in 30 seconds.';
 	@override String get action => 'Continue';
 }
 
@@ -466,7 +468,9 @@ class _TranslationsOnboardingAppPurposeEn extends TranslationsOnboardingAppPurpo
 	@override String get bullet_1 => 'Allows TalkCaddy to follow you on the course';
 	@override String get bullet_2 => 'Calculates distances automatically';
 	@override String get bullet_3 => 'Syncs your round and your shots';
-	@override String get key_message => 'You don\'t need to use the app during the round.\nJust talk to TalkCaddy.';
+	@override String get key_message_1 => 'You don\'t need to touch anything during the round.';
+	@override String get key_message_2 => 'Just talk to your caddie in ChatGPT.';
+	@override String get key_message_3 => 'This app saves your round, location, and stats.';
 	@override String get action => 'Got it';
 }
 
@@ -841,13 +845,17 @@ extension on TranslationsEn {
 			'rate_popup.cancel_button' => 'Maybe later',
 			'rate_popup.rate_button' => 'Yes, with pleasure!',
 			'onboarding.welcome.title' => 'Your voice caddie',
-			'onboarding.welcome.subtitle' => 'Play without a scorecard, without writing anything.\nJust talk. I\'ll take care of the rest.',
+			'onboarding.welcome.subtitle' => 'Play without a scorecard and without writing anything. Just talk.',
+			'onboarding.welcome.chatgpt_info' => 'We\'ll take you to ChatGPT to talk to your caddie.',
+			'onboarding.welcome.setup_time' => 'Set it up in 30 seconds.',
 			'onboarding.welcome.action' => 'Continue',
 			'onboarding.app_purpose.title' => 'What is this app for?',
 			'onboarding.app_purpose.bullet_1' => 'Allows TalkCaddy to follow you on the course',
 			'onboarding.app_purpose.bullet_2' => 'Calculates distances automatically',
 			'onboarding.app_purpose.bullet_3' => 'Syncs your round and your shots',
-			'onboarding.app_purpose.key_message' => 'You don\'t need to use the app during the round.\nJust talk to TalkCaddy.',
+			'onboarding.app_purpose.key_message_1' => 'You don\'t need to touch anything during the round.',
+			'onboarding.app_purpose.key_message_2' => 'Just talk to your caddie in ChatGPT.',
+			'onboarding.app_purpose.key_message_3' => 'This app saves your round, location, and stats.',
 			'onboarding.app_purpose.action' => 'Got it',
 			'onboarding.location_permission.title' => 'We need your location',
 			'onboarding.location_permission.description' => 'TalkCaddy uses GPS to:',

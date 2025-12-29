@@ -23,7 +23,9 @@
     "onboarding": {
         "welcome": {
             "title": "Your voice caddie",
-            "subtitle": "Play without a scorecard, without writing anything.\nJust talk. I'll take care of the rest.",
+            "subtitle": "Play without a scorecard and without writing anything. Just talk.",
+            "chatgpt_info": "We'll take you to ChatGPT to talk to your caddie.",
+            "setup_time": "Set it up in 30 seconds.",
             "action": "Continue"
         },
         "app_purpose": {
@@ -31,7 +33,9 @@
             "bullet_1": "Allows TalkCaddy to follow you on the course",
             "bullet_2": "Calculates distances automatically",
             "bullet_3": "Syncs your round and your shots",
-            "key_message": "You don't need to use the app during the round.\nJust talk to TalkCaddy.",
+            "key_message_1": "You don't need to touch anything during the round.",
+            "key_message_2": "Just talk to your caddie in ChatGPT.",
+            "key_message_3": "This app saves your round, location, and stats.",
             "action": "Got it"
         },
         "location_permission": {

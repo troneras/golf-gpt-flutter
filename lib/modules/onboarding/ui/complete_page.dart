@@ -29,12 +29,8 @@ class _CompletePageState extends ConsumerState<CompletePage> {
   }
 
   void _continue() {
-    final userState = ref.read(userStateNotifierProvider);
-    if (userState.user.isGptConnected) {
-      context.go('/');
-    } else {
-      context.go('/voice-caddy-setup', extra: {'allowSkip': false});
-    }
+    // Voice caddy setup is optional - users can set it up from home page
+    context.go('/');
   }
 
   @override

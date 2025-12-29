@@ -44,7 +44,7 @@ class _OnboardingWelcomeStepState extends ConsumerState<OnboardingWelcomeStep> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            OnboardingProgress(value: 0.33),
+            OnboardingProgress(value: 0.5),
             const SizedBox(height: 32),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 32),
@@ -96,6 +96,32 @@ class _OnboardingWelcomeStepState extends ConsumerState<OnboardingWelcomeStep> {
                 ),
               ),
             ),
+            const SizedBox(height: 16),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 32),
+              child: Animate(
+                effects: const [
+                  FadeEffect(
+                    delay: Duration(milliseconds: 400),
+                    duration: Duration(milliseconds: 200),
+                  ),
+                  MoveEffect(
+                    delay: Duration(milliseconds: 400),
+                    duration: Duration(milliseconds: 450),
+                    begin: Offset(0, 50),
+                    end: Offset.zero,
+                  ),
+                ],
+                child: Text(
+                  tr.chatgpt_info,
+                  textAlign: TextAlign.center,
+                  style: context.textTheme.bodyMedium?.copyWith(
+                    color: context.colors.primary,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+              ),
+            ),
             const SizedBox(height: 32),
             Expanded(
               child: Animate(
@@ -123,7 +149,26 @@ class _OnboardingWelcomeStepState extends ConsumerState<OnboardingWelcomeStep> {
               child: Animate(
                 effects: const [
                   FadeEffect(
-                    delay: Duration(milliseconds: 400),
+                    delay: Duration(milliseconds: 450),
+                    duration: Duration(milliseconds: 200),
+                  ),
+                ],
+                child: Text(
+                  tr.setup_time,
+                  textAlign: TextAlign.center,
+                  style: context.textTheme.bodySmall?.copyWith(
+                    color: context.colors.onBackground.withOpacity(0.5),
+                  ),
+                ),
+              ),
+            ),
+            const SizedBox(height: 12),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 32),
+              child: Animate(
+                effects: const [
+                  FadeEffect(
+                    delay: Duration(milliseconds: 500),
                     duration: Duration(milliseconds: 200),
                   ),
                 ],
@@ -170,6 +215,13 @@ class _OnboardingAppPurposeStepState
     });
   }
 
+  void _completeOnboarding() {
+    final analytics = ref.read(analyticsApiProvider);
+    analytics.logEvent('onboarding_completed', {});
+    analytics.setUserProperties({'onboarded': true});
+    Navigator.of(context).pushReplacementNamed(widget.nextRoute);
+  }
+
   @override
   Widget build(BuildContext context) {
     final tr = Translations.of(context).onboarding.app_purpose;
@@ -178,7 +230,7 @@ class _OnboardingAppPurposeStepState
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            OnboardingProgress(value: 0.66),
+            OnboardingProgress(value: 1.0),
             const SizedBox(height: 32),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 32),
@@ -248,14 +300,15 @@ class _OnboardingAppPurposeStepState
                     color: context.colors.primary.withOpacity(0.1),
                     borderRadius: BorderRadius.circular(16),
                   ),
-                  child: Text(
-                    tr.key_message,
-                    textAlign: TextAlign.center,
-                    style: context.textTheme.bodyLarge?.copyWith(
-                      fontWeight: FontWeight.w600,
-                      color: context.colors.primary,
-                      height: 1.5,
-                    ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      _KeyMessageItem(text: tr.key_message_1),
+                      const SizedBox(height: 12),
+                      _KeyMessageItem(text: tr.key_message_2, isHighlighted: true),
+                      const SizedBox(height: 12),
+                      _KeyMessageItem(text: tr.key_message_3),
+                    ],
                   ),
                 ),
               ),
@@ -271,9 +324,7 @@ class _OnboardingAppPurposeStepState
                   ),
                 ],
                 child: ElevatedButton(
-                  onPressed: () {
-                    Navigator.of(context).pushReplacementNamed(widget.nextRoute);
-                  },
+                  onPressed: _completeOnboarding,
                   child: Text(tr.action),
                 ),
               ),
@@ -286,7 +337,7 @@ class _OnboardingAppPurposeStepState
   }
 }
 
-/// Screen 3: Location Permission
+/// Screen 3: Location Permission (kept for reuse in home page)
 class OnboardingLocationPermissionStep extends ConsumerStatefulWidget {
   final String nextRoute;
 
@@ -528,6 +579,45 @@ class _BulletPoint extends StatelessWidget {
             text,
             style: context.textTheme.bodyLarge?.copyWith(
               height: 1.3,
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class _KeyMessageItem extends StatelessWidget {
+  final String text;
+  final bool isHighlighted;
+
+  const _KeyMessageItem({
+    required this.text,
+    this.isHighlighted = false,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Container(
+          width: 6,
+          height: 6,
+          margin: const EdgeInsets.only(top: 7),
+          decoration: BoxDecoration(
+            color: context.colors.primary,
+            shape: BoxShape.circle,
+          ),
+        ),
+        const SizedBox(width: 12),
+        Expanded(
+          child: Text(
+            text,
+            style: context.textTheme.bodyMedium?.copyWith(
+              fontWeight: isHighlighted ? FontWeight.w600 : FontWeight.normal,
+              color: context.colors.primary,
+              height: 1.4,
             ),
           ),
         ),

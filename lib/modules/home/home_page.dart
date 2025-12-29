@@ -77,6 +77,13 @@ class _HomePageState extends ConsumerState<HomePage> with WidgetsBindingObserver
         }
         return;
       }
+      // Show location permission bottom sheet before requesting system permission
+      if (mounted) {
+        final shouldRequest = await _showLocationPermissionBottomSheet();
+        if (!shouldRequest) {
+          return;
+        }
+      }
       final newStatus = await Permission.locationWhenInUse.request();
       if (newStatus.isGranted) {
         ref.read(analyticsApiProvider).logEvent('permission_granted', {
@@ -96,6 +103,104 @@ class _HomePageState extends ConsumerState<HomePage> with WidgetsBindingObserver
         setState(() => _isCheckingPermission = false);
       }
     }
+  }
+
+  Future<bool> _showLocationPermissionBottomSheet() async {
+    final tr = Translations.of(context).onboarding.location_permission;
+    final homeTr = Translations.of(context).home;
+    final result = await showModalBottomSheet<bool>(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: context.colors.surface,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
+      ),
+      builder: (bottomSheetContext) => Padding(
+        padding: EdgeInsets.only(
+          bottom: MediaQuery.of(bottomSheetContext).viewInsets.bottom,
+        ),
+        child: SafeArea(
+          child: Padding(
+            padding: const EdgeInsets.all(24),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                // Drag handle
+                Center(
+                  child: Container(
+                    width: 40,
+                    height: 4,
+                    decoration: BoxDecoration(
+                      color: context.colors.onSurface.withValues(alpha: 0.2),
+                      borderRadius: BorderRadius.circular(2),
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 24),
+                // GPS Icon
+                Icon(
+                  Icons.location_on,
+                  size: 48,
+                  color: context.colors.primary,
+                ),
+                const SizedBox(height: 16),
+                // Title
+                Text(
+                  tr.title,
+                  textAlign: TextAlign.center,
+                  style: context.textTheme.headlineSmall?.copyWith(
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                const SizedBox(height: 8),
+                // Description
+                Text(
+                  tr.description,
+                  textAlign: TextAlign.center,
+                  style: context.textTheme.bodyLarge?.copyWith(
+                    color: context.colors.onSurface.withValues(alpha: 0.7),
+                  ),
+                ),
+                const SizedBox(height: 24),
+                // Bullet points
+                _LocationBulletPoint(icon: Icons.golf_course, text: tr.bullet_1),
+                const SizedBox(height: 16),
+                _LocationBulletPoint(icon: Icons.straighten, text: tr.bullet_2),
+                const SizedBox(height: 16),
+                _LocationBulletPoint(icon: Icons.sports_golf, text: tr.bullet_3),
+                const SizedBox(height: 24),
+                // Reassurance text
+                Text(
+                  tr.reassurance,
+                  textAlign: TextAlign.center,
+                  style: context.textTheme.bodyMedium?.copyWith(
+                    color: context.colors.onSurface.withValues(alpha: 0.5),
+                    fontStyle: FontStyle.italic,
+                  ),
+                ),
+                const SizedBox(height: 24),
+                // Primary button
+                ElevatedButton(
+                  onPressed: () => Navigator.of(bottomSheetContext).pop(true),
+                  child: Text(tr.action),
+                ),
+                const SizedBox(height: 8),
+                // Skip button
+                TextButton(
+                  onPressed: () => Navigator.of(bottomSheetContext).pop(false),
+                  child: Text(homeTr.play_without_gps),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+    if (result == false) {
+      _startRoundWithoutGps();
+    }
+    return result ?? false;
   }
 
   void _startRound() {
@@ -511,6 +616,44 @@ class _DialogBulletPoint extends StatelessWidget {
           child: Text(
             text,
             style: context.textTheme.bodyMedium,
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class _LocationBulletPoint extends StatelessWidget {
+  final IconData icon;
+  final String text;
+
+  const _LocationBulletPoint({
+    required this.icon,
+    required this.text,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        Container(
+          width: 40,
+          height: 40,
+          decoration: BoxDecoration(
+            color: context.colors.primary.withValues(alpha: 0.1),
+            borderRadius: BorderRadius.circular(12),
+          ),
+          child: Icon(
+            icon,
+            size: 22,
+            color: context.colors.primary,
+          ),
+        ),
+        const SizedBox(width: 16),
+        Expanded(
+          child: Text(
+            text,
+            style: context.textTheme.bodyLarge,
           ),
         ),
       ],
