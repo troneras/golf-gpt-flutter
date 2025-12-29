@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:math' as math;
 
 import 'package:apparence_kit/core/theme/extensions/theme_extension.dart';
 import 'package:flutter/material.dart';
@@ -52,7 +53,7 @@ const _defaultSuggestions = [
   ),
 ];
 
-/// Animated suggestion card with typewriter effect and reflection
+/// Animated suggestion card with typewriter effect and voice waveform
 class SuggestionCard extends StatefulWidget {
   final List<Suggestion> suggestions;
   final Duration typeSpeed;
@@ -74,6 +75,8 @@ class _SuggestionCardState extends State<SuggestionCard> {
   int _visibleCharacters = 0;
   Timer? _typeTimer;
   Timer? _pauseTimer;
+  bool _isTyping = false;
+  bool _isErasing = false;
 
   @override
   void initState() {
@@ -85,6 +88,8 @@ class _SuggestionCardState extends State<SuggestionCard> {
     _typeTimer?.cancel();
     _pauseTimer?.cancel();
     _visibleCharacters = 0;
+    _isTyping = true;
+    _isErasing = false;
 
     final fullText = widget.suggestions[_currentIndex].fullText;
 
@@ -100,6 +105,9 @@ class _SuggestionCardState extends State<SuggestionCard> {
         });
       } else {
         timer.cancel();
+        setState(() {
+          _isTyping = false;
+        });
         // Pause before moving to next suggestion
         _pauseTimer = Timer(widget.pauseDuration, _eraseAndNext);
       }
@@ -108,6 +116,10 @@ class _SuggestionCardState extends State<SuggestionCard> {
 
   void _eraseAndNext() {
     if (!mounted) return;
+
+    setState(() {
+      _isErasing = true;
+    });
 
     // Quick erase effect
     _typeTimer = Timer.periodic(const Duration(milliseconds: 20), (timer) {
@@ -125,6 +137,7 @@ class _SuggestionCardState extends State<SuggestionCard> {
         // Move to next suggestion
         setState(() {
           _currentIndex = (_currentIndex + 1) % widget.suggestions.length;
+          _isErasing = false;
         });
         _startTypewriter();
       }
@@ -172,10 +185,12 @@ class _SuggestionCardState extends State<SuggestionCard> {
             ],
           ),
           const SizedBox(height: 10),
-          // Typewriter suggestion text
+          // Typewriter suggestion text with voice waveform
           _TypewriterText(
             suggestion: suggestion,
             visibleCharacters: _visibleCharacters,
+            isTyping: _isTyping,
+            isErasing: _isErasing,
           ),
           const SizedBox(height: 2),
           // Reflection
@@ -193,17 +208,22 @@ class _SuggestionCardState extends State<SuggestionCard> {
 class _TypewriterText extends StatelessWidget {
   final Suggestion suggestion;
   final int visibleCharacters;
+  final bool isTyping;
+  final bool isErasing;
 
   const _TypewriterText({
     required this.suggestion,
     required this.visibleCharacters,
+    required this.isTyping,
+    required this.isErasing,
   });
 
   @override
   Widget build(BuildContext context) {
     final fullText = suggestion.fullText;
-    final visibleText =
-        visibleCharacters <= fullText.length ? fullText.substring(0, visibleCharacters) : fullText;
+    final visibleText = visibleCharacters <= fullText.length
+        ? fullText.substring(0, visibleCharacters)
+        : fullText;
 
     return Row(
       children: [
@@ -215,24 +235,32 @@ class _TypewriterText extends StatelessWidget {
             ),
           ),
         ),
-        // Blinking cursor
-        const _BlinkingCursor(color: Colors.white),
+        const SizedBox(width: 8),
+        // Voice waveform cursor
+        _VoiceWaveform(
+          isTyping: isTyping,
+          isErasing: isErasing,
+        ),
       ],
     );
   }
 }
 
-/// Blinking cursor for typewriter effect
-class _BlinkingCursor extends StatefulWidget {
-  final Color color;
+/// Voice waveform visualizer that replaces the cursor
+class _VoiceWaveform extends StatefulWidget {
+  final bool isTyping;
+  final bool isErasing;
 
-  const _BlinkingCursor({required this.color});
+  const _VoiceWaveform({
+    required this.isTyping,
+    required this.isErasing,
+  });
 
   @override
-  State<_BlinkingCursor> createState() => _BlinkingCursorState();
+  State<_VoiceWaveform> createState() => _VoiceWaveformState();
 }
 
-class _BlinkingCursorState extends State<_BlinkingCursor>
+class _VoiceWaveformState extends State<_VoiceWaveform>
     with SingleTickerProviderStateMixin {
   late final AnimationController _controller;
 
@@ -241,8 +269,8 @@ class _BlinkingCursorState extends State<_BlinkingCursor>
     super.initState();
     _controller = AnimationController(
       vsync: this,
-      duration: const Duration(milliseconds: 600),
-    )..repeat(reverse: true);
+      duration: const Duration(milliseconds: 800),
+    )..repeat();
   }
 
   @override
@@ -256,27 +284,95 @@ class _BlinkingCursorState extends State<_BlinkingCursor>
     return AnimatedBuilder(
       animation: _controller,
       builder: (context, _) {
-        return Opacity(
-          opacity: _controller.value,
-          child: Container(
-            width: 2,
-            height: 16,
-            margin: const EdgeInsets.only(left: 2),
-            decoration: BoxDecoration(
-              color: widget.color,
-              borderRadius: BorderRadius.circular(1),
-              boxShadow: [
-                BoxShadow(
-                  color: widget.color.withValues(alpha: 0.6),
-                  blurRadius: 6,
-                ),
-              ],
-            ),
+        return CustomPaint(
+          size: const Size(24, 18),
+          painter: _VoiceWaveformPainter(
+            progress: _controller.value,
+            isTyping: widget.isTyping,
+            isErasing: widget.isErasing,
           ),
         );
       },
     );
   }
+}
+
+/// Custom painter for the voice waveform
+class _VoiceWaveformPainter extends CustomPainter {
+  final double progress;
+  final bool isTyping;
+  final bool isErasing;
+
+  _VoiceWaveformPainter({
+    required this.progress,
+    required this.isTyping,
+    required this.isErasing,
+  });
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    const barCount = 5;
+    final barWidth = size.width / (barCount * 2 - 1);
+    final maxHeight = size.height;
+    final minHeight = size.height * 0.2;
+
+    final paint = Paint()
+      ..style = PaintingStyle.fill
+      ..color = Colors.white;
+
+    // Glow paint
+    final glowPaint = Paint()
+      ..style = PaintingStyle.fill
+      ..color = Colors.white.withValues(alpha: 0.3)
+      ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 4);
+
+    for (int i = 0; i < barCount; i++) {
+      // Each bar has its own phase offset
+      final phase = i * math.pi / barCount;
+      final animValue = math.sin(progress * math.pi * 2 + phase);
+
+      double heightFactor;
+      if (isTyping) {
+        // Active typing: vigorous animation with varying heights
+        heightFactor = 0.4 + animValue.abs() * 0.6;
+        // Middle bars are generally taller
+        final middleFactor = 1.0 - (i - barCount / 2).abs() / (barCount / 2) * 0.3;
+        heightFactor *= middleFactor;
+      } else if (isErasing) {
+        // Erasing: fast, declining animation
+        heightFactor = 0.3 + animValue.abs() * 0.4;
+      } else {
+        // Idle: gentle breathing
+        heightFactor = 0.15 + animValue.abs() * 0.15;
+      }
+
+      final barHeight =
+          minHeight + (maxHeight - minHeight) * heightFactor.clamp(0.0, 1.0);
+      final x = i * barWidth * 2;
+      final y = (size.height - barHeight) / 2;
+
+      final rect = RRect.fromRectAndRadius(
+        Rect.fromLTWH(x, y, barWidth, barHeight),
+        const Radius.circular(2),
+      );
+
+      // Draw glow when active
+      if (isTyping || isErasing) {
+        canvas.drawRRect(rect, glowPaint);
+      }
+
+      // Draw bar with opacity based on activity
+      final opacity = isTyping ? 1.0 : (isErasing ? 0.8 : 0.6);
+      paint.color = Colors.white.withValues(alpha: opacity);
+      canvas.drawRRect(rect, paint);
+    }
+  }
+
+  @override
+  bool shouldRepaint(_VoiceWaveformPainter oldDelegate) =>
+      oldDelegate.progress != progress ||
+      oldDelegate.isTyping != isTyping ||
+      oldDelegate.isErasing != isErasing;
 }
 
 /// Mirrored reflection of the text
@@ -292,8 +388,9 @@ class _ReflectionText extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final fullText = suggestion.fullText;
-    final visibleText =
-        visibleCharacters <= fullText.length ? fullText.substring(0, visibleCharacters) : fullText;
+    final visibleText = visibleCharacters <= fullText.length
+        ? fullText.substring(0, visibleCharacters)
+        : fullText;
 
     return Transform(
       alignment: Alignment.topCenter,
@@ -303,16 +400,16 @@ class _ReflectionText extends StatelessWidget {
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,
           colors: [
-            Colors.white.withValues(alpha: 0.25),
+            Colors.white.withValues(alpha: 0.2),
             Colors.transparent,
           ],
-          stops: const [0.0, 0.6],
+          stops: const [0.0, 0.5],
         ).createShader(bounds),
         blendMode: BlendMode.dstIn,
         child: Text(
           visibleText,
           style: context.textTheme.bodyMedium?.copyWith(
-            color: Colors.white.withValues(alpha: 0.15),
+            color: Colors.white.withValues(alpha: 0.1),
           ),
         ),
       ),
@@ -343,9 +440,7 @@ class _PaginationDots extends StatelessWidget {
           height: isActive ? 6 : 4,
           decoration: BoxDecoration(
             shape: BoxShape.circle,
-            color: isActive
-                ? Colors.white
-                : Colors.white.withValues(alpha: 0.3),
+            color: isActive ? Colors.white : Colors.white.withValues(alpha: 0.3),
             boxShadow: isActive
                 ? [
                     BoxShadow(
