@@ -338,6 +338,23 @@ class _HomePageState extends ConsumerState<HomePage> with WidgetsBindingObserver
             fit: BoxFit.cover,
           ),
         ),
+        // Vignette/inset shadow effect around edges
+        Positioned.fill(
+          child: DecoratedBox(
+            decoration: BoxDecoration(
+              gradient: RadialGradient(
+                radius: 1.0,
+                colors: [
+                  Colors.transparent,
+                  Colors.transparent,
+                  Colors.black.withValues(alpha: 0.25),
+                  Colors.black.withValues(alpha: 0.45),
+                ],
+                stops: const [0.0, 0.45, 0.75, 1.0],
+              ),
+            ),
+          ),
+        ),
         // Dark gradient overlay from bottom for readability
         Positioned.fill(
           child: DecoratedBox(
