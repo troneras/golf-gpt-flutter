@@ -1,6 +1,7 @@
 import 'package:apparence_kit/core/data/api/analytics_api.dart';
 import 'package:apparence_kit/core/theme/extensions/theme_extension.dart';
 import 'package:apparence_kit/core/widgets/glow_button.dart';
+import 'package:apparence_kit/core/widgets/shooting_stars.dart';
 import 'package:apparence_kit/core/widgets/suggestion_card.dart';
 import 'package:apparence_kit/i18n/translations.g.dart';
 import 'package:apparence_kit/modules/round/domain/round.dart';
@@ -353,6 +354,17 @@ class _HomePageState extends ConsumerState<HomePage> with WidgetsBindingObserver
                 ],
               ),
             ),
+          ),
+        ),
+        // Shooting stars in the night sky
+        const Positioned(
+          top: 0,
+          left: 0,
+          right: 0,
+          child: ShootingStars(
+            height: 200,
+            spawnInterval: Duration(seconds: 3),
+            maxStars: 2,
           ),
         ),
         // Main content
