@@ -1,3 +1,4 @@
+import 'package:apparence_kit/i18n/translations.g.dart';
 import 'package:flutter/material.dart';
 
 class PageNotFound extends StatelessWidget {
@@ -5,9 +6,9 @@ class PageNotFound extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
+    return Scaffold(
       body: Center(
-        child: Text('404 - Page not found'),
+        child: Text(Translations.of(context).common.page_not_found),
       ),
     );
   }

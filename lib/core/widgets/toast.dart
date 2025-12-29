@@ -1,4 +1,5 @@
 import 'package:another_flushbar/flushbar.dart';
+import 'package:apparence_kit/core/theme/extensions/theme_extension.dart';
 import 'package:apparence_kit/router.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -43,19 +44,38 @@ class ToastBuilder {
     if (Platform.environment.containsKey('FLUTTER_TEST')) {
       return;
     }
-    if (navigatorKey.currentContext == null ||
-        !navigatorKey.currentContext!.mounted) {
+    final context = navigatorKey.currentContext;
+    if (context == null || !context.mounted) {
       return;
     }
+    final colors = context.colors;
     Flushbar(
       flushbarPosition: FlushbarPosition.TOP,
       title: title,
       message: text,
-      titleSize: 21,
-      messageSize: 16,
+      titleSize: 16,
+      messageSize: 14,
       duration: duration,
-      leftBarIndicatorColor: Colors.orange,
-    ).show(navigatorKey.currentContext!);
+      backgroundColor: const Color(0xFF141A24).withValues(alpha: 0.95),
+      titleColor: colors.onSurface,
+      messageColor: colors.onSurface.withValues(alpha: 0.7),
+      borderRadius: BorderRadius.circular(12),
+      margin: const EdgeInsets.all(16),
+      padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 20),
+      icon: Icon(
+        Icons.info_outline,
+        color: colors.warning,
+        size: 24,
+      ),
+      shouldIconPulse: false,
+      boxShadows: [
+        BoxShadow(
+          color: Colors.black.withValues(alpha: 0.3),
+          blurRadius: 12,
+          offset: const Offset(0, 4),
+        ),
+      ],
+    ).show(context);
   }
 }
 
@@ -65,34 +85,39 @@ void showSuccessToast({
   required String text,
   Duration duration = const Duration(seconds: 3),
 }) {
-  // This is a hack to prevent the toast from showing during tests
   if (Platform.environment.containsKey('FLUTTER_TEST')) {
     return;
   }
   if (!context.mounted) {
     return;
   }
+  final colors = context.colors;
   Flushbar(
     flushbarPosition: FlushbarPosition.TOP,
     title: title,
     message: text,
-    titleSize: 24,
+    titleSize: 16,
     messageSize: 14,
     duration: duration,
-    barBlur: 8,
-    backgroundColor: Colors.black45,
-    titleColor: Colors.white,
-    messageColor: Colors.white,
-    // leftBarIndicatorColor: Colors.greenAccent,
-    borderRadius: BorderRadius.circular(16),
+    backgroundColor: const Color(0xFF141A24).withValues(alpha: 0.95),
+    titleColor: colors.onSurface,
+    messageColor: colors.onSurface.withValues(alpha: 0.7),
+    borderRadius: BorderRadius.circular(12),
     margin: const EdgeInsets.all(16),
-    padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 24),
-    icon: const Icon(
-      Icons.check,
-      color: Colors.white,
-      size: 32,
+    padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 20),
+    icon: Icon(
+      Icons.check_circle_outline,
+      color: colors.success,
+      size: 24,
     ),
     shouldIconPulse: false,
+    boxShadows: [
+      BoxShadow(
+        color: Colors.black.withValues(alpha: 0.3),
+        blurRadius: 12,
+        offset: const Offset(0, 4),
+      ),
+    ],
   ).show(context);
 }
 
@@ -103,24 +128,38 @@ void showErrorToast({
   Duration duration = const Duration(seconds: 3),
   String? reason,
 }) {
-  // This is a hack to prevent the toast from showing during tests
   if (Platform.environment.containsKey('FLUTTER_TEST')) {
     return;
   }
   if (!context.mounted) {
     return;
   }
+  final colors = context.colors;
   Flushbar(
     flushbarPosition: FlushbarPosition.TOP,
     title: title,
     message: text,
-    titleSize: 21,
-    messageSize: 16,
+    titleSize: 16,
+    messageSize: 14,
     duration: duration,
-    backgroundColor: Colors.redAccent,
-    icon: const Icon(
-      Icons.error,
-      color: Colors.white,
+    backgroundColor: const Color(0xFF141A24).withValues(alpha: 0.95),
+    titleColor: colors.onSurface,
+    messageColor: colors.onSurface.withValues(alpha: 0.7),
+    borderRadius: BorderRadius.circular(12),
+    margin: const EdgeInsets.all(16),
+    padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 20),
+    icon: Icon(
+      Icons.error_outline,
+      color: colors.error,
+      size: 24,
     ),
+    shouldIconPulse: false,
+    boxShadows: [
+      BoxShadow(
+        color: Colors.black.withValues(alpha: 0.3),
+        blurRadius: 12,
+        offset: const Offset(0, 4),
+      ),
+    ],
   ).show(context);
 }

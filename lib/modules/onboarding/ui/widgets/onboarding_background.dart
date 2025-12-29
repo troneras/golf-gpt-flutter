@@ -1,25 +1,36 @@
 import 'package:apparence_kit/core/theme/extensions/theme_extension.dart';
 import 'package:flutter/material.dart';
 
+/// Dark-themed onboarding background following the design system.
+///
+/// Onboarding screens are "Emotional" type = High glass level.
+/// Uses dark background with subtle gradient and vignette effect.
 class OnboardingBackground extends StatelessWidget {
   final Widget child;
   final String? bgImagePath;
   final double bgImageOpacity;
-  final Color? bgColor;
 
   const OnboardingBackground({
     super.key,
     required this.child,
     this.bgImagePath,
-    this.bgColor,
-    this.bgImageOpacity = .15,
+    this.bgImageOpacity = .2,
   });
 
   @override
   Widget build(BuildContext context) {
+    final colors = context.colors;
+
     return Stack(
       fit: StackFit.expand,
       children: <Widget>[
+        // Base dark background
+        Positioned.fill(
+          child: ColoredBox(
+            color: colors.background,
+          ),
+        ),
+        // Optional background image with low opacity
         if (bgImagePath != null)
           Positioned.fill(
             child: Opacity(
@@ -34,45 +45,41 @@ class OnboardingBackground extends StatelessWidget {
               ),
             ),
           ),
-        const Positioned.fill(
-          child: ColoredBox(
-            color: Colors.white,
-          ),
-        ),
+        // Subtle primary color gradient from top
         Positioned.fill(
-          child: Container(
-              decoration: BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
-              colors: [
-                bgColor ?? context.colors.primary.withValues(alpha: .15),
-                bgColor ?? context.colors.primary.withValues(alpha: 0),
-              ],
-              stops: const [0.0, .5],
+          child: DecoratedBox(
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.topCenter,
+                end: Alignment.center,
+                colors: [
+                  colors.primary.withValues(alpha: 0.08),
+                  Colors.transparent,
+                ],
+              ),
             ),
-          )),
-        ),
-        // Positioned(
-        //   top: 120,
-        //   left: 0,
-        //   right: 0,
-        //   child: Image.asset(
-        //     'assets/images/introduction/lines.png',
-        //     fit: BoxFit.cover,
-        //   ),
-        // ),
-        Positioned.fill(
-          child: LayoutBuilder(
-            builder: (context, constraints) {
-              return SizedBox(
-                key: const ValueKey("background"),
-                width: constraints.maxWidth,
-                height: constraints.maxHeight,
-                child: child,
-              );
-            },
           ),
+        ),
+        // Vignette effect (per design system)
+        Positioned.fill(
+          child: DecoratedBox(
+            decoration: BoxDecoration(
+              gradient: RadialGradient(
+                radius: 1.0,
+                colors: [
+                  Colors.transparent,
+                  Colors.transparent,
+                  Colors.black.withValues(alpha: 0.25),
+                  Colors.black.withValues(alpha: 0.45),
+                ],
+                stops: const [0.0, 0.45, 0.75, 1.0],
+              ),
+            ),
+          ),
+        ),
+        // Content
+        Positioned.fill(
+          child: child,
         ),
       ],
     );

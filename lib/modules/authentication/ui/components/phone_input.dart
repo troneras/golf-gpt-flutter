@@ -1,4 +1,5 @@
 import 'package:apparence_kit/core/theme/extensions/theme_extension.dart';
+import 'package:apparence_kit/i18n/translations.g.dart';
 import 'package:apparence_kit/modules/authentication/providers/phone_auth_notifier.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -25,6 +26,8 @@ class _PhoneInputComponentState extends ConsumerState<PhoneInputComponent> {
   @override
   Widget build(BuildContext context) {
     final state = ref.watch(phoneAuthProvider);
+    final tr = Translations.of(context).auth.phone_auth;
+    final commonTr = Translations.of(context).common;
 
     return Form(
       key: _formKey,
@@ -35,7 +38,7 @@ class _PhoneInputComponentState extends ConsumerState<PhoneInputComponent> {
           Icon(Icons.phone_android, size: 72, color: context.colors.primary),
           const SizedBox(height: 24),
           Text(
-            'Enter your phone number',
+            tr.enter_phone,
             style: context.textTheme.titleLarge?.copyWith(
               fontWeight: FontWeight.w600,
             ),
@@ -43,7 +46,7 @@ class _PhoneInputComponentState extends ConsumerState<PhoneInputComponent> {
           ),
           const SizedBox(height: 12),
           Text(
-            'We will send you a verification code to confirm your identity',
+            tr.send_code_info,
             style: context.textTheme.bodyMedium?.copyWith(
               color: context.colors.onBackground.withValues(alpha: .7),
             ),
@@ -72,8 +75,8 @@ class _PhoneInputComponentState extends ConsumerState<PhoneInputComponent> {
             controller: _phoneController,
             keyboardType: TextInputType.phone,
             decoration: InputDecoration(
-              labelText: 'Phone Number',
-              hintText: '+1 (555) 123-4567',
+              labelText: tr.phone_label,
+              hintText: tr.phone_hint,
               prefixIcon: const Icon(Icons.phone),
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(12),
@@ -81,11 +84,11 @@ class _PhoneInputComponentState extends ConsumerState<PhoneInputComponent> {
             ),
             validator: (value) {
               if (value == null || value.isEmpty) {
-                return 'Please enter a phone number';
+                return tr.phone_required;
               }
               // Simple validation for demo purposes
               if (value.replaceAll(RegExp(r'[^0-9+]'), '').length < 7) {
-                return 'Please enter a valid phone number';
+                return tr.phone_invalid;
               }
               return null;
             },
@@ -125,7 +128,7 @@ class _PhoneInputComponentState extends ConsumerState<PhoneInputComponent> {
                       valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
                     ),
                   )
-                : const Text('Continue'),
+                : Text(commonTr.kContinue),
           ),
         ],
       ),

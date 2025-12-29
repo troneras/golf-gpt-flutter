@@ -57,29 +57,39 @@
     "auth": {
         "or_sign_in_with": "O inicia sesion con",
         "sign_in_with_google": "Iniciar sesion con Google",
+        "social_signin_error": {
+            "google": "No se pudo iniciar sesion con Google",
+            "apple": "No se pudo iniciar sesion con Apple",
+            "facebook": "No se pudo iniciar sesion con Facebook",
+            "google_play": "No se pudo iniciar sesion con Google Play"
+        },
         "signin": {
             "title": "Conecta tu caddie",
-            "subtitle": "Tu cuenta sincroniza tu ronda y el GPS del campo.",
+            "subtitle": "Tu caddie de IA personal",
             "email_label": "Correo electronico",
-            "email_hint": "tu@email.com",
+            "email_hint": "Correo electronico",
             "password_label": "Contrasena",
             "password_hint": "Contrasena",
-            "action": "Entrar",
-            "forgot_password": "Olvidaste tu contrasena?",
+            "action": "Continuar",
+            "forgot_password": "Olvide mi contrasena",
             "no_account": "No tienes cuenta?",
+            "no_account_question": "Aun no tienes cuenta?",
+            "register": "Registrate",
             "signup_link": "Registrate",
             "error_title": "Error",
             "error_message": "Email o contrasena incorrectos"
         },
         "signup": {
             "title": "Crear cuenta",
-            "subtitle": "Tu cuenta sincroniza tu ronda y el GPS del campo.",
+            "subtitle": "Tu caddie de IA personal",
             "email_label": "Correo electronico",
-            "email_hint": "tu@email.com",
+            "email_hint": "Correo electronico",
             "password_label": "Contrasena",
             "password_hint": "Contrasena",
             "action": "Registrarse",
             "has_account": "Ya tienes cuenta?",
+            "has_account_question": "Ya tienes cuenta?",
+            "signin": "Inicia sesion",
             "signin_link": "Inicia sesion",
             "error_title": "Error",
             "error_message": "Este correo ya existe o es invalido"
@@ -111,6 +121,21 @@
             "success_title": "Contrasena cambiada",
             "success_subtitle": "Tu contrasena ha sido actualizada. Inicia sesion con tu nueva contrasena.",
             "back_to_signin": "Ir a iniciar sesion"
+        },
+        "phone_auth": {
+            "input_title": "Autenticacion por telefono",
+            "verify_title": "Verificar OTP",
+            "enter_phone": "Ingresa tu numero de telefono",
+            "send_code_info": "Te enviaremos un codigo de verificacion para confirmar tu identidad",
+            "phone_label": "Numero de telefono",
+            "phone_hint": "+1 (555) 123-4567",
+            "phone_required": "Por favor ingresa un numero de telefono",
+            "phone_invalid": "Por favor ingresa un numero de telefono valido",
+            "verification_code": "Codigo de verificacion",
+            "code_sent_to": "Hemos enviado un codigo de verificacion a {phone}",
+            "enter_all_digits": "Por favor ingresa los 6 digitos",
+            "verify_code": "Verificar codigo",
+            "resend_code": "Reenviar codigo"
         }
     },
     "common": {
@@ -118,6 +143,8 @@
         "cancel": "Cancelar",
         "skip": "Omitir",
         "error": "Error",
+        "error_occurred": "Ha ocurrido un error",
+        "page_not_found": "404 - Pagina no encontrada",
         "success": "Exito",
         "loading": "Cargando...",
         "or": "o",
@@ -141,6 +168,8 @@
     },
     "settings": {
         "title": "Ajustes",
+        "default_user": "Usuario",
+        "beta_badge": "Beta",
         "sections": {
             "permissions": "Permisos",
             "preferences": "Preferencias",
@@ -156,6 +185,12 @@
         "disconnect_confirm": "Seguro que quieres desconectarte?",
         "delete_account": "Eliminar cuenta",
         "delete_account_confirm": "Esta accion es permanente y eliminara todos tus datos. Seguro que quieres continuar?",
+        "delete_account_dialog": {
+            "title": "Eliminar mi cuenta?",
+            "warning": "Atencion: esta accion es irreversible",
+            "confirm": "Si, eliminar",
+            "button_text": "Quiero eliminar mi cuenta"
+        },
         "theme_mode": "Modo claro/oscuro",
         "location_permission": {
             "title": "Ubicacion",
@@ -276,6 +311,15 @@
         "bogey": "Bogey",
         "double_bogey": "Doble Bogey",
         "triple_bogey": "Triple Bogey"
+    },
+    "score_input": {
+        "hole_title": "Hoyo {holeNumber}",
+        "par_info": "Par {par}",
+        "par_yards_info": "Par {par} • {yards} yds",
+        "strokes": "Golpes",
+        "putts": "Putts",
+        "penalties": "Penaltis",
+        "save": "Guardar"
     },
     "active_round": {
         "title": "Tienes una ronda en curso",

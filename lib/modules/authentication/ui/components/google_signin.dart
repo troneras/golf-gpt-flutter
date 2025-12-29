@@ -2,6 +2,7 @@
 
 import 'package:apparence_kit/core/states/user_state_notifier.dart';
 import 'package:apparence_kit/core/widgets/toast.dart';
+import 'package:apparence_kit/i18n/translations.g.dart';
 import 'package:apparence_kit/modules/authentication/providers/signin_state_provider.dart';
 import 'package:apparence_kit/modules/authentication/ui/widgets/round_signin.dart';
 import 'package:flutter/material.dart';
@@ -15,6 +16,7 @@ class GoogleSignInComponent extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final tr = Translations.of(context);
     void onPressed() {
       ref
           .read(signinStateProvider.notifier)
@@ -29,8 +31,8 @@ class GoogleSignInComponent extends ConsumerWidget {
         (err) {
           showErrorToast(
             context: context,
-            title: 'Error',
-            text: 'Cannot signin with Google',
+            title: tr.common.error,
+            text: tr.auth.social_signin_error.google,
           );
           return err;
         },
@@ -48,6 +50,7 @@ class GooglePlayGamesSignInComponent extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final tr = Translations.of(context);
     return SocialSigninButton.googlePlayGames(
       () => ref
           .read(signinStateProvider.notifier)
@@ -55,8 +58,8 @@ class GooglePlayGamesSignInComponent extends ConsumerWidget {
           .catchError(
             (err) => showErrorToast(
               context: context,
-              title: 'Error',
-              text: 'Cannot signin with Google play',
+              title: tr.common.error,
+              text: tr.auth.social_signin_error.google_play,
             ),
           )
           .then(

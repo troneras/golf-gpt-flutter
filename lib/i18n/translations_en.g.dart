@@ -52,6 +52,7 @@ class TranslationsEn extends Translations with BaseTranslations<AppLocale, Trans
 	@override late final _TranslationsRoundInProgressEn round_in_progress = _TranslationsRoundInProgressEn._(_root);
 	@override late final _TranslationsRoundSummaryEn round_summary = _TranslationsRoundSummaryEn._(_root);
 	@override late final _TranslationsScoreNamesEn score_names = _TranslationsScoreNamesEn._(_root);
+	@override late final _TranslationsScoreInputEn score_input = _TranslationsScoreInputEn._(_root);
 	@override late final _TranslationsActiveRoundEn active_round = _TranslationsActiveRoundEn._(_root);
 	@override late final _TranslationsFeedbackEn feedback = _TranslationsFeedbackEn._(_root);
 	@override late final _TranslationsGpsEn gps = _TranslationsGpsEn._(_root);
@@ -118,10 +119,12 @@ class _TranslationsAuthEn extends TranslationsAuthEs {
 	// Translations
 	@override String get or_sign_in_with => 'Or sign in with';
 	@override String get sign_in_with_google => 'Sign in with Google';
+	@override late final _TranslationsAuthSocialSigninErrorEn social_signin_error = _TranslationsAuthSocialSigninErrorEn._(_root);
 	@override late final _TranslationsAuthSigninEn signin = _TranslationsAuthSigninEn._(_root);
 	@override late final _TranslationsAuthSignupEn signup = _TranslationsAuthSignupEn._(_root);
 	@override late final _TranslationsAuthEmailVerificationEn email_verification = _TranslationsAuthEmailVerificationEn._(_root);
 	@override late final _TranslationsAuthRecoverPasswordEn recover_password = _TranslationsAuthRecoverPasswordEn._(_root);
+	@override late final _TranslationsAuthPhoneAuthEn phone_auth = _TranslationsAuthPhoneAuthEn._(_root);
 }
 
 // Path: common
@@ -135,6 +138,8 @@ class _TranslationsCommonEn extends TranslationsCommonEs {
 	@override String get cancel => 'Cancel';
 	@override String get skip => 'Skip';
 	@override String get error => 'Error';
+	@override String get error_occurred => 'An error occurred';
+	@override String get page_not_found => '404 - Page not found';
 	@override String get success => 'Success';
 	@override String get loading => 'Loading...';
 	@override String get or => 'or';
@@ -179,6 +184,8 @@ class _TranslationsSettingsEn extends TranslationsSettingsEs {
 
 	// Translations
 	@override String get title => 'Settings';
+	@override String get default_user => 'User';
+	@override String get beta_badge => 'Beta';
 	@override late final _TranslationsSettingsSectionsEn sections = _TranslationsSettingsSectionsEn._(_root);
 	@override String get my_bag => 'My bag';
 	@override String get send_feedback => 'Send feedback';
@@ -188,6 +195,7 @@ class _TranslationsSettingsEn extends TranslationsSettingsEs {
 	@override String get disconnect_confirm => 'Are you sure you want to disconnect?';
 	@override String get delete_account => 'Delete account';
 	@override String get delete_account_confirm => 'This action is permanent and will delete all your data. Are you sure you want to continue?';
+	@override late final _TranslationsSettingsDeleteAccountDialogEn delete_account_dialog = _TranslationsSettingsDeleteAccountDialogEn._(_root);
 	@override String get theme_mode => 'Light/Dark mode';
 	@override late final _TranslationsSettingsLocationPermissionEn location_permission = _TranslationsSettingsLocationPermissionEn._(_root);
 	@override late final _TranslationsSettingsNotificationPermissionEn notification_permission = _TranslationsSettingsNotificationPermissionEn._(_root);
@@ -332,6 +340,22 @@ class _TranslationsScoreNamesEn extends TranslationsScoreNamesEs {
 	@override String get bogey => 'Bogey';
 	@override String get double_bogey => 'Double Bogey';
 	@override String get triple_bogey => 'Triple Bogey';
+}
+
+// Path: score_input
+class _TranslationsScoreInputEn extends TranslationsScoreInputEs {
+	_TranslationsScoreInputEn._(TranslationsEn root) : this._root = root, super.internal(root);
+
+	final TranslationsEn _root; // ignore: unused_field
+
+	// Translations
+	@override String get hole_title => 'Hole {holeNumber}';
+	@override String get par_info => 'Par {par}';
+	@override String get par_yards_info => 'Par {par} • {yards} yds';
+	@override String get strokes => 'Strokes';
+	@override String get putts => 'Putts';
+	@override String get penalties => 'Penalties';
+	@override String get save => 'Save';
 }
 
 // Path: active_round
@@ -501,6 +525,19 @@ class _TranslationsOnboardingLoadingEn extends TranslationsOnboardingLoadingEs {
 	@override String get subtitle => 'Wait a few seconds';
 }
 
+// Path: auth.social_signin_error
+class _TranslationsAuthSocialSigninErrorEn extends TranslationsAuthSocialSigninErrorEs {
+	_TranslationsAuthSocialSigninErrorEn._(TranslationsEn root) : this._root = root, super.internal(root);
+
+	final TranslationsEn _root; // ignore: unused_field
+
+	// Translations
+	@override String get google => 'Could not sign in with Google';
+	@override String get apple => 'Could not sign in with Apple';
+	@override String get facebook => 'Could not sign in with Facebook';
+	@override String get google_play => 'Could not sign in with Google Play';
+}
+
 // Path: auth.signin
 class _TranslationsAuthSigninEn extends TranslationsAuthSigninEs {
 	_TranslationsAuthSigninEn._(TranslationsEn root) : this._root = root, super.internal(root);
@@ -509,14 +546,16 @@ class _TranslationsAuthSigninEn extends TranslationsAuthSigninEs {
 
 	// Translations
 	@override String get title => 'Connect your caddie';
-	@override String get subtitle => 'Your account syncs your round and course GPS.';
+	@override String get subtitle => 'Your personal AI caddie';
 	@override String get email_label => 'Email';
-	@override String get email_hint => 'you@email.com';
+	@override String get email_hint => 'Email';
 	@override String get password_label => 'Password';
 	@override String get password_hint => 'Password';
-	@override String get action => 'Sign in';
-	@override String get forgot_password => 'Forgot your password?';
+	@override String get action => 'Continue';
+	@override String get forgot_password => 'Forgot my password';
 	@override String get no_account => 'Don\'t have an account?';
+	@override String get no_account_question => 'Don\'t have an account yet?';
+	@override String get register => 'Sign up';
 	@override String get signup_link => 'Sign up';
 	@override String get error_title => 'Error';
 	@override String get error_message => 'Wrong email or password';
@@ -530,13 +569,15 @@ class _TranslationsAuthSignupEn extends TranslationsAuthSignupEs {
 
 	// Translations
 	@override String get title => 'Create account';
-	@override String get subtitle => 'Your account syncs your round and course GPS.';
+	@override String get subtitle => 'Your personal AI caddie';
 	@override String get email_label => 'Email';
-	@override String get email_hint => 'you@email.com';
+	@override String get email_hint => 'Email';
 	@override String get password_label => 'Password';
 	@override String get password_hint => 'Password';
 	@override String get action => 'Sign up';
 	@override String get has_account => 'Already have an account?';
+	@override String get has_account_question => 'Already have an account?';
+	@override String get signin => 'Sign in';
 	@override String get signin_link => 'Sign in';
 	@override String get error_title => 'Error';
 	@override String get error_message => 'This email already exists or is invalid';
@@ -584,6 +625,28 @@ class _TranslationsAuthRecoverPasswordEn extends TranslationsAuthRecoverPassword
 	@override String get back_to_signin => 'Go to sign in';
 }
 
+// Path: auth.phone_auth
+class _TranslationsAuthPhoneAuthEn extends TranslationsAuthPhoneAuthEs {
+	_TranslationsAuthPhoneAuthEn._(TranslationsEn root) : this._root = root, super.internal(root);
+
+	final TranslationsEn _root; // ignore: unused_field
+
+	// Translations
+	@override String get input_title => 'Phone Authentication';
+	@override String get verify_title => 'Verify OTP';
+	@override String get enter_phone => 'Enter your phone number';
+	@override String get send_code_info => 'We will send you a verification code to confirm your identity';
+	@override String get phone_label => 'Phone Number';
+	@override String get phone_hint => '+1 (555) 123-4567';
+	@override String get phone_required => 'Please enter a phone number';
+	@override String get phone_invalid => 'Please enter a valid phone number';
+	@override String get verification_code => 'Verification Code';
+	@override String get code_sent_to => 'We have sent a verification code to {phone}';
+	@override String get enter_all_digits => 'Please enter all 6 digits';
+	@override String get verify_code => 'Verify Code';
+	@override String get resend_code => 'Resend Code';
+}
+
 // Path: settings.sections
 class _TranslationsSettingsSectionsEn extends TranslationsSettingsSectionsEs {
 	_TranslationsSettingsSectionsEn._(TranslationsEn root) : this._root = root, super.internal(root);
@@ -596,6 +659,19 @@ class _TranslationsSettingsSectionsEn extends TranslationsSettingsSectionsEs {
 	@override String get golf => 'Golf';
 	@override String get help => 'Help & Support';
 	@override String get account => 'Account';
+}
+
+// Path: settings.delete_account_dialog
+class _TranslationsSettingsDeleteAccountDialogEn extends TranslationsSettingsDeleteAccountDialogEs {
+	_TranslationsSettingsDeleteAccountDialogEn._(TranslationsEn root) : this._root = root, super.internal(root);
+
+	final TranslationsEn _root; // ignore: unused_field
+
+	// Translations
+	@override String get title => 'Delete my account?';
+	@override String get warning => 'Warning: this action is irreversible';
+	@override String get confirm => 'Yes, delete';
+	@override String get button_text => 'I want to delete my account';
 }
 
 // Path: settings.location_permission
@@ -820,26 +896,34 @@ extension on TranslationsEn {
 			'onboarding.loading.subtitle' => 'Wait a few seconds',
 			'auth.or_sign_in_with' => 'Or sign in with',
 			'auth.sign_in_with_google' => 'Sign in with Google',
+			'auth.social_signin_error.google' => 'Could not sign in with Google',
+			'auth.social_signin_error.apple' => 'Could not sign in with Apple',
+			'auth.social_signin_error.facebook' => 'Could not sign in with Facebook',
+			'auth.social_signin_error.google_play' => 'Could not sign in with Google Play',
 			'auth.signin.title' => 'Connect your caddie',
-			'auth.signin.subtitle' => 'Your account syncs your round and course GPS.',
+			'auth.signin.subtitle' => 'Your personal AI caddie',
 			'auth.signin.email_label' => 'Email',
-			'auth.signin.email_hint' => 'you@email.com',
+			'auth.signin.email_hint' => 'Email',
 			'auth.signin.password_label' => 'Password',
 			'auth.signin.password_hint' => 'Password',
-			'auth.signin.action' => 'Sign in',
-			'auth.signin.forgot_password' => 'Forgot your password?',
+			'auth.signin.action' => 'Continue',
+			'auth.signin.forgot_password' => 'Forgot my password',
 			'auth.signin.no_account' => 'Don\'t have an account?',
+			'auth.signin.no_account_question' => 'Don\'t have an account yet?',
+			'auth.signin.register' => 'Sign up',
 			'auth.signin.signup_link' => 'Sign up',
 			'auth.signin.error_title' => 'Error',
 			'auth.signin.error_message' => 'Wrong email or password',
 			'auth.signup.title' => 'Create account',
-			'auth.signup.subtitle' => 'Your account syncs your round and course GPS.',
+			'auth.signup.subtitle' => 'Your personal AI caddie',
 			'auth.signup.email_label' => 'Email',
-			'auth.signup.email_hint' => 'you@email.com',
+			'auth.signup.email_hint' => 'Email',
 			'auth.signup.password_label' => 'Password',
 			'auth.signup.password_hint' => 'Password',
 			'auth.signup.action' => 'Sign up',
 			'auth.signup.has_account' => 'Already have an account?',
+			'auth.signup.has_account_question' => 'Already have an account?',
+			'auth.signup.signin' => 'Sign in',
 			'auth.signup.signin_link' => 'Sign in',
 			'auth.signup.error_title' => 'Error',
 			'auth.signup.error_message' => 'This email already exists or is invalid',
@@ -867,10 +951,25 @@ extension on TranslationsEn {
 			'auth.recover_password.success_title' => 'Password changed',
 			'auth.recover_password.success_subtitle' => 'Your password has been updated. Sign in with your new password.',
 			'auth.recover_password.back_to_signin' => 'Go to sign in',
+			'auth.phone_auth.input_title' => 'Phone Authentication',
+			'auth.phone_auth.verify_title' => 'Verify OTP',
+			'auth.phone_auth.enter_phone' => 'Enter your phone number',
+			'auth.phone_auth.send_code_info' => 'We will send you a verification code to confirm your identity',
+			'auth.phone_auth.phone_label' => 'Phone Number',
+			'auth.phone_auth.phone_hint' => '+1 (555) 123-4567',
+			'auth.phone_auth.phone_required' => 'Please enter a phone number',
+			'auth.phone_auth.phone_invalid' => 'Please enter a valid phone number',
+			'auth.phone_auth.verification_code' => 'Verification Code',
+			'auth.phone_auth.code_sent_to' => 'We have sent a verification code to {phone}',
+			'auth.phone_auth.enter_all_digits' => 'Please enter all 6 digits',
+			'auth.phone_auth.verify_code' => 'Verify Code',
+			'auth.phone_auth.resend_code' => 'Resend Code',
 			'common.kContinue' => 'Continue',
 			'common.cancel' => 'Cancel',
 			'common.skip' => 'Skip',
 			'common.error' => 'Error',
+			'common.error_occurred' => 'An error occurred',
+			'common.page_not_found' => '404 - Page not found',
 			'common.success' => 'Success',
 			'common.loading' => 'Loading...',
 			'common.or' => 'or',
@@ -888,6 +987,8 @@ extension on TranslationsEn {
 			'rounds.detail_title' => 'Round details',
 			'rounds.result' => 'Result',
 			'settings.title' => 'Settings',
+			'settings.default_user' => 'User',
+			'settings.beta_badge' => 'Beta',
 			'settings.sections.permissions' => 'Permissions',
 			'settings.sections.preferences' => 'Preferences',
 			'settings.sections.golf' => 'Golf',
@@ -901,6 +1002,10 @@ extension on TranslationsEn {
 			'settings.disconnect_confirm' => 'Are you sure you want to disconnect?',
 			'settings.delete_account' => 'Delete account',
 			'settings.delete_account_confirm' => 'This action is permanent and will delete all your data. Are you sure you want to continue?',
+			'settings.delete_account_dialog.title' => 'Delete my account?',
+			'settings.delete_account_dialog.warning' => 'Warning: this action is irreversible',
+			'settings.delete_account_dialog.confirm' => 'Yes, delete',
+			'settings.delete_account_dialog.button_text' => 'I want to delete my account',
 			'settings.theme_mode' => 'Light/Dark mode',
 			'settings.location_permission.title' => 'Location',
 			'settings.location_permission.subtitle' => 'To measure distances and record shots',
@@ -1007,6 +1112,13 @@ extension on TranslationsEn {
 			'score_names.bogey' => 'Bogey',
 			'score_names.double_bogey' => 'Double Bogey',
 			'score_names.triple_bogey' => 'Triple Bogey',
+			'score_input.hole_title' => 'Hole {holeNumber}',
+			'score_input.par_info' => 'Par {par}',
+			'score_input.par_yards_info' => 'Par {par} • {yards} yds',
+			'score_input.strokes' => 'Strokes',
+			'score_input.putts' => 'Putts',
+			'score_input.penalties' => 'Penalties',
+			'score_input.save' => 'Save',
 			'active_round.title' => 'You have a round in progress',
 			'active_round.message' => ({required Object courseName}) => 'You left an unfinished round at ${courseName}.',
 			'active_round.holes_played' => ({required Object count}) => '${count} of 18 holes played',

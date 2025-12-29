@@ -1,6 +1,7 @@
 import 'package:apparence_kit/core/shared_preferences/shared_preferences.dart';
 import 'package:apparence_kit/core/states/user_state_notifier.dart';
 import 'package:apparence_kit/core/theme/extensions/theme_extension.dart';
+import 'package:apparence_kit/core/widgets/styled_dialog.dart';
 import 'package:apparence_kit/i18n/translations.g.dart';
 import 'package:apparence_kit/modules/round/domain/course.dart';
 import 'package:apparence_kit/modules/round/domain/tee.dart';
@@ -217,24 +218,26 @@ class SelectCoursePage extends ConsumerWidget {
 /// Returns true if user clicked "continue" (regardless of permission outcome).
 Future<bool> _showNotificationPermissionDialog(BuildContext context) async {
   final tr = Translations.of(context).select_course;
+  final colors = context.colors;
 
   final result = await showDialog<String>(
     context: context,
-    builder: (context) => AlertDialog(
-      title: Text(tr.notification_permission_title),
-      content: Text(tr.notification_permission_message),
+    builder: (ctx) => StyledDialog(
+      icon: Icon(
+        Icons.notifications_outlined,
+        size: 48,
+        color: colors.primary,
+      ),
+      title: tr.notification_permission_title,
+      content: tr.notification_permission_message,
       actions: [
-        TextButton(
-          onPressed: () => Navigator.of(context).pop('cancel'),
-          child: Text(tr.notification_permission_cancel),
+        StyledDialogAction.secondary(
+          label: tr.notification_permission_cancel,
+          onTap: () => Navigator.of(ctx).pop('cancel'),
         ),
-        TextButton(
-          onPressed: () => Navigator.of(context).pop('settings'),
-          child: Text(tr.notification_permission_settings),
-        ),
-        FilledButton(
-          onPressed: () => Navigator.of(context).pop('continue'),
-          child: Text(tr.notification_permission_continue),
+        StyledDialogAction.primary(
+          label: tr.notification_permission_continue,
+          onTap: () => Navigator.of(ctx).pop('continue'),
         ),
       ],
     ),
@@ -254,23 +257,29 @@ Future<bool> _showNotificationPermissionDialog(BuildContext context) async {
 /// Shows a confirmation dialog when enabling GPS for a course far from user's location.
 Future<bool> _showFarCourseGpsConfirmation(BuildContext context, double distanceKm) async {
   final tr = Translations.of(context).select_course;
+  final colors = context.colors;
   final formattedDistance = distanceKm < 1
       ? '${(distanceKm * 1000).round()} m'
       : '${distanceKm.toStringAsFixed(1)} km';
 
   final result = await showDialog<bool>(
     context: context,
-    builder: (context) => AlertDialog(
-      title: Text(tr.far_course_gps_title),
-      content: Text(tr.far_course_gps_message.replaceAll('{distance}', formattedDistance)),
+    builder: (ctx) => StyledDialog(
+      icon: Icon(
+        Icons.location_on_outlined,
+        size: 48,
+        color: colors.warning,
+      ),
+      title: tr.far_course_gps_title,
+      content: tr.far_course_gps_message.replaceAll('{distance}', formattedDistance),
       actions: [
-        TextButton(
-          onPressed: () => Navigator.of(context).pop(false),
-          child: Text(tr.far_course_gps_disable),
+        StyledDialogAction.secondary(
+          label: tr.far_course_gps_disable,
+          onTap: () => Navigator.of(ctx).pop(false),
         ),
-        FilledButton(
-          onPressed: () => Navigator.of(context).pop(true),
-          child: Text(tr.far_course_gps_enable),
+        StyledDialogAction.primary(
+          label: tr.far_course_gps_enable,
+          onTap: () => Navigator.of(ctx).pop(true),
         ),
       ],
     ),

@@ -1,6 +1,6 @@
 import 'package:apparence_kit/core/data/api/analytics_api.dart';
-import 'package:apparence_kit/i18n/translations.g.dart';
 import 'package:apparence_kit/core/theme/extensions/theme_extension.dart';
+import 'package:apparence_kit/i18n/translations.g.dart';
 import 'package:apparence_kit/modules/onboarding/ui/widgets/onboarding_background.dart';
 import 'package:apparence_kit/modules/onboarding/ui/widgets/onboarding_progress.dart';
 import 'package:flutter/material.dart';
@@ -39,12 +39,14 @@ class _OnboardingWelcomeStepState extends ConsumerState<OnboardingWelcomeStep> {
   @override
   Widget build(BuildContext context) {
     final tr = Translations.of(context).onboarding.welcome;
+    final colors = context.colors;
+
     return OnboardingBackground(
       child: SafeArea(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            OnboardingProgress(value: 0.5),
+            const OnboardingProgress(value: 0.5),
             const SizedBox(height: 32),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 32),
@@ -66,6 +68,7 @@ class _OnboardingWelcomeStepState extends ConsumerState<OnboardingWelcomeStep> {
                   textAlign: TextAlign.center,
                   style: context.textTheme.headlineMedium?.copyWith(
                     fontWeight: FontWeight.w600,
+                    color: colors.onBackground,
                   ),
                 ),
               ),
@@ -90,7 +93,7 @@ class _OnboardingWelcomeStepState extends ConsumerState<OnboardingWelcomeStep> {
                   tr.subtitle,
                   textAlign: TextAlign.center,
                   style: context.textTheme.bodyLarge?.copyWith(
-                    color: context.colors.onBackground.withOpacity(0.7),
+                    color: colors.textSecondary,
                     height: 1.5,
                   ),
                 ),
@@ -116,7 +119,7 @@ class _OnboardingWelcomeStepState extends ConsumerState<OnboardingWelcomeStep> {
                   tr.chatgpt_info,
                   textAlign: TextAlign.center,
                   style: context.textTheme.bodyMedium?.copyWith(
-                    color: context.colors.primary,
+                    color: colors.primary,
                     fontWeight: FontWeight.w600,
                   ),
                 ),
@@ -157,7 +160,7 @@ class _OnboardingWelcomeStepState extends ConsumerState<OnboardingWelcomeStep> {
                   tr.setup_time,
                   textAlign: TextAlign.center,
                   style: context.textTheme.bodySmall?.copyWith(
-                    color: context.colors.onBackground.withOpacity(0.5),
+                    color: colors.textTertiary,
                   ),
                 ),
               ),
@@ -172,11 +175,11 @@ class _OnboardingWelcomeStepState extends ConsumerState<OnboardingWelcomeStep> {
                     duration: Duration(milliseconds: 200),
                   ),
                 ],
-                child: ElevatedButton(
+                child: _OnboardingCTAButton(
                   onPressed: () {
                     Navigator.of(context).pushReplacementNamed(widget.nextRoute);
                   },
-                  child: Text(tr.action),
+                  text: tr.action,
                 ),
               ),
             ),
@@ -225,12 +228,14 @@ class _OnboardingAppPurposeStepState
   @override
   Widget build(BuildContext context) {
     final tr = Translations.of(context).onboarding.app_purpose;
+    final colors = context.colors;
+
     return OnboardingBackground(
       child: SafeArea(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            OnboardingProgress(value: 1.0),
+            const OnboardingProgress(value: 1.0),
             const SizedBox(height: 32),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 32),
@@ -252,6 +257,7 @@ class _OnboardingAppPurposeStepState
                   textAlign: TextAlign.center,
                   style: context.textTheme.headlineMedium?.copyWith(
                     fontWeight: FontWeight.w600,
+                    color: colors.onBackground,
                   ),
                 ),
               ),
@@ -285,6 +291,7 @@ class _OnboardingAppPurposeStepState
               ),
             ),
             const Spacer(),
+            // Key messages card with Level 3 Showcase Glass
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 32),
               child: Animate(
@@ -297,17 +304,42 @@ class _OnboardingAppPurposeStepState
                 child: Container(
                   padding: const EdgeInsets.all(20),
                   decoration: BoxDecoration(
-                    color: context.colors.primary.withOpacity(0.1),
+                    color: const Color(0xFF141A24).withValues(alpha: 0.90),
                     borderRadius: BorderRadius.circular(16),
+                    border: Border.all(
+                      color: Colors.white.withValues(alpha: 0.08),
+                    ),
                   ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                  child: Stack(
                     children: [
-                      _KeyMessageItem(text: tr.key_message_1),
-                      const SizedBox(height: 12),
-                      _KeyMessageItem(text: tr.key_message_2, isHighlighted: true),
-                      const SizedBox(height: 12),
-                      _KeyMessageItem(text: tr.key_message_3),
+                      // Inset shadow overlay for glass depth
+                      Positioned.fill(
+                        child: DecoratedBox(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(16),
+                            gradient: LinearGradient(
+                              begin: Alignment.topLeft,
+                              end: Alignment.bottomRight,
+                              colors: [
+                                Colors.black.withValues(alpha: 0.2),
+                                Colors.black.withValues(alpha: 0.05),
+                                Colors.transparent,
+                              ],
+                              stops: const [0.0, 0.3, 0.6],
+                            ),
+                          ),
+                        ),
+                      ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          _KeyMessageItem(text: tr.key_message_1),
+                          const SizedBox(height: 12),
+                          _KeyMessageItem(text: tr.key_message_2, isHighlighted: true),
+                          const SizedBox(height: 12),
+                          _KeyMessageItem(text: tr.key_message_3),
+                        ],
+                      ),
                     ],
                   ),
                 ),
@@ -323,9 +355,9 @@ class _OnboardingAppPurposeStepState
                     duration: Duration(milliseconds: 200),
                   ),
                 ],
-                child: ElevatedButton(
+                child: _OnboardingCTAButton(
                   onPressed: _completeOnboarding,
-                  child: Text(tr.action),
+                  text: tr.action,
                 ),
               ),
             ),
@@ -409,12 +441,14 @@ class _OnboardingLocationPermissionStepState
   @override
   Widget build(BuildContext context) {
     final tr = Translations.of(context).onboarding.location_permission;
+    final colors = context.colors;
+
     return OnboardingBackground(
       child: SafeArea(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            OnboardingProgress(value: 1.0),
+            const OnboardingProgress(value: 1.0),
             const SizedBox(height: 32),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 32),
@@ -436,6 +470,7 @@ class _OnboardingLocationPermissionStepState
                   textAlign: TextAlign.center,
                   style: context.textTheme.headlineMedium?.copyWith(
                     fontWeight: FontWeight.w600,
+                    color: colors.onBackground,
                   ),
                 ),
               ),
@@ -454,7 +489,7 @@ class _OnboardingLocationPermissionStepState
                   tr.description,
                   textAlign: TextAlign.center,
                   style: context.textTheme.bodyLarge?.copyWith(
-                    color: context.colors.onBackground.withOpacity(0.7),
+                    color: colors.textSecondary,
                   ),
                 ),
               ),
@@ -509,7 +544,7 @@ class _OnboardingLocationPermissionStepState
                   tr.reassurance,
                   textAlign: TextAlign.center,
                   style: context.textTheme.bodyMedium?.copyWith(
-                    color: context.colors.onBackground.withOpacity(0.5),
+                    color: colors.textTertiary,
                     fontStyle: FontStyle.italic,
                   ),
                 ),
@@ -525,9 +560,9 @@ class _OnboardingLocationPermissionStepState
                     duration: Duration(milliseconds: 200),
                   ),
                 ],
-                child: ElevatedButton(
+                child: _OnboardingCTAButton(
                   onPressed: () => _requestPermission(context),
-                  child: Text(tr.action),
+                  text: tr.action,
                 ),
               ),
             ),
@@ -541,9 +576,9 @@ class _OnboardingLocationPermissionStepState
                     duration: Duration(milliseconds: 200),
                   ),
                 ],
-                child: TextButton(
+                child: _OnboardingGhostButton(
                   onPressed: _skipPermission,
-                  child: Text(tr.skip),
+                  text: tr.skip,
                 ),
               ),
             ),
@@ -555,6 +590,7 @@ class _OnboardingLocationPermissionStepState
   }
 }
 
+/// Bullet point widget for onboarding screens (dark theme).
 class _BulletPoint extends StatelessWidget {
   final IconData icon;
   final String text;
@@ -566,18 +602,29 @@ class _BulletPoint extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = context.colors;
+
     return Row(
       children: [
-        Icon(
-          icon,
-          size: 28,
-          color: context.colors.primary,
+        Container(
+          width: 44,
+          height: 44,
+          decoration: BoxDecoration(
+            color: colors.primary.withValues(alpha: 0.15),
+            borderRadius: BorderRadius.circular(12),
+          ),
+          child: Icon(
+            icon,
+            size: 24,
+            color: colors.primary,
+          ),
         ),
         const SizedBox(width: 16),
         Expanded(
           child: Text(
             text,
             style: context.textTheme.bodyLarge?.copyWith(
+              color: colors.onBackground,
               height: 1.3,
             ),
           ),
@@ -587,6 +634,7 @@ class _BulletPoint extends StatelessWidget {
   }
 }
 
+/// Key message item for onboarding glass card.
 class _KeyMessageItem extends StatelessWidget {
   final String text;
   final bool isHighlighted;
@@ -598,6 +646,8 @@ class _KeyMessageItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = context.colors;
+
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -606,8 +656,14 @@ class _KeyMessageItem extends StatelessWidget {
           height: 6,
           margin: const EdgeInsets.only(top: 7),
           decoration: BoxDecoration(
-            color: context.colors.primary,
+            color: colors.primary,
             shape: BoxShape.circle,
+            boxShadow: [
+              BoxShadow(
+                color: colors.primary.withValues(alpha: 0.4),
+                blurRadius: 4,
+              ),
+            ],
           ),
         ),
         const SizedBox(width: 12),
@@ -616,12 +672,100 @@ class _KeyMessageItem extends StatelessWidget {
             text,
             style: context.textTheme.bodyMedium?.copyWith(
               fontWeight: isHighlighted ? FontWeight.w600 : FontWeight.normal,
-              color: context.colors.primary,
+              color: isHighlighted ? colors.primary : colors.textSecondary,
               height: 1.4,
             ),
           ),
         ),
       ],
+    );
+  }
+}
+
+/// Primary CTA button following design system.
+/// Uses gradient background with glow effect.
+class _OnboardingCTAButton extends StatelessWidget {
+  final VoidCallback onPressed;
+  final String text;
+
+  const _OnboardingCTAButton({
+    required this.onPressed,
+    required this.text,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final colors = context.colors;
+
+    return GestureDetector(
+      onTap: onPressed,
+      child: Container(
+        height: 52,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(12),
+          gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [
+              colors.primary.withValues(alpha: 0.9),
+              colors.primary,
+            ],
+          ),
+          boxShadow: [
+            BoxShadow(
+              color: colors.primary.withValues(alpha: 0.3),
+              blurRadius: 12,
+              offset: const Offset(0, 4),
+            ),
+          ],
+        ),
+        child: Center(
+          child: Text(
+            text,
+            style: context.textTheme.titleMedium?.copyWith(
+              color: colors.onPrimary,
+              fontWeight: FontWeight.w600,
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+/// Ghost/secondary button following design system.
+class _OnboardingGhostButton extends StatelessWidget {
+  final VoidCallback onPressed;
+  final String text;
+
+  const _OnboardingGhostButton({
+    required this.onPressed,
+    required this.text,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final colors = context.colors;
+
+    return GestureDetector(
+      onTap: onPressed,
+      child: Container(
+        height: 44,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(12),
+          border: Border.all(
+            color: Colors.white.withValues(alpha: 0.15),
+          ),
+        ),
+        child: Center(
+          child: Text(
+            text,
+            style: context.textTheme.bodyLarge?.copyWith(
+              color: colors.textSecondary,
+            ),
+          ),
+        ),
+      ),
     );
   }
 }

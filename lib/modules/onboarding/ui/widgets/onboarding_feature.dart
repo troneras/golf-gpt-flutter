@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 
 /// A generic onboarding step widget with text and image.
+/// Follows the design system: dark theme, proper text hierarchy, CTA with glow.
 class OnboardingStep extends StatelessWidget {
   final String? title;
   final Widget? titleWidget;
@@ -37,18 +38,12 @@ class OnboardingStep extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = context.colors;
+
     final content = ResponsiveLayout(
-      // medium: OnboardingStepLarge(
-      //   title: title,
-      //   imgPath: imgPath,
-      //   description: description,
-      //   btnText: btnText,
-      //   nextRoute: nextRoute,
-      //   onNext: onNext,
-      //   progress: progress,
-      // ),
       small: ColoredBox(
-        color: withBg == true ? Colors.transparent : const Color(0xFFFAF9FD),
+        // Always use dark background per design system
+        color: colors.background,
         child: SafeArea(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -77,7 +72,10 @@ class OnboardingStep extends StatelessWidget {
                         ? Text(
                             title!,
                             textAlign: TextAlign.center,
-                            style: context.textTheme.headlineMedium?.copyWith(),
+                            style: context.textTheme.headlineMedium?.copyWith(
+                              fontWeight: FontWeight.w600,
+                              color: colors.onBackground,
+                            ),
                           )
                         : titleWidget!,
                   ),
@@ -106,8 +104,8 @@ class OnboardingStep extends StatelessWidget {
                       description,
                       textAlign: TextAlign.center,
                       style: context.textTheme.bodyLarge?.copyWith(
-                        color: context.colors.onBackground.withOpacity(.6),
-                        // height: 1.2,
+                        color: colors.textSecondary,
+                        height: 1.5,
                       ),
                     ),
                   ),
@@ -157,15 +155,45 @@ class OnboardingStep extends StatelessWidget {
                       end: Offset.zero,
                     ),
                   ],
-                  child: ElevatedButton(
-                    onPressed: () {
+                  // CTA button with gradient and glow (design system)
+                  child: GestureDetector(
+                    onTap: () {
                       if (onNext != null) {
                         onNext!.call();
                       } else {
                         Navigator.of(context).pushReplacementNamed(nextRoute);
                       }
                     },
-                    child: Text(btnText),
+                    child: Container(
+                      height: 52,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(12),
+                        gradient: LinearGradient(
+                          begin: Alignment.topCenter,
+                          end: Alignment.bottomCenter,
+                          colors: [
+                            colors.primary.withValues(alpha: 0.9),
+                            colors.primary,
+                          ],
+                        ),
+                        boxShadow: [
+                          BoxShadow(
+                            color: colors.primary.withValues(alpha: 0.3),
+                            blurRadius: 12,
+                            offset: const Offset(0, 4),
+                          ),
+                        ],
+                      ),
+                      child: Center(
+                        child: Text(
+                          btnText,
+                          style: context.textTheme.titleMedium?.copyWith(
+                            color: colors.onPrimary,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                      ),
+                    ),
                   ),
                 ),
               ),

@@ -1,4 +1,5 @@
 import 'package:apparence_kit/core/theme/extensions/theme_extension.dart';
+import 'package:apparence_kit/i18n/translations.g.dart';
 import 'package:apparence_kit/modules/authentication/providers/phone_auth_notifier.dart';
 import 'package:apparence_kit/modules/authentication/ui/widgets/otp_input.dart';
 import 'package:flutter/material.dart';
@@ -25,6 +26,7 @@ class _OtpVerificationComponentState
   @override
   Widget build(BuildContext context) {
     final state = ref.watch(phoneAuthProvider);
+    final tr = Translations.of(context).auth.phone_auth;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -33,7 +35,7 @@ class _OtpVerificationComponentState
         Icon(Icons.sms_outlined, size: 72, color: context.colors.primary),
         const SizedBox(height: 24),
         Text(
-          'Verification Code',
+          tr.verification_code,
           style: context.textTheme.titleLarge?.copyWith(
             fontWeight: FontWeight.w600,
           ),
@@ -41,7 +43,7 @@ class _OtpVerificationComponentState
         ),
         const SizedBox(height: 12),
         Text(
-          'We have sent a verification code to ${state.phoneNumber}',
+          tr.code_sent_to.replaceAll('{phone}', state.phoneNumber),
           style: context.textTheme.bodyMedium?.copyWith(
             color: context.colors.onBackground.withValues(alpha: .7),
           ),
@@ -74,8 +76,8 @@ class _OtpVerificationComponentState
                     ref.read(phoneAuthProvider.notifier).verifyOtp(otp);
                   } else {
                     ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(
-                        content: Text('Please enter all 6 digits'),
+                      SnackBar(
+                        content: Text(tr.enter_all_digits),
                       ),
                     );
                   }
@@ -100,7 +102,7 @@ class _OtpVerificationComponentState
                     valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
                   ),
                 )
-              : const Text('Verify Code'),
+              : Text(tr.verify_code),
         ),
         const SizedBox(height: 16),
         TextButton(
@@ -115,7 +117,7 @@ class _OtpVerificationComponentState
             padding: const EdgeInsets.symmetric(vertical: 12),
           ),
           child: Text(
-            'Resend Code',
+            tr.resend_code,
             style: context.textTheme.bodyMedium?.copyWith(
               color: context.colors.primary,
               fontWeight: FontWeight.w600,

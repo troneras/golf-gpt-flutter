@@ -1,5 +1,6 @@
 import 'package:apparence_kit/core/theme/extensions/theme_extension.dart';
 import 'package:apparence_kit/core/widgets/responsive_layout.dart';
+import 'package:apparence_kit/i18n/translations.g.dart';
 import 'package:apparence_kit/modules/authentication/providers/models/phone_signin_state.dart';
 import 'package:apparence_kit/modules/authentication/providers/phone_auth_notifier.dart';
 import 'package:apparence_kit/modules/authentication/ui/components/otp_verification.dart';
@@ -18,6 +19,7 @@ class _PhoneAuthPageState extends ConsumerState<PhoneAuthPage> {
   @override
   Widget build(BuildContext context) {
     final state = ref.watch(phoneAuthProvider);
+    final tr = Translations.of(context).auth.phone_auth;
 
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
@@ -25,8 +27,8 @@ class _PhoneAuthPageState extends ConsumerState<PhoneAuthPage> {
         backgroundColor: context.colors.background,
         appBar: AppBar(
           title: switch (state) {
-            PhoneAuthInputPhoneState() => const Text('Phone Authentication'),
-            PhoneAuthVerifyOtpState() => const Text('Verify OTP'),
+            PhoneAuthInputPhoneState() => Text(tr.input_title),
+            PhoneAuthVerifyOtpState() => Text(tr.verify_title),
           },
           centerTitle: true,
           elevation: 0,

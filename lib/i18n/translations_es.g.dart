@@ -53,6 +53,7 @@ class Translations with BaseTranslations<AppLocale, Translations> {
 	late final TranslationsRoundInProgressEs round_in_progress = TranslationsRoundInProgressEs.internal(_root);
 	late final TranslationsRoundSummaryEs round_summary = TranslationsRoundSummaryEs.internal(_root);
 	late final TranslationsScoreNamesEs score_names = TranslationsScoreNamesEs.internal(_root);
+	late final TranslationsScoreInputEs score_input = TranslationsScoreInputEs.internal(_root);
 	late final TranslationsActiveRoundEs active_round = TranslationsActiveRoundEs.internal(_root);
 	late final TranslationsFeedbackEs feedback = TranslationsFeedbackEs.internal(_root);
 	late final TranslationsGpsEs gps = TranslationsGpsEs.internal(_root);
@@ -160,10 +161,12 @@ class TranslationsAuthEs {
 	/// es: 'Iniciar sesion con Google'
 	String get sign_in_with_google => 'Iniciar sesion con Google';
 
+	late final TranslationsAuthSocialSigninErrorEs social_signin_error = TranslationsAuthSocialSigninErrorEs.internal(_root);
 	late final TranslationsAuthSigninEs signin = TranslationsAuthSigninEs.internal(_root);
 	late final TranslationsAuthSignupEs signup = TranslationsAuthSignupEs.internal(_root);
 	late final TranslationsAuthEmailVerificationEs email_verification = TranslationsAuthEmailVerificationEs.internal(_root);
 	late final TranslationsAuthRecoverPasswordEs recover_password = TranslationsAuthRecoverPasswordEs.internal(_root);
+	late final TranslationsAuthPhoneAuthEs phone_auth = TranslationsAuthPhoneAuthEs.internal(_root);
 }
 
 // Path: common
@@ -185,6 +188,12 @@ class TranslationsCommonEs {
 
 	/// es: 'Error'
 	String get error => 'Error';
+
+	/// es: 'Ha ocurrido un error'
+	String get error_occurred => 'Ha ocurrido un error';
+
+	/// es: '404 - Pagina no encontrada'
+	String get page_not_found => '404 - Pagina no encontrada';
 
 	/// es: 'Exito'
 	String get success => 'Exito';
@@ -264,6 +273,12 @@ class TranslationsSettingsEs {
 	/// es: 'Ajustes'
 	String get title => 'Ajustes';
 
+	/// es: 'Usuario'
+	String get default_user => 'Usuario';
+
+	/// es: 'Beta'
+	String get beta_badge => 'Beta';
+
 	late final TranslationsSettingsSectionsEs sections = TranslationsSettingsSectionsEs.internal(_root);
 
 	/// es: 'Mi bolsa'
@@ -289,6 +304,8 @@ class TranslationsSettingsEs {
 
 	/// es: 'Esta accion es permanente y eliminara todos tus datos. Seguro que quieres continuar?'
 	String get delete_account_confirm => 'Esta accion es permanente y eliminara todos tus datos. Seguro que quieres continuar?';
+
+	late final TranslationsSettingsDeleteAccountDialogEs delete_account_dialog = TranslationsSettingsDeleteAccountDialogEs.internal(_root);
 
 	/// es: 'Modo claro/oscuro'
 	String get theme_mode => 'Modo claro/oscuro';
@@ -630,6 +647,36 @@ class TranslationsScoreNamesEs {
 	String get triple_bogey => 'Triple Bogey';
 }
 
+// Path: score_input
+class TranslationsScoreInputEs {
+	TranslationsScoreInputEs.internal(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+
+	/// es: 'Hoyo {holeNumber}'
+	String get hole_title => 'Hoyo {holeNumber}';
+
+	/// es: 'Par {par}'
+	String get par_info => 'Par {par}';
+
+	/// es: 'Par {par} • {yards} yds'
+	String get par_yards_info => 'Par {par} • {yards} yds';
+
+	/// es: 'Golpes'
+	String get strokes => 'Golpes';
+
+	/// es: 'Putts'
+	String get putts => 'Putts';
+
+	/// es: 'Penaltis'
+	String get penalties => 'Penaltis';
+
+	/// es: 'Guardar'
+	String get save => 'Guardar';
+}
+
 // Path: active_round
 class TranslationsActiveRoundEs {
 	TranslationsActiveRoundEs.internal(this._root);
@@ -931,6 +978,27 @@ class TranslationsOnboardingLoadingEs {
 	String get subtitle => 'Espera unos segundos';
 }
 
+// Path: auth.social_signin_error
+class TranslationsAuthSocialSigninErrorEs {
+	TranslationsAuthSocialSigninErrorEs.internal(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+
+	/// es: 'No se pudo iniciar sesion con Google'
+	String get google => 'No se pudo iniciar sesion con Google';
+
+	/// es: 'No se pudo iniciar sesion con Apple'
+	String get apple => 'No se pudo iniciar sesion con Apple';
+
+	/// es: 'No se pudo iniciar sesion con Facebook'
+	String get facebook => 'No se pudo iniciar sesion con Facebook';
+
+	/// es: 'No se pudo iniciar sesion con Google Play'
+	String get google_play => 'No se pudo iniciar sesion con Google Play';
+}
+
 // Path: auth.signin
 class TranslationsAuthSigninEs {
 	TranslationsAuthSigninEs.internal(this._root);
@@ -942,14 +1010,14 @@ class TranslationsAuthSigninEs {
 	/// es: 'Conecta tu caddie'
 	String get title => 'Conecta tu caddie';
 
-	/// es: 'Tu cuenta sincroniza tu ronda y el GPS del campo.'
-	String get subtitle => 'Tu cuenta sincroniza tu ronda y el GPS del campo.';
+	/// es: 'Tu caddie de IA personal'
+	String get subtitle => 'Tu caddie de IA personal';
 
 	/// es: 'Correo electronico'
 	String get email_label => 'Correo electronico';
 
-	/// es: 'tu@email.com'
-	String get email_hint => 'tu@email.com';
+	/// es: 'Correo electronico'
+	String get email_hint => 'Correo electronico';
 
 	/// es: 'Contrasena'
 	String get password_label => 'Contrasena';
@@ -957,14 +1025,20 @@ class TranslationsAuthSigninEs {
 	/// es: 'Contrasena'
 	String get password_hint => 'Contrasena';
 
-	/// es: 'Entrar'
-	String get action => 'Entrar';
+	/// es: 'Continuar'
+	String get action => 'Continuar';
 
-	/// es: 'Olvidaste tu contrasena?'
-	String get forgot_password => 'Olvidaste tu contrasena?';
+	/// es: 'Olvide mi contrasena'
+	String get forgot_password => 'Olvide mi contrasena';
 
 	/// es: 'No tienes cuenta?'
 	String get no_account => 'No tienes cuenta?';
+
+	/// es: 'Aun no tienes cuenta?'
+	String get no_account_question => 'Aun no tienes cuenta?';
+
+	/// es: 'Registrate'
+	String get register => 'Registrate';
 
 	/// es: 'Registrate'
 	String get signup_link => 'Registrate';
@@ -987,14 +1061,14 @@ class TranslationsAuthSignupEs {
 	/// es: 'Crear cuenta'
 	String get title => 'Crear cuenta';
 
-	/// es: 'Tu cuenta sincroniza tu ronda y el GPS del campo.'
-	String get subtitle => 'Tu cuenta sincroniza tu ronda y el GPS del campo.';
+	/// es: 'Tu caddie de IA personal'
+	String get subtitle => 'Tu caddie de IA personal';
 
 	/// es: 'Correo electronico'
 	String get email_label => 'Correo electronico';
 
-	/// es: 'tu@email.com'
-	String get email_hint => 'tu@email.com';
+	/// es: 'Correo electronico'
+	String get email_hint => 'Correo electronico';
 
 	/// es: 'Contrasena'
 	String get password_label => 'Contrasena';
@@ -1007,6 +1081,12 @@ class TranslationsAuthSignupEs {
 
 	/// es: 'Ya tienes cuenta?'
 	String get has_account => 'Ya tienes cuenta?';
+
+	/// es: 'Ya tienes cuenta?'
+	String get has_account_question => 'Ya tienes cuenta?';
+
+	/// es: 'Inicia sesion'
+	String get signin => 'Inicia sesion';
 
 	/// es: 'Inicia sesion'
 	String get signin_link => 'Inicia sesion';
@@ -1108,6 +1188,54 @@ class TranslationsAuthRecoverPasswordEs {
 	String get back_to_signin => 'Ir a iniciar sesion';
 }
 
+// Path: auth.phone_auth
+class TranslationsAuthPhoneAuthEs {
+	TranslationsAuthPhoneAuthEs.internal(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+
+	/// es: 'Autenticacion por telefono'
+	String get input_title => 'Autenticacion por telefono';
+
+	/// es: 'Verificar OTP'
+	String get verify_title => 'Verificar OTP';
+
+	/// es: 'Ingresa tu numero de telefono'
+	String get enter_phone => 'Ingresa tu numero de telefono';
+
+	/// es: 'Te enviaremos un codigo de verificacion para confirmar tu identidad'
+	String get send_code_info => 'Te enviaremos un codigo de verificacion para confirmar tu identidad';
+
+	/// es: 'Numero de telefono'
+	String get phone_label => 'Numero de telefono';
+
+	/// es: '+1 (555) 123-4567'
+	String get phone_hint => '+1 (555) 123-4567';
+
+	/// es: 'Por favor ingresa un numero de telefono'
+	String get phone_required => 'Por favor ingresa un numero de telefono';
+
+	/// es: 'Por favor ingresa un numero de telefono valido'
+	String get phone_invalid => 'Por favor ingresa un numero de telefono valido';
+
+	/// es: 'Codigo de verificacion'
+	String get verification_code => 'Codigo de verificacion';
+
+	/// es: 'Hemos enviado un codigo de verificacion a {phone}'
+	String get code_sent_to => 'Hemos enviado un codigo de verificacion a {phone}';
+
+	/// es: 'Por favor ingresa los 6 digitos'
+	String get enter_all_digits => 'Por favor ingresa los 6 digitos';
+
+	/// es: 'Verificar codigo'
+	String get verify_code => 'Verificar codigo';
+
+	/// es: 'Reenviar codigo'
+	String get resend_code => 'Reenviar codigo';
+}
+
 // Path: settings.sections
 class TranslationsSettingsSectionsEs {
 	TranslationsSettingsSectionsEs.internal(this._root);
@@ -1130,6 +1258,27 @@ class TranslationsSettingsSectionsEs {
 
 	/// es: 'Cuenta'
 	String get account => 'Cuenta';
+}
+
+// Path: settings.delete_account_dialog
+class TranslationsSettingsDeleteAccountDialogEs {
+	TranslationsSettingsDeleteAccountDialogEs.internal(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+
+	/// es: 'Eliminar mi cuenta?'
+	String get title => 'Eliminar mi cuenta?';
+
+	/// es: 'Atencion: esta accion es irreversible'
+	String get warning => 'Atencion: esta accion es irreversible';
+
+	/// es: 'Si, eliminar'
+	String get confirm => 'Si, eliminar';
+
+	/// es: 'Quiero eliminar mi cuenta'
+	String get button_text => 'Quiero eliminar mi cuenta';
 }
 
 // Path: settings.location_permission
@@ -1480,26 +1629,34 @@ extension on Translations {
 			'onboarding.loading.subtitle' => 'Espera unos segundos',
 			'auth.or_sign_in_with' => 'O inicia sesion con',
 			'auth.sign_in_with_google' => 'Iniciar sesion con Google',
+			'auth.social_signin_error.google' => 'No se pudo iniciar sesion con Google',
+			'auth.social_signin_error.apple' => 'No se pudo iniciar sesion con Apple',
+			'auth.social_signin_error.facebook' => 'No se pudo iniciar sesion con Facebook',
+			'auth.social_signin_error.google_play' => 'No se pudo iniciar sesion con Google Play',
 			'auth.signin.title' => 'Conecta tu caddie',
-			'auth.signin.subtitle' => 'Tu cuenta sincroniza tu ronda y el GPS del campo.',
+			'auth.signin.subtitle' => 'Tu caddie de IA personal',
 			'auth.signin.email_label' => 'Correo electronico',
-			'auth.signin.email_hint' => 'tu@email.com',
+			'auth.signin.email_hint' => 'Correo electronico',
 			'auth.signin.password_label' => 'Contrasena',
 			'auth.signin.password_hint' => 'Contrasena',
-			'auth.signin.action' => 'Entrar',
-			'auth.signin.forgot_password' => 'Olvidaste tu contrasena?',
+			'auth.signin.action' => 'Continuar',
+			'auth.signin.forgot_password' => 'Olvide mi contrasena',
 			'auth.signin.no_account' => 'No tienes cuenta?',
+			'auth.signin.no_account_question' => 'Aun no tienes cuenta?',
+			'auth.signin.register' => 'Registrate',
 			'auth.signin.signup_link' => 'Registrate',
 			'auth.signin.error_title' => 'Error',
 			'auth.signin.error_message' => 'Email o contrasena incorrectos',
 			'auth.signup.title' => 'Crear cuenta',
-			'auth.signup.subtitle' => 'Tu cuenta sincroniza tu ronda y el GPS del campo.',
+			'auth.signup.subtitle' => 'Tu caddie de IA personal',
 			'auth.signup.email_label' => 'Correo electronico',
-			'auth.signup.email_hint' => 'tu@email.com',
+			'auth.signup.email_hint' => 'Correo electronico',
 			'auth.signup.password_label' => 'Contrasena',
 			'auth.signup.password_hint' => 'Contrasena',
 			'auth.signup.action' => 'Registrarse',
 			'auth.signup.has_account' => 'Ya tienes cuenta?',
+			'auth.signup.has_account_question' => 'Ya tienes cuenta?',
+			'auth.signup.signin' => 'Inicia sesion',
 			'auth.signup.signin_link' => 'Inicia sesion',
 			'auth.signup.error_title' => 'Error',
 			'auth.signup.error_message' => 'Este correo ya existe o es invalido',
@@ -1527,10 +1684,25 @@ extension on Translations {
 			'auth.recover_password.success_title' => 'Contrasena cambiada',
 			'auth.recover_password.success_subtitle' => 'Tu contrasena ha sido actualizada. Inicia sesion con tu nueva contrasena.',
 			'auth.recover_password.back_to_signin' => 'Ir a iniciar sesion',
+			'auth.phone_auth.input_title' => 'Autenticacion por telefono',
+			'auth.phone_auth.verify_title' => 'Verificar OTP',
+			'auth.phone_auth.enter_phone' => 'Ingresa tu numero de telefono',
+			'auth.phone_auth.send_code_info' => 'Te enviaremos un codigo de verificacion para confirmar tu identidad',
+			'auth.phone_auth.phone_label' => 'Numero de telefono',
+			'auth.phone_auth.phone_hint' => '+1 (555) 123-4567',
+			'auth.phone_auth.phone_required' => 'Por favor ingresa un numero de telefono',
+			'auth.phone_auth.phone_invalid' => 'Por favor ingresa un numero de telefono valido',
+			'auth.phone_auth.verification_code' => 'Codigo de verificacion',
+			'auth.phone_auth.code_sent_to' => 'Hemos enviado un codigo de verificacion a {phone}',
+			'auth.phone_auth.enter_all_digits' => 'Por favor ingresa los 6 digitos',
+			'auth.phone_auth.verify_code' => 'Verificar codigo',
+			'auth.phone_auth.resend_code' => 'Reenviar codigo',
 			'common.kContinue' => 'Continuar',
 			'common.cancel' => 'Cancelar',
 			'common.skip' => 'Omitir',
 			'common.error' => 'Error',
+			'common.error_occurred' => 'Ha ocurrido un error',
+			'common.page_not_found' => '404 - Pagina no encontrada',
 			'common.success' => 'Exito',
 			'common.loading' => 'Cargando...',
 			'common.or' => 'o',
@@ -1548,6 +1720,8 @@ extension on Translations {
 			'rounds.detail_title' => 'Detalle de ronda',
 			'rounds.result' => 'Resultado',
 			'settings.title' => 'Ajustes',
+			'settings.default_user' => 'Usuario',
+			'settings.beta_badge' => 'Beta',
 			'settings.sections.permissions' => 'Permisos',
 			'settings.sections.preferences' => 'Preferencias',
 			'settings.sections.golf' => 'Golf',
@@ -1561,6 +1735,10 @@ extension on Translations {
 			'settings.disconnect_confirm' => 'Seguro que quieres desconectarte?',
 			'settings.delete_account' => 'Eliminar cuenta',
 			'settings.delete_account_confirm' => 'Esta accion es permanente y eliminara todos tus datos. Seguro que quieres continuar?',
+			'settings.delete_account_dialog.title' => 'Eliminar mi cuenta?',
+			'settings.delete_account_dialog.warning' => 'Atencion: esta accion es irreversible',
+			'settings.delete_account_dialog.confirm' => 'Si, eliminar',
+			'settings.delete_account_dialog.button_text' => 'Quiero eliminar mi cuenta',
 			'settings.theme_mode' => 'Modo claro/oscuro',
 			'settings.location_permission.title' => 'Ubicacion',
 			'settings.location_permission.subtitle' => 'Para medir distancias y registrar golpes',
@@ -1667,6 +1845,13 @@ extension on Translations {
 			'score_names.bogey' => 'Bogey',
 			'score_names.double_bogey' => 'Doble Bogey',
 			'score_names.triple_bogey' => 'Triple Bogey',
+			'score_input.hole_title' => 'Hoyo {holeNumber}',
+			'score_input.par_info' => 'Par {par}',
+			'score_input.par_yards_info' => 'Par {par} • {yards} yds',
+			'score_input.strokes' => 'Golpes',
+			'score_input.putts' => 'Putts',
+			'score_input.penalties' => 'Penaltis',
+			'score_input.save' => 'Guardar',
 			'active_round.title' => 'Tienes una ronda en curso',
 			'active_round.message' => ({required Object courseName}) => 'Dejaste una ronda sin terminar en ${courseName}.',
 			'active_round.holes_played' => ({required Object count}) => '${count} de 18 hoyos jugados',

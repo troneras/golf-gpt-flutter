@@ -146,14 +146,16 @@ class OtpInputField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = context.colors;
+
     return Container(
       height: 60,
       margin: const EdgeInsets.symmetric(horizontal: 4),
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(8),
+        color: const Color(0xFF141A24).withValues(alpha: 0.85),
+        borderRadius: BorderRadius.circular(12),
         border: Border.all(
-          color: context.colors.primary.withValues(alpha: 0.3),
-          width: 2,
+          color: Colors.white.withValues(alpha: 0.08),
         ),
       ),
       child: TextField(
@@ -163,6 +165,7 @@ class OtpInputField extends StatelessWidget {
         keyboardType: TextInputType.number,
         style: context.textTheme.headlineSmall?.copyWith(
           fontWeight: FontWeight.w600,
+          color: colors.onBackground,
         ),
         maxLength: 1,
         decoration: const InputDecoration(

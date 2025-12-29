@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:apparence_kit/core/data/api/analytics_api.dart';
+import 'package:apparence_kit/core/theme/extensions/theme_extension.dart';
 import 'package:apparence_kit/i18n/translations.g.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -69,45 +70,46 @@ class _NotificationPermissionTileState extends ConsumerState<NotificationPermiss
 
     final tr = Translations.of(context).settings.notification_permission;
     final isGranted = _status?.isGranted ?? false;
-    final colorScheme = Theme.of(context).colorScheme;
+    final colors = context.colors;
 
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 4.0),
+      padding: const EdgeInsets.symmetric(vertical: 12),
       child: Row(
         children: [
           Icon(
             Icons.notifications,
             size: 21,
-            color: colorScheme.onSurface,
+            color: Colors.white.withValues(alpha: 0.6),
           ),
-          const SizedBox(width: 8),
+          const SizedBox(width: 12),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
                   tr.title,
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w400,
-                    color: colorScheme.onSurface,
+                  style: context.textTheme.bodyLarge?.copyWith(
+                    color: colors.onBackground,
                   ),
                 ),
+                const SizedBox(height: 2),
                 Text(
                   tr.subtitle,
-                  style: TextStyle(
-                    fontSize: 12,
-                    color: colorScheme.onSurface.withValues(alpha: 0.6),
+                  style: context.textTheme.bodySmall?.copyWith(
+                    color: colors.textTertiary,
                   ),
                 ),
               ],
             ),
           ),
           if (_status == null)
-            const SizedBox(
+            SizedBox(
               width: 16,
               height: 16,
-              child: CircularProgressIndicator(strokeWidth: 2),
+              child: CircularProgressIndicator(
+                strokeWidth: 2,
+                color: colors.primary,
+              ),
             )
           else if (isGranted)
             Row(
@@ -116,43 +118,41 @@ class _NotificationPermissionTileState extends ConsumerState<NotificationPermiss
                 Icon(
                   Icons.check_circle,
                   size: 18,
-                  color: Colors.green.shade600,
+                  color: colors.success,
                 ),
                 const SizedBox(width: 4),
                 Text(
                   tr.granted,
-                  style: TextStyle(
-                    fontSize: 14,
-                    color: Colors.green.shade600,
+                  style: context.textTheme.bodySmall?.copyWith(
+                    color: colors.success,
                   ),
                 ),
               ],
             )
           else
-            TextButton(
-              onPressed: () => openAppSettings(),
-              style: TextButton.styleFrom(
-                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
-                minimumSize: Size.zero,
-                tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-              ),
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Icon(
-                    Icons.warning_amber,
-                    size: 18,
-                    color: Colors.orange.shade700,
-                  ),
-                  const SizedBox(width: 4),
-                  Text(
-                    tr.open_settings,
-                    style: TextStyle(
-                      fontSize: 14,
-                      color: colorScheme.primary,
+            InkWell(
+              onTap: () => openAppSettings(),
+              borderRadius: BorderRadius.circular(8),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Icon(
+                      Icons.warning_amber_rounded,
+                      size: 18,
+                      color: colors.warning,
                     ),
-                  ),
-                ],
+                    const SizedBox(width: 4),
+                    Text(
+                      tr.open_settings,
+                      style: context.textTheme.bodySmall?.copyWith(
+                        color: colors.primary,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
         ],

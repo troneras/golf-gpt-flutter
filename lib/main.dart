@@ -1,6 +1,4 @@
 import 'package:apparence_kit/core/data/api/analytics_api.dart';
-import 'package:apparence_kit/modules/round/providers/active_round_notifier.dart';
-
 import 'package:apparence_kit/core/initializer/onstart_widget.dart';
 import 'package:apparence_kit/core/shared_preferences/shared_preferences.dart';
 import 'package:apparence_kit/core/states/user_state_notifier.dart';
@@ -12,10 +10,9 @@ import 'package:apparence_kit/core/theme/universal_theme.dart';
 import 'package:apparence_kit/environnements.dart';
 import 'package:apparence_kit/firebase_options_dev.dart' as firebase_dev;
 import 'package:apparence_kit/i18n/translations.g.dart';
-
 import 'package:apparence_kit/modules/notifications/api/local_notifier.dart';
 import 'package:apparence_kit/modules/notifications/repositories/notifications_repository.dart';
-
+import 'package:apparence_kit/modules/round/providers/active_round_notifier.dart';
 import 'package:apparence_kit/router.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
@@ -117,10 +114,10 @@ class MyApp extends ConsumerWidget {
       notifier: AppTheme.uniform(
         sharedPreferences: sharedPreferences,
         themeFactory: const UniversalThemeFactory(),
-        lightColors: ApparenceKitColors.light(),
+        lightColors: ApparenceKitColors.dark(), // Force dark theme
         darkColors: ApparenceKitColors.dark(),
         textTheme: ApparenceKitTextTheme.build(),
-        defaultMode: ThemeMode.light,
+        defaultMode: ThemeMode.dark,
       ),
       child: Builder(builder: (context) {
         return MaterialApp.router(

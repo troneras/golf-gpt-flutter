@@ -71,26 +71,46 @@ class _BrowseCoursesPageState extends ConsumerState<BrowseCoursesPage>
         backgroundColor: context.colors.background,
         elevation: 0,
         leading: IconButton(
-          icon: Icon(Icons.arrow_back, color: context.colors.onBackground),
+          icon: Icon(Icons.arrow_back, color: Colors.white.withValues(alpha: 0.9)),
           onPressed: () => context.pop(),
         ),
         title: Text(
           tr.title,
           style: context.textTheme.titleLarge?.copyWith(
             fontWeight: FontWeight.w600,
+            color: Colors.white,
           ),
         ),
         centerTitle: true,
-        bottom: TabBar(
-          controller: _tabController,
-          labelColor: context.colors.onBackground,
-          unselectedLabelColor: context.colors.onBackground.withValues(alpha: 0.5),
-          indicatorColor: context.colors.primary,
-          tabs: [
-            Tab(text: tr.tab_nearby),
-            Tab(text: tr.tab_recent),
-            Tab(text: tr.tab_search),
-          ],
+        bottom: PreferredSize(
+          preferredSize: const Size.fromHeight(48),
+          child: Container(
+            decoration: BoxDecoration(
+              border: Border(
+                bottom: BorderSide(
+                  color: Colors.white.withValues(alpha: 0.06),
+                ),
+              ),
+            ),
+            child: TabBar(
+              controller: _tabController,
+              labelColor: Colors.white,
+              unselectedLabelColor: Colors.white.withValues(alpha: 0.4),
+              indicatorColor: context.colors.primary,
+              indicatorWeight: 2.5,
+              labelStyle: context.textTheme.titleSmall?.copyWith(
+                fontWeight: FontWeight.w600,
+              ),
+              unselectedLabelStyle: context.textTheme.titleSmall?.copyWith(
+                fontWeight: FontWeight.w400,
+              ),
+              tabs: [
+                Tab(text: tr.tab_nearby),
+                Tab(text: tr.tab_recent),
+                Tab(text: tr.tab_search),
+              ],
+            ),
+          ),
         ),
       ),
       body: TabBarView(
@@ -226,33 +246,49 @@ class _SearchTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final tr = Translations.of(context).browse_courses;
+    // Glass style for search input
+    const baseColor = Color(0xFF141A24);
     return Column(
       children: [
         Padding(
           padding: const EdgeInsets.all(16),
           child: TextField(
             onChanged: onSearchChanged,
+            style: const TextStyle(color: Colors.white),
+            cursorColor: context.colors.primary,
             decoration: InputDecoration(
               hintText: tr.search_placeholder,
-              prefixIcon: const Icon(Icons.search),
+              hintStyle: TextStyle(
+                color: Colors.white.withValues(alpha: 0.4),
+              ),
+              prefixIcon: Icon(
+                Icons.search,
+                color: Colors.white.withValues(alpha: 0.5),
+              ),
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(12),
                 borderSide: BorderSide(
-                  color: context.colors.onSurface.withValues(alpha: 0.2),
+                  color: Colors.white.withValues(alpha: 0.06),
                 ),
               ),
               enabledBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(12),
                 borderSide: BorderSide(
-                  color: context.colors.onSurface.withValues(alpha: 0.2),
+                  color: Colors.white.withValues(alpha: 0.06),
                 ),
               ),
               focusedBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(12),
-                borderSide: BorderSide(color: context.colors.primary),
+                borderSide: BorderSide(
+                  color: context.colors.primary.withValues(alpha: 0.6),
+                ),
               ),
               filled: true,
-              fillColor: context.colors.surface,
+              fillColor: baseColor.withValues(alpha: 0.85),
+              contentPadding: const EdgeInsets.symmetric(
+                horizontal: 16,
+                vertical: 14,
+              ),
             ),
           ),
         ),
@@ -336,13 +372,15 @@ class _CourseListTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Matte glass style
+    const baseColor = Color(0xFF141A24);
     return Container(
       margin: const EdgeInsets.only(bottom: 8),
       decoration: BoxDecoration(
-        color: context.colors.surface,
+        color: baseColor.withValues(alpha: 0.85),
         borderRadius: BorderRadius.circular(12),
         border: Border.all(
-          color: context.colors.onSurface.withValues(alpha: 0.1),
+          color: Colors.white.withValues(alpha: 0.06),
         ),
       ),
       child: InkWell(
@@ -352,13 +390,20 @@ class _CourseListTile extends StatelessWidget {
           padding: const EdgeInsets.all(12),
           child: Row(
             children: [
-              ClipRRect(
-                borderRadius: BorderRadius.circular(8),
+              // Golf flag icon with subtle tint
+              Container(
+                width: 40,
+                height: 40,
+                decoration: BoxDecoration(
+                  color: Colors.white.withValues(alpha: 0.05),
+                  borderRadius: BorderRadius.circular(8),
+                ),
                 child: Image.asset(
                   'assets/images/icons/ic_flag.png',
-                  width: 40,
-                  height: 40,
+                  width: 24,
+                  height: 24,
                   fit: BoxFit.contain,
+                  color: Colors.white.withValues(alpha: 0.7),
                 ),
               ),
               const SizedBox(width: 12),
@@ -372,14 +417,17 @@ class _CourseListTile extends StatelessWidget {
                           : course.name,
                       style: context.textTheme.titleMedium?.copyWith(
                         fontWeight: FontWeight.w600,
+                        color: Colors.white,
                       ),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
                     ),
                     if (course.cityCountry.isNotEmpty ||
                         course.formattedDistance.isNotEmpty)
                       Text(
                         _buildSubtitle(course),
                         style: context.textTheme.bodySmall?.copyWith(
-                          color: context.colors.onSurface.withValues(alpha: 0.6),
+                          color: Colors.white.withValues(alpha: 0.5),
                         ),
                       ),
                   ],
@@ -387,7 +435,7 @@ class _CourseListTile extends StatelessWidget {
               ),
               Icon(
                 Icons.chevron_right,
-                color: context.colors.onSurface.withValues(alpha: 0.5),
+                color: Colors.white.withValues(alpha: 0.3),
               ),
             ],
           ),
@@ -419,13 +467,13 @@ class _EmptyView extends StatelessWidget {
             Icon(
               icon ?? Icons.golf_course,
               size: 64,
-              color: context.colors.onSurface.withValues(alpha: 0.3),
+              color: Colors.white.withValues(alpha: 0.2),
             ),
             const SizedBox(height: 16),
             Text(
               message,
               style: context.textTheme.bodyLarge?.copyWith(
-                color: context.colors.onSurface.withValues(alpha: 0.6),
+                color: Colors.white.withValues(alpha: 0.6),
               ),
               textAlign: TextAlign.center,
             ),
@@ -434,7 +482,7 @@ class _EmptyView extends StatelessWidget {
               Text(
                 hint!,
                 style: context.textTheme.bodySmall?.copyWith(
-                  color: context.colors.onSurface.withValues(alpha: 0.4),
+                  color: Colors.white.withValues(alpha: 0.4),
                 ),
                 textAlign: TextAlign.center,
               ),
@@ -458,6 +506,8 @@ class _ErrorView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final tr = Translations.of(context).browse_courses;
+    // Muted error color
+    const mutedError = Color(0xFFCF6B6B);
     return Center(
       child: Padding(
         padding: const EdgeInsets.all(32),
@@ -467,20 +517,20 @@ class _ErrorView extends StatelessWidget {
             Icon(
               Icons.error_outline,
               size: 64,
-              color: context.colors.error,
+              color: mutedError.withValues(alpha: 0.7),
             ),
             const SizedBox(height: 16),
             Text(
               message,
               style: context.textTheme.bodyLarge?.copyWith(
-                color: context.colors.onSurface.withValues(alpha: 0.6),
+                color: Colors.white.withValues(alpha: 0.6),
               ),
               textAlign: TextAlign.center,
             ),
             const SizedBox(height: 24),
-            FilledButton(
+            _GhostButton(
+              label: tr.retry,
               onPressed: onRetry,
-              child: Text(tr.retry),
             ),
           ],
         ),
@@ -511,20 +561,20 @@ class _LoginRequiredView extends StatelessWidget {
             Icon(
               Icons.lock_outline,
               size: 64,
-              color: context.colors.onSurface.withValues(alpha: 0.3),
+              color: Colors.white.withValues(alpha: 0.2),
             ),
             const SizedBox(height: 16),
             Text(
               message,
               style: context.textTheme.bodyLarge?.copyWith(
-                color: context.colors.onSurface.withValues(alpha: 0.6),
+                color: Colors.white.withValues(alpha: 0.6),
               ),
               textAlign: TextAlign.center,
             ),
             const SizedBox(height: 24),
-            FilledButton(
+            _PrimaryButton(
+              label: actionLabel,
               onPressed: onLogin,
-              child: Text(actionLabel),
             ),
           ],
         ),
@@ -557,13 +607,13 @@ class _LocationPermissionRequiredView extends StatelessWidget {
             Icon(
               Icons.location_off_outlined,
               size: 64,
-              color: context.colors.onSurface.withValues(alpha: 0.3),
+              color: Colors.white.withValues(alpha: 0.2),
             ),
             const SizedBox(height: 16),
             Text(
               message,
               style: context.textTheme.bodyLarge?.copyWith(
-                color: context.colors.onSurface.withValues(alpha: 0.6),
+                color: Colors.white.withValues(alpha: 0.6),
               ),
               textAlign: TextAlign.center,
             ),
@@ -571,17 +621,129 @@ class _LocationPermissionRequiredView extends StatelessWidget {
             Text(
               hint,
               style: context.textTheme.bodySmall?.copyWith(
-                color: context.colors.onSurface.withValues(alpha: 0.4),
+                color: Colors.white.withValues(alpha: 0.4),
               ),
               textAlign: TextAlign.center,
             ),
             const SizedBox(height: 24),
-            FilledButton.icon(
+            _PrimaryButton(
+              label: actionLabel,
+              icon: Icons.settings,
               onPressed: onOpenSettings,
-              icon: const Icon(Icons.settings),
-              label: Text(actionLabel),
             ),
           ],
+        ),
+      ),
+    );
+  }
+}
+
+/// Ghost button - secondary action with outline
+class _GhostButton extends StatelessWidget {
+  final String label;
+  final VoidCallback onPressed;
+
+  const _GhostButton({
+    required this.label,
+    required this.onPressed,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: 48,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(12),
+        border: Border.all(
+          color: Colors.white.withValues(alpha: 0.15),
+        ),
+      ),
+      child: Material(
+        color: Colors.transparent,
+        child: InkWell(
+          onTap: onPressed,
+          borderRadius: BorderRadius.circular(12),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 24),
+            child: Center(
+              child: Text(
+                label,
+                style: context.textTheme.titleSmall?.copyWith(
+                  fontWeight: FontWeight.w600,
+                  color: Colors.white.withValues(alpha: 0.7),
+                ),
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+/// Primary button with glow effect
+class _PrimaryButton extends StatelessWidget {
+  final String label;
+  final VoidCallback onPressed;
+  final IconData? icon;
+
+  const _PrimaryButton({
+    required this.label,
+    required this.onPressed,
+    this.icon,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: 48,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(12),
+        gradient: LinearGradient(
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+          colors: [
+            context.colors.primary.withValues(alpha: 0.9),
+            context.colors.primary,
+          ],
+        ),
+        boxShadow: [
+          BoxShadow(
+            color: context.colors.primary.withValues(alpha: 0.3),
+            blurRadius: 12,
+            offset: const Offset(0, 4),
+          ),
+        ],
+      ),
+      child: Material(
+        color: Colors.transparent,
+        child: InkWell(
+          onTap: onPressed,
+          borderRadius: BorderRadius.circular(12),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 24),
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                if (icon != null) ...[
+                  Icon(
+                    icon,
+                    size: 18,
+                    color: Colors.white,
+                  ),
+                  const SizedBox(width: 8),
+                ],
+                Text(
+                  label,
+                  style: context.textTheme.titleSmall?.copyWith(
+                    fontWeight: FontWeight.w600,
+                    color: Colors.white,
+                  ),
+                ),
+              ],
+            ),
+          ),
         ),
       ),
     );

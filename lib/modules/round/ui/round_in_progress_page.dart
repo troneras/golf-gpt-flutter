@@ -1,4 +1,5 @@
 import 'package:apparence_kit/core/theme/extensions/theme_extension.dart';
+import 'package:apparence_kit/core/widgets/styled_dialog.dart';
 import 'package:apparence_kit/i18n/translations.g.dart';
 import 'package:apparence_kit/modules/notifications/api/local_notifier.dart';
 import 'package:apparence_kit/modules/round/providers/active_round_notifier.dart';
@@ -148,27 +149,31 @@ class _RoundInProgressPageState extends ConsumerState<RoundInProgressPage> {
   }
 
   void _showExitConfirmation(BuildContext context) {
-    showDialog(
+    final tr = Translations.of(context).round_in_progress;
+    final commonTr = Translations.of(context).common;
+    final colors = context.colors;
+    showStyledDialog(
       context: context,
-      builder: (context) => AlertDialog(
-        title: const Text('Salir de la ronda?'),
-        content: const Text(
-          'Tu progreso se guardara y podras continuar mas tarde.',
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(context),
-            child: const Text('Cancelar'),
-          ),
-          TextButton(
-            onPressed: () {
-              Navigator.pop(context);
-              context.pop();
-            },
-            child: const Text('Salir'),
-          ),
-        ],
+      icon: Icon(
+        Icons.exit_to_app,
+        size: 48,
+        color: colors.primary,
       ),
+      title: tr.exit_title,
+      content: tr.exit_message,
+      actions: [
+        StyledDialogAction.secondary(
+          label: commonTr.cancel,
+          onTap: () => Navigator.pop(context),
+        ),
+        StyledDialogAction.primary(
+          label: tr.exit_action,
+          onTap: () {
+            Navigator.pop(context);
+            context.pop();
+          },
+        ),
+      ],
     );
   }
 
@@ -263,28 +268,29 @@ class _RoundInProgressPageState extends ConsumerState<RoundInProgressPage> {
 
   void _showDiscardConfirmDialog(BuildContext context) {
     final tr = Translations.of(context).round_in_progress;
-    showDialog(
+    final colors = context.colors;
+    showStyledDialog(
       context: context,
-      builder: (dialogContext) => AlertDialog(
-        title: Text(tr.discard_title),
-        content: Text(tr.discard_message),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(dialogContext),
-            child: Text(tr.back),
-          ),
-          FilledButton(
-            style: FilledButton.styleFrom(
-              backgroundColor: Colors.red,
-            ),
-            onPressed: () {
-              Navigator.pop(dialogContext);
-              ref.read(activeRoundNotifierProvider.notifier).discardRound();
-            },
-            child: Text(tr.discard_action),
-          ),
-        ],
+      icon: Icon(
+        Icons.delete_forever,
+        size: 48,
+        color: colors.error,
       ),
+      title: tr.discard_title,
+      content: tr.discard_message,
+      actions: [
+        StyledDialogAction.secondary(
+          label: tr.back,
+          onTap: () => Navigator.pop(context),
+        ),
+        StyledDialogAction.destructive(
+          label: tr.discard_action,
+          onTap: () {
+            Navigator.pop(context);
+            ref.read(activeRoundNotifierProvider.notifier).discardRound();
+          },
+        ),
+      ],
     );
   }
 
@@ -470,6 +476,7 @@ class _ErrorView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final tr = Translations.of(context);
     return Padding(
       padding: const EdgeInsets.all(24),
       child: Column(
@@ -482,7 +489,7 @@ class _ErrorView extends StatelessWidget {
           ),
           const SizedBox(height: 24),
           Text(
-            'Error',
+            tr.common.error,
             style: context.textTheme.titleLarge?.copyWith(
               fontWeight: FontWeight.w600,
             ),
@@ -502,12 +509,12 @@ class _ErrorView extends StatelessWidget {
             children: [
               OutlinedButton(
                 onPressed: onBack,
-                child: const Text('Volver'),
+                child: Text(tr.round_in_progress.back),
               ),
               const SizedBox(width: 16),
               FilledButton(
                 onPressed: onRetry,
-                child: const Text('Reintentar'),
+                child: Text(tr.round_in_progress.retry),
               ),
             ],
           ),
@@ -529,25 +536,23 @@ class _FinishRoundOptionsDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final tr = Translations.of(context).round_in_progress;
-    return AlertDialog(
-      title: Text(tr.finish_title),
-      content: Text(tr.finish_message),
+    final colors = context.colors;
+    return StyledDialog(
+      icon: Icon(
+        Icons.flag_outlined,
+        size: 48,
+        color: colors.primary,
+      ),
+      title: tr.finish_title,
+      content: tr.finish_message,
       actions: [
-        TextButton(
-          onPressed: () => Navigator.pop(context),
-          child: Text(Translations.of(context).common.cancel),
+        StyledDialogAction.secondary(
+          label: Translations.of(context).common.cancel,
+          onTap: () => Navigator.pop(context),
         ),
-        OutlinedButton(
-          style: OutlinedButton.styleFrom(
-            foregroundColor: Colors.red,
-            side: const BorderSide(color: Colors.red),
-          ),
-          onPressed: onDiscard,
-          child: Text(tr.discard_action),
-        ),
-        FilledButton(
-          onPressed: onSave,
-          child: Text(tr.save_action),
+        StyledDialogAction.primary(
+          label: tr.save_action,
+          onTap: onSave,
         ),
       ],
     );
@@ -574,38 +579,160 @@ class _FinishRoundDialogState extends State<_FinishRoundDialog> {
 
   @override
   Widget build(BuildContext context) {
-    return AlertDialog(
-      title: const Text('Finalizar ronda?'),
-      content: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          const Text('Una vez finalizada, no podras editar los resultados.'),
-          const SizedBox(height: 16),
-          TextField(
-            controller: _notesController,
-            decoration: const InputDecoration(
-              labelText: 'Notas (opcional)',
-              hintText: 'Agrega notas sobre la ronda...',
-              border: OutlineInputBorder(),
-            ),
-            maxLines: 3,
+    final tr = Translations.of(context).round_in_progress;
+    final commonTr = Translations.of(context).common;
+    final colors = context.colors;
+    return Dialog(
+      backgroundColor: Colors.transparent,
+      surfaceTintColor: Colors.transparent,
+      elevation: 0,
+      child: Container(
+        decoration: BoxDecoration(
+          color: const Color(0xFF141A24).withValues(alpha: 0.90),
+          borderRadius: BorderRadius.circular(16),
+          border: Border.all(
+            color: Colors.white.withValues(alpha: 0.08),
           ),
-        ],
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withValues(alpha: 0.4),
+              blurRadius: 24,
+              offset: const Offset(0, 8),
+            ),
+          ],
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(24),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Icon(
+                Icons.flag_outlined,
+                size: 48,
+                color: colors.primary,
+              ),
+              const SizedBox(height: 16),
+              Text(
+                tr.finish_title,
+                style: context.textTheme.titleLarge?.copyWith(
+                  fontWeight: FontWeight.w600,
+                  color: colors.onSurface,
+                ),
+                textAlign: TextAlign.center,
+              ),
+              const SizedBox(height: 12),
+              Text(
+                tr.finish_message,
+                style: context.textTheme.bodyMedium?.copyWith(
+                  color: colors.onSurface.withValues(alpha: 0.7),
+                ),
+                textAlign: TextAlign.center,
+              ),
+              const SizedBox(height: 16),
+              TextField(
+                controller: _notesController,
+                style: TextStyle(color: colors.onSurface),
+                decoration: InputDecoration(
+                  labelText: tr.notes_label,
+                  labelStyle: TextStyle(color: colors.onSurface.withValues(alpha: 0.7)),
+                  hintText: tr.notes_hint,
+                  hintStyle: TextStyle(color: colors.onSurface.withValues(alpha: 0.5)),
+                  filled: true,
+                  fillColor: const Color(0xFF141A24).withValues(alpha: 0.85),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(12),
+                    borderSide: BorderSide(color: Colors.white.withValues(alpha: 0.06)),
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(12),
+                    borderSide: BorderSide(color: Colors.white.withValues(alpha: 0.06)),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(12),
+                    borderSide: BorderSide(color: colors.primary.withValues(alpha: 0.6)),
+                  ),
+                ),
+                maxLines: 3,
+              ),
+              const SizedBox(height: 24),
+              Row(
+                children: [
+                  Expanded(
+                    child: Container(
+                      height: 48,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(12),
+                        border: Border.all(
+                          color: Colors.white.withValues(alpha: 0.15),
+                        ),
+                      ),
+                      child: Material(
+                        color: Colors.transparent,
+                        child: InkWell(
+                          onTap: () => Navigator.pop(context),
+                          borderRadius: BorderRadius.circular(12),
+                          child: Center(
+                            child: Text(
+                              commonTr.cancel,
+                              style: context.textTheme.titleSmall?.copyWith(
+                                color: colors.onSurface.withValues(alpha: 0.7),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(width: 12),
+                  Expanded(
+                    child: Container(
+                      height: 48,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(12),
+                        gradient: LinearGradient(
+                          begin: Alignment.topCenter,
+                          end: Alignment.bottomCenter,
+                          colors: [
+                            colors.primary.withValues(alpha: 0.9),
+                            colors.primary,
+                          ],
+                        ),
+                        boxShadow: [
+                          BoxShadow(
+                            color: colors.primary.withValues(alpha: 0.3),
+                            blurRadius: 12,
+                            offset: const Offset(0, 4),
+                          ),
+                        ],
+                      ),
+                      child: Material(
+                        color: Colors.transparent,
+                        child: InkWell(
+                          onTap: () {
+                            Navigator.pop(context);
+                            final notes = _notesController.text.trim();
+                            widget.onFinish(notes.isNotEmpty ? notes : null);
+                          },
+                          borderRadius: BorderRadius.circular(12),
+                          child: Center(
+                            child: Text(
+                              tr.finish_action,
+                              style: context.textTheme.titleSmall?.copyWith(
+                                fontWeight: FontWeight.w600,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ),
       ),
-      actions: [
-        TextButton(
-          onPressed: () => Navigator.pop(context),
-          child: const Text('Cancelar'),
-        ),
-        FilledButton(
-          onPressed: () {
-            Navigator.pop(context);
-            final notes = _notesController.text.trim();
-            widget.onFinish(notes.isNotEmpty ? notes : null);
-          },
-          child: const Text('Finalizar'),
-        ),
-      ],
     );
   }
 }
@@ -624,20 +751,26 @@ class _ForgottenRoundDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final tr = Translations.of(context).forgotten_round;
+    final colors = context.colors;
     // Replace placeholder since slang doesn't support this format
     final body = tr.dialog_body.replaceAll('{courseName}', courseName);
 
-    return AlertDialog(
-      title: Text(tr.dialog_title),
-      content: Text(body),
+    return StyledDialog(
+      icon: Icon(
+        Icons.timer_outlined,
+        size: 48,
+        color: colors.warning,
+      ),
+      title: tr.dialog_title,
+      content: body,
       actions: [
-        TextButton(
-          onPressed: onContinue,
-          child: Text(tr.action_continue),
+        StyledDialogAction.secondary(
+          label: tr.action_continue,
+          onTap: onContinue,
         ),
-        FilledButton(
-          onPressed: onEnd,
-          child: Text(tr.action_end),
+        StyledDialogAction.primary(
+          label: tr.action_end,
+          onTap: onEnd,
         ),
       ],
     );

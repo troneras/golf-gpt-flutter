@@ -1,4 +1,5 @@
 import 'package:apparence_kit/core/theme/extensions/theme_extension.dart';
+import 'package:apparence_kit/core/widgets/styled_dialog.dart';
 import 'package:apparence_kit/i18n/translations.g.dart';
 import 'package:apparence_kit/modules/bag/domain/club.dart';
 import 'package:apparence_kit/modules/bag/providers/bag_page_notifier.dart';
@@ -96,28 +97,29 @@ class BagPage extends ConsumerWidget {
 
   void _confirmDelete(BuildContext context, WidgetRef ref, Club club) {
     final tr = Translations.of(context);
-    showDialog(
+    final colors = context.colors;
+    showStyledDialog(
       context: context,
-      builder: (context) => AlertDialog(
-        title: Text(tr.bag.delete_club),
-        content: Text(tr.bag.delete_confirm(clubName: club.displayName)),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(context),
-            child: Text(tr.common.cancel),
-          ),
-          TextButton(
-            onPressed: () {
-              Navigator.pop(context);
-              ref.read(bagPageProvider.notifier).deleteClub(club.id);
-            },
-            child: Text(
-              tr.bag.delete_club,
-              style: TextStyle(color: Theme.of(context).colorScheme.error),
-            ),
-          ),
-        ],
+      icon: Icon(
+        Icons.delete_outline,
+        size: 48,
+        color: colors.error,
       ),
+      title: tr.bag.delete_club,
+      content: tr.bag.delete_confirm(clubName: club.displayName),
+      actions: [
+        StyledDialogAction.secondary(
+          label: tr.common.cancel,
+          onTap: () => Navigator.pop(context),
+        ),
+        StyledDialogAction.destructive(
+          label: tr.bag.delete_club,
+          onTap: () {
+            Navigator.pop(context);
+            ref.read(bagPageProvider.notifier).deleteClub(club.id);
+          },
+        ),
+      ],
     );
   }
 }

@@ -60,20 +60,40 @@ class _OnboardingProgressState extends State<OnboardingProgress>
 
   @override
   Widget build(BuildContext context) {
+    final colors = context.colors;
+
     return AnimatedBuilder(
       animation: _progressAnimation,
       builder: (context, child) {
         return Padding(
           padding: const EdgeInsets.fromLTRB(80, 16, 80, 0),
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(32),
-            child: LinearProgressIndicator(
-              value: _progressAnimation.value,
-              minHeight: 16,
-              valueColor: AlwaysStoppedAnimation<Color>(
-                context.colors.primary,
+          child: Container(
+            height: 6,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(3),
+              color: Colors.white.withValues(alpha: 0.08),
+            ),
+            child: FractionallySizedBox(
+              alignment: Alignment.centerLeft,
+              widthFactor: _progressAnimation.value,
+              child: Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(3),
+                  gradient: LinearGradient(
+                    colors: [
+                      colors.primary,
+                      colors.primary.withValues(alpha: 0.8),
+                    ],
+                  ),
+                  boxShadow: [
+                    BoxShadow(
+                      color: colors.primary.withValues(alpha: 0.4),
+                      blurRadius: 8,
+                      offset: const Offset(0, 2),
+                    ),
+                  ],
+                ),
               ),
-              backgroundColor: context.colors.primary.withOpacity(0.1),
             ),
           ),
         );

@@ -1,5 +1,6 @@
 import 'package:apparence_kit/core/initializer/models/run_state.dart';
 import 'package:apparence_kit/core/initializer/onstart_service.dart';
+import 'package:apparence_kit/i18n/translations.g.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -43,7 +44,7 @@ class _InitializerState extends ConsumerState<Initializer> {
       AppReadyState() => widget.onReady,
       AppErrorState(:final error) =>
         widget.onError?.call(context, error) ??
-            const Center(child: Text('An error occured')),
+            Center(child: Text(Translations.of(context).common.error_occurred)),
     };
   }
 }

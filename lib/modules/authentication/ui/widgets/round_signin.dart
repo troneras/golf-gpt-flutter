@@ -1,3 +1,4 @@
+import 'package:apparence_kit/core/theme/extensions/theme_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -70,24 +71,20 @@ class SocialSigninButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = context.colors;
+
     if (label != null) {
-      return OutlinedButton.icon(
-        onPressed: () {
-          HapticFeedback.mediumImpact();
-          onPressed?.call();
-        },
-        icon: iconImage,
-        label: Text(label!),
-        style: OutlinedButton.styleFrom(
-          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
-          side: const BorderSide(color: Colors.black12),
-        ),
+      return _GlassSocialButton(
+        iconImage: iconImage,
+        label: label!,
+        onPressed: onPressed,
       );
     }
     return Container(
       width: 56,
       decoration: BoxDecoration(
-        border: Border.all(color: Colors.black12),
+        color: colors.glassBg,
+        border: Border.all(color: colors.glassBorder),
         shape: BoxShape.circle,
       ),
       child: RawMaterialButton(
@@ -100,6 +97,59 @@ class SocialSigninButton extends StatelessWidget {
         fillColor: Colors.transparent,
         padding: const EdgeInsets.all(16),
         child: iconImage,
+      ),
+    );
+  }
+}
+
+/// Transparent social sign-in button
+class _GlassSocialButton extends StatelessWidget {
+  final Image iconImage;
+  final String label;
+  final SocialSigninCallback? onPressed;
+
+  const _GlassSocialButton({
+    required this.iconImage,
+    required this.label,
+    this.onPressed,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final colors = context.colors;
+
+    return Container(
+      height: 52,
+      decoration: BoxDecoration(
+        color: Colors.transparent,
+        borderRadius: BorderRadius.circular(12),
+        border: Border.all(
+          color: Colors.white.withValues(alpha: 0.2),
+        ),
+      ),
+      child: Material(
+        color: Colors.transparent,
+        child: InkWell(
+          borderRadius: BorderRadius.circular(12),
+          onTap: () {
+            HapticFeedback.mediumImpact();
+            onPressed?.call();
+          },
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              iconImage,
+              const SizedBox(width: 12),
+              Text(
+                label,
+                style: context.textTheme.titleMedium?.copyWith(
+                  color: colors.onBackground,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }

@@ -1,6 +1,7 @@
 import 'package:apparence_kit/core/data/api/analytics_api.dart';
 import 'package:apparence_kit/core/theme/extensions/theme_extension.dart';
 import 'package:apparence_kit/core/widgets/glow_button.dart';
+import 'package:apparence_kit/core/widgets/styled_dialog.dart';
 import 'package:apparence_kit/core/widgets/shooting_stars.dart';
 import 'package:apparence_kit/core/widgets/suggestion_card.dart';
 import 'package:apparence_kit/i18n/translations.g.dart';
@@ -214,51 +215,57 @@ class _HomePageState extends ConsumerState<HomePage> with WidgetsBindingObserver
     final tr = Translations.of(context);
     final locationTr = tr.onboarding.location_permission;
     final homeTr = tr.home;
-    showDialog(
+    final colors = context.colors;
+    showStyledDialog(
       context: context,
-      builder: (dialogContext) => AlertDialog(
-        title: Text(homeTr.location_required_title),
-        content: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              locationTr.description,
-              style: context.textTheme.bodyLarge,
+      icon: Icon(
+        Icons.location_on_outlined,
+        size: 48,
+        color: colors.primary,
+      ),
+      title: homeTr.location_required_title,
+      contentWidget: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            locationTr.description,
+            style: context.textTheme.bodyMedium?.copyWith(
+              color: colors.onSurface.withValues(alpha: 0.7),
             ),
-            const SizedBox(height: 16),
-            _DialogBulletPoint(icon: Icons.golf_course, text: locationTr.bullet_1),
-            const SizedBox(height: 12),
-            _DialogBulletPoint(icon: Icons.straighten, text: locationTr.bullet_2),
-            const SizedBox(height: 12),
-            _DialogBulletPoint(icon: Icons.sports_golf, text: locationTr.bullet_3),
-            const SizedBox(height: 16),
-            Text(
-              locationTr.reassurance,
-              style: context.textTheme.bodyMedium?.copyWith(
-                fontStyle: FontStyle.italic,
-                color: context.colors.onSurface.withValues(alpha: 0.6),
-              ),
-            ),
-          ],
-        ),
-        actions: [
-          TextButton(
-            onPressed: () {
-              Navigator.of(dialogContext).pop();
-              _startRoundWithoutGps();
-            },
-            child: Text(homeTr.play_without_gps),
           ),
-          FilledButton(
-            onPressed: () {
-              Navigator.of(dialogContext).pop();
-              openAppSettings();
-            },
-            child: Text(homeTr.location_required_action),
+          const SizedBox(height: 16),
+          _DialogBulletPoint(icon: Icons.golf_course, text: locationTr.bullet_1),
+          const SizedBox(height: 12),
+          _DialogBulletPoint(icon: Icons.straighten, text: locationTr.bullet_2),
+          const SizedBox(height: 12),
+          _DialogBulletPoint(icon: Icons.sports_golf, text: locationTr.bullet_3),
+          const SizedBox(height: 16),
+          Text(
+            locationTr.reassurance,
+            style: context.textTheme.bodySmall?.copyWith(
+              fontStyle: FontStyle.italic,
+              color: colors.onSurface.withValues(alpha: 0.5),
+            ),
           ),
         ],
       ),
+      actions: [
+        StyledDialogAction.secondary(
+          label: homeTr.play_without_gps,
+          onTap: () {
+            Navigator.of(context).pop();
+            _startRoundWithoutGps();
+          },
+        ),
+        StyledDialogAction.primary(
+          label: homeTr.location_required_action,
+          onTap: () {
+            Navigator.of(context).pop();
+            openAppSettings();
+          },
+        ),
+      ],
     );
   }
 
@@ -269,45 +276,51 @@ class _HomePageState extends ConsumerState<HomePage> with WidgetsBindingObserver
 
   void _showActiveRoundDialog(Round activeRound) {
     final tr = Translations.of(context).active_round;
-    showDialog(
+    final colors = context.colors;
+    showStyledDialog(
       context: context,
       barrierDismissible: false,
-      builder: (dialogContext) => AlertDialog(
-        title: Text(tr.title),
-        content: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              tr.message(courseName: activeRound.course.name),
-              style: context.textTheme.bodyLarge,
+      icon: Icon(
+        Icons.golf_course,
+        size: 48,
+        color: colors.primary,
+      ),
+      title: tr.title,
+      contentWidget: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            tr.message(courseName: activeRound.course.name),
+            style: context.textTheme.bodyMedium?.copyWith(
+              color: colors.onSurface.withValues(alpha: 0.7),
             ),
-            const SizedBox(height: 8),
-            Text(
-              tr.holes_played(count: activeRound.holesPlayed),
-              style: context.textTheme.bodyMedium?.copyWith(
-                color: context.colors.onSurface.withValues(alpha: 0.6),
-              ),
-            ),
-          ],
-        ),
-        actions: [
-          TextButton(
-            onPressed: () {
-              Navigator.of(dialogContext).pop();
-              _finishActiveRound(activeRound);
-            },
-            child: Text(tr.finish),
           ),
-          FilledButton(
-            onPressed: () {
-              Navigator.of(dialogContext).pop();
-              _resumeActiveRound(activeRound);
-            },
-            child: Text(tr.resume),
+          const SizedBox(height: 8),
+          Text(
+            tr.holes_played(count: activeRound.holesPlayed),
+            style: context.textTheme.bodySmall?.copyWith(
+              color: colors.onSurface.withValues(alpha: 0.5),
+            ),
           ),
         ],
       ),
+      actions: [
+        StyledDialogAction.secondary(
+          label: tr.finish,
+          onTap: () {
+            Navigator.of(context).pop();
+            _finishActiveRound(activeRound);
+          },
+        ),
+        StyledDialogAction.primary(
+          label: tr.resume,
+          onTap: () {
+            Navigator.of(context).pop();
+            _resumeActiveRound(activeRound);
+          },
+        ),
+      ],
     );
   }
 

@@ -21,8 +21,18 @@ class FeedbackPage extends ConsumerWidget {
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
+        backgroundColor: context.colors.background,
         appBar: AppBar(
-          title: Text(tr.title),
+          backgroundColor: context.colors.background,
+          surfaceTintColor: Colors.transparent,
+          elevation: 0,
+          title: Text(
+            tr.title,
+            style: context.textTheme.titleLarge?.copyWith(
+              fontWeight: FontWeight.w600,
+            ),
+          ),
+          centerTitle: true,
           leading: IconButton(
             icon: const Icon(Icons.arrow_back),
             onPressed: () => context.pop(),
@@ -56,6 +66,61 @@ class _FeedbackFormView extends ConsumerWidget {
       FeedbackStateSending(:final category) => category,
       FeedbackStateSuccess() => FeedbackCategory.general,
     };
+    final colors = context.colors;
+
+    // Matte glass input decoration
+    InputDecoration glassInputDecoration({
+      required String labelText,
+      String? hintText,
+      bool alignLabelWithHint = false,
+    }) {
+      return InputDecoration(
+        labelText: labelText,
+        hintText: hintText,
+        alignLabelWithHint: alignLabelWithHint,
+        labelStyle: context.textTheme.bodyMedium?.copyWith(
+          color: Colors.white.withValues(alpha: 0.7),
+        ),
+        hintStyle: context.textTheme.bodyMedium?.copyWith(
+          color: Colors.white.withValues(alpha: 0.5),
+        ),
+        filled: true,
+        fillColor: const Color(0xFF141A24).withValues(alpha: 0.85),
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(12),
+          borderSide: BorderSide(
+            color: Colors.white.withValues(alpha: 0.06),
+          ),
+        ),
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(12),
+          borderSide: BorderSide(
+            color: Colors.white.withValues(alpha: 0.06),
+          ),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(12),
+          borderSide: BorderSide(
+            color: colors.primary.withValues(alpha: 0.6),
+          ),
+        ),
+        errorBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(12),
+          borderSide: BorderSide(
+            color: colors.error.withValues(alpha: 0.6),
+          ),
+        ),
+        focusedErrorBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(12),
+          borderSide: BorderSide(
+            color: colors.error.withValues(alpha: 0.8),
+          ),
+        ),
+        counterStyle: context.textTheme.bodySmall?.copyWith(
+          color: Colors.white.withValues(alpha: 0.5),
+        ),
+      );
+    }
 
     return Form(
       key: _formKey,
@@ -64,54 +129,87 @@ class _FeedbackFormView extends ConsumerWidget {
         child: ListView(
           children: [
             const SizedBox(height: 24),
+            // Header icon
+            Icon(
+              Icons.message_outlined,
+              size: 48,
+              color: colors.primary,
+            ),
+            const SizedBox(height: 16),
             Text(
               tr.subtitle,
               style: context.textTheme.bodyLarge?.copyWith(
-                color: context.colors.onBackground.withValues(alpha: .7),
+                color: Colors.white.withValues(alpha: 0.7),
               ),
               textAlign: TextAlign.center,
             ),
             const SizedBox(height: 32),
+            // Category label
             Text(
               tr.category_label,
               style: context.textTheme.bodyMedium?.copyWith(
                 fontWeight: FontWeight.w500,
+                color: Colors.white.withValues(alpha: 0.7),
               ),
             ),
             const SizedBox(height: 8),
-            DropdownButtonFormField<FeedbackCategory>(
-              initialValue: currentCategory,
-              decoration: InputDecoration(
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(8),
+            // Styled dropdown
+            Container(
+              decoration: BoxDecoration(
+                color: const Color(0xFF141A24).withValues(alpha: 0.85),
+                borderRadius: BorderRadius.circular(12),
+                border: Border.all(
+                  color: Colors.white.withValues(alpha: 0.06),
                 ),
               ),
-              items: FeedbackCategory.values.map((category) {
-                return DropdownMenuItem(
-                  value: category,
-                  child: Text(_getCategoryLabel(category)),
-                );
-              }).toList(),
-              onChanged: isSending
-                  ? null
-                  : (value) {
-                      if (value != null) {
-                        ref
-                            .read(feedbackStateProvider.notifier)
-                            .setCategory(value);
-                      }
-                    },
+              child: DropdownButtonFormField<FeedbackCategory>(
+                initialValue: currentCategory,
+                dropdownColor: const Color(0xFF141A24),
+                style: context.textTheme.bodyMedium?.copyWith(
+                  color: Colors.white,
+                ),
+                decoration: const InputDecoration(
+                  border: InputBorder.none,
+                  contentPadding: EdgeInsets.symmetric(
+                    horizontal: 16,
+                    vertical: 12,
+                  ),
+                ),
+                icon: Icon(
+                  Icons.keyboard_arrow_down,
+                  color: Colors.white.withValues(alpha: 0.5),
+                ),
+                items: FeedbackCategory.values.map((category) {
+                  return DropdownMenuItem(
+                    value: category,
+                    child: Text(_getCategoryLabel(category)),
+                  );
+                }).toList(),
+                onChanged: isSending
+                    ? null
+                    : (value) {
+                        if (value != null) {
+                          ref
+                              .read(feedbackStateProvider.notifier)
+                              .setCategory(value);
+                        }
+                      },
+              ),
             ),
             const SizedBox(height: 24),
+            // Subject field
             TextFormField(
               key: const Key('subject_input'),
               enabled: !isSending,
+              style: context.textTheme.bodyMedium?.copyWith(
+                color: Colors.white,
+              ),
               onChanged: (value) => ref
                   .read(feedbackStateProvider.notifier)
                   .setSubject(value),
-              decoration: InputDecoration(
-                hintText: tr.subject_hint,
+              decoration: glassInputDecoration(
                 labelText: tr.subject_label,
+                hintText: tr.subject_hint,
               ),
               textInputAction: TextInputAction.next,
               maxLength: 255,
@@ -123,15 +221,19 @@ class _FeedbackFormView extends ConsumerWidget {
               },
             ),
             const SizedBox(height: 16),
+            // Message field
             TextFormField(
               key: const Key('message_input'),
               enabled: !isSending,
+              style: context.textTheme.bodyMedium?.copyWith(
+                color: Colors.white,
+              ),
               onChanged: (value) => ref
                   .read(feedbackStateProvider.notifier)
                   .setMessage(value),
-              decoration: InputDecoration(
-                hintText: tr.message_hint,
+              decoration: glassInputDecoration(
                 labelText: tr.message_label,
+                hintText: tr.message_hint,
                 alignLabelWithHint: true,
               ),
               textInputAction: TextInputAction.newline,
@@ -145,7 +247,8 @@ class _FeedbackFormView extends ConsumerWidget {
               },
             ),
             const SizedBox(height: 32),
-            ElevatedButton(
+            // Primary CTA button with glow
+            _PrimaryCTAButton(
               key: const Key('submit_button'),
               onPressed: isSending
                   ? null
@@ -169,7 +272,8 @@ class _FeedbackFormView extends ConsumerWidget {
                             },
                           );
                     },
-              child: isSending ? const ButtonLoading() : Text(tr.submit),
+              isLoading: isSending,
+              label: tr.submit,
             ),
             const SizedBox(height: 32),
           ],
@@ -189,6 +293,87 @@ class _FeedbackFormView extends ConsumerWidget {
   }
 }
 
+/// Primary CTA button with gradient and glow effect
+class _PrimaryCTAButton extends StatelessWidget {
+  final VoidCallback? onPressed;
+  final bool isLoading;
+  final String label;
+
+  const _PrimaryCTAButton({
+    super.key,
+    required this.onPressed,
+    required this.isLoading,
+    required this.label,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final colors = context.colors;
+    final isEnabled = onPressed != null && !isLoading;
+
+    if (!isEnabled) {
+      // Disabled state
+      return Container(
+        height: 52,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(12),
+          color: Colors.white.withValues(alpha: 0.08),
+        ),
+        child: Center(
+          child: isLoading
+              ? const ButtonLoading()
+              : Text(
+                  label,
+                  style: context.textTheme.titleSmall?.copyWith(
+                    fontWeight: FontWeight.w600,
+                    color: Colors.white.withValues(alpha: 0.3),
+                  ),
+                ),
+        ),
+      );
+    }
+
+    // Enabled state with gradient and glow
+    return Container(
+      height: 52,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(12),
+        gradient: LinearGradient(
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+          colors: [
+            colors.primary.withValues(alpha: 0.9),
+            colors.primary,
+          ],
+        ),
+        boxShadow: [
+          BoxShadow(
+            color: colors.primary.withValues(alpha: 0.3),
+            blurRadius: 12,
+            offset: const Offset(0, 4),
+          ),
+        ],
+      ),
+      child: Material(
+        color: Colors.transparent,
+        child: InkWell(
+          onTap: onPressed,
+          borderRadius: BorderRadius.circular(12),
+          child: Center(
+            child: Text(
+              label,
+              style: context.textTheme.titleSmall?.copyWith(
+                fontWeight: FontWeight.w600,
+                color: Colors.white,
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
 class _FeedbackSuccessView extends ConsumerWidget {
   final TranslationsFeedbackEs tr;
 
@@ -201,34 +386,90 @@ class _FeedbackSuccessView extends ConsumerWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Icon(
-            Icons.check_circle_outline,
-            size: 80,
-            color: context.colors.primary,
-          ),
-          const SizedBox(height: 24),
-          Text(
-            tr.success_title,
-            style: context.textTheme.headlineMedium?.copyWith(
-              fontWeight: FontWeight.w600,
+          // Success card with matte glass
+          Container(
+            padding: const EdgeInsets.all(32),
+            decoration: BoxDecoration(
+              color: const Color(0xFF141A24).withValues(alpha: 0.90),
+              borderRadius: BorderRadius.circular(16),
+              border: Border.all(
+                color: Colors.white.withValues(alpha: 0.08),
+              ),
             ),
-            textAlign: TextAlign.center,
-          ),
-          const SizedBox(height: 12),
-          Text(
-            tr.success_message,
-            style: context.textTheme.bodyLarge?.copyWith(
-              color: context.colors.onBackground.withValues(alpha: .7),
+            child: Column(
+              children: [
+                // Success icon with glow
+                Container(
+                  width: 80,
+                  height: 80,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: const Color(0xFF6BCF9B).withValues(alpha: 0.15),
+                    boxShadow: [
+                      BoxShadow(
+                        color: const Color(0xFF6BCF9B).withValues(alpha: 0.2),
+                        blurRadius: 24,
+                        spreadRadius: 4,
+                      ),
+                    ],
+                  ),
+                  child: const Icon(
+                    Icons.check_rounded,
+                    size: 48,
+                    color: Color(0xFF6BCF9B),
+                  ),
+                ),
+                const SizedBox(height: 24),
+                Text(
+                  tr.success_title,
+                  style: context.textTheme.headlineSmall?.copyWith(
+                    fontWeight: FontWeight.w600,
+                    color: Colors.white,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+                const SizedBox(height: 12),
+                Text(
+                  tr.success_message,
+                  style: context.textTheme.bodyLarge?.copyWith(
+                    color: Colors.white.withValues(alpha: 0.7),
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+              ],
             ),
-            textAlign: TextAlign.center,
           ),
           const SizedBox(height: 32),
-          ElevatedButton(
-            onPressed: () {
-              ref.read(feedbackStateProvider.notifier).reset();
-              context.pop();
-            },
-            child: Text(tr.back),
+          // Ghost button (secondary style)
+          SizedBox(
+            width: double.infinity,
+            child: Container(
+              height: 52,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(12),
+                border: Border.all(
+                  color: Colors.white.withValues(alpha: 0.15),
+                ),
+              ),
+              child: Material(
+                color: Colors.transparent,
+                child: InkWell(
+                  onTap: () {
+                    ref.read(feedbackStateProvider.notifier).reset();
+                    context.pop();
+                  },
+                  borderRadius: BorderRadius.circular(12),
+                  child: Center(
+                    child: Text(
+                      tr.back,
+                      style: context.textTheme.titleSmall?.copyWith(
+                        color: Colors.white.withValues(alpha: 0.7),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ),
           ),
         ],
       ),

@@ -75,6 +75,7 @@ class _ClubEditSheetState extends State<ClubEditSheet> {
   @override
   Widget build(BuildContext context) {
     final tr = Translations.of(context).bag;
+    final colors = context.colors;
 
     return Padding(
       padding: EdgeInsets.only(
@@ -82,8 +83,13 @@ class _ClubEditSheetState extends State<ClubEditSheet> {
       ),
       child: Container(
         decoration: BoxDecoration(
-          color: context.colors.background,
-          borderRadius: const BorderRadius.vertical(top: Radius.circular(20)),
+          color: const Color(0xFF141A24).withValues(alpha: 0.95),
+          borderRadius: const BorderRadius.vertical(top: Radius.circular(16)),
+          border: Border(
+            top: BorderSide(color: Colors.white.withValues(alpha: 0.08)),
+            left: BorderSide(color: Colors.white.withValues(alpha: 0.08)),
+            right: BorderSide(color: Colors.white.withValues(alpha: 0.08)),
+          ),
         ),
         child: SafeArea(
           top: false,
@@ -96,7 +102,7 @@ class _ClubEditSheetState extends State<ClubEditSheet> {
                   width: 40,
                   height: 4,
                   decoration: BoxDecoration(
-                    color: context.colors.onSurface.withValues(alpha: 0.2),
+                    color: Colors.white.withValues(alpha: 0.2),
                     borderRadius: BorderRadius.circular(2),
                   ),
                 ),
@@ -105,6 +111,7 @@ class _ClubEditSheetState extends State<ClubEditSheet> {
                   isEditing ? tr.edit_distance : tr.add_club_title,
                   style: context.textTheme.titleLarge?.copyWith(
                     fontWeight: FontWeight.w600,
+                    color: colors.onSurface,
                   ),
                 ),
                 const SizedBox(height: 24),
@@ -129,36 +136,60 @@ class _ClubEditSheetState extends State<ClubEditSheet> {
                 const SizedBox(height: 24),
                 SizedBox(
                   width: double.infinity,
-                  child: Container(
-                    height: 52,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(12),
-                      gradient: const LinearGradient(
-                        begin: Alignment.topCenter,
-                        end: Alignment.bottomCenter,
-                        colors: [
-                          Color(0xFF8BC34A),
-                          Color(0xFF689F38),
-                        ],
-                      ),
-                    ),
-                    child: Material(
-                      color: Colors.transparent,
-                      child: InkWell(
-                        onTap: _canSave ? _handleSave : null,
-                        borderRadius: BorderRadius.circular(12),
-                        child: Center(
-                          child: Text(
-                            tr.save,
-                            style: context.textTheme.titleSmall?.copyWith(
-                              fontWeight: FontWeight.w600,
-                              color: Colors.white,
+                  child: _canSave
+                      ? Container(
+                          height: 52,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(12),
+                            gradient: LinearGradient(
+                              begin: Alignment.topCenter,
+                              end: Alignment.bottomCenter,
+                              colors: [
+                                colors.primary.withValues(alpha: 0.9),
+                                colors.primary,
+                              ],
+                            ),
+                            boxShadow: [
+                              BoxShadow(
+                                color: colors.primary.withValues(alpha: 0.3),
+                                blurRadius: 12,
+                                offset: const Offset(0, 4),
+                              ),
+                            ],
+                          ),
+                          child: Material(
+                            color: Colors.transparent,
+                            child: InkWell(
+                              onTap: _handleSave,
+                              borderRadius: BorderRadius.circular(12),
+                              child: Center(
+                                child: Text(
+                                  tr.save,
+                                  style: context.textTheme.titleSmall?.copyWith(
+                                    fontWeight: FontWeight.w600,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        )
+                      : Container(
+                          height: 52,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(12),
+                            color: Colors.white.withValues(alpha: 0.08),
+                          ),
+                          child: Center(
+                            child: Text(
+                              tr.save,
+                              style: context.textTheme.titleSmall?.copyWith(
+                                fontWeight: FontWeight.w600,
+                                color: Colors.white.withValues(alpha: 0.3),
+                              ),
                             ),
                           ),
                         ),
-                      ),
-                    ),
-                  ),
                 ),
               ],
             ),
@@ -192,17 +223,20 @@ class _ReadOnlyClubName extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = context.colors;
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
       decoration: BoxDecoration(
-        color: context.colors.surface,
+        color: const Color(0xFF141A24).withValues(alpha: 0.85),
         borderRadius: BorderRadius.circular(12),
+        border: Border.all(color: Colors.white.withValues(alpha: 0.06)),
       ),
       child: Text(
         name,
         style: context.textTheme.titleMedium?.copyWith(
           fontWeight: FontWeight.w500,
+          color: colors.onSurface,
         ),
       ),
     );
@@ -224,27 +258,33 @@ class _ClubTypeDropdown extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = context.colors;
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.symmetric(horizontal: 16),
       decoration: BoxDecoration(
-        color: context.colors.surface,
+        color: const Color(0xFF141A24).withValues(alpha: 0.85),
         borderRadius: BorderRadius.circular(12),
+        border: Border.all(color: Colors.white.withValues(alpha: 0.06)),
       ),
       child: DropdownButtonHideUnderline(
         child: DropdownButton<String>(
           value: value,
           isExpanded: true,
+          dropdownColor: const Color(0xFF141A24),
           hint: Text(
             hintText,
             style: context.textTheme.bodyLarge?.copyWith(
-              color: context.colors.onSurface.withValues(alpha: 0.5),
+              color: colors.onSurface.withValues(alpha: 0.5),
             ),
           ),
           items: options.map((option) {
             return DropdownMenuItem<String>(
               value: option.type,
-              child: Text(option.displayName),
+              child: Text(
+                option.displayName,
+                style: TextStyle(color: colors.onSurface),
+              ),
             );
           }).toList(),
           onChanged: onChanged,
@@ -269,23 +309,36 @@ class _DistanceInput extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = context.colors;
     return TextField(
       controller: controller,
       keyboardType: TextInputType.number,
+      style: TextStyle(color: colors.onSurface),
       inputFormatters: [
         FilteringTextInputFormatter.digitsOnly,
         LengthLimitingTextInputFormatter(3),
       ],
       decoration: InputDecoration(
         labelText: labelText,
+        labelStyle: TextStyle(color: colors.onSurface.withValues(alpha: 0.7)),
         hintText: hintText,
+        hintStyle: TextStyle(color: colors.onSurface.withValues(alpha: 0.5)),
         filled: true,
-        fillColor: context.colors.surface,
+        fillColor: const Color(0xFF141A24).withValues(alpha: 0.85),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),
-          borderSide: BorderSide.none,
+          borderSide: BorderSide(color: Colors.white.withValues(alpha: 0.06)),
+        ),
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(12),
+          borderSide: BorderSide(color: Colors.white.withValues(alpha: 0.06)),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(12),
+          borderSide: BorderSide(color: colors.primary.withValues(alpha: 0.6)),
         ),
         suffixText: suffixText,
+        suffixStyle: TextStyle(color: colors.onSurface.withValues(alpha: 0.5)),
       ),
     );
   }

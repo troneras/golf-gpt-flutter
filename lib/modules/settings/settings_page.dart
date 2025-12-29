@@ -2,7 +2,6 @@ import 'package:apparence_kit/core/data/api/analytics_api.dart';
 import 'package:apparence_kit/core/data/models/user.dart';
 import 'package:apparence_kit/core/states/user_state_notifier.dart';
 import 'package:apparence_kit/core/theme/extensions/theme_extension.dart';
-import 'package:apparence_kit/core/theme/providers/theme_provider.dart';
 import 'package:apparence_kit/i18n/translations.g.dart';
 import 'package:apparence_kit/modules/settings/ui/widgets/location_permission_tile.dart';
 import 'package:apparence_kit/modules/settings/ui/widgets/notification_permission_tile.dart';
@@ -49,7 +48,7 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
     final user = userState.user;
     final userName = switch (user) {
       AuthenticatedUserData(:final name, :final email) => name ?? email,
-      _ => 'User',
+      _ => tr.settings.default_user,
     };
     final userEmail = switch (user) {
       AuthenticatedUserData(:final email) => email,
@@ -60,9 +59,11 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
       _ => false,
     };
 
-    return SafeArea(
-      child: ListView(
-        padding: const EdgeInsets.fromLTRB(16, 40, 16, 24),
+    return Scaffold(
+      backgroundColor: context.colors.background,
+      body: SafeArea(
+        child: ListView(
+          padding: const EdgeInsets.fromLTRB(16, 40, 16, 24),
         children: [
           Text(
             tr.settings.title,
@@ -90,15 +91,6 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
                 onTap: () => context.push('/bag'),
               ),
               const VoiceCaddySettingsTile(),
-            ],
-          ),
-          const SizedBox(height: 16),
-
-          // Preferences Section - Customization
-          _SettingsSection(
-            title: tr.settings.sections.preferences,
-            children: const [
-              _ThemeSwitcherTile(),
             ],
           ),
           const SizedBox(height: 16),
@@ -162,11 +154,12 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
             child: Text(
               'TalkCaddy v$_appVersion',
               style: context.textTheme.bodySmall?.copyWith(
-                color: context.colors.onBackground.withValues(alpha: 0.5),
+                color: context.colors.textTertiary,
               ),
             ),
           ),
         ],
+        ),
       ),
     );
   }
@@ -183,7 +176,7 @@ class _SettingsSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final colorScheme = Theme.of(context).colorScheme;
+    final colors = context.colors;
     final filteredChildren = children.where((child) {
       // Filter out empty widgets (like NotificationPermissionTile on iOS)
       return child is! SizedBox || (child.width != 0 && child.height != 0);
@@ -200,16 +193,20 @@ class _SettingsSection extends StatelessWidget {
           padding: const EdgeInsets.only(left: 4, bottom: 8),
           child: Text(
             title,
-            style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                  color: colorScheme.onBackground.withValues(alpha: 0.6),
-                  fontWeight: FontWeight.w600,
-                ),
+            style: context.textTheme.titleSmall?.copyWith(
+              color: colors.textTertiary,
+              fontWeight: FontWeight.w600,
+            ),
           ),
         ),
+        // Matte Glass - Level 1 (Design System)
         Container(
           decoration: BoxDecoration(
+            color: const Color(0xFF141A24).withValues(alpha: 0.85),
             borderRadius: BorderRadius.circular(12),
-            color: colorScheme.surface,
+            border: Border.all(
+              color: Colors.white.withValues(alpha: 0.06),
+            ),
           ),
           child: Column(
             children: [
@@ -220,7 +217,7 @@ class _SettingsSection extends StatelessWidget {
                 ),
                 if (i < filteredChildren.length - 1)
                   Divider(
-                    color: Colors.blueGrey.withValues(alpha: 0.1),
+                    color: Colors.white.withValues(alpha: 0.06),
                     height: 1,
                     indent: 16,
                     endIndent: 16,
@@ -248,19 +245,41 @@ class ProfileTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final colorScheme = Theme.of(context).colorScheme;
+    final colors = context.colors;
+    // Prominent Glass - Level 2 (Design System)
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
+        color: const Color(0xFF141A24).withValues(alpha: 0.90),
         borderRadius: BorderRadius.circular(12),
-        color: colorScheme.surface,
+        border: Border.all(
+          color: Colors.white.withValues(alpha: 0.08),
+        ),
       ),
       child: Row(
         children: [
-          CircleAvatar(
-            radius: 32,
-            backgroundImage: const AssetImage('assets/images/avatar.png'),
-            backgroundColor: colorScheme.surfaceContainerHighest,
+          Container(
+            width: 64,
+            height: 64,
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              color: colors.elevated,
+              border: Border.all(
+                color: colors.primary.withValues(alpha: 0.3),
+                width: 2,
+              ),
+            ),
+            child: ClipOval(
+              child: Image.asset(
+                'assets/images/avatar.png',
+                fit: BoxFit.cover,
+                errorBuilder: (context, error, stackTrace) => Icon(
+                  Icons.person,
+                  size: 32,
+                  color: colors.textTertiary,
+                ),
+              ),
+            ),
           ),
           const SizedBox(width: 16),
           Expanded(
@@ -272,9 +291,9 @@ class ProfileTile extends StatelessWidget {
                     Flexible(
                       child: Text(
                         title,
-                        style: Theme.of(context).textTheme.titleLarge!.copyWith(
-                              color: colorScheme.onSurface,
-                            ),
+                        style: context.textTheme.titleLarge!.copyWith(
+                          color: colors.onBackground,
+                        ),
                         overflow: TextOverflow.ellipsis,
                       ),
                     ),
@@ -283,14 +302,18 @@ class ProfileTile extends StatelessWidget {
                       Container(
                         padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                         decoration: BoxDecoration(
-                          color: colorScheme.primaryContainer,
+                          color: colors.primary.withValues(alpha: 0.15),
                           borderRadius: BorderRadius.circular(12),
+                          border: Border.all(
+                            color: colors.primary.withValues(alpha: 0.3),
+                          ),
                         ),
                         child: Text(
-                          'Beta',
-                          style: Theme.of(context).textTheme.labelSmall!.copyWith(
-                                color: colorScheme.onPrimaryContainer,
-                              ),
+                          Translations.of(context).settings.beta_badge,
+                          style: context.textTheme.labelSmall!.copyWith(
+                            color: colors.primary,
+                            fontWeight: FontWeight.w500,
+                          ),
                         ),
                       ),
                     ],
@@ -299,70 +322,12 @@ class ProfileTile extends StatelessWidget {
                 const SizedBox(height: 2),
                 Text(
                   subtitle,
-                  style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                        color: colorScheme.onSurface.withValues(alpha: 0.7),
-                      ),
+                  style: context.textTheme.bodyMedium!.copyWith(
+                    color: colors.textSecondary,
+                  ),
                 ),
               ],
             ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class _ThemeSwitcherTile extends StatefulWidget {
-  const _ThemeSwitcherTile();
-
-  @override
-  State<_ThemeSwitcherTile> createState() => _ThemeSwitcherTileState();
-}
-
-class _ThemeSwitcherTileState extends State<_ThemeSwitcherTile> {
-  bool darkMode = false;
-
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      darkMode = ThemeProvider.of(context).mode == ThemeMode.dark;
-      setState(() {});
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    final tr = Translations.of(context);
-    final colorScheme = Theme.of(context).colorScheme;
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 4),
-      child: Row(
-        children: [
-          Icon(
-            darkMode ? Icons.dark_mode : Icons.light_mode,
-            size: 21,
-            color: colorScheme.onSurface,
-          ),
-          const SizedBox(width: 8),
-          Expanded(
-            child: Text(
-              tr.settings.theme_mode,
-              style: TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.w400,
-                color: colorScheme.onSurface,
-              ),
-            ),
-          ),
-          Switch(
-            value: darkMode,
-            onChanged: (value) {
-              setState(() {
-                darkMode = value;
-              });
-              ThemeProvider.of(context).toggle();
-            },
           ),
         ],
       ),
@@ -378,34 +343,141 @@ class _SignOutTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final tr = Translations.of(context);
-    final colorScheme = Theme.of(context).colorScheme;
+    final colors = context.colors;
     return InkWell(
       onTap: () {
         showDialog(
           context: context,
           builder: (dialogContext) {
-            return AlertDialog.adaptive(
-              title: Text(tr.settings.disconnect),
-              content: Text(tr.settings.disconnect_confirm),
-              actions: <Widget>[
-                TextButton(
-                  child: Text(tr.common.cancel),
-                  onPressed: () {
-                    Navigator.of(dialogContext).pop();
-                  },
+            return Dialog(
+              backgroundColor: Colors.transparent,
+              surfaceTintColor: Colors.transparent,
+              elevation: 0,
+              child: Container(
+                decoration: BoxDecoration(
+                  color: const Color(0xFF141A24).withValues(alpha: 0.90),
+                  borderRadius: BorderRadius.circular(16),
+                  border: Border.all(
+                    color: Colors.white.withValues(alpha: 0.08),
+                  ),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withValues(alpha: 0.4),
+                      blurRadius: 24,
+                      offset: const Offset(0, 8),
+                    ),
+                  ],
                 ),
-                TextButton(
-                  child: Text(tr.settings.disconnect),
-                  onPressed: () {
-                    Navigator.of(dialogContext).pop();
-                    onSignOut();
-                  },
+                child: Padding(
+                  padding: const EdgeInsets.all(24),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Icon(
+                        Icons.logout_rounded,
+                        size: 48,
+                        color: colors.primary,
+                      ),
+                      const SizedBox(height: 16),
+                      Text(
+                        tr.settings.disconnect,
+                        style: context.textTheme.titleLarge?.copyWith(
+                          fontWeight: FontWeight.w600,
+                          color: colors.onSurface,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                      const SizedBox(height: 12),
+                      Text(
+                        tr.settings.disconnect_confirm,
+                        style: context.textTheme.bodyMedium?.copyWith(
+                          color: colors.onSurface.withValues(alpha: 0.7),
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                      const SizedBox(height: 24),
+                      Row(
+                        children: [
+                          Expanded(
+                            child: Container(
+                              height: 48,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(12),
+                                border: Border.all(
+                                  color: Colors.white.withValues(alpha: 0.15),
+                                ),
+                              ),
+                              child: Material(
+                                color: Colors.transparent,
+                                child: InkWell(
+                                  onTap: () => Navigator.of(dialogContext).pop(),
+                                  borderRadius: BorderRadius.circular(12),
+                                  child: Center(
+                                    child: Text(
+                                      tr.common.cancel,
+                                      style: context.textTheme.titleSmall?.copyWith(
+                                        color: colors.onSurface.withValues(alpha: 0.7),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                          const SizedBox(width: 12),
+                          Expanded(
+                            child: Container(
+                              height: 48,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(12),
+                                gradient: LinearGradient(
+                                  begin: Alignment.topCenter,
+                                  end: Alignment.bottomCenter,
+                                  colors: [
+                                    colors.primary.withValues(alpha: 0.9),
+                                    colors.primary,
+                                  ],
+                                ),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: colors.primary.withValues(alpha: 0.3),
+                                    blurRadius: 12,
+                                    offset: const Offset(0, 4),
+                                  ),
+                                ],
+                              ),
+                              child: Material(
+                                color: Colors.transparent,
+                                child: InkWell(
+                                  onTap: () {
+                                    Navigator.of(dialogContext).pop();
+                                    onSignOut();
+                                  },
+                                  borderRadius: BorderRadius.circular(12),
+                                  child: Center(
+                                    child: Text(
+                                      tr.settings.disconnect,
+                                      style: context.textTheme.titleSmall?.copyWith(
+                                        fontWeight: FontWeight.w600,
+                                        color: Colors.white,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
-              ],
+              ),
             );
           },
         );
       },
+      borderRadius: BorderRadius.circular(8),
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 12),
         child: Row(
@@ -413,22 +485,21 @@ class _SignOutTile extends StatelessWidget {
             Icon(
               Icons.logout,
               size: 21,
-              color: colorScheme.onSurface,
+              color: Colors.white.withValues(alpha: 0.6),
             ),
-            const SizedBox(width: 8),
+            const SizedBox(width: 12),
             Expanded(
               child: Text(
                 tr.settings.disconnect,
-                style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w400,
-                  color: colorScheme.onSurface,
+                style: context.textTheme.bodyLarge?.copyWith(
+                  color: colors.onBackground,
                 ),
               ),
             ),
             Icon(
               Icons.chevron_right,
-              color: colorScheme.onSurface.withValues(alpha: 0.5),
+              size: 20,
+              color: colors.textTertiary,
             ),
           ],
         ),
@@ -441,62 +512,157 @@ class _DeleteAccountTile extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final tr = Translations.of(context);
+    final colors = context.colors;
+    // Using muted error color from design system (#CF6B6B)
+    const mutedError = Color(0xFFCF6B6B);
     return InkWell(
       onTap: () {
         showDialog(
           context: context,
           builder: (dialogContext) {
-            return AlertDialog.adaptive(
-              title: Text(tr.settings.delete_account),
-              content: Text(tr.settings.delete_account_confirm),
-              actions: <Widget>[
-                TextButton(
-                  child: Text(tr.common.cancel),
-                  onPressed: () {
-                    Navigator.of(dialogContext).pop();
-                  },
-                ),
-                TextButton(
-                  child: Text(
-                    tr.settings.delete_account,
-                    style: const TextStyle(color: Colors.red),
+            return Dialog(
+              backgroundColor: Colors.transparent,
+              surfaceTintColor: Colors.transparent,
+              elevation: 0,
+              child: Container(
+                decoration: BoxDecoration(
+                  color: const Color(0xFF141A24).withValues(alpha: 0.90),
+                  borderRadius: BorderRadius.circular(16),
+                  border: Border.all(
+                    color: Colors.white.withValues(alpha: 0.08),
                   ),
-                  onPressed: () async {
-                    Navigator.of(dialogContext).pop();
-                    await ref.read(userStateNotifierProvider.notifier).deleteAccount();
-                    if (context.mounted) {
-                      context.go('/signin');
-                    }
-                  },
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withValues(alpha: 0.4),
+                      blurRadius: 24,
+                      offset: const Offset(0, 8),
+                    ),
+                  ],
                 ),
-              ],
+                child: Padding(
+                  padding: const EdgeInsets.all(24),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      const Icon(
+                        Icons.warning_amber_rounded,
+                        size: 48,
+                        color: mutedError,
+                      ),
+                      const SizedBox(height: 16),
+                      Text(
+                        tr.settings.delete_account,
+                        style: context.textTheme.titleLarge?.copyWith(
+                          fontWeight: FontWeight.w600,
+                          color: colors.onSurface,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                      const SizedBox(height: 12),
+                      Text(
+                        tr.settings.delete_account_confirm,
+                        style: context.textTheme.bodyMedium?.copyWith(
+                          color: colors.onSurface.withValues(alpha: 0.7),
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                      const SizedBox(height: 24),
+                      Row(
+                        children: [
+                          Expanded(
+                            child: Container(
+                              height: 48,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(12),
+                                border: Border.all(
+                                  color: Colors.white.withValues(alpha: 0.15),
+                                ),
+                              ),
+                              child: Material(
+                                color: Colors.transparent,
+                                child: InkWell(
+                                  onTap: () => Navigator.of(dialogContext).pop(),
+                                  borderRadius: BorderRadius.circular(12),
+                                  child: Center(
+                                    child: Text(
+                                      tr.common.cancel,
+                                      style: context.textTheme.titleSmall?.copyWith(
+                                        color: colors.onSurface.withValues(alpha: 0.7),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                          const SizedBox(width: 12),
+                          Expanded(
+                            child: Container(
+                              height: 48,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(12),
+                                color: mutedError.withValues(alpha: 0.15),
+                                border: Border.all(
+                                  color: mutedError.withValues(alpha: 0.3),
+                                ),
+                              ),
+                              child: Material(
+                                color: Colors.transparent,
+                                child: InkWell(
+                                  onTap: () async {
+                                    Navigator.of(dialogContext).pop();
+                                    await ref.read(userStateNotifierProvider.notifier).deleteAccount();
+                                    if (context.mounted) {
+                                      context.go('/signin');
+                                    }
+                                  },
+                                  borderRadius: BorderRadius.circular(12),
+                                  child: Center(
+                                    child: Text(
+                                      tr.settings.delete_account,
+                                      style: context.textTheme.titleSmall?.copyWith(
+                                        fontWeight: FontWeight.w600,
+                                        color: mutedError,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+              ),
             );
           },
         );
       },
+      borderRadius: BorderRadius.circular(8),
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 12),
         child: Row(
           children: [
-            const Icon(
+            Icon(
               Icons.delete_forever,
               size: 21,
-              color: Colors.red,
+              color: mutedError.withValues(alpha: 0.8),
             ),
-            const SizedBox(width: 8),
+            const SizedBox(width: 12),
             Expanded(
               child: Text(
                 tr.settings.delete_account,
-                style: const TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w400,
-                  color: Colors.red,
+                style: context.textTheme.bodyLarge?.copyWith(
+                  color: mutedError,
                 ),
               ),
             ),
             Icon(
               Icons.chevron_right,
-              color: Colors.red.withValues(alpha: 0.5),
+              size: 20,
+              color: mutedError.withValues(alpha: 0.5),
             ),
           ],
         ),

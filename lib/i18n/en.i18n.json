@@ -57,29 +57,39 @@
     "auth": {
         "or_sign_in_with": "Or sign in with",
         "sign_in_with_google": "Sign in with Google",
+        "social_signin_error": {
+            "google": "Could not sign in with Google",
+            "apple": "Could not sign in with Apple",
+            "facebook": "Could not sign in with Facebook",
+            "google_play": "Could not sign in with Google Play"
+        },
         "signin": {
             "title": "Connect your caddie",
-            "subtitle": "Your account syncs your round and course GPS.",
+            "subtitle": "Your personal AI caddie",
             "email_label": "Email",
-            "email_hint": "you@email.com",
+            "email_hint": "Email",
             "password_label": "Password",
             "password_hint": "Password",
-            "action": "Sign in",
-            "forgot_password": "Forgot your password?",
+            "action": "Continue",
+            "forgot_password": "Forgot my password",
             "no_account": "Don't have an account?",
+            "no_account_question": "Don't have an account yet?",
+            "register": "Sign up",
             "signup_link": "Sign up",
             "error_title": "Error",
             "error_message": "Wrong email or password"
         },
         "signup": {
             "title": "Create account",
-            "subtitle": "Your account syncs your round and course GPS.",
+            "subtitle": "Your personal AI caddie",
             "email_label": "Email",
-            "email_hint": "you@email.com",
+            "email_hint": "Email",
             "password_label": "Password",
             "password_hint": "Password",
             "action": "Sign up",
             "has_account": "Already have an account?",
+            "has_account_question": "Already have an account?",
+            "signin": "Sign in",
             "signin_link": "Sign in",
             "error_title": "Error",
             "error_message": "This email already exists or is invalid"
@@ -111,6 +121,21 @@
             "success_title": "Password changed",
             "success_subtitle": "Your password has been updated. Sign in with your new password.",
             "back_to_signin": "Go to sign in"
+        },
+        "phone_auth": {
+            "input_title": "Phone Authentication",
+            "verify_title": "Verify OTP",
+            "enter_phone": "Enter your phone number",
+            "send_code_info": "We will send you a verification code to confirm your identity",
+            "phone_label": "Phone Number",
+            "phone_hint": "+1 (555) 123-4567",
+            "phone_required": "Please enter a phone number",
+            "phone_invalid": "Please enter a valid phone number",
+            "verification_code": "Verification Code",
+            "code_sent_to": "We have sent a verification code to {phone}",
+            "enter_all_digits": "Please enter all 6 digits",
+            "verify_code": "Verify Code",
+            "resend_code": "Resend Code"
         }
     },
     "common": {
@@ -118,6 +143,8 @@
         "cancel": "Cancel",
         "skip": "Skip",
         "error": "Error",
+        "error_occurred": "An error occurred",
+        "page_not_found": "404 - Page not found",
         "success": "Success",
         "loading": "Loading...",
         "or": "or",
@@ -141,6 +168,8 @@
     },
     "settings": {
         "title": "Settings",
+        "default_user": "User",
+        "beta_badge": "Beta",
         "sections": {
             "permissions": "Permissions",
             "preferences": "Preferences",
@@ -156,6 +185,12 @@
         "disconnect_confirm": "Are you sure you want to disconnect?",
         "delete_account": "Delete account",
         "delete_account_confirm": "This action is permanent and will delete all your data. Are you sure you want to continue?",
+        "delete_account_dialog": {
+            "title": "Delete my account?",
+            "warning": "Warning: this action is irreversible",
+            "confirm": "Yes, delete",
+            "button_text": "I want to delete my account"
+        },
         "theme_mode": "Light/Dark mode",
         "location_permission": {
             "title": "Location",
@@ -276,6 +311,15 @@
         "bogey": "Bogey",
         "double_bogey": "Double Bogey",
         "triple_bogey": "Triple Bogey"
+    },
+    "score_input": {
+        "hole_title": "Hole {holeNumber}",
+        "par_info": "Par {par}",
+        "par_yards_info": "Par {par} • {yards} yds",
+        "strokes": "Strokes",
+        "putts": "Putts",
+        "penalties": "Penalties",
+        "save": "Save"
     },
     "active_round": {
         "title": "You have a round in progress",
