@@ -178,6 +178,7 @@
     },
     "select_course": {
         "title": "Select the course",
+        "start_round_cta": "Start voice round",
         "loading": "Searching for nearby course...",
         "closest_course": "Closest course",
         "recent_course": "Recent course",

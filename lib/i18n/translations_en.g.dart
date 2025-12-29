@@ -201,6 +201,7 @@ class _TranslationsSelectCourseEn extends TranslationsSelectCourseEs {
 
 	// Translations
 	@override String get title => 'Select the course';
+	@override String get start_round_cta => 'Start voice round';
 	@override String get loading => 'Searching for nearby course...';
 	@override String get closest_course => 'Closest course';
 	@override String get recent_course => 'Recent course';
@@ -965,6 +966,7 @@ extension on TranslationsEn {
 			'settings.notification_permission.granted' => 'Allowed',
 			'settings.notification_permission.open_settings' => 'Open settings',
 			'select_course.title' => 'Select the course',
+			'select_course.start_round_cta' => 'Start voice round',
 			'select_course.loading' => 'Searching for nearby course...',
 			'select_course.closest_course' => 'Closest course',
 			'select_course.recent_course' => 'Recent course',

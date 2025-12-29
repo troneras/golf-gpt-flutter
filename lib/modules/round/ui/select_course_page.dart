@@ -729,7 +729,7 @@ class _BottomButtons extends StatelessWidget {
                     borderRadius: BorderRadius.circular(12),
                     child: Center(
                       child: Text(
-                        tr.home.start_round,
+                        tr.select_course.start_round_cta,
                         style: context.textTheme.titleSmall?.copyWith(
                           fontWeight: FontWeight.bold,
                           color: onStartRound != null

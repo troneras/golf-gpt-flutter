@@ -306,6 +306,9 @@ class TranslationsSelectCourseEs {
 	/// es: 'Selecciona el campo'
 	String get title => 'Selecciona el campo';
 
+	/// es: 'Empezar ronda por voz'
+	String get start_round_cta => 'Empezar ronda por voz';
+
 	/// es: 'Buscando campo cercano...'
 	String get loading => 'Buscando campo cercano...';
 
@@ -1665,6 +1668,7 @@ extension on Translations {
 			'settings.notification_permission.granted' => 'Permitido',
 			'settings.notification_permission.open_settings' => 'Abrir ajustes',
 			'select_course.title' => 'Selecciona el campo',
+			'select_course.start_round_cta' => 'Empezar ronda por voz',
 			'select_course.loading' => 'Buscando campo cercano...',
 			'select_course.closest_course' => 'Campo mas cercano',
 			'select_course.recent_course' => 'Campo reciente',

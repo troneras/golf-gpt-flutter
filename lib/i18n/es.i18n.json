@@ -178,6 +178,7 @@
     },
     "select_course": {
         "title": "Selecciona el campo",
+        "start_round_cta": "Empezar ronda por voz",
         "loading": "Buscando campo cercano...",
         "closest_course": "Campo mas cercano",
         "recent_course": "Campo reciente",
