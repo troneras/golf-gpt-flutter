@@ -4,9 +4,9 @@ import 'package:apparence_kit/modules/notifications/api/local_notifier.dart';
 import 'package:apparence_kit/modules/round/providers/active_round_notifier.dart';
 import 'package:apparence_kit/modules/round/providers/models/active_round_state.dart';
 import 'package:apparence_kit/modules/round/ui/widgets/round_header.dart';
-import 'package:apparence_kit/modules/round/ui/widgets/scorecard_grid.dart';
 import 'package:apparence_kit/modules/round/ui/widgets/score_input_sheet.dart';
-
+import 'package:apparence_kit/modules/round/ui/widgets/scorecard_grid.dart';
+import 'package:apparence_kit/modules/voice_caddy/ui/widgets/voice_caddy_fab.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -84,6 +84,9 @@ class _RoundInProgressPageState extends ConsumerState<RoundInProgressPage> {
             ),
         ],
       ),
+      floatingActionButton: state is ActiveRoundStateActive
+          ? const VoiceCaddyFab()
+          : null,
       body: _buildBody(context, state),
     );
   }

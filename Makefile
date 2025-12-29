@@ -11,6 +11,7 @@ GOOGLE_SERVER_CLIENT_ID ?=
 SENTRY_DSN ?=
 SENTRY_AUTH_TOKEN ?=
 MIXPANEL_TOKEN ?=
+GPT_ID ?=
 
 # Build dart-define flags (dev mode)
 DART_DEFINES = --dart-define=BACKEND_URL=$(BACKEND_URL)
@@ -19,6 +20,9 @@ ifneq ($(GOOGLE_SERVER_CLIENT_ID),)
 endif
 ifneq ($(MIXPANEL_TOKEN),)
     DART_DEFINES += --dart-define=MIXPANEL_TOKEN=$(MIXPANEL_TOKEN)
+endif
+ifneq ($(GPT_ID),)
+    DART_DEFINES += --dart-define=GPT_ID=$(GPT_ID)
 endif
 
 # Build dart-define flags (prod mode - includes Sentry)

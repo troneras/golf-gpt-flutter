@@ -128,17 +128,32 @@ class VoiceCaddyNotifier extends _$VoiceCaddyNotifier {
   }
 
   /// Open ChatGPT with the custom GPT
+  ///
+  /// Tries to open the ChatGPT app directly using its deep link scheme.
+  /// Falls back to the web URL if the app is not installed.
   Future<bool> openChatGPT() async {
-    const gptUrl = 'https://chat.openai.com/g/$_gptId';
-    final uri = Uri.parse(gptUrl);
+    // Try ChatGPT app deep link first
+    final appUri = Uri.parse('chatgpt://g/$_gptId');
+    final webUri = Uri.parse('https://chatgpt.com/g/$_gptId');
 
     try {
+      // Check if ChatGPT app can handle the deep link
+      if (await canLaunchUrl(appUri)) {
+        final launched = await launchUrl(
+          appUri,
+          mode: LaunchMode.externalApplication,
+        );
+        if (launched) return true;
+      }
+
+      // Fall back to web URL in external browser
       final launched = await launchUrl(
-        uri,
+        webUri,
         mode: LaunchMode.externalApplication,
       );
       return launched;
     } catch (e) {
+      _logger.e('Error opening ChatGPT: $e');
       state = state.copyWith(error: 'Could not open ChatGPT');
       return false;
     }

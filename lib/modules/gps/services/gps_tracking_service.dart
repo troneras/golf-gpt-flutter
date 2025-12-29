@@ -70,6 +70,7 @@ class GpsTrackingService {
   StreamSubscription<Position>? _positionSubscription;
   Timer? _trackingTimer;
   Position? _lastPosition;
+  DateTime? _lastSentTime;
 
   GpsTrackingStatus _status = GpsTrackingStatus.stopped;
   GpsTrackingStatus get status => _status;
@@ -221,9 +222,10 @@ class GpsTrackingService {
         onError: _onPositionError,
       );
 
-      // Start timer for regular interval tracking
+      // Start timer for regular interval tracking.
+      // Uses forceRefresh to get fresh position even when stationary.
       _trackingTimer = Timer.periodic(kTrackingInterval, (_) {
-        _sendCurrentPosition();
+        _sendCurrentPosition(forceRefresh: true);
       });
 
       _setStatus(GpsTrackingStatus.tracking);
@@ -279,6 +281,7 @@ class GpsTrackingService {
     _trackingTimer = null;
 
     _lastPosition = null;
+    _lastSentTime = null;
 
     // Try to flush retry buffer before stopping
     await _flushRetryBuffer();
@@ -319,6 +322,9 @@ class GpsTrackingService {
   void _onPositionUpdate(Position position) {
     _lastPosition = position;
     _logger.d('Position updated: ${position.latitude}, ${position.longitude}');
+
+    // Try to send - _sendCurrentPosition handles throttling
+    _sendCurrentPosition();
   }
 
   void _onPositionError(Object error) {
@@ -326,10 +332,29 @@ class GpsTrackingService {
     _setStatus(GpsTrackingStatus.error);
   }
 
-  Future<void> _sendCurrentPosition() async {
-    if (_lastPosition == null) {
-      _logger.d('No position available to send');
+  Future<void> _sendCurrentPosition({bool forceRefresh = false}) async {
+    // Throttle: only send if enough time has passed since last send.
+    // This prevents duplicate sends from both timer and position stream.
+    final now = DateTime.now();
+    if (_lastSentTime != null &&
+        now.difference(_lastSentTime!) < kTrackingInterval) {
       return;
+    }
+
+    // If forceRefresh or no position yet, get current position directly.
+    // This ensures we send even when stationary (distance filter not exceeded).
+    if (forceRefresh || _lastPosition == null) {
+      try {
+        _lastPosition = await Geolocator.getCurrentPosition(
+          locationSettings: const LocationSettings(
+            accuracy: LocationAccuracy.high,
+          ),
+        );
+        _logger.d('Position refreshed: ${_lastPosition!.latitude}, ${_lastPosition!.longitude}');
+      } catch (e) {
+        _logger.w('Failed to get current position: $e');
+        if (_lastPosition == null) return;
+      }
     }
 
     final point = GpsPoint.fromPosition(_lastPosition!);
@@ -340,6 +365,7 @@ class GpsTrackingService {
 
       // Then send current point
       await _repository.trackPoint(point);
+      _lastSentTime = now;
       _logger.d('GPS point sent successfully');
     } catch (e) {
       _logger.w('Failed to send GPS point, buffering for retry');
