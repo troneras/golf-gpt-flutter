@@ -1,4 +1,5 @@
 import 'package:apparence_kit/core/shared_preferences/shared_preferences.dart';
+import 'package:apparence_kit/core/states/user_state_notifier.dart';
 import 'package:apparence_kit/core/theme/extensions/theme_extension.dart';
 import 'package:apparence_kit/i18n/translations.g.dart';
 import 'package:apparence_kit/modules/round/domain/course.dart';
@@ -98,7 +99,21 @@ class SelectCoursePage extends ConsumerWidget {
               HapticFeedback.mediumImpact();
               if (selectedTee == null) return;
 
-              // If GPS is enabled, check notification permission on Android
+              // Step 1: Check if GPT is connected, if not trigger setup
+              final userState = ref.read(userStateNotifierProvider);
+              if (!userState.user.isGptConnected) {
+                // Navigate to voice caddy setup and wait for completion
+                await context.push('/voice-caddy-setup');
+                // After returning, check again if user completed setup
+                if (!context.mounted) return;
+                final updatedUserState = ref.read(userStateNotifierProvider);
+                if (!updatedUserState.user.isGptConnected) {
+                  // User skipped setup, don't start round
+                  return;
+                }
+              }
+
+              // Step 2: If GPS is enabled, check notification permission
               if (gpsEnabled) {
                 final hasNotificationPerm = await ref
                     .read(selectCourseProvider.notifier)
@@ -117,7 +132,7 @@ class SelectCoursePage extends ConsumerWidget {
 
               if (!context.mounted) return;
 
-              // Start the round
+              // Step 3: Start the round
               await ref.read(activeRoundNotifierProvider.notifier).startRound(
                 courseId: course.id,
                 teeId: selectedTee.id,
