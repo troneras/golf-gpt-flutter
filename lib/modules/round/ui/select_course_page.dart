@@ -113,20 +113,14 @@ class SelectCoursePage extends ConsumerWidget {
                 }
               }
 
-              // Step 2: If GPS is enabled, check notification permission
+              // Step 2: If GPS is enabled, request notification permission (but don't block if denied)
               if (gpsEnabled) {
                 final hasNotificationPerm = await ref
                     .read(selectCourseProvider.notifier)
                     .hasNotificationPermission();
                 if (!hasNotificationPerm && context.mounted) {
-                  final proceed = await _showNotificationPermissionDialog(context);
-                  if (!proceed) {
-                    // User chose to disable GPS or open settings
-                    if (context.mounted) {
-                      ref.read(selectCourseProvider.notifier).disableGps();
-                    }
-                    return;
-                  }
+                  // Show dialog but continue regardless of user choice
+                  await _showNotificationPermissionDialog(context);
                 }
               }
 
