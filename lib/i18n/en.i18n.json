@@ -3,7 +3,7 @@
         "title": "TalkCaddy",
         "title_ready": "is ready",
         "start_round": "Start round",
-        "gps_hint": "Enable GPS and start talking to your caddie",
+        "gps_hint": "You'll be asked for location permission if not already granted",
         "say_things_like": "Say things like:",
         "example_1": "\"Tee shot with driver\"",
         "example_2": "\"Two putts\"",
@@ -401,9 +401,9 @@
             "why_link": "Why is this needed?"
         },
         "home_card": {
-            "not_connected_title": "Set up Voice Caddy",
-            "not_connected_subtitle": "Connect ChatGPT to talk to your caddy hands-free",
-            "not_connected_cta": "Set up",
+            "not_connected_title": "Connect Voice Caddy (recommended)",
+            "not_connected_subtitle": "Required to play with voice only",
+            "not_connected_cta": "Connect",
             "connected_title": "Voice caddy ready",
             "connected_subtitle": "Open ChatGPT and tap the headphone icon to start",
             "connected_cta": "Open"

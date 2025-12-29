@@ -78,8 +78,8 @@ class TranslationsHomeEs {
 	/// es: 'Iniciar ronda'
 	String get start_round => 'Iniciar ronda';
 
-	/// es: 'Activa el GPS y empieza a hablar con tu caddie'
-	String get gps_hint => 'Activa el GPS y empieza a hablar con tu caddie';
+	/// es: 'Se te pedira permiso de ubicacion si aun no lo has dado'
+	String get gps_hint => 'Se te pedira permiso de ubicacion si aun no lo has dado';
 
 	/// es: 'Di cosas como:'
 	String get say_things_like => 'Di cosas como:';
@@ -1443,14 +1443,14 @@ class TranslationsVoiceCaddyHomeCardEs {
 
 	// Translations
 
-	/// es: 'Configura tu Caddie de Voz'
-	String get not_connected_title => 'Configura tu Caddie de Voz';
+	/// es: 'Conecta tu Caddie de Voz (recomendado)'
+	String get not_connected_title => 'Conecta tu Caddie de Voz (recomendado)';
 
-	/// es: 'Conecta ChatGPT para hablar con tu caddie sin usar las manos'
-	String get not_connected_subtitle => 'Conecta ChatGPT para hablar con tu caddie sin usar las manos';
+	/// es: 'Necesario para jugar solo con la voz'
+	String get not_connected_subtitle => 'Necesario para jugar solo con la voz';
 
-	/// es: 'Configurar'
-	String get not_connected_cta => 'Configurar';
+	/// es: 'Conectar'
+	String get not_connected_cta => 'Conectar';
 
 	/// es: 'Caddie de voz listo'
 	String get connected_title => 'Caddie de voz listo';
@@ -1530,7 +1530,7 @@ extension on Translations {
 			'home.title' => 'TalkCaddy',
 			'home.title_ready' => 'esta listo',
 			'home.start_round' => 'Iniciar ronda',
-			'home.gps_hint' => 'Activa el GPS y empieza a hablar con tu caddie',
+			'home.gps_hint' => 'Se te pedira permiso de ubicacion si aun no lo has dado',
 			'home.say_things_like' => 'Di cosas como:',
 			'home.example_1' => '"Salida con driver"',
 			'home.example_2' => '"Dos putts"',
@@ -1853,9 +1853,9 @@ extension on Translations {
 			'voice_caddy.error.why_needed' => 'El caddie de voz necesita acceso a tu cuenta TalkCaddy para conocer tu ubicacion y distancias de palos.',
 			'voice_caddy.error.try_again' => 'Intentar de nuevo',
 			'voice_caddy.error.why_link' => 'Por que es necesario?',
-			'voice_caddy.home_card.not_connected_title' => 'Configura tu Caddie de Voz',
-			'voice_caddy.home_card.not_connected_subtitle' => 'Conecta ChatGPT para hablar con tu caddie sin usar las manos',
-			'voice_caddy.home_card.not_connected_cta' => 'Configurar',
+			'voice_caddy.home_card.not_connected_title' => 'Conecta tu Caddie de Voz (recomendado)',
+			'voice_caddy.home_card.not_connected_subtitle' => 'Necesario para jugar solo con la voz',
+			'voice_caddy.home_card.not_connected_cta' => 'Conectar',
 			'voice_caddy.home_card.connected_title' => 'Caddie de voz listo',
 			'voice_caddy.home_card.connected_subtitle' => 'Abre ChatGPT y toca el icono de audifonos para empezar',
 			'voice_caddy.home_card.connected_cta' => 'Abrir',

@@ -70,7 +70,7 @@ class _TranslationsHomeEn extends TranslationsHomeEs {
 	@override String get title => 'TalkCaddy';
 	@override String get title_ready => 'is ready';
 	@override String get start_round => 'Start round';
-	@override String get gps_hint => 'Enable GPS and start talking to your caddie';
+	@override String get gps_hint => 'You\'ll be asked for location permission if not already granted';
 	@override String get say_things_like => 'Say things like:';
 	@override String get example_1 => '"Tee shot with driver"';
 	@override String get example_2 => '"Two putts"';
@@ -774,9 +774,9 @@ class _TranslationsVoiceCaddyHomeCardEn extends TranslationsVoiceCaddyHomeCardEs
 	final TranslationsEn _root; // ignore: unused_field
 
 	// Translations
-	@override String get not_connected_title => 'Set up Voice Caddy';
-	@override String get not_connected_subtitle => 'Connect ChatGPT to talk to your caddy hands-free';
-	@override String get not_connected_cta => 'Set up';
+	@override String get not_connected_title => 'Connect Voice Caddy (recommended)';
+	@override String get not_connected_subtitle => 'Required to play with voice only';
+	@override String get not_connected_cta => 'Connect';
 	@override String get connected_title => 'Voice caddy ready';
 	@override String get connected_subtitle => 'Open ChatGPT and tap the headphone icon to start';
 	@override String get connected_cta => 'Open';
@@ -830,7 +830,7 @@ extension on TranslationsEn {
 			'home.title' => 'TalkCaddy',
 			'home.title_ready' => 'is ready',
 			'home.start_round' => 'Start round',
-			'home.gps_hint' => 'Enable GPS and start talking to your caddie',
+			'home.gps_hint' => 'You\'ll be asked for location permission if not already granted',
 			'home.say_things_like' => 'Say things like:',
 			'home.example_1' => '"Tee shot with driver"',
 			'home.example_2' => '"Two putts"',
@@ -1153,9 +1153,9 @@ extension on TranslationsEn {
 			'voice_caddy.error.why_needed' => 'The voice caddy needs access to your TalkCaddy account to know your location and club distances.',
 			'voice_caddy.error.try_again' => 'Try again',
 			'voice_caddy.error.why_link' => 'Why is this needed?',
-			'voice_caddy.home_card.not_connected_title' => 'Set up Voice Caddy',
-			'voice_caddy.home_card.not_connected_subtitle' => 'Connect ChatGPT to talk to your caddy hands-free',
-			'voice_caddy.home_card.not_connected_cta' => 'Set up',
+			'voice_caddy.home_card.not_connected_title' => 'Connect Voice Caddy (recommended)',
+			'voice_caddy.home_card.not_connected_subtitle' => 'Required to play with voice only',
+			'voice_caddy.home_card.not_connected_cta' => 'Connect',
 			'voice_caddy.home_card.connected_title' => 'Voice caddy ready',
 			'voice_caddy.home_card.connected_subtitle' => 'Open ChatGPT and tap the headphone icon to start',
 			'voice_caddy.home_card.connected_cta' => 'Open',
