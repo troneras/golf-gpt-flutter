@@ -106,6 +106,8 @@ flutter:
     - assets/images/avatars/
     - assets/icons/
     - assets/launcher/
+  shaders:
+    - shaders/glow_button.frag
 flutter_launcher_icons:
   ios: true
   android: true

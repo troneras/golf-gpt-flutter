@@ -1,5 +1,6 @@
 import 'package:apparence_kit/core/data/api/analytics_api.dart';
 import 'package:apparence_kit/core/theme/extensions/theme_extension.dart';
+import 'package:apparence_kit/core/widgets/glow_button.dart';
 import 'package:apparence_kit/i18n/translations.g.dart';
 import 'package:apparence_kit/modules/round/domain/round.dart';
 import 'package:apparence_kit/modules/round/providers/active_round_check_provider.dart';
@@ -359,7 +360,7 @@ class _HomePageState extends ConsumerState<HomePage> with WidgetsBindingObserver
             padding: const EdgeInsets.symmetric(horizontal: 24),
             child: Column(
               children: [
-                const SizedBox(height: 24),
+                const SizedBox(height: 48),
                 // Header - TalkCaddy title
                 Text(
                   tr.title,
@@ -377,11 +378,12 @@ class _HomePageState extends ConsumerState<HomePage> with WidgetsBindingObserver
                   ),
                 ),
                 const Spacer(),
-                // Start Round Button
-                _StartRoundButton(
+                // Start Round Button - vertically centered
+                GlowButton(
+                  text: tr.start_round.toUpperCase(),
+                  icon: Icons.play_arrow_rounded,
                   onPressed: _isCheckingPermission ? null : _handleStartRound,
                   isLoading: _isCheckingPermission,
-                  label: tr.start_round.toUpperCase(),
                 ),
                 const SizedBox(height: 12),
                 // Subtitle below button
@@ -392,170 +394,15 @@ class _HomePageState extends ConsumerState<HomePage> with WidgetsBindingObserver
                     color: context.colors.textSecondary,
                   ),
                 ),
-                const SizedBox(height: 32),
+                const SizedBox(height: 24),
                 // AI Suggestion card
                 const _SuggestionCard(),
-                const SizedBox(height: 24),
+                const Spacer(),
               ],
             ),
           ),
         ),
       ],
-    );
-  }
-}
-
-class _StartRoundButton extends StatefulWidget {
-  final VoidCallback? onPressed;
-  final bool isLoading;
-  final String label;
-
-  const _StartRoundButton({
-    required this.onPressed,
-    required this.isLoading,
-    required this.label,
-  });
-
-  @override
-  State<_StartRoundButton> createState() => _StartRoundButtonState();
-}
-
-class _StartRoundButtonState extends State<_StartRoundButton>
-    with SingleTickerProviderStateMixin {
-  late AnimationController _controller;
-
-  @override
-  void initState() {
-    super.initState();
-    _controller = AnimationController(
-      duration: const Duration(seconds: 3),
-      vsync: this,
-    )..repeat();
-  }
-
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    final colors = context.colors;
-    const borderRadius = 14.0;
-    const glowColor = Color(0xFF5AA9FF); // Cyan/blue glow
-    const greenGlow = Color(0xFF6BCF9B); // Green accent
-
-    return Center(
-      child: AnimatedBuilder(
-        animation: _controller,
-        builder: (context, child) {
-          // Calculate rotating angle for shimmer effect
-          final angle = _controller.value * 2 * 3.14159;
-
-          return Container(
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(borderRadius + 4),
-              // Animated outer glow
-              boxShadow: [
-                // Pulsing main glow
-                BoxShadow(
-                  color: Color.lerp(
-                    glowColor.withValues(alpha: 0.5),
-                    greenGlow.withValues(alpha: 0.5),
-                    (1 + _controller.value) / 2,
-                  )!,
-                  blurRadius: 24 + (8 * _controller.value),
-                  spreadRadius: 0,
-                ),
-                // Secondary glow
-                BoxShadow(
-                  color: glowColor.withValues(alpha: 0.3),
-                  blurRadius: 12,
-                  spreadRadius: 2,
-                ),
-              ],
-            ),
-            child: Container(
-              padding: const EdgeInsets.all(2),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(borderRadius + 2),
-                // Animated rotating gradient border
-                gradient: SweepGradient(
-                  center: Alignment.center,
-                  startAngle: angle,
-                  endAngle: angle + 6.28,
-                  colors: [
-                    glowColor.withValues(alpha: 0.9),
-                    greenGlow.withValues(alpha: 0.7),
-                    glowColor.withValues(alpha: 0.4),
-                    greenGlow.withValues(alpha: 0.7),
-                    glowColor.withValues(alpha: 0.9),
-                  ],
-                  stops: const [0.0, 0.25, 0.5, 0.75, 1.0],
-                ),
-              ),
-              child: child,
-            ),
-          );
-        },
-        child: Container(
-          height: 52,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(borderRadius),
-            // Inner button gradient (blue → green)
-            gradient: LinearGradient(
-              begin: Alignment.centerLeft,
-              end: Alignment.centerRight,
-              colors: [
-                colors.ctaGradientStart,
-                colors.ctaGradientEnd,
-              ],
-            ),
-          ),
-          child: Material(
-            color: Colors.transparent,
-            child: InkWell(
-              onTap: widget.onPressed,
-              borderRadius: BorderRadius.circular(borderRadius),
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 32),
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    if (widget.isLoading)
-                      const SizedBox(
-                        width: 24,
-                        height: 24,
-                        child: CircularProgressIndicator(
-                          strokeWidth: 2,
-                          color: Colors.white,
-                        ),
-                      )
-                    else ...[
-                      const Icon(
-                        Icons.play_arrow_rounded,
-                        color: Colors.white,
-                        size: 26,
-                      ),
-                      const SizedBox(width: 8),
-                      Text(
-                        widget.label,
-                        style: context.textTheme.labelLarge?.copyWith(
-                          color: Colors.white,
-                          fontWeight: FontWeight.w600,
-                          letterSpacing: 0.5,
-                        ),
-                      ),
-                    ],
-                  ],
-                ),
-              ),
-            ),
-          ),
-        ),
-      ),
     );
   }
 }
@@ -574,10 +421,7 @@ class _SuggestionCard extends StatelessWidget {
         // Glass effect from design system
         color: colors.glassBg,
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(
-          color: colors.glassBorder,
-          width: 1,
-        ),
+        border: Border.all(color: colors.glassBorder),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,

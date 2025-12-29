@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:apparence_kit/core/bottom_menu/bottom_router.dart';
 import 'package:apparence_kit/core/theme/extensions/theme_extension.dart';
 import 'package:apparence_kit/core/widgets/responsive_layout.dart';
@@ -92,40 +90,32 @@ class _GlassyBottomBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final colors = context.colors;
-    return ClipRRect(
-      child: BackdropFilter(
-        filter: ImageFilter.blur(sigmaX: 20, sigmaY: 20),
-        child: Container(
-          decoration: BoxDecoration(
-            color: colors.glassBg,
-            border: Border(
-              top: BorderSide(
-                color: colors.glassBorder,
-                width: 0.5,
-              ),
-            ),
-          ),
-          child: SafeArea(
-            top: false,
-            child: SizedBox(
-              height: 56,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: routes.asMap().entries.map((entry) {
-                  final index = entry.key;
-                  final route = entry.value;
-                  final isSelected = currentIndex == index;
-                  return Expanded(
-                    child: _GlassyNavItem(
-                      icon: route.icon ?? Icons.circle,
-                      label: route.label ?? '',
-                      isSelected: isSelected,
-                      onTap: () => onTap(index),
-                    ),
-                  );
-                }).toList(),
-              ),
-            ),
+    return Container(
+      decoration: BoxDecoration(
+        color: colors.glassBg,
+        border: Border(
+          top: BorderSide(color: colors.glassBorder),
+        ),
+      ),
+      child: SafeArea(
+        top: false,
+        child: SizedBox(
+          height: 56,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: routes.asMap().entries.map((entry) {
+              final index = entry.key;
+              final route = entry.value;
+              final isSelected = currentIndex == index;
+              return Expanded(
+                child: _GlassyNavItem(
+                  icon: route.icon ?? Icons.circle,
+                  label: route.label ?? '',
+                  isSelected: isSelected,
+                  onTap: () => onTap(index),
+                ),
+              );
+            }).toList(),
           ),
         ),
       ),
