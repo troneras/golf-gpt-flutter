@@ -153,98 +153,125 @@ class UniversalThemeFactory extends ApparenceKitThemeDataFactory {
         },
       );
 
-  /// Typography scale (tight):
-  /// - Title: 20-22px
-  /// - Primary action: 18px
-  /// - Body: 14-16px
-  /// - Secondary: 12-13px
+  /// TalkCaddy Typography Scale
   ///
-  /// Weights: Regular (400), Medium (500), Semibold (600)
-  /// No italic, no playful weights, no decorative fonts
+  /// Font: Inter (SF Pro on iOS)
+  /// Principles: Modern, legible outdoors, good medium weight
+  ///
+  /// Scale:
+  /// - H1/Hero: 28-32, weight 600, line 1.2
+  /// - H2: 22-24, weight 600
+  /// - H3: 18-20, weight 500
+  /// - Body Large: 16, weight 400, line 1.5
+  /// - Body: 14, weight 400
+  /// - Hint/Microcopy: 13, weight 400
+  /// - CTA: 16-17, weight 600
   TextTheme textTheme({
     required ApparenceKitColors colors,
     required ApparenceKitTextTheme defaultTextStyle,
   }) =>
       TextTheme(
-        // Display styles (large titles, rarely used)
+        // H1 / Hero - Home title "TalkCaddy"
         displayLarge: defaultTextStyle.primary.copyWith(
-          fontSize: 28,
+          fontSize: 32,
           color: colors.onBackground,
           fontWeight: FontWeight.w600,
+          height: 1.2,
         ),
+        // H2 - Section titles
         displayMedium: defaultTextStyle.primary.copyWith(
           fontSize: 24,
           color: colors.onBackground,
           fontWeight: FontWeight.w600,
+          height: 1.2,
         ),
         displaySmall: defaultTextStyle.primary.copyWith(
           fontSize: 22,
           color: colors.onBackground,
           fontWeight: FontWeight.w600,
+          height: 1.2,
         ),
-        // Headline styles (section headers)
+        // H2 variants
         headlineLarge: defaultTextStyle.primary.copyWith(
+          fontSize: 24,
+          color: colors.onBackground,
+          fontWeight: FontWeight.w600,
+          height: 1.2,
+        ),
+        headlineMedium: defaultTextStyle.primary.copyWith(
           fontSize: 22,
           color: colors.onBackground,
           fontWeight: FontWeight.w600,
+          height: 1.25,
         ),
-        headlineMedium: defaultTextStyle.primary.copyWith(
+        // H3 - Subsections
+        headlineSmall: defaultTextStyle.primary.copyWith(
           fontSize: 20,
           color: colors.onBackground,
-          fontWeight: FontWeight.w600,
+          fontWeight: FontWeight.w500,
+          height: 1.3,
         ),
-        headlineSmall: defaultTextStyle.primary.copyWith(
-          fontSize: 18,
-          color: colors.onBackground,
-          fontWeight: FontWeight.w600,
-        ),
-        // Title styles (card titles, list items)
+        // Title styles (card titles, navigation)
         titleLarge: defaultTextStyle.primary.copyWith(
           fontSize: 20,
           color: colors.onBackground,
-          fontWeight: FontWeight.w600,
+          fontWeight: FontWeight.w500,
+          height: 1.3,
         ),
         titleMedium: defaultTextStyle.primary.copyWith(
           fontSize: 18,
           color: colors.onBackground,
           fontWeight: FontWeight.w500,
+          height: 1.35,
         ),
         titleSmall: defaultTextStyle.primary.copyWith(
           fontSize: 16,
           color: colors.onBackground,
           fontWeight: FontWeight.w500,
+          height: 1.4,
         ),
-        // Body styles (main content)
+        // Body Large - main content
         bodyLarge: defaultTextStyle.primary.copyWith(
           fontSize: 16,
           color: colors.onBackground,
           fontWeight: FontWeight.w400,
+          height: 1.5,
         ),
+        // Body - secondary content
         bodyMedium: defaultTextStyle.primary.copyWith(
           fontSize: 14,
           color: colors.onBackground,
           fontWeight: FontWeight.w400,
+          height: 1.5,
         ),
+        // Hint / Microcopy (key for AI suggestion card)
         bodySmall: defaultTextStyle.primary.copyWith(
           fontSize: 13,
-          color: colors.onBackground,
+          color: colors.textTertiary,
           fontWeight: FontWeight.w400,
+          height: 1.4,
         ),
-        // Label styles (buttons, captions)
+        // CTA / Button text
         labelLarge: defaultTextStyle.primary.copyWith(
-          fontSize: 16,
+          fontSize: 17,
           color: colors.onBackground,
-          fontWeight: FontWeight.w500,
+          fontWeight: FontWeight.w600,
+          letterSpacing: 0.5,
+          height: 1.2,
         ),
+        // Secondary labels
         labelMedium: defaultTextStyle.primary.copyWith(
-          fontSize: 13,
+          fontSize: 14,
           color: colors.onBackground,
           fontWeight: FontWeight.w500,
+          height: 1.3,
         ),
+        // Captions
         labelSmall: defaultTextStyle.primary.copyWith(
           fontSize: 12,
-          color: colors.onBackground,
-          fontWeight: FontWeight.w500,
+          color: colors.textTertiary,
+          fontWeight: FontWeight.w400,
+          height: 1.3,
         ),
       );
 }
