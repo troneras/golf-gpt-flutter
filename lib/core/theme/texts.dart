@@ -1,5 +1,12 @@
-import 'package:flutter/material.dart';
+import 'dart:io';
 
+import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+
+/// Typography configuration following Material + iOS guidelines
+/// Font: Inter (Android/Web) / SF Pro (iOS - system default)
+/// Weights: Regular (400), Medium (500), Semibold (600)
+/// No italic, no decorative fonts
 class ApparenceKitTextTheme extends ThemeExtension<ApparenceKitTextTheme> {
   final TextStyle primary;
 
@@ -7,12 +14,27 @@ class ApparenceKitTextTheme extends ThemeExtension<ApparenceKitTextTheme> {
     required this.primary,
   });
 
-  factory ApparenceKitTextTheme.build() => const ApparenceKitTextTheme(
-        primary: TextStyle(
-          fontSize: 16,
-          fontWeight: FontWeight.w400,
-          color: Color(0xFF000000),
-        ),
+  /// Get the base text style with Inter font (or system font on iOS)
+  static TextStyle _baseTextStyle() {
+    // On iOS, use system font (SF Pro) for native feel
+    // On other platforms, use Inter
+    if (Platform.isIOS) {
+      return const TextStyle(
+        fontFamily: '.SF Pro Text',
+        fontSize: 16,
+        fontWeight: FontWeight.w400,
+        color: Color(0xFF000000),
+      );
+    }
+    return GoogleFonts.inter(
+      fontSize: 16,
+      fontWeight: FontWeight.w400,
+      color: const Color(0xFF000000),
+    );
+  }
+
+  factory ApparenceKitTextTheme.build() => ApparenceKitTextTheme(
+        primary: _baseTextStyle(),
       );
 
   @override

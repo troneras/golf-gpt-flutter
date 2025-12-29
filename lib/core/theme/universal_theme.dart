@@ -65,13 +65,13 @@ class UniversalThemeFactory extends ApparenceKitThemeDataFactory {
         ),
         selectedLabelTextStyle: textTheme.primary.copyWith(
           color: colors.primary,
-          fontSize: 16,
-          fontWeight: FontWeight.w700,
+          fontSize: 14,
+          fontWeight: FontWeight.w600,
         ),
         unselectedLabelTextStyle: textTheme.primary.copyWith(
           color: colors.onSurface,
-          fontSize: 16,
-          fontWeight: FontWeight.w700,
+          fontSize: 14,
+          fontWeight: FontWeight.w500,
         ),
       );
 
@@ -91,9 +91,10 @@ class UniversalThemeFactory extends ApparenceKitThemeDataFactory {
             ),
             borderRadius: BorderRadius.circular(8),
           ),
+          // Primary action: 18px, Semibold (600)
           textStyle: textTheme.primary.copyWith(
-            fontSize: 16,
-            fontWeight: FontWeight.w700,
+            fontSize: 18,
+            fontWeight: FontWeight.w600,
             color: colors.onPrimary,
           ),
           elevation: 0,
@@ -126,13 +127,16 @@ class UniversalThemeFactory extends ApparenceKitThemeDataFactory {
           ),
         ),
         filled: true,
+        // Body: 16px, Regular (400)
         hintStyle: textTheme.primary.copyWith(
           color: colors.grey2,
           fontSize: 16,
-          fontWeight: FontWeight.w300,
+          fontWeight: FontWeight.w400,
         ),
         labelStyle: textTheme.primary.copyWith(
           color: colors.grey2,
+          fontSize: 14,
+          fontWeight: FontWeight.w500,
         ),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(5.0),
@@ -149,15 +153,98 @@ class UniversalThemeFactory extends ApparenceKitThemeDataFactory {
         },
       );
 
+  /// Typography scale (tight):
+  /// - Title: 20-22px
+  /// - Primary action: 18px
+  /// - Body: 14-16px
+  /// - Secondary: 12-13px
+  ///
+  /// Weights: Regular (400), Medium (500), Semibold (600)
+  /// No italic, no playful weights, no decorative fonts
   TextTheme textTheme({
     required ApparenceKitColors colors,
     required ApparenceKitTextTheme defaultTextStyle,
   }) =>
       TextTheme(
-        headlineLarge: defaultTextStyle.primary.copyWith(
-          fontSize: 32,
+        // Display styles (large titles, rarely used)
+        displayLarge: defaultTextStyle.primary.copyWith(
+          fontSize: 28,
           color: colors.onBackground,
-          fontWeight: FontWeight.w700,
+          fontWeight: FontWeight.w600,
+        ),
+        displayMedium: defaultTextStyle.primary.copyWith(
+          fontSize: 24,
+          color: colors.onBackground,
+          fontWeight: FontWeight.w600,
+        ),
+        displaySmall: defaultTextStyle.primary.copyWith(
+          fontSize: 22,
+          color: colors.onBackground,
+          fontWeight: FontWeight.w600,
+        ),
+        // Headline styles (section headers)
+        headlineLarge: defaultTextStyle.primary.copyWith(
+          fontSize: 22,
+          color: colors.onBackground,
+          fontWeight: FontWeight.w600,
+        ),
+        headlineMedium: defaultTextStyle.primary.copyWith(
+          fontSize: 20,
+          color: colors.onBackground,
+          fontWeight: FontWeight.w600,
+        ),
+        headlineSmall: defaultTextStyle.primary.copyWith(
+          fontSize: 18,
+          color: colors.onBackground,
+          fontWeight: FontWeight.w600,
+        ),
+        // Title styles (card titles, list items)
+        titleLarge: defaultTextStyle.primary.copyWith(
+          fontSize: 20,
+          color: colors.onBackground,
+          fontWeight: FontWeight.w600,
+        ),
+        titleMedium: defaultTextStyle.primary.copyWith(
+          fontSize: 18,
+          color: colors.onBackground,
+          fontWeight: FontWeight.w500,
+        ),
+        titleSmall: defaultTextStyle.primary.copyWith(
+          fontSize: 16,
+          color: colors.onBackground,
+          fontWeight: FontWeight.w500,
+        ),
+        // Body styles (main content)
+        bodyLarge: defaultTextStyle.primary.copyWith(
+          fontSize: 16,
+          color: colors.onBackground,
+          fontWeight: FontWeight.w400,
+        ),
+        bodyMedium: defaultTextStyle.primary.copyWith(
+          fontSize: 14,
+          color: colors.onBackground,
+          fontWeight: FontWeight.w400,
+        ),
+        bodySmall: defaultTextStyle.primary.copyWith(
+          fontSize: 13,
+          color: colors.onBackground,
+          fontWeight: FontWeight.w400,
+        ),
+        // Label styles (buttons, captions)
+        labelLarge: defaultTextStyle.primary.copyWith(
+          fontSize: 16,
+          color: colors.onBackground,
+          fontWeight: FontWeight.w500,
+        ),
+        labelMedium: defaultTextStyle.primary.copyWith(
+          fontSize: 13,
+          color: colors.onBackground,
+          fontWeight: FontWeight.w500,
+        ),
+        labelSmall: defaultTextStyle.primary.copyWith(
+          fontSize: 12,
+          color: colors.onBackground,
+          fontWeight: FontWeight.w500,
         ),
       );
 }
