@@ -418,7 +418,7 @@ class _HomePageState extends ConsumerState<HomePage> with WidgetsBindingObserver
                 const SizedBox(height: 12),
                 // Subtitle below button
                 Text(
-                  'Juega solo con la voz',
+                  tr.subtitle,
                   textAlign: TextAlign.center,
                   style: context.textTheme.bodyMedium?.copyWith(
                     color: context.colors.textSecondary,

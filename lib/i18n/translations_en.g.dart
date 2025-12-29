@@ -69,6 +69,7 @@ class _TranslationsHomeEn extends TranslationsHomeEs {
 	// Translations
 	@override String get title => 'TalkCaddy';
 	@override String get title_ready => 'is ready';
+	@override String get subtitle => 'Voice only. No phone touching.';
 	@override String get start_round => 'Start round';
 	@override String get gps_hint => 'You\'ll be asked for location permission if not already granted';
 	@override String get say_things_like => 'Say things like:';
@@ -778,6 +779,7 @@ extension on TranslationsEn {
 		return switch (path) {
 			'home.title' => 'TalkCaddy',
 			'home.title_ready' => 'is ready',
+			'home.subtitle' => 'Voice only. No phone touching.',
 			'home.start_round' => 'Start round',
 			'home.gps_hint' => 'You\'ll be asked for location permission if not already granted',
 			'home.say_things_like' => 'Say things like:',

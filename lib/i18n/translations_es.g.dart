@@ -75,6 +75,9 @@ class TranslationsHomeEs {
 	/// es: 'esta listo'
 	String get title_ready => 'esta listo';
 
+	/// es: 'Solo voz. Sin tocar el movil.'
+	String get subtitle => 'Solo voz. Sin tocar el movil.';
+
 	/// es: 'Iniciar ronda'
 	String get start_round => 'Iniciar ronda';
 
@@ -1436,6 +1439,7 @@ extension on Translations {
 		return switch (path) {
 			'home.title' => 'TalkCaddy',
 			'home.title_ready' => 'esta listo',
+			'home.subtitle' => 'Solo voz. Sin tocar el movil.',
 			'home.start_round' => 'Iniciar ronda',
 			'home.gps_hint' => 'Se te pedira permiso de ubicacion si aun no lo has dado',
 			'home.say_things_like' => 'Di cosas como:',

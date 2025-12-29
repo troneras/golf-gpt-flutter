@@ -2,6 +2,7 @@
     "home": {
         "title": "TalkCaddy",
         "title_ready": "is ready",
+        "subtitle": "Voice only. No phone touching.",
         "start_round": "Start round",
         "gps_hint": "You'll be asked for location permission if not already granted",
         "say_things_like": "Say things like:",

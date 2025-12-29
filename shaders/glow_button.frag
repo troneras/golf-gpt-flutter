@@ -69,10 +69,10 @@ void main() {
     float dist = roundedBoxSDF(center, buttonSize * 0.5, uBorderRadius);
     float maxGlowDist = min(uGlowPaddingH, uGlowPaddingV);
 
-    // === COLORS (clean cyan palette) ===
-    vec3 cyanBright = vec3(0.0, 0.95, 1.0);
-    vec3 cyanMid = vec3(0.0, 0.7, 0.9);
-    vec3 cyanDeep = vec3(0.0, 0.4, 0.6);
+    // === COLORS (clean cyan palette, reduced ~12% intensity) ===
+    vec3 cyanBright = vec3(0.0, 0.82, 0.87);
+    vec3 cyanMid = vec3(0.0, 0.6, 0.78);
+    vec3 cyanDeep = vec3(0.0, 0.35, 0.52);
     vec3 white = vec3(1.0);
 
     // Smooth breathing (with bright peak)
@@ -130,18 +130,18 @@ void main() {
         alpha += innerGlow * 0.2;
     }
 
-    // === NEON BORDER (refined, white-hot core) ===
+    // === NEON BORDER (refined, thinner, white-hot core) ===
     float borderDist = abs(dist);
 
-    if (borderDist < 5.0) {
-        // Soft outer glow
-        float outerGlow = smoothstep(5.0, 2.0, borderDist) * 0.5;
+    if (borderDist < 4.0) {
+        // Soft outer glow (reduced range)
+        float outerGlow = smoothstep(4.0, 1.5, borderDist) * 0.45;
 
-        // Main neon line
-        float neonLine = smoothstep(2.0, 0.5, borderDist);
+        // Main neon line (thinner)
+        float neonLine = smoothstep(1.5, 0.4, borderDist);
 
-        // White-hot core
-        float hotCore = smoothstep(0.8, 0.0, borderDist);
+        // White-hot core (narrower)
+        float hotCore = smoothstep(0.6, 0.0, borderDist);
 
         // Subtle energy flow around border
         float flow = sin(atan(center.y, center.x) * 3.0 - uTime * 2.5) * 0.5 + 0.5;

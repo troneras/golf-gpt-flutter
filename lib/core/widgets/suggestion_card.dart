@@ -6,50 +6,48 @@ import 'package:flutter/material.dart';
 
 /// Model for a suggestion
 class Suggestion {
-  final String prefix;
-  final String highlighted;
+  final String action;
+  final String text;
 
   const Suggestion({
-    required this.prefix,
-    required this.highlighted,
+    required this.action,
+    required this.text,
   });
-
-  String get fullText => prefix + highlighted;
 }
 
 /// Default suggestions to rotate through
 const _defaultSuggestions = [
   Suggestion(
-    prefix: 'Pregunta, ',
-    highlighted: '"¿A qué distancia está el green?"',
+    action: 'Pregunta:',
+    text: '¿A qué distancia está el green?',
   ),
   Suggestion(
-    prefix: 'Pregunta, ',
-    highlighted: '"¿Qué palo me recomiendas?"',
+    action: 'Pregunta:',
+    text: '¿Qué palo me recomiendas?',
   ),
   Suggestion(
-    prefix: 'Dile, ',
-    highlighted: '"Apunta mi puntuación: 4 golpes"',
+    action: 'Di:',
+    text: 'Apunta mi puntuación: 4 golpes',
   ),
   Suggestion(
-    prefix: 'Pregunta, ',
-    highlighted: '"¿Cuál es el par de este hoyo?"',
+    action: 'Pregunta:',
+    text: '¿Cuál es el par de este hoyo?',
   ),
   Suggestion(
-    prefix: 'Pregunta, ',
-    highlighted: '"¿Dónde está el bunker?"',
+    action: 'Pregunta:',
+    text: '¿Dónde está el bunker?',
   ),
   Suggestion(
-    prefix: 'Dile, ',
-    highlighted: '"Cambio de hoyo"',
+    action: 'Di:',
+    text: 'Cambio de hoyo',
   ),
   Suggestion(
-    prefix: 'Pregunta, ',
-    highlighted: '"¿Cómo voy en el marcador?"',
+    action: 'Pregunta:',
+    text: '¿Cómo voy en el marcador?',
   ),
   Suggestion(
-    prefix: 'Dile, ',
-    highlighted: '"Hice birdie en este hoyo"',
+    action: 'Di:',
+    text: 'Hice birdie en este hoyo',
   ),
 ];
 
@@ -77,10 +75,13 @@ class _SuggestionCardState extends State<SuggestionCard> {
   Timer? _pauseTimer;
   bool _isTyping = false;
   bool _isErasing = false;
+  String _displayedAction = '';
+  double _actionOpacity = 1.0;
 
   @override
   void initState() {
     super.initState();
+    _displayedAction = widget.suggestions[_currentIndex].action;
     _startTypewriter();
   }
 
@@ -91,7 +92,7 @@ class _SuggestionCardState extends State<SuggestionCard> {
     _isTyping = true;
     _isErasing = false;
 
-    final fullText = widget.suggestions[_currentIndex].fullText;
+    final text = widget.suggestions[_currentIndex].text;
 
     _typeTimer = Timer.periodic(widget.typeSpeed, (timer) {
       if (!mounted) {
@@ -99,7 +100,7 @@ class _SuggestionCardState extends State<SuggestionCard> {
         return;
       }
 
-      if (_visibleCharacters < fullText.length) {
+      if (_visibleCharacters < text.length) {
         setState(() {
           _visibleCharacters++;
         });
@@ -134,13 +135,40 @@ class _SuggestionCardState extends State<SuggestionCard> {
         });
       } else {
         timer.cancel();
-        // Move to next suggestion
-        setState(() {
-          _currentIndex = (_currentIndex + 1) % widget.suggestions.length;
-          _isErasing = false;
-        });
-        _startTypewriter();
+        final nextIndex = (_currentIndex + 1) % widget.suggestions.length;
+        final nextAction = widget.suggestions[nextIndex].action;
+        final currentAction = widget.suggestions[_currentIndex].action;
+
+        // If action changes, fade out then fade in
+        if (nextAction != currentAction) {
+          _animateActionChange(nextIndex, nextAction);
+        } else {
+          setState(() {
+            _currentIndex = nextIndex;
+            _isErasing = false;
+          });
+          _startTypewriter();
+        }
       }
+    });
+  }
+
+  void _animateActionChange(int nextIndex, String nextAction) {
+    // Fade out
+    setState(() {
+      _actionOpacity = 0.0;
+    });
+
+    // After fade out, change action and fade in
+    Future.delayed(const Duration(milliseconds: 200), () {
+      if (!mounted) return;
+      setState(() {
+        _displayedAction = nextAction;
+        _currentIndex = nextIndex;
+        _isErasing = false;
+        _actionOpacity = 1.0;
+      });
+      _startTypewriter();
     });
   }
 
@@ -190,14 +218,18 @@ class _SuggestionCardState extends State<SuggestionCard> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // Header row with label and dots
+                  // Header row with action label and dots
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text(
-                        'Sugerencia:',
-                        style: context.textTheme.bodySmall?.copyWith(
-                          color: colors.textTertiary,
+                      AnimatedOpacity(
+                        duration: const Duration(milliseconds: 200),
+                        opacity: _actionOpacity,
+                        child: Text(
+                          _displayedAction,
+                          style: context.textTheme.bodySmall?.copyWith(
+                            color: colors.textTertiary,
+                          ),
                         ),
                       ),
                       // Pagination dots
@@ -210,7 +242,7 @@ class _SuggestionCardState extends State<SuggestionCard> {
                   const SizedBox(height: 10),
                   // Typewriter suggestion text with voice waveform
                   _TypewriterText(
-                    suggestion: suggestion,
+                    text: suggestion.text,
                     visibleCharacters: _visibleCharacters,
                     isTyping: _isTyping,
                     isErasing: _isErasing,
@@ -218,7 +250,7 @@ class _SuggestionCardState extends State<SuggestionCard> {
                   const SizedBox(height: 2),
                   // Reflection
                   _ReflectionText(
-                    suggestion: suggestion,
+                    text: suggestion.text,
                     visibleCharacters: _visibleCharacters,
                   ),
                 ],
@@ -233,13 +265,13 @@ class _SuggestionCardState extends State<SuggestionCard> {
 
 /// The main suggestion text with typewriter effect
 class _TypewriterText extends StatelessWidget {
-  final Suggestion suggestion;
+  final String text;
   final int visibleCharacters;
   final bool isTyping;
   final bool isErasing;
 
   const _TypewriterText({
-    required this.suggestion,
+    required this.text,
     required this.visibleCharacters,
     required this.isTyping,
     required this.isErasing,
@@ -247,10 +279,9 @@ class _TypewriterText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final fullText = suggestion.fullText;
-    final visibleText = visibleCharacters <= fullText.length
-        ? fullText.substring(0, visibleCharacters)
-        : fullText;
+    final visibleText = visibleCharacters <= text.length
+        ? text.substring(0, visibleCharacters)
+        : text;
 
     return Row(
       children: [
@@ -404,20 +435,19 @@ class _VoiceWaveformPainter extends CustomPainter {
 
 /// Mirrored reflection of the text
 class _ReflectionText extends StatelessWidget {
-  final Suggestion suggestion;
+  final String text;
   final int visibleCharacters;
 
   const _ReflectionText({
-    required this.suggestion,
+    required this.text,
     required this.visibleCharacters,
   });
 
   @override
   Widget build(BuildContext context) {
-    final fullText = suggestion.fullText;
-    final visibleText = visibleCharacters <= fullText.length
-        ? fullText.substring(0, visibleCharacters)
-        : fullText;
+    final visibleText = visibleCharacters <= text.length
+        ? text.substring(0, visibleCharacters)
+        : text;
 
     return Transform(
       alignment: Alignment.topCenter,
@@ -462,20 +492,12 @@ class _PaginationDots extends StatelessWidget {
         final isActive = index == currentIndex;
         return AnimatedContainer(
           duration: const Duration(milliseconds: 300),
-          margin: const EdgeInsets.only(left: 4),
-          width: isActive ? 6 : 4,
-          height: isActive ? 6 : 4,
+          margin: const EdgeInsets.only(left: 3),
+          width: isActive ? 4 : 3,
+          height: isActive ? 4 : 3,
           decoration: BoxDecoration(
             shape: BoxShape.circle,
-            color: isActive ? Colors.white : Colors.white.withValues(alpha: 0.3),
-            boxShadow: isActive
-                ? [
-                    BoxShadow(
-                      color: Colors.white.withValues(alpha: 0.5),
-                      blurRadius: 4,
-                    ),
-                  ]
-                : null,
+            color: Colors.white.withValues(alpha: isActive ? 0.35 : 0.25),
           ),
         );
       }),
