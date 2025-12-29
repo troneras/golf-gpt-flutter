@@ -350,12 +350,13 @@ class _LoadedView extends StatelessWidget {
                             : 'assets/images/icons/ic_gps_pin.png',
                         width: 20,
                         height: 20,
+                        color: Colors.white.withValues(alpha: 0.6),
                       ),
                       const SizedBox(width: 8),
                       Text(
                         isRecentCourse ? tr.recent_course : tr.closest_course,
                         style: context.textTheme.bodyMedium?.copyWith(
-                          color: context.colors.onBackground.withValues(alpha: 0.7),
+                          color: Colors.white.withValues(alpha: 0.6),
                         ),
                       ),
                     ],
@@ -374,6 +375,7 @@ class _LoadedView extends StatelessWidget {
                   tr.tees_section,
                   style: context.textTheme.titleMedium?.copyWith(
                     fontWeight: FontWeight.w600,
+                    color: Colors.white.withValues(alpha: 0.9),
                   ),
                 ),
                 const SizedBox(height: 12),
@@ -392,6 +394,7 @@ class _LoadedView extends StatelessWidget {
                   tr.settings_section,
                   style: context.textTheme.titleMedium?.copyWith(
                     fontWeight: FontWeight.w600,
+                    color: Colors.white.withValues(alpha: 0.9),
                   ),
                 ),
                 const SizedBox(height: 12),
@@ -429,12 +432,14 @@ class _CourseCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final tr = Translations.of(context).select_course;
+    // Slightly more prominent glass - main context card
+    const baseColor = Color(0xFF141A24);
     return Container(
       decoration: BoxDecoration(
-        color: context.colors.surface,
+        color: baseColor.withValues(alpha: 0.9),
         borderRadius: BorderRadius.circular(12),
         border: Border.all(
-          color: context.colors.onSurface.withValues(alpha: 0.1),
+          color: Colors.white.withValues(alpha: 0.08),
         ),
       ),
       child: InkWell(
@@ -462,6 +467,7 @@ class _CourseCard extends StatelessWidget {
                       courseName,
                       style: context.textTheme.titleMedium?.copyWith(
                         fontWeight: FontWeight.w600,
+                        color: Colors.white,
                       ),
                     ),
                     if (clubName != null && clubName!.isNotEmpty) ...[
@@ -469,7 +475,7 @@ class _CourseCard extends StatelessWidget {
                       Text(
                         clubName!,
                         style: context.textTheme.bodySmall?.copyWith(
-                          color: context.colors.onSurface.withValues(alpha: 0.5),
+                          color: Colors.white.withValues(alpha: 0.5),
                         ),
                       ),
                     ],
@@ -485,7 +491,7 @@ class _CourseCard extends StatelessWidget {
               ),
               Icon(
                 Icons.chevron_right,
-                color: context.colors.onSurface.withValues(alpha: 0.5),
+                color: Colors.white.withValues(alpha: 0.4),
               ),
             ],
           ),
@@ -508,17 +514,17 @@ class _TeeCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Matte glass style - dark smoked glass
+    const baseColor = Color(0xFF141A24);
     return Container(
       decoration: BoxDecoration(
-        color: isSelected
-            ? const Color(0xFFFFF8E1)
-            : context.colors.surface,
+        color: baseColor.withValues(alpha: 0.85),
         borderRadius: BorderRadius.circular(12),
         border: Border.all(
           color: isSelected
-              ? const Color(0xFFFDD835)
-              : context.colors.onSurface.withValues(alpha: 0.1),
-          width: isSelected ? 2 : 1,
+              ? context.colors.primary.withValues(alpha: 0.6)
+              : Colors.white.withValues(alpha: 0.06),
+          width: isSelected ? 1.5 : 1,
         ),
       ),
       child: InkWell(
@@ -528,6 +534,7 @@ class _TeeCard extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
           child: Row(
             children: [
+              // Tee color indicator
               Container(
                 width: 12,
                 height: 12,
@@ -535,7 +542,7 @@ class _TeeCard extends StatelessWidget {
                   color: tee.displayColor,
                   shape: BoxShape.circle,
                   border: tee.isLightColor
-                      ? Border.all(color: Colors.grey.shade400, width: 1)
+                      ? Border.all(color: Colors.grey.shade600)
                       : null,
                 ),
               ),
@@ -548,27 +555,27 @@ class _TeeCard extends StatelessWidget {
                       tee.name,
                       style: context.textTheme.titleSmall?.copyWith(
                         fontWeight: FontWeight.w600,
+                        color: isSelected
+                            ? Colors.white
+                            : Colors.white.withValues(alpha: 0.9),
                       ),
                     ),
                     if (tee.totalLength != null)
                       Text(
                         tee.formattedLength,
                         style: context.textTheme.bodySmall?.copyWith(
-                          color: context.colors.onSurface.withValues(alpha: 0.6),
+                          color: Colors.white.withValues(alpha: 0.5),
                         ),
                       ),
                   ],
                 ),
               ),
-              if (tee.totalLength != null)
-                Text(
-                  tee.formattedLength,
-                  style: context.textTheme.bodyMedium?.copyWith(
-                    fontWeight: isSelected ? FontWeight.w600 : FontWeight.normal,
-                    color: isSelected
-                        ? context.colors.onBackground
-                        : context.colors.onSurface.withValues(alpha: 0.7),
-                  ),
+              // Selection indicator
+              if (isSelected)
+                Icon(
+                  Icons.check_circle,
+                  size: 20,
+                  color: context.colors.primary,
                 ),
             ],
           ),
@@ -607,16 +614,18 @@ class _GpsToggleCard extends StatelessWidget {
     final description = showWarning
         ? tr.gps_too_far.replaceAll('{distance}', _formatDistance(distanceKm))
         : tr.gps_tracking_description;
+
+    // Matte glass style - same as other cards
+    const baseColor = Color(0xFF141A24);
+    // Muted amber for warning (contextual, not alarming)
+    const mutedAmber = Color(0xFFB8956A);
+
     return Container(
       decoration: BoxDecoration(
-        color: showWarning
-            ? Colors.orange.withValues(alpha: 0.1)
-            : context.colors.surface,
+        color: baseColor.withValues(alpha: 0.85),
         borderRadius: BorderRadius.circular(12),
         border: Border.all(
-          color: showWarning
-              ? Colors.orange.withValues(alpha: 0.3)
-              : context.colors.onSurface.withValues(alpha: 0.1),
+          color: Colors.white.withValues(alpha: 0.06),
         ),
       ),
       child: InkWell(
@@ -631,7 +640,7 @@ class _GpsToggleCard extends StatelessWidget {
                 size: 24,
                 color: isEnabled
                     ? context.colors.primary
-                    : (showWarning ? Colors.orange : context.colors.onSurface.withValues(alpha: 0.4)),
+                    : (showWarning ? mutedAmber : Colors.white.withValues(alpha: 0.4)),
               ),
               const SizedBox(width: 12),
               Expanded(
@@ -642,14 +651,15 @@ class _GpsToggleCard extends StatelessWidget {
                       tr.gps_tracking,
                       style: context.textTheme.titleSmall?.copyWith(
                         fontWeight: FontWeight.w600,
+                        color: Colors.white.withValues(alpha: 0.9),
                       ),
                     ),
                     Text(
                       description,
                       style: context.textTheme.bodySmall?.copyWith(
                         color: showWarning
-                            ? Colors.orange.shade700
-                            : context.colors.onSurface.withValues(alpha: 0.6),
+                            ? mutedAmber
+                            : Colors.white.withValues(alpha: 0.5),
                       ),
                     ),
                   ],
@@ -660,6 +670,8 @@ class _GpsToggleCard extends StatelessWidget {
                 onChanged: (_) => onToggle(),
                 activeTrackColor: context.colors.primary.withValues(alpha: 0.5),
                 activeThumbColor: context.colors.primary,
+                inactiveTrackColor: Colors.white.withValues(alpha: 0.1),
+                inactiveThumbColor: Colors.white.withValues(alpha: 0.4),
               ),
             ],
           ),
@@ -681,13 +693,15 @@ class _BottomButtons extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final tr = Translations.of(context);
+    final isEnabled = onStartRound != null;
+
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
         color: context.colors.background,
         border: Border(
           top: BorderSide(
-            color: context.colors.onSurface.withValues(alpha: 0.1),
+            color: Colors.white.withValues(alpha: 0.06),
           ),
         ),
       ),
@@ -695,45 +709,63 @@ class _BottomButtons extends StatelessWidget {
         top: false,
         child: Row(
           children: [
+            // Cancel button - ghost style
             Expanded(
-              child: OutlinedButton(
-                onPressed: onCancel,
-                style: OutlinedButton.styleFrom(
-                  padding: const EdgeInsets.symmetric(vertical: 16),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  side: BorderSide(
-                    color: context.colors.onSurface.withValues(alpha: 0.3),
+              child: Container(
+                height: 52,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(12),
+                  border: Border.all(
+                    color: Colors.white.withValues(alpha: 0.15),
                   ),
                 ),
-                child: Text(
-                  tr.common.cancel,
-                  style: context.textTheme.titleSmall?.copyWith(
-                    fontWeight: FontWeight.w600,
+                child: Material(
+                  color: Colors.transparent,
+                  child: InkWell(
+                    onTap: onCancel,
+                    borderRadius: BorderRadius.circular(12),
+                    child: Center(
+                      child: Text(
+                        tr.common.cancel,
+                        style: context.textTheme.titleSmall?.copyWith(
+                          fontWeight: FontWeight.w600,
+                          color: Colors.white.withValues(alpha: 0.7),
+                        ),
+                      ),
+                    ),
                   ),
                 ),
               ),
             ),
             const SizedBox(width: 12),
+            // CTA button - subtle glow when enabled
             Expanded(
               flex: 2,
               child: Container(
                 height: 52,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(12),
-                  gradient: onStartRound != null
-                      ? const LinearGradient(
+                  gradient: isEnabled
+                      ? LinearGradient(
                           begin: Alignment.topCenter,
                           end: Alignment.bottomCenter,
                           colors: [
-                            Color(0xFF8BC34A),
-                            Color(0xFF689F38),
+                            context.colors.primary.withValues(alpha: 0.9),
+                            context.colors.primary,
                           ],
                         )
                       : null,
-                  color: onStartRound == null
-                      ? context.colors.onSurface.withValues(alpha: 0.1)
+                  color: !isEnabled
+                      ? Colors.white.withValues(alpha: 0.08)
+                      : null,
+                  boxShadow: isEnabled
+                      ? [
+                          BoxShadow(
+                            color: context.colors.primary.withValues(alpha: 0.3),
+                            blurRadius: 12,
+                            offset: const Offset(0, 4),
+                          ),
+                        ]
                       : null,
                 ),
                 child: Material(
@@ -746,9 +778,9 @@ class _BottomButtons extends StatelessWidget {
                         tr.select_course.start_round_cta,
                         style: context.textTheme.titleSmall?.copyWith(
                           fontWeight: FontWeight.w600,
-                          color: onStartRound != null
+                          color: isEnabled
                               ? Colors.white
-                              : context.colors.onSurface.withValues(alpha: 0.4),
+                              : Colors.white.withValues(alpha: 0.3),
                         ),
                       ),
                     ),

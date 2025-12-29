@@ -75,7 +75,7 @@ class _GlassyBottomBarFactory extends BartBottomBarFactory {
   }
 }
 
-/// Glassy transparent bottom navigation bar
+/// Glassy transparent bottom navigation bar - HUD style
 class _GlassyBottomBar extends StatelessWidget {
   final List<bart.BartMenuRoute> routes;
   final int currentIndex;
@@ -90,11 +90,14 @@ class _GlassyBottomBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final colors = context.colors;
+    // Dark glass - matches the app's dark aesthetic
     return Container(
       decoration: BoxDecoration(
-        color: colors.glassBg,
+        color: colors.background.withValues(alpha: 0.85),
         border: Border(
-          top: BorderSide(color: colors.glassBorder),
+          top: BorderSide(
+            color: Colors.white.withValues(alpha: 0.06),
+          ),
         ),
       ),
       child: SafeArea(
@@ -139,6 +142,8 @@ class _GlassyNavItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final colors = context.colors;
+    // Inactive items almost invisible - focus mode
+    final inactiveColor = Colors.white.withValues(alpha: 0.25);
     return GestureDetector(
       onTap: onTap,
       behavior: HitTestBehavior.opaque,
@@ -148,13 +153,13 @@ class _GlassyNavItem extends StatelessWidget {
           Icon(
             icon,
             size: 24,
-            color: isSelected ? colors.primary : colors.textTertiary,
+            color: isSelected ? colors.primary : inactiveColor,
           ),
           const SizedBox(height: 4),
           Text(
             label,
             style: context.textTheme.labelSmall?.copyWith(
-              color: isSelected ? colors.primary : colors.textTertiary,
+              color: isSelected ? colors.primary : inactiveColor,
               fontWeight: isSelected ? FontWeight.w500 : FontWeight.w400,
             ),
           ),
