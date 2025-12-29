@@ -1,6 +1,7 @@
 import 'package:apparence_kit/modules/gps/providers/gps_tracking_notifier.dart';
 import 'package:apparence_kit/modules/gps/services/gps_tracking_service.dart';
 import 'package:apparence_kit/modules/round/domain/running_score.dart';
+import 'package:apparence_kit/modules/round/providers/active_round_check_provider.dart';
 import 'package:apparence_kit/modules/round/providers/models/active_round_state.dart';
 import 'package:apparence_kit/modules/round/providers/models/select_course_state.dart';
 import 'package:apparence_kit/modules/round/repositories/round_repository.dart';
@@ -41,7 +42,6 @@ class ActiveRoundNotifier extends _$ActiveRoundNotifier {
         courseId: courseId,
         teeId: teeId,
         gpsEnabled: gpsEnabled,
-        chatgptEnabled: true,
       );
       if (!ref.mounted) return;
       _logger.i('Round started: ${round.id} at ${round.course.name}');
@@ -203,7 +203,6 @@ class ActiveRoundNotifier extends _$ActiveRoundNotifier {
       state = ActiveRoundStateActive(
         round: finalRound,
         currentHole: newCurrentHole,
-        isSaving: false,
       );
     } catch (e, stackTrace) {
       _logger.e('Error saving score', error: e, stackTrace: stackTrace);
@@ -368,6 +367,9 @@ class ActiveRoundNotifier extends _$ActiveRoundNotifier {
       if (!ref.mounted) return;
       _logger.i('Round finished: ${summary.totalStrokes} strokes');
 
+      // Invalidate active round check so home page gets fresh data
+      ref.invalidate(activeRoundCheckProvider);
+
       state = ActiveRoundState.finished(
         roundId: currentState.round.id,
         summary: summary,
@@ -422,6 +424,9 @@ class ActiveRoundNotifier extends _$ActiveRoundNotifier {
       await _roundRepository.discardRound(currentState.round.id);
       if (!ref.mounted) return;
       _logger.i('Round discarded');
+
+      // Invalidate active round check so home page gets fresh data
+      ref.invalidate(activeRoundCheckProvider);
 
       state = ActiveRoundState.discarded(
         roundId: currentState.round.id,
