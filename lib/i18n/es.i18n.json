@@ -364,11 +364,7 @@
         },
         "success": {
             "title": "Caddie de Voz Conectado",
-            "subtitle": "Todo listo. Una cosa mas:",
-            "tip": "Para hablar con tu caddie, toca el icono de audifonos en ChatGPT",
-            "example": "Prueba diciendo: \"Hola, en que me puedes ayudar en el campo?\"",
-            "cta_primary": "Iniciar una ronda",
-            "cta_secondary": "Ir al inicio"
+            "cta": "Continuar"
         },
         "error": {
             "not_completed_title": "Conexion no completada",

@@ -1314,20 +1314,8 @@ class TranslationsVoiceCaddySuccessEs {
 	/// es: 'Caddie de Voz Conectado'
 	String get title => 'Caddie de Voz Conectado';
 
-	/// es: 'Todo listo. Una cosa mas:'
-	String get subtitle => 'Todo listo. Una cosa mas:';
-
-	/// es: 'Para hablar con tu caddie, toca el icono de audifonos en ChatGPT'
-	String get tip => 'Para hablar con tu caddie, toca el icono de audifonos en ChatGPT';
-
-	/// es: 'Prueba diciendo: "Hola, en que me puedes ayudar en el campo?"'
-	String get example => 'Prueba diciendo: "Hola, en que me puedes ayudar en el campo?"';
-
-	/// es: 'Iniciar una ronda'
-	String get cta_primary => 'Iniciar una ronda';
-
-	/// es: 'Ir al inicio'
-	String get cta_secondary => 'Ir al inicio';
+	/// es: 'Continuar'
+	String get cta => 'Continuar';
 }
 
 // Path: voice_caddy.error
@@ -1745,11 +1733,7 @@ extension on Translations {
 			'voice_caddy.waiting.cta' => 'Ya he conectado',
 			'voice_caddy.waiting.help' => 'Tienes problemas?',
 			'voice_caddy.success.title' => 'Caddie de Voz Conectado',
-			'voice_caddy.success.subtitle' => 'Todo listo. Una cosa mas:',
-			'voice_caddy.success.tip' => 'Para hablar con tu caddie, toca el icono de audifonos en ChatGPT',
-			'voice_caddy.success.example' => 'Prueba diciendo: "Hola, en que me puedes ayudar en el campo?"',
-			'voice_caddy.success.cta_primary' => 'Iniciar una ronda',
-			'voice_caddy.success.cta_secondary' => 'Ir al inicio',
+			'voice_caddy.success.cta' => 'Continuar',
 			'voice_caddy.error.not_completed_title' => 'Conexion no completada',
 			'voice_caddy.error.not_completed_subtitle' => 'Parece que el inicio de sesion no se completo en ChatGPT.',
 			'voice_caddy.error.why_needed' => 'El caddie de voz necesita acceso a tu cuenta TalkCaddy para conocer tu ubicacion y distancias de palos.',

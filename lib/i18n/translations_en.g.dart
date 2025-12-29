@@ -699,11 +699,7 @@ class _TranslationsVoiceCaddySuccessEn extends TranslationsVoiceCaddySuccessEs {
 
 	// Translations
 	@override String get title => 'Voice Caddy Connected';
-	@override String get subtitle => 'You\'re all set. One last thing:';
-	@override String get tip => 'To talk to your caddy, tap the headphone icon in ChatGPT';
-	@override String get example => 'Try saying: "Hey, what can you help me with on the course?"';
-	@override String get cta_primary => 'Start a round';
-	@override String get cta_secondary => 'Go to home';
+	@override String get cta => 'Continue';
 }
 
 // Path: voice_caddy.error
@@ -1079,11 +1075,7 @@ extension on TranslationsEn {
 			'voice_caddy.waiting.cta' => 'I\'ve connected',
 			'voice_caddy.waiting.help' => 'Having trouble?',
 			'voice_caddy.success.title' => 'Voice Caddy Connected',
-			'voice_caddy.success.subtitle' => 'You\'re all set. One last thing:',
-			'voice_caddy.success.tip' => 'To talk to your caddy, tap the headphone icon in ChatGPT',
-			'voice_caddy.success.example' => 'Try saying: "Hey, what can you help me with on the course?"',
-			'voice_caddy.success.cta_primary' => 'Start a round',
-			'voice_caddy.success.cta_secondary' => 'Go to home',
+			'voice_caddy.success.cta' => 'Continue',
 			'voice_caddy.error.not_completed_title' => 'Connection not completed',
 			'voice_caddy.error.not_completed_subtitle' => 'It looks like the sign-in wasn\'t completed in ChatGPT.',
 			'voice_caddy.error.why_needed' => 'The voice caddy needs access to your TalkCaddy account to know your location and club distances.',

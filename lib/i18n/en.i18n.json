@@ -364,11 +364,7 @@
         },
         "success": {
             "title": "Voice Caddy Connected",
-            "subtitle": "You're all set. One last thing:",
-            "tip": "To talk to your caddy, tap the headphone icon in ChatGPT",
-            "example": "Try saying: \"Hey, what can you help me with on the course?\"",
-            "cta_primary": "Start a round",
-            "cta_secondary": "Go to home"
+            "cta": "Continue"
         },
         "error": {
             "not_completed_title": "Connection not completed",

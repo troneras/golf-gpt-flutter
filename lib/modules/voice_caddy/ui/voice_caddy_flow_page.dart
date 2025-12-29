@@ -45,8 +45,7 @@ class VoiceCaddyFlowPage extends ConsumerWidget {
           ),
         'success' => VoiceCaddyRouteTransition(
             builder: (context) => VcSuccessStep(
-              onStartRound: () => _handleStartRound(context),
-              onGoHome: () => _handleGoHome(context),
+              onContinue: () => _handleContinue(context),
             ),
             settings: settings,
           ),
@@ -66,14 +65,10 @@ class VoiceCaddyFlowPage extends ConsumerWidget {
   }
 
   void _handleSkip(BuildContext context) {
-    context.go('/');
+    context.pop();
   }
 
-  void _handleStartRound(BuildContext context) {
-    context.go('/select-course');
-  }
-
-  void _handleGoHome(BuildContext context) {
-    context.go('/');
+  void _handleContinue(BuildContext context) {
+    context.pop();
   }
 }
