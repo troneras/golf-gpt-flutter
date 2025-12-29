@@ -48,12 +48,6 @@
             "action": "Permitir ubicacion",
             "skip": "Ahora no"
         },
-        "complete": {
-            "title": "Todo listo",
-            "subtitle": "Vuelve al chat y di:",
-            "command": "\"TalkCaddy, empiezo una ronda\"",
-            "action": "Continuar"
-        },
         "loading": {
             "title": "Preparando tu experiencia",
             "subtitle": "Espera unos segundos"

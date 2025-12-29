@@ -1,5 +1,6 @@
 // ignore_for_file: use_build_context_synchronously
 
+import 'package:apparence_kit/core/states/user_state_notifier.dart';
 import 'package:apparence_kit/core/widgets/toast.dart';
 import 'package:apparence_kit/modules/authentication/providers/signin_state_provider.dart';
 import 'package:apparence_kit/modules/authentication/ui/widgets/round_signin.dart';
@@ -19,7 +20,10 @@ class GoogleSignInComponent extends ConsumerWidget {
           .read(signinStateProvider.notifier)
           .signinWithGoogle()
           .then(
-            (value) => context.go('/complete'),
+            (value) async {
+              await ref.read(userStateNotifierProvider.notifier).onOnboarded();
+              context.go('/');
+            },
           )
           .catchError(
         (err) {

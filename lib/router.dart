@@ -1,5 +1,4 @@
 import 'package:apparence_kit/core/bottom_menu/bottom_menu.dart';
-import 'package:apparence_kit/core/guards/authenticated_guard.dart';
 import 'package:apparence_kit/core/guards/user_info_guard.dart';
 import 'package:apparence_kit/core/widgets/page_not_found.dart';
 import 'package:apparence_kit/environnements.dart';
@@ -19,7 +18,6 @@ import 'package:apparence_kit/modules/rounds/ui/round_detail_page.dart';
 import 'package:apparence_kit/modules/bag/ui/bag_page.dart';
 
 import 'package:apparence_kit/modules/onboarding/ui/onboarding_page.dart';
-import 'package:apparence_kit/modules/onboarding/ui/complete_page.dart';
 import 'package:apparence_kit/modules/voice_caddy/ui/voice_caddy_flow_page.dart';
 
 
@@ -94,11 +92,6 @@ GoRouter generateRouter({
         name: 'recover_password',
         path: '/recover_password',
         builder: (context, state) => const RecoverPasswordPage(),
-      ),
-      GoRoute(
-        name: 'complete',
-        path: '/complete',
-        builder: (context, state) => const CompletePage(),
       ),
       GoRoute(
         name: 'feedback',

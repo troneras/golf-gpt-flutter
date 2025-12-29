@@ -105,7 +105,6 @@ class _TranslationsOnboardingEn extends TranslationsOnboardingEs {
 	@override late final _TranslationsOnboardingWelcomeEn welcome = _TranslationsOnboardingWelcomeEn._(_root);
 	@override late final _TranslationsOnboardingAppPurposeEn app_purpose = _TranslationsOnboardingAppPurposeEn._(_root);
 	@override late final _TranslationsOnboardingLocationPermissionEn location_permission = _TranslationsOnboardingLocationPermissionEn._(_root);
-	@override late final _TranslationsOnboardingCompleteEn complete = _TranslationsOnboardingCompleteEn._(_root);
 	@override late final _TranslationsOnboardingLoadingEn loading = _TranslationsOnboardingLoadingEn._(_root);
 }
 
@@ -492,19 +491,6 @@ class _TranslationsOnboardingLocationPermissionEn extends TranslationsOnboarding
 	@override String get skip => 'Not now';
 }
 
-// Path: onboarding.complete
-class _TranslationsOnboardingCompleteEn extends TranslationsOnboardingCompleteEs {
-	_TranslationsOnboardingCompleteEn._(TranslationsEn root) : this._root = root, super.internal(root);
-
-	final TranslationsEn _root; // ignore: unused_field
-
-	// Translations
-	@override String get title => 'All set';
-	@override String get subtitle => 'Go back to the chat and say:';
-	@override String get command => '"TalkCaddy, I\'m starting a round"';
-	@override String get action => 'Continue';
-}
-
 // Path: onboarding.loading
 class _TranslationsOnboardingLoadingEn extends TranslationsOnboardingLoadingEs {
 	_TranslationsOnboardingLoadingEn._(TranslationsEn root) : this._root = root, super.internal(root);
@@ -866,10 +852,6 @@ extension on TranslationsEn {
 			'onboarding.location_permission.reassurance' => 'Not used outside of the round.',
 			'onboarding.location_permission.action' => 'Allow location',
 			'onboarding.location_permission.skip' => 'Not now',
-			'onboarding.complete.title' => 'All set',
-			'onboarding.complete.subtitle' => 'Go back to the chat and say:',
-			'onboarding.complete.command' => '"TalkCaddy, I\'m starting a round"',
-			'onboarding.complete.action' => 'Continue',
 			'onboarding.loading.title' => 'Preparing your experience',
 			'onboarding.loading.subtitle' => 'Wait a few seconds',
 			'auth.or_sign_in_with' => 'Or sign in with',

@@ -140,7 +140,6 @@ class TranslationsOnboardingEs {
 	late final TranslationsOnboardingWelcomeEs welcome = TranslationsOnboardingWelcomeEs.internal(_root);
 	late final TranslationsOnboardingAppPurposeEs app_purpose = TranslationsOnboardingAppPurposeEs.internal(_root);
 	late final TranslationsOnboardingLocationPermissionEs location_permission = TranslationsOnboardingLocationPermissionEs.internal(_root);
-	late final TranslationsOnboardingCompleteEs complete = TranslationsOnboardingCompleteEs.internal(_root);
 	late final TranslationsOnboardingLoadingEs loading = TranslationsOnboardingLoadingEs.internal(_root);
 }
 
@@ -916,27 +915,6 @@ class TranslationsOnboardingLocationPermissionEs {
 	String get skip => 'Ahora no';
 }
 
-// Path: onboarding.complete
-class TranslationsOnboardingCompleteEs {
-	TranslationsOnboardingCompleteEs.internal(this._root);
-
-	final Translations _root; // ignore: unused_field
-
-	// Translations
-
-	/// es: 'Todo listo'
-	String get title => 'Todo listo';
-
-	/// es: 'Vuelve al chat y di:'
-	String get subtitle => 'Vuelve al chat y di:';
-
-	/// es: '"TalkCaddy, empiezo una ronda"'
-	String get command => '"TalkCaddy, empiezo una ronda"';
-
-	/// es: 'Continuar'
-	String get action => 'Continuar';
-}
-
 // Path: onboarding.loading
 class TranslationsOnboardingLoadingEs {
 	TranslationsOnboardingLoadingEs.internal(this._root);
@@ -1568,10 +1546,6 @@ extension on Translations {
 			'onboarding.location_permission.reassurance' => 'No se usa fuera de la ronda.',
 			'onboarding.location_permission.action' => 'Permitir ubicacion',
 			'onboarding.location_permission.skip' => 'Ahora no',
-			'onboarding.complete.title' => 'Todo listo',
-			'onboarding.complete.subtitle' => 'Vuelve al chat y di:',
-			'onboarding.complete.command' => '"TalkCaddy, empiezo una ronda"',
-			'onboarding.complete.action' => 'Continuar',
 			'onboarding.loading.title' => 'Preparando tu experiencia',
 			'onboarding.loading.subtitle' => 'Espera unos segundos',
 			'auth.or_sign_in_with' => 'O inicia sesion con',

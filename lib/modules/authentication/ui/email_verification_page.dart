@@ -1,3 +1,4 @@
+import 'package:apparence_kit/core/states/user_state_notifier.dart';
 import 'package:apparence_kit/core/theme/extensions/theme_extension.dart';
 import 'package:apparence_kit/core/widgets/buttons.dart';
 import 'package:apparence_kit/i18n/translations.g.dart';
@@ -35,9 +36,12 @@ class _EmailVerificationPageState extends ConsumerState<EmailVerificationPage> {
     final state = ref.watch(emailVerificationProvider);
     final tr = Translations.of(context).auth.email_verification;
 
-    ref.listen(emailVerificationProvider, (previous, next) {
+    ref.listen(emailVerificationProvider, (previous, next) async {
       if (next is EmailVerificationVerified) {
-        context.go('/complete');
+        await ref.read(userStateNotifierProvider.notifier).onOnboarded();
+        if (context.mounted) {
+          context.go('/');
+        }
       }
     });
 

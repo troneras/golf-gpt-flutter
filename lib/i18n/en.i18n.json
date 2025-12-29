@@ -48,12 +48,6 @@
             "action": "Allow location",
             "skip": "Not now"
         },
-        "complete": {
-            "title": "All set",
-            "subtitle": "Go back to the chat and say:",
-            "command": "\"TalkCaddy, I'm starting a round\"",
-            "action": "Continue"
-        },
         "loading": {
             "title": "Preparing your experience",
             "subtitle": "Wait a few seconds"

@@ -1,3 +1,4 @@
+import 'package:apparence_kit/core/states/user_state_notifier.dart';
 import 'package:apparence_kit/core/theme/extensions/theme_extension.dart';
 import 'package:apparence_kit/core/widgets/buttons.dart';
 import 'package:apparence_kit/core/widgets/responsive_layout.dart';
@@ -162,8 +163,9 @@ class SignupForm extends ConsumerWidget {
                         // ignore: use_build_context_synchronously
                         context.go('/email_verification');
                       } else {
+                        await ref.read(userStateNotifierProvider.notifier).onOnboarded();
                         // ignore: use_build_context_synchronously
-                        context.go('/complete');
+                        context.go('/');
                       }
                     },
                     onError: (err) => showErrorToast(
