@@ -68,7 +68,7 @@ class _RoundInProgressPageState extends ConsumerState<RoundInProgressPage> {
         title: Text(
           'Ronda en curso',
           style: context.textTheme.titleLarge?.copyWith(
-            fontWeight: FontWeight.bold,
+            fontWeight: FontWeight.w600,
           ),
         ),
         centerTitle: true,
@@ -446,7 +446,7 @@ class _BottomButton extends StatelessWidget {
                 : const Text(
                     'Finalizar Ronda',
                     style: TextStyle(
-                      fontWeight: FontWeight.bold,
+                      fontWeight: FontWeight.w600,
                       fontSize: 16,
                     ),
                   ),
@@ -484,7 +484,7 @@ class _ErrorView extends StatelessWidget {
           Text(
             'Error',
             style: context.textTheme.titleLarge?.copyWith(
-              fontWeight: FontWeight.bold,
+              fontWeight: FontWeight.w600,
             ),
             textAlign: TextAlign.center,
           ),

@@ -77,7 +77,7 @@ class _BrowseCoursesPageState extends ConsumerState<BrowseCoursesPage>
         title: Text(
           tr.title,
           style: context.textTheme.titleLarge?.copyWith(
-            fontWeight: FontWeight.bold,
+            fontWeight: FontWeight.w600,
           ),
         ),
         centerTitle: true,
@@ -371,7 +371,7 @@ class _CourseListTile extends StatelessWidget {
                           ? '${course.clubName} - ${course.name}'
                           : course.name,
                       style: context.textTheme.titleMedium?.copyWith(
-                        fontWeight: FontWeight.bold,
+                        fontWeight: FontWeight.w600,
                       ),
                     ),
                     if (course.cityCountry.isNotEmpty ||

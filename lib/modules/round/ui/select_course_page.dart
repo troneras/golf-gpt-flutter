@@ -41,7 +41,7 @@ class SelectCoursePage extends ConsumerWidget {
         title: Text(
           tr.title,
           style: context.textTheme.titleLarge?.copyWith(
-            fontWeight: FontWeight.bold,
+            fontWeight: FontWeight.w600,
           ),
         ),
         centerTitle: true,
@@ -461,7 +461,7 @@ class _CourseCard extends StatelessWidget {
                     Text(
                       courseName,
                       style: context.textTheme.titleMedium?.copyWith(
-                        fontWeight: FontWeight.bold,
+                        fontWeight: FontWeight.w600,
                       ),
                     ),
                     if (clubName != null && clubName!.isNotEmpty) ...[
@@ -564,7 +564,7 @@ class _TeeCard extends StatelessWidget {
                 Text(
                   tee.formattedLength,
                   style: context.textTheme.bodyMedium?.copyWith(
-                    fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
+                    fontWeight: isSelected ? FontWeight.w600 : FontWeight.normal,
                     color: isSelected
                         ? context.colors.onBackground
                         : context.colors.onSurface.withValues(alpha: 0.7),
@@ -745,7 +745,7 @@ class _BottomButtons extends StatelessWidget {
                       child: Text(
                         tr.select_course.start_round_cta,
                         style: context.textTheme.titleSmall?.copyWith(
-                          fontWeight: FontWeight.bold,
+                          fontWeight: FontWeight.w600,
                           color: onStartRound != null
                               ? Colors.white
                               : context.colors.onSurface.withValues(alpha: 0.4),
@@ -791,7 +791,7 @@ class _NoCourseFoundView extends StatelessWidget {
           Text(
             tr.no_course_found,
             style: context.textTheme.titleLarge?.copyWith(
-              fontWeight: FontWeight.bold,
+              fontWeight: FontWeight.w600,
             ),
             textAlign: TextAlign.center,
           ),
@@ -890,7 +890,7 @@ class _ErrorView extends StatelessWidget {
           Text(
             tr.error_title,
             style: context.textTheme.titleLarge?.copyWith(
-              fontWeight: FontWeight.bold,
+              fontWeight: FontWeight.w600,
             ),
             textAlign: TextAlign.center,
           ),

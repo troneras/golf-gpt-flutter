@@ -35,7 +35,7 @@ class _OtpVerificationComponentState
         Text(
           'Verification Code',
           style: context.textTheme.titleLarge?.copyWith(
-            fontWeight: FontWeight.bold,
+            fontWeight: FontWeight.w600,
           ),
           textAlign: TextAlign.center,
         ),
@@ -118,7 +118,7 @@ class _OtpVerificationComponentState
             'Resend Code',
             style: context.textTheme.bodyMedium?.copyWith(
               color: context.colors.primary,
-              fontWeight: FontWeight.bold,
+              fontWeight: FontWeight.w600,
             ),
           ),
         ),

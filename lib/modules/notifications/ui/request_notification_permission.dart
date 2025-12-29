@@ -45,7 +45,7 @@ class RequestNotificationPermission extends ConsumerWidget {
             translations.title,
             textAlign: TextAlign.center,
             style: context.textTheme.headlineMedium?.copyWith(
-              fontWeight: FontWeight.bold,
+              fontWeight: FontWeight.w600,
             ),
           ),
           const SizedBox(height: 16),

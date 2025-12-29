@@ -178,7 +178,7 @@ class _NotificationTileState extends State<NotificationTile>
                   child: Text(
                     widget.title,
                     style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                          fontWeight: FontWeight.w700,
+                          fontWeight: FontWeight.w600,
                           color: widget.titleColor,
                         ),
                     overflow: TextOverflow.clip,

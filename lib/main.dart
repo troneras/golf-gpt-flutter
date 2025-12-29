@@ -185,7 +185,7 @@ class AppErrorWidget extends StatelessWidget {
         children: [
           const Text(
             'Oups!',
-            style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+            style: TextStyle(color: Colors.white, fontWeight: FontWeight.w600),
           ),
           const SizedBox(height: 8),
           const Text(

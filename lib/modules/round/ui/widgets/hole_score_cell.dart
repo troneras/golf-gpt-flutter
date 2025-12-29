@@ -61,7 +61,7 @@ class HoleScoreCell extends StatelessWidget {
                 child: Text(
                   '${score.holeNumber}',
                   style: context.textTheme.bodyMedium?.copyWith(
-                    fontWeight: isCurrentHole ? FontWeight.bold : FontWeight.w500,
+                    fontWeight: isCurrentHole ? FontWeight.w600 : FontWeight.w500,
                   ),
                   textAlign: TextAlign.center,
                 ),
@@ -217,7 +217,7 @@ class _ScoreBadge extends StatelessWidget {
         child: Text(
           '${score.strokes}',
           style: context.textTheme.bodyLarge?.copyWith(
-            fontWeight: FontWeight.bold,
+            fontWeight: FontWeight.w600,
             color: _getScoreTextColor(context, relativeToPar),
           ),
         ),
@@ -381,7 +381,7 @@ class SubtotalRow extends StatelessWidget {
             child: Text(
               label,
               style: context.textTheme.bodyMedium?.copyWith(
-                fontWeight: FontWeight.bold,
+                fontWeight: FontWeight.w600,
               ),
               textAlign: TextAlign.center,
             ),
@@ -402,7 +402,7 @@ class SubtotalRow extends StatelessWidget {
             child: Text(
               '$par',
               style: context.textTheme.bodyMedium?.copyWith(
-                fontWeight: FontWeight.bold,
+                fontWeight: FontWeight.w600,
               ),
               textAlign: TextAlign.center,
             ),
@@ -411,7 +411,7 @@ class SubtotalRow extends StatelessWidget {
             child: Text(
               strokes != null ? '$strokes' : '-',
               style: context.textTheme.bodyLarge?.copyWith(
-                fontWeight: FontWeight.bold,
+                fontWeight: FontWeight.w600,
               ),
               textAlign: TextAlign.center,
             ),
@@ -421,7 +421,7 @@ class SubtotalRow extends StatelessWidget {
             child: Text(
               _formatRelativeToPar(relativeToPar),
               style: context.textTheme.bodyMedium?.copyWith(
-                fontWeight: FontWeight.bold,
+                fontWeight: FontWeight.w600,
                 color: _getRelativeColor(context, relativeToPar),
               ),
               textAlign: TextAlign.center,

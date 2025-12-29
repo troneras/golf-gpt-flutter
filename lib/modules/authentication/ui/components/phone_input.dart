@@ -37,7 +37,7 @@ class _PhoneInputComponentState extends ConsumerState<PhoneInputComponent> {
           Text(
             'Enter your phone number',
             style: context.textTheme.titleLarge?.copyWith(
-              fontWeight: FontWeight.bold,
+              fontWeight: FontWeight.w600,
             ),
             textAlign: TextAlign.center,
           ),

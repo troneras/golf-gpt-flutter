@@ -26,7 +26,7 @@ class ChatgptHandoffDialog extends StatelessWidget {
             Text(
               tr.title,
               style: context.textTheme.titleLarge?.copyWith(
-                fontWeight: FontWeight.bold,
+                fontWeight: FontWeight.w600,
               ),
               textAlign: TextAlign.center,
             ),

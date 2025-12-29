@@ -37,7 +37,7 @@ class RoundHeader extends StatelessWidget {
                     Text(
                       round.course.name,
                       style: context.textTheme.titleMedium?.copyWith(
-                        fontWeight: FontWeight.bold,
+                        fontWeight: FontWeight.w600,
                       ),
                     ),
                     if (round.tee != null) ...[
@@ -175,7 +175,7 @@ class _SummaryItem extends StatelessWidget {
         Text(
           value,
           style: context.textTheme.titleLarge?.copyWith(
-            fontWeight: FontWeight.bold,
+            fontWeight: FontWeight.w600,
             color: valueColor ?? context.colors.onSurface,
           ),
         ),

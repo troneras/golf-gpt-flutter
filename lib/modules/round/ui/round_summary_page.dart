@@ -48,7 +48,7 @@ class RoundSummaryPage extends StatelessWidget {
               Text(
                 'Ronda finalizada!',
                 style: context.textTheme.headlineSmall?.copyWith(
-                  fontWeight: FontWeight.bold,
+                  fontWeight: FontWeight.w600,
                 ),
               ),
               const SizedBox(height: 8),
@@ -90,7 +90,7 @@ class RoundSummaryPage extends StatelessWidget {
                         child: Text(
                           'Volver al inicio',
                           style: context.textTheme.titleSmall?.copyWith(
-                            fontWeight: FontWeight.bold,
+                            fontWeight: FontWeight.w600,
                             color: Colors.white,
                           ),
                         ),
@@ -168,7 +168,7 @@ class _ScoreCard extends StatelessWidget {
               Text(
                 '${summary.totalStrokes}',
                 style: context.textTheme.displayLarge?.copyWith(
-                  fontWeight: FontWeight.bold,
+                  fontWeight: FontWeight.w600,
                   color: context.colors.onSurface,
                   height: 1,
                 ),
@@ -189,7 +189,7 @@ class _ScoreCard extends StatelessWidget {
                   child: Text(
                     summary.relativeToParFormatted,
                     style: context.textTheme.titleMedium?.copyWith(
-                      fontWeight: FontWeight.bold,
+                      fontWeight: FontWeight.w600,
                       color: Colors.white,
                     ),
                   ),
@@ -319,7 +319,7 @@ class _StatCard extends StatelessWidget {
               Text(
                 value,
                 style: context.textTheme.titleLarge?.copyWith(
-                  fontWeight: FontWeight.bold,
+                  fontWeight: FontWeight.w600,
                 ),
               ),
               if (subtitle != null) ...[

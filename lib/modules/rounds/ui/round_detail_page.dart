@@ -99,7 +99,7 @@ class _RoundDetailContent extends StatelessWidget {
                 Text(
                   round.course.name,
                   style: context.textTheme.headlineSmall?.copyWith(
-                    fontWeight: FontWeight.bold,
+                    fontWeight: FontWeight.w600,
                   ),
                 ),
                 const SizedBox(height: 4),
@@ -130,7 +130,7 @@ class _RoundDetailContent extends StatelessWidget {
             child: Text(
               'Scorecard',
               style: context.textTheme.titleMedium?.copyWith(
-                fontWeight: FontWeight.bold,
+                fontWeight: FontWeight.w600,
               ),
             ),
           ),
@@ -223,7 +223,7 @@ class _StatItem extends StatelessWidget {
         Text(
           value,
           style: context.textTheme.headlineSmall?.copyWith(
-            fontWeight: FontWeight.bold,
+            fontWeight: FontWeight.w600,
             color: highlight ? context.colors.primary : null,
           ),
         ),
@@ -314,7 +314,7 @@ class _ScorecardHeaderRow extends StatelessWidget {
             child: Text(
               tr.hole,
               style: context.textTheme.bodySmall?.copyWith(
-                fontWeight: FontWeight.bold,
+                fontWeight: FontWeight.w600,
               ),
             ),
           ),
@@ -323,7 +323,7 @@ class _ScorecardHeaderRow extends StatelessWidget {
             child: Text(
               tr.par,
               style: context.textTheme.bodySmall?.copyWith(
-                fontWeight: FontWeight.bold,
+                fontWeight: FontWeight.w600,
               ),
               textAlign: TextAlign.center,
             ),
@@ -333,7 +333,7 @@ class _ScorecardHeaderRow extends StatelessWidget {
             child: Text(
               tr.score,
               style: context.textTheme.bodySmall?.copyWith(
-                fontWeight: FontWeight.bold,
+                fontWeight: FontWeight.w600,
               ),
               textAlign: TextAlign.center,
             ),
@@ -342,7 +342,7 @@ class _ScorecardHeaderRow extends StatelessWidget {
             child: Text(
               Translations.of(context).rounds.result,
               style: context.textTheme.bodySmall?.copyWith(
-                fontWeight: FontWeight.bold,
+                fontWeight: FontWeight.w600,
               ),
               textAlign: TextAlign.center,
             ),
@@ -437,7 +437,7 @@ class _ScorecardTotalRow extends StatelessWidget {
             child: Text(
               label,
               style: context.textTheme.bodyMedium?.copyWith(
-                fontWeight: FontWeight.bold,
+                fontWeight: FontWeight.w600,
               ),
             ),
           ),
@@ -446,7 +446,7 @@ class _ScorecardTotalRow extends StatelessWidget {
             child: Text(
               par.toString(),
               style: context.textTheme.bodyMedium?.copyWith(
-                fontWeight: FontWeight.bold,
+                fontWeight: FontWeight.w600,
               ),
               textAlign: TextAlign.center,
             ),
@@ -456,7 +456,7 @@ class _ScorecardTotalRow extends StatelessWidget {
             child: Text(
               strokes?.toString() ?? '-',
               style: context.textTheme.bodyMedium?.copyWith(
-                fontWeight: FontWeight.bold,
+                fontWeight: FontWeight.w600,
               ),
               textAlign: TextAlign.center,
             ),
@@ -568,7 +568,7 @@ class _DiffBadge extends StatelessWidget {
       text,
       style: context.textTheme.bodyMedium?.copyWith(
         color: textColor,
-        fontWeight: FontWeight.bold,
+        fontWeight: FontWeight.w600,
       ),
       textAlign: TextAlign.center,
     );

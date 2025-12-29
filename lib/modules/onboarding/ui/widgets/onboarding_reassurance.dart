@@ -36,7 +36,7 @@ class CheckedReassurance extends StatelessWidget {
           textAlign: TextAlign.left,
           style: context.textTheme.bodyLarge?.copyWith(
             color: context.colors.grey3,
-            fontWeight: FontWeight.w900,
+            fontWeight: FontWeight.w600,
           ),
         ),
       ),

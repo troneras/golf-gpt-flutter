@@ -65,7 +65,7 @@ class _OnboardingWelcomeStepState extends ConsumerState<OnboardingWelcomeStep> {
                   tr.title,
                   textAlign: TextAlign.center,
                   style: context.textTheme.headlineMedium?.copyWith(
-                    fontWeight: FontWeight.bold,
+                    fontWeight: FontWeight.w600,
                   ),
                 ),
               ),
@@ -251,7 +251,7 @@ class _OnboardingAppPurposeStepState
                   tr.title,
                   textAlign: TextAlign.center,
                   style: context.textTheme.headlineMedium?.copyWith(
-                    fontWeight: FontWeight.bold,
+                    fontWeight: FontWeight.w600,
                   ),
                 ),
               ),
@@ -435,7 +435,7 @@ class _OnboardingLocationPermissionStepState
                   tr.title,
                   textAlign: TextAlign.center,
                   style: context.textTheme.headlineMedium?.copyWith(
-                    fontWeight: FontWeight.bold,
+                    fontWeight: FontWeight.w600,
                   ),
                 ),
               ),

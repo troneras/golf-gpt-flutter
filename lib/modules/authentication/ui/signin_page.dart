@@ -56,7 +56,7 @@ class SigninPage extends ConsumerWidget {
                           Text(
                             'TalkCaddy',
                             style: context.textTheme.headlineMedium?.copyWith(
-                              fontWeight: FontWeight.bold,
+                              fontWeight: FontWeight.w600,
                             ),
                           ),
                         ],
@@ -65,7 +65,7 @@ class SigninPage extends ConsumerWidget {
                       Text(
                         tr.title,
                         style: context.textTheme.headlineLarge?.copyWith(
-                          fontWeight: FontWeight.bold,
+                          fontWeight: FontWeight.w600,
                         ),
                         textAlign: TextAlign.center,
                       ),

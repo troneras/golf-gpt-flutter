@@ -116,7 +116,7 @@ class _TotalRow extends StatelessWidget {
             child: Text(
               'TOT',
               style: context.textTheme.bodyMedium?.copyWith(
-                fontWeight: FontWeight.bold,
+                fontWeight: FontWeight.w600,
               ),
               textAlign: TextAlign.center,
             ),
@@ -137,7 +137,7 @@ class _TotalRow extends StatelessWidget {
             child: Text(
               '${round.totalPar}',
               style: context.textTheme.bodyMedium?.copyWith(
-                fontWeight: FontWeight.bold,
+                fontWeight: FontWeight.w600,
               ),
               textAlign: TextAlign.center,
             ),
@@ -146,7 +146,7 @@ class _TotalRow extends StatelessWidget {
             child: Text(
               holesPlayed > 0 ? '$totalStrokes' : '-',
               style: context.textTheme.titleMedium?.copyWith(
-                fontWeight: FontWeight.bold,
+                fontWeight: FontWeight.w600,
               ),
               textAlign: TextAlign.center,
             ),
@@ -156,7 +156,7 @@ class _TotalRow extends StatelessWidget {
             child: Text(
               _formatRelativeToPar(holesPlayed > 0 ? relativeToPar : null),
               style: context.textTheme.bodyMedium?.copyWith(
-                fontWeight: FontWeight.bold,
+                fontWeight: FontWeight.w600,
                 color: _getRelativeColor(context, holesPlayed > 0 ? relativeToPar : null),
               ),
               textAlign: TextAlign.center,

@@ -125,7 +125,7 @@ class _VcWaitingStepState extends ConsumerState<VcWaitingStep> {
                       tr.title,
                       textAlign: TextAlign.center,
                       style: context.textTheme.headlineSmall?.copyWith(
-                        fontWeight: FontWeight.bold,
+                        fontWeight: FontWeight.w600,
                       ),
                     ),
                     const SizedBox(height: 16),

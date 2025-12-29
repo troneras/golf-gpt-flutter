@@ -17,7 +17,7 @@ class EmptyNotifications extends StatelessWidget {
           'No notifications yet',
           style: TextStyle(
             fontSize: 18,
-            fontWeight: FontWeight.bold,
+            fontWeight: FontWeight.w600,
             color: Colors.grey[400],
           ),
         ),

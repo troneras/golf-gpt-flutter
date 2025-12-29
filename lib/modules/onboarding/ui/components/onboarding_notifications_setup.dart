@@ -59,7 +59,7 @@ class NotificationsPermissionStep extends ConsumerWidget {
                     translations.title,
                     textAlign: TextAlign.center,
                     style: context.textTheme.headlineMedium?.copyWith(
-                      fontWeight: FontWeight.bold,
+                      fontWeight: FontWeight.w600,
                     ),
                   ),
                 ),

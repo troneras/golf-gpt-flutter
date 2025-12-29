@@ -210,7 +210,7 @@ class _FeedbackSuccessView extends ConsumerWidget {
           Text(
             tr.success_title,
             style: context.textTheme.headlineMedium?.copyWith(
-              fontWeight: FontWeight.bold,
+              fontWeight: FontWeight.w600,
             ),
             textAlign: TextAlign.center,
           ),

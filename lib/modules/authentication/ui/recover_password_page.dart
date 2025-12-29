@@ -81,7 +81,7 @@ class _RecoverPasswordPageState extends ConsumerState<RecoverPasswordPage> {
               Text(
                 tr.email_title,
                 style: context.textTheme.headlineSmall?.copyWith(
-                  fontWeight: FontWeight.bold,
+                  fontWeight: FontWeight.w600,
                 ),
                 textAlign: TextAlign.center,
               ),
@@ -167,7 +167,7 @@ class _RecoverPasswordPageState extends ConsumerState<RecoverPasswordPage> {
               Text(
                 tr.code_title,
                 style: context.textTheme.headlineSmall?.copyWith(
-                  fontWeight: FontWeight.bold,
+                  fontWeight: FontWeight.w600,
                 ),
                 textAlign: TextAlign.center,
               ),
@@ -285,7 +285,7 @@ class _RecoverPasswordPageState extends ConsumerState<RecoverPasswordPage> {
             Text(
               tr.success_title,
               style: context.textTheme.headlineSmall?.copyWith(
-                fontWeight: FontWeight.bold,
+                fontWeight: FontWeight.w600,
                 color: Colors.green,
               ),
               textAlign: TextAlign.center,

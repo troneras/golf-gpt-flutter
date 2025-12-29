@@ -314,7 +314,7 @@ class _ScoreBadge extends StatelessWidget {
       child: Text(
         scoreText,
         style: context.textTheme.titleMedium?.copyWith(
-          fontWeight: FontWeight.bold,
+          fontWeight: FontWeight.w600,
           color: textColor,
         ),
       ),

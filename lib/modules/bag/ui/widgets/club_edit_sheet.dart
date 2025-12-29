@@ -104,7 +104,7 @@ class _ClubEditSheetState extends State<ClubEditSheet> {
                 Text(
                   isEditing ? tr.edit_distance : tr.add_club_title,
                   style: context.textTheme.titleLarge?.copyWith(
-                    fontWeight: FontWeight.bold,
+                    fontWeight: FontWeight.w600,
                   ),
                 ),
                 const SizedBox(height: 24),
@@ -151,7 +151,7 @@ class _ClubEditSheetState extends State<ClubEditSheet> {
                           child: Text(
                             tr.save,
                             style: context.textTheme.titleSmall?.copyWith(
-                              fontWeight: FontWeight.bold,
+                              fontWeight: FontWeight.w600,
                               color: Colors.white,
                             ),
                           ),

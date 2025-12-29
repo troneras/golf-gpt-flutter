@@ -150,7 +150,7 @@ class _HomePageState extends ConsumerState<HomePage> with WidgetsBindingObserver
                   tr.title,
                   textAlign: TextAlign.center,
                   style: context.textTheme.headlineSmall?.copyWith(
-                    fontWeight: FontWeight.bold,
+                    fontWeight: FontWeight.w600,
                   ),
                 ),
                 const SizedBox(height: 8),
@@ -386,14 +386,14 @@ class _HomePageState extends ConsumerState<HomePage> with WidgetsBindingObserver
                         Text(
                           tr.title,
                           style: context.textTheme.headlineSmall?.copyWith(
-                            fontWeight: FontWeight.bold,
+                            fontWeight: FontWeight.w600,
                           ),
                         ),
                         const SizedBox(width: 6),
                         Text(
                           tr.title_ready,
                           style: context.textTheme.headlineSmall?.copyWith(
-                            fontWeight: FontWeight.bold,
+                            fontWeight: FontWeight.w600,
                             color: context.colors.primary,
                           ),
                         ),
@@ -513,7 +513,7 @@ class _StartRoundButton extends StatelessWidget {
                     label,
                     style: context.textTheme.titleMedium?.copyWith(
                       color: Colors.white,
-                      fontWeight: FontWeight.bold,
+                      fontWeight: FontWeight.w600,
                       letterSpacing: 1.2,
                     ),
                   ),

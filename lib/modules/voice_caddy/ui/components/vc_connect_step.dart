@@ -81,7 +81,7 @@ class _VcConnectStepState extends ConsumerState<VcConnectStep> {
                     tr.title,
                     textAlign: TextAlign.center,
                     style: context.textTheme.headlineMedium?.copyWith(
-                      fontWeight: FontWeight.bold,
+                      fontWeight: FontWeight.w600,
                     ),
                   ),
                 ),
@@ -274,7 +274,7 @@ class _InstructionRow extends StatelessWidget {
               number,
               style: context.textTheme.bodyMedium?.copyWith(
                 color: Colors.white,
-                fontWeight: FontWeight.bold,
+                fontWeight: FontWeight.w600,
               ),
             ),
           ),
@@ -310,7 +310,7 @@ class _ManualStep extends StatelessWidget {
         Text(
           '$number.',
           style: context.textTheme.bodySmall?.copyWith(
-            fontWeight: FontWeight.bold,
+            fontWeight: FontWeight.w600,
             color: context.colors.onBackground.withOpacity(0.7),
           ),
         ),

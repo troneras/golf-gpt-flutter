@@ -27,7 +27,7 @@ class BagPage extends ConsumerWidget {
         title: Text(
           tr.title,
           style: context.textTheme.titleLarge?.copyWith(
-            fontWeight: FontWeight.bold,
+            fontWeight: FontWeight.w600,
           ),
         ),
         centerTitle: true,

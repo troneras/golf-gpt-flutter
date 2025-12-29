@@ -162,7 +162,7 @@ class OtpInputField extends StatelessWidget {
         textAlign: TextAlign.center,
         keyboardType: TextInputType.number,
         style: context.textTheme.headlineSmall?.copyWith(
-          fontWeight: FontWeight.bold,
+          fontWeight: FontWeight.w600,
         ),
         maxLength: 1,
         decoration: const InputDecoration(

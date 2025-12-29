@@ -133,7 +133,7 @@ class _ScoreInputSheetState extends State<ScoreInputSheet> {
                         child: Text(
                           'Guardar',
                           style: context.textTheme.titleSmall?.copyWith(
-                            fontWeight: FontWeight.bold,
+                            fontWeight: FontWeight.w600,
                             color: Colors.white,
                           ),
                         ),
@@ -172,7 +172,7 @@ class _SheetHeader extends StatelessWidget {
         Text(
           'Hoyo ${score.holeNumber}',
           style: context.textTheme.titleLarge?.copyWith(
-            fontWeight: FontWeight.bold,
+            fontWeight: FontWeight.w600,
           ),
         ),
         const SizedBox(height: 4),
@@ -229,7 +229,7 @@ class _CounterRow extends StatelessWidget {
           child: Text(
             '$value',
             style: context.textTheme.titleLarge?.copyWith(
-              fontWeight: FontWeight.bold,
+              fontWeight: FontWeight.w600,
             ),
             textAlign: TextAlign.center,
           ),
@@ -324,7 +324,7 @@ class _ScorePreview extends StatelessWidget {
             child: Text(
               _formatRelativeToPar(relativeToPar),
               style: context.textTheme.bodyMedium?.copyWith(
-                fontWeight: FontWeight.bold,
+                fontWeight: FontWeight.w600,
                 color: _getTextColor(relativeToPar),
               ),
             ),
