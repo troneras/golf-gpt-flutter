@@ -424,6 +424,8 @@ class _TranslationsVoiceCaddyEn extends TranslationsVoiceCaddyEs {
 	@override late final _TranslationsVoiceCaddyErrorEn error = _TranslationsVoiceCaddyErrorEn._(_root);
 	@override late final _TranslationsVoiceCaddyHomeCardEn home_card = _TranslationsVoiceCaddyHomeCardEn._(_root);
 	@override late final _TranslationsVoiceCaddySettingsEn settings = _TranslationsVoiceCaddySettingsEn._(_root);
+	@override late final _TranslationsVoiceCaddyFabEn fab = _TranslationsVoiceCaddyFabEn._(_root);
+	@override late final _TranslationsVoiceCaddyHandoffEn handoff = _TranslationsVoiceCaddyHandoffEn._(_root);
 }
 
 // Path: forgotten_round
@@ -788,6 +790,31 @@ class _TranslationsVoiceCaddySettingsEn extends TranslationsVoiceCaddySettingsEs
 	@override String get not_connected => 'Not connected';
 }
 
+// Path: voice_caddy.fab
+class _TranslationsVoiceCaddyFabEn extends TranslationsVoiceCaddyFabEs {
+	_TranslationsVoiceCaddyFabEn._(TranslationsEn root) : this._root = root, super.internal(root);
+
+	final TranslationsEn _root; // ignore: unused_field
+
+	// Translations
+	@override String get tooltip_connected => 'Talk to your caddy';
+	@override String get tooltip_not_connected => 'Set up voice caddy';
+}
+
+// Path: voice_caddy.handoff
+class _TranslationsVoiceCaddyHandoffEn extends TranslationsVoiceCaddyHandoffEs {
+	_TranslationsVoiceCaddyHandoffEn._(TranslationsEn root) : this._root = root, super.internal(root);
+
+	final TranslationsEn _root; // ignore: unused_field
+
+	// Translations
+	@override String get title => 'Your caddie is ready';
+	@override String get body => 'When ChatGPT opens, tap the mic and speak naturally.';
+	@override String get example => '"How far to the green?"';
+	@override String get footer => 'You only need to do this once.';
+	@override String get action => 'OK';
+}
+
 /// The flat map containing all translations for locale <en>.
 /// Only for edge cases! For simple maps, use the map function of this library.
 ///
@@ -1127,6 +1154,13 @@ extension on TranslationsEn {
 			'voice_caddy.settings.title' => 'Voice Caddy',
 			'voice_caddy.settings.connected' => 'Connected',
 			'voice_caddy.settings.not_connected' => 'Not connected',
+			'voice_caddy.fab.tooltip_connected' => 'Talk to your caddy',
+			'voice_caddy.fab.tooltip_not_connected' => 'Set up voice caddy',
+			'voice_caddy.handoff.title' => 'Your caddie is ready',
+			'voice_caddy.handoff.body' => 'When ChatGPT opens, tap the mic and speak naturally.',
+			'voice_caddy.handoff.example' => '"How far to the green?"',
+			'voice_caddy.handoff.footer' => 'You only need to do this once.',
+			'voice_caddy.handoff.action' => 'OK',
 			'forgotten_round.notification_title' => 'Still playing?',
 			'forgotten_round.notification_body' => 'Your round has been active for {hours} hours',
 			'forgotten_round.dialog_title' => 'End your round?',

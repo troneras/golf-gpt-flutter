@@ -28,8 +28,13 @@ class _CompletePageState extends ConsumerState<CompletePage> {
     }
   }
 
-  void _continueToHome() {
-    context.go('/');
+  void _continue() {
+    final userState = ref.read(userStateNotifierProvider);
+    if (userState.user.isGptConnected) {
+      context.go('/');
+    } else {
+      context.go('/voice-caddy-setup', extra: {'allowSkip': false});
+    }
   }
 
   @override
@@ -162,7 +167,7 @@ class _CompletePageState extends ConsumerState<CompletePage> {
                   child: SizedBox(
                     width: double.infinity,
                     child: ElevatedButton(
-                      onPressed: _continueToHome,
+                      onPressed: _continue,
                       child: Text(tr.action),
                     ),
                   ),

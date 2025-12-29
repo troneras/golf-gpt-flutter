@@ -408,6 +408,17 @@
             "title": "Voice Caddy",
             "connected": "Connected",
             "not_connected": "Not connected"
+        },
+        "fab": {
+            "tooltip_connected": "Talk to your caddy",
+            "tooltip_not_connected": "Set up voice caddy"
+        },
+        "handoff": {
+            "title": "Your caddie is ready",
+            "body": "When ChatGPT opens, tap the mic and speak naturally.",
+            "example": "\"How far to the green?\"",
+            "footer": "You only need to do this once.",
+            "action": "OK"
         }
     },
     "forgotten_round": {

@@ -1,3 +1,4 @@
+import 'package:apparence_kit/core/shared_preferences/shared_preferences.dart';
 import 'package:apparence_kit/core/theme/extensions/theme_extension.dart';
 import 'package:apparence_kit/i18n/translations.g.dart';
 import 'package:apparence_kit/modules/round/domain/course.dart';
@@ -6,12 +7,16 @@ import 'package:apparence_kit/modules/round/providers/active_round_notifier.dart
 import 'package:apparence_kit/modules/round/providers/models/active_round_state.dart';
 import 'package:apparence_kit/modules/round/providers/models/select_course_state.dart';
 import 'package:apparence_kit/modules/round/providers/select_course_notifier.dart';
+import 'package:apparence_kit/modules/round/ui/widgets/chatgpt_handoff_dialog.dart';
+import 'package:apparence_kit/modules/voice_caddy/providers/voice_caddy_provider.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:permission_handler/permission_handler.dart';
+
+const _handoffShownKey = 'chatgpt_handoff_shown';
 
 // Alias for the generated provider
 const activeRoundNotifierProvider = activeRoundProvider;
@@ -122,10 +127,22 @@ class SelectCoursePage extends ConsumerWidget {
               // Check if round was started successfully
               final roundState = ref.read(activeRoundNotifierProvider);
               if (roundState is ActiveRoundStateActive) {
-                // Navigate to round in progress
+                if (!context.mounted) return;
+                // Check if this is the first time starting a round (per install)
+                final prefs = ref.read(sharedPreferencesProvider).prefs;
+                final hasSeenHandoff = prefs.getBool(_handoffShownKey) ?? false;
+                if (!hasSeenHandoff) {
+                  // Show the handoff dialog
+                  await showChatgptHandoffDialog(context);
+                  // Mark as shown for future rounds
+                  await prefs.setBool(_handoffShownKey, true);
+                }
+                // Navigate to round in progress first (so it's ready when user returns)
                 if (context.mounted) {
                   context.go('/round-in-progress');
                 }
+                // Open ChatGPT
+                await ref.read(voiceCaddyProvider.notifier).openChatGPT();
               } else if (roundState is ActiveRoundStateError) {
                 // Show error
                 if (context.mounted) {

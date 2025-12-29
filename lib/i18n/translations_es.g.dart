@@ -792,6 +792,8 @@ class TranslationsVoiceCaddyEs {
 	late final TranslationsVoiceCaddyErrorEs error = TranslationsVoiceCaddyErrorEs.internal(_root);
 	late final TranslationsVoiceCaddyHomeCardEs home_card = TranslationsVoiceCaddyHomeCardEs.internal(_root);
 	late final TranslationsVoiceCaddySettingsEs settings = TranslationsVoiceCaddySettingsEs.internal(_root);
+	late final TranslationsVoiceCaddyFabEs fab = TranslationsVoiceCaddyFabEs.internal(_root);
+	late final TranslationsVoiceCaddyHandoffEs handoff = TranslationsVoiceCaddyHandoffEs.internal(_root);
 }
 
 // Path: forgotten_round
@@ -1466,6 +1468,45 @@ class TranslationsVoiceCaddySettingsEs {
 	String get not_connected => 'No conectado';
 }
 
+// Path: voice_caddy.fab
+class TranslationsVoiceCaddyFabEs {
+	TranslationsVoiceCaddyFabEs.internal(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+
+	/// es: 'Hablar con tu caddie'
+	String get tooltip_connected => 'Hablar con tu caddie';
+
+	/// es: 'Configurar caddie de voz'
+	String get tooltip_not_connected => 'Configurar caddie de voz';
+}
+
+// Path: voice_caddy.handoff
+class TranslationsVoiceCaddyHandoffEs {
+	TranslationsVoiceCaddyHandoffEs.internal(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+
+	/// es: 'Tu caddie esta listo'
+	String get title => 'Tu caddie esta listo';
+
+	/// es: 'Cuando se abra ChatGPT, toca el micro y habla naturalmente.'
+	String get body => 'Cuando se abra ChatGPT, toca el micro y habla naturalmente.';
+
+	/// es: '"A cuanto esta el green?"'
+	String get example => '"A cuanto esta el green?"';
+
+	/// es: 'Solo tienes que hacer esto una vez.'
+	String get footer => 'Solo tienes que hacer esto una vez.';
+
+	/// es: 'OK'
+	String get action => 'OK';
+}
+
 /// The flat map containing all translations for locale <es>.
 /// Only for edge cases! For simple maps, use the map function of this library.
 ///
@@ -1805,6 +1846,13 @@ extension on Translations {
 			'voice_caddy.settings.title' => 'Caddie de Voz',
 			'voice_caddy.settings.connected' => 'Conectado',
 			'voice_caddy.settings.not_connected' => 'No conectado',
+			'voice_caddy.fab.tooltip_connected' => 'Hablar con tu caddie',
+			'voice_caddy.fab.tooltip_not_connected' => 'Configurar caddie de voz',
+			'voice_caddy.handoff.title' => 'Tu caddie esta listo',
+			'voice_caddy.handoff.body' => 'Cuando se abra ChatGPT, toca el micro y habla naturalmente.',
+			'voice_caddy.handoff.example' => '"A cuanto esta el green?"',
+			'voice_caddy.handoff.footer' => 'Solo tienes que hacer esto una vez.',
+			'voice_caddy.handoff.action' => 'OK',
 			'forgotten_round.notification_title' => 'Sigues jugando?',
 			'forgotten_round.notification_body' => 'Tu ronda lleva activa {hours} horas',
 			'forgotten_round.dialog_title' => 'Finalizar ronda?',

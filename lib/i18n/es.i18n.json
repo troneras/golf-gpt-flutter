@@ -408,6 +408,17 @@
             "title": "Caddie de Voz",
             "connected": "Conectado",
             "not_connected": "No conectado"
+        },
+        "fab": {
+            "tooltip_connected": "Hablar con tu caddie",
+            "tooltip_not_connected": "Configurar caddie de voz"
+        },
+        "handoff": {
+            "title": "Tu caddie esta listo",
+            "body": "Cuando se abra ChatGPT, toca el micro y habla naturalmente.",
+            "example": "\"A cuanto esta el green?\"",
+            "footer": "Solo tienes que hacer esto una vez.",
+            "action": "OK"
         }
     },
     "forgotten_round": {

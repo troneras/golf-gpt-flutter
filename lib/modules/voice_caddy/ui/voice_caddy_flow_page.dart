@@ -20,9 +20,11 @@ class VoiceCaddyFlowPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return Navigator(
-      initialRoute: 'intro',
-      onGenerateRoute: (settings) => switch (settings.name) {
+    return PopScope(
+      canPop: allowSkip,
+      child: Navigator(
+        initialRoute: 'intro',
+        onGenerateRoute: (settings) => switch (settings.name) {
         'intro' => VoiceCaddyRouteTransition(
             builder: (context) => VcIntroStep(
               nextRoute: 'prerequisites',
@@ -72,7 +74,8 @@ class VoiceCaddyFlowPage extends ConsumerWidget {
             settings: settings,
           ),
         String() || null => throw 'Unimplemented route: ${settings.name}',
-      },
+        },
+      ),
     );
   }
 
