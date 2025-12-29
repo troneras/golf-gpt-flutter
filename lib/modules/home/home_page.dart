@@ -329,40 +329,28 @@ class _HomePageState extends ConsumerState<HomePage> with WidgetsBindingObserver
     final backgroundColor = context.colors.background;
     return Stack(
       children: [
-        // Background image with gradient fade
-        Positioned(
-          top: 0,
-          left: 0,
-          right: 0,
-          child: SizedBox(
-            height: MediaQuery.of(context).size.height * 0.38,
-            child: Stack(
-              fit: StackFit.expand,
-              children: [
-                Image.asset(
-                  'assets/images/background.png',
-                  fit: BoxFit.cover,
-                ),
-                // Gradient overlay for fade effect
-                Positioned(
-                  bottom: 0,
-                  left: 0,
-                  right: 0,
-                  height: 100,
-                  child: DecoratedBox(
-                    decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                        begin: Alignment.topCenter,
-                        end: Alignment.bottomCenter,
-                        colors: [
-                          backgroundColor.withValues(alpha: 0),
-                          backgroundColor,
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-              ],
+        // Background image - full screen golf course
+        Positioned.fill(
+          child: Image.asset(
+            'assets/images/background-2.jpg',
+            fit: BoxFit.cover,
+          ),
+        ),
+        // Dark gradient overlay from bottom for readability
+        Positioned.fill(
+          child: DecoratedBox(
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+                stops: const [0.0, 0.3, 0.6, 1.0],
+                colors: [
+                  backgroundColor.withValues(alpha: 0.3),
+                  backgroundColor.withValues(alpha: 0.1),
+                  backgroundColor.withValues(alpha: 0.6),
+                  backgroundColor.withValues(alpha: 0.95),
+                ],
+              ),
             ),
           ),
         ),
@@ -463,23 +451,26 @@ class _StartRoundButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = context.colors;
     return Container(
       height: 56,
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(12),
-        gradient: const LinearGradient(
-          begin: Alignment.topCenter,
-          end: Alignment.bottomCenter,
+        borderRadius: BorderRadius.circular(28),
+        // Use CTA gradient from design system (blue → green)
+        gradient: LinearGradient(
+          begin: Alignment.centerLeft,
+          end: Alignment.centerRight,
           colors: [
-            Color(0xFF8BC34A),
-            Color(0xFF689F38),
+            colors.ctaGradientStart,
+            colors.ctaGradientEnd,
           ],
         ),
         boxShadow: [
           BoxShadow(
-            color: const Color(0xFF689F38).withValues(alpha: 0.4),
-            blurRadius: 8,
+            color: colors.ctaGlow,
+            blurRadius: 16,
             offset: const Offset(0, 4),
+            spreadRadius: 0,
           ),
         ],
       ),
@@ -487,7 +478,7 @@ class _StartRoundButton extends StatelessWidget {
         color: Colors.transparent,
         child: InkWell(
           onTap: onPressed,
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: BorderRadius.circular(28),
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 24),
             child: Row(
@@ -503,18 +494,18 @@ class _StartRoundButton extends StatelessWidget {
                     ),
                   )
                 else ...[
-                  Image.asset(
-                    'assets/images/icons/ic_play_white.png',
-                    width: 24,
-                    height: 24,
+                  const Icon(
+                    Icons.play_arrow_rounded,
+                    color: Colors.white,
+                    size: 28,
                   ),
-                  const SizedBox(width: 12),
+                  const SizedBox(width: 8),
                   Text(
                     label,
-                    style: context.textTheme.titleMedium?.copyWith(
+                    style: context.textTheme.labelLarge?.copyWith(
                       color: Colors.white,
                       fontWeight: FontWeight.w600,
-                      letterSpacing: 1.2,
+                      letterSpacing: 0.5,
                     ),
                   ),
                 ],
@@ -538,13 +529,16 @@ class _VoiceCommandsSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = context.colors;
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: context.colors.surface,
-        borderRadius: BorderRadius.circular(12),
+        // Glass effect from design system
+        color: colors.glassBg,
+        borderRadius: BorderRadius.circular(16),
         border: Border.all(
-          color: context.colors.onSurface.withValues(alpha: 0.1),
+          color: colors.glassBorder,
+          width: 1,
         ),
       ),
       child: Column(
@@ -552,16 +546,17 @@ class _VoiceCommandsSection extends StatelessWidget {
         children: [
           Row(
             children: [
-              Image.asset(
-                'assets/images/icons/ic_chat.png',
-                width: 24,
-                height: 24,
+              Icon(
+                Icons.chat_bubble_outline_rounded,
+                size: 20,
+                color: colors.textSecondary,
               ),
               const SizedBox(width: 8),
               Text(
                 title,
-                style: context.textTheme.bodyLarge?.copyWith(
-                  fontWeight: FontWeight.w600,
+                style: context.textTheme.bodyMedium?.copyWith(
+                  color: colors.textSecondary,
+                  fontWeight: FontWeight.w500,
                 ),
               ),
             ],
@@ -572,17 +567,19 @@ class _VoiceCommandsSection extends StatelessWidget {
                 child: Row(
                   children: [
                     Container(
-                      width: 6,
-                      height: 6,
+                      width: 4,
+                      height: 4,
                       decoration: BoxDecoration(
-                        color: context.colors.onSurface.withValues(alpha: 0.5),
+                        color: colors.primary,
                         shape: BoxShape.circle,
                       ),
                     ),
                     const SizedBox(width: 12),
                     Text(
                       example,
-                      style: context.textTheme.bodyMedium,
+                      style: context.textTheme.bodyMedium?.copyWith(
+                        color: colors.onBackground,
+                      ),
                     ),
                   ],
                 ),
