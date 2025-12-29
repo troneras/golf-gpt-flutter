@@ -24,14 +24,16 @@ class HoleScoreCell extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = context.colors;
     return Container(
       decoration: BoxDecoration(
+        // Dark-first design: current hole uses primary accent with low alpha
         color: isCurrentHole
-            ? const Color(0xFFFFF8E1)
-            : context.colors.surface,
+            ? colors.primary.withValues(alpha: 0.1)
+            : Colors.transparent,
         border: Border(
           bottom: BorderSide(
-            color: context.colors.onSurface.withValues(alpha: 0.1),
+            color: Colors.white.withValues(alpha: 0.06),
           ),
         ),
       ),
@@ -51,7 +53,7 @@ class HoleScoreCell extends StatelessWidget {
                     ? Icon(
                         Icons.play_arrow,
                         size: 14,
-                        color: context.colors.primary,
+                        color: colors.primary,
                       )
                     : null,
               ),
@@ -62,6 +64,7 @@ class HoleScoreCell extends StatelessWidget {
                   '${score.holeNumber}',
                   style: context.textTheme.bodyMedium?.copyWith(
                     fontWeight: isCurrentHole ? FontWeight.w600 : FontWeight.w500,
+                    color: colors.onBackground,
                   ),
                   textAlign: TextAlign.center,
                 ),
@@ -72,7 +75,7 @@ class HoleScoreCell extends StatelessWidget {
                 child: Text(
                   score.yards != null ? '${score.yards}' : '-',
                   style: context.textTheme.bodySmall?.copyWith(
-                    color: context.colors.onSurface.withValues(alpha: 0.6),
+                    color: colors.textTertiary,
                   ),
                   textAlign: TextAlign.center,
                 ),
@@ -84,6 +87,7 @@ class HoleScoreCell extends StatelessWidget {
                   '${score.par}',
                   style: context.textTheme.bodyMedium?.copyWith(
                     fontWeight: FontWeight.w500,
+                    color: colors.textSecondary,
                   ),
                   textAlign: TextAlign.center,
                 ),
@@ -135,15 +139,17 @@ class HoleScoreCell extends StatelessWidget {
   }
 
   Color _getRelativeColor(BuildContext context, int? relativeToPar) {
+    final colors = context.colors;
     if (relativeToPar == null) {
-      return context.colors.onSurface.withValues(alpha: 0.4);
+      return colors.textDisabled;
     }
+    // Muted colors per design system
     if (relativeToPar < 0) {
-      return Colors.green.shade700;
+      return colors.success;
     } else if (relativeToPar > 0) {
-      return Colors.red.shade700;
+      return colors.warning;
     }
-    return context.colors.onSurface;
+    return colors.onBackground;
   }
 }
 
@@ -184,6 +190,7 @@ class _ScoreBadge extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = context.colors;
     if (!score.isPlayed) {
       return Container(
         width: 36,
@@ -191,7 +198,7 @@ class _ScoreBadge extends StatelessWidget {
         decoration: BoxDecoration(
           shape: BoxShape.circle,
           border: Border.all(
-            color: context.colors.onSurface.withValues(alpha: 0.2),
+            color: Colors.white.withValues(alpha: 0.15),
             width: 1,
           ),
         ),
@@ -199,7 +206,7 @@ class _ScoreBadge extends StatelessWidget {
           child: Text(
             '-',
             style: context.textTheme.bodyLarge?.copyWith(
-              color: context.colors.onSurface.withValues(alpha: 0.4),
+              color: colors.textDisabled,
             ),
           ),
         ),
@@ -226,58 +233,62 @@ class _ScoreBadge extends StatelessWidget {
   }
 
   BoxDecoration _getScoreDecoration(BuildContext context, int relativeToPar) {
-    // Eagle or better (-2 or less): double circle
+    final colors = context.colors;
+    // Eagle or better (-2 or less): double circle with muted amber
     if (relativeToPar <= -2) {
+      const eagleColor = Color(0xFFB8956A); // Muted amber from design system
       return BoxDecoration(
         shape: BoxShape.circle,
-        color: Colors.amber.shade100,
-        border: Border.all(color: Colors.amber.shade700, width: 2),
+        color: eagleColor.withValues(alpha: 0.15),
+        border: Border.all(color: eagleColor, width: 2),
         boxShadow: [
           BoxShadow(
-            color: Colors.amber.shade200,
+            color: eagleColor.withValues(alpha: 0.3),
             spreadRadius: 2,
             blurRadius: 0,
           ),
         ],
       );
     }
-    // Birdie (-1): circle
+    // Birdie (-1): circle with success color
     if (relativeToPar == -1) {
       return BoxDecoration(
         shape: BoxShape.circle,
-        border: Border.all(color: Colors.green.shade700, width: 2),
+        border: Border.all(color: colors.success, width: 2),
       );
     }
     // Par (0): no decoration
     if (relativeToPar == 0) {
       return const BoxDecoration();
     }
-    // Bogey (+1): square
+    // Bogey (+1): square with warning color
     if (relativeToPar == 1) {
       return BoxDecoration(
         borderRadius: BorderRadius.circular(4),
-        border: Border.all(color: Colors.red.shade400, width: 2),
+        border: Border.all(color: colors.warning, width: 2),
       );
     }
-    // Double bogey or worse (+2 or more): filled square
+    // Double bogey or worse (+2 or more): filled square with error color
     return BoxDecoration(
       borderRadius: BorderRadius.circular(4),
-      color: Colors.red.shade100,
-      border: Border.all(color: Colors.red.shade700, width: 2),
+      color: colors.error.withValues(alpha: 0.15),
+      border: Border.all(color: colors.error, width: 2),
     );
   }
 
   Color _getScoreTextColor(BuildContext context, int relativeToPar) {
+    final colors = context.colors;
+    // Muted colors per design system
     if (relativeToPar <= -2) {
-      return Colors.amber.shade900;
+      return const Color(0xFFB8956A); // Muted amber
     }
     if (relativeToPar < 0) {
-      return Colors.green.shade700;
+      return colors.success;
     }
     if (relativeToPar > 0) {
-      return Colors.red.shade700;
+      return colors.warning;
     }
-    return context.colors.onSurface;
+    return colors.onBackground;
   }
 }
 
@@ -287,13 +298,14 @@ class ScorecardHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = context.colors;
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
       decoration: BoxDecoration(
-        color: context.colors.background,
+        color: colors.primary.withValues(alpha: 0.08),
         border: Border(
           bottom: BorderSide(
-            color: context.colors.onSurface.withValues(alpha: 0.2),
+            color: Colors.white.withValues(alpha: 0.06),
             width: 1,
           ),
         ),
@@ -309,7 +321,7 @@ class ScorecardHeader extends StatelessWidget {
               'Score',
               style: context.textTheme.labelSmall?.copyWith(
                 fontWeight: FontWeight.w600,
-                color: context.colors.onSurface.withValues(alpha: 0.6),
+                color: colors.textTertiary,
               ),
               textAlign: TextAlign.center,
             ),
@@ -335,7 +347,7 @@ class _HeaderCell extends StatelessWidget {
         text,
         style: context.textTheme.labelSmall?.copyWith(
           fontWeight: FontWeight.w600,
-          color: context.colors.onSurface.withValues(alpha: 0.6),
+          color: context.colors.textTertiary,
         ),
         textAlign: TextAlign.center,
       ),
@@ -362,13 +374,14 @@ class SubtotalRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = context.colors;
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 10),
       decoration: BoxDecoration(
-        color: context.colors.onSurface.withValues(alpha: 0.05),
+        color: Colors.white.withValues(alpha: 0.03),
         border: Border(
           bottom: BorderSide(
-            color: context.colors.onSurface.withValues(alpha: 0.2),
+            color: Colors.white.withValues(alpha: 0.06),
             width: 1,
           ),
         ),
@@ -382,6 +395,7 @@ class SubtotalRow extends StatelessWidget {
               label,
               style: context.textTheme.bodyMedium?.copyWith(
                 fontWeight: FontWeight.w600,
+                color: colors.onBackground,
               ),
               textAlign: TextAlign.center,
             ),
@@ -392,7 +406,7 @@ class SubtotalRow extends StatelessWidget {
               yards != null ? '$yards' : '-',
               style: context.textTheme.bodySmall?.copyWith(
                 fontWeight: FontWeight.w600,
-                color: context.colors.onSurface.withValues(alpha: 0.6),
+                color: colors.textTertiary,
               ),
               textAlign: TextAlign.center,
             ),
@@ -403,6 +417,7 @@ class SubtotalRow extends StatelessWidget {
               '$par',
               style: context.textTheme.bodyMedium?.copyWith(
                 fontWeight: FontWeight.w600,
+                color: colors.textSecondary,
               ),
               textAlign: TextAlign.center,
             ),
@@ -412,6 +427,7 @@ class SubtotalRow extends StatelessWidget {
               strokes != null ? '$strokes' : '-',
               style: context.textTheme.bodyLarge?.copyWith(
                 fontWeight: FontWeight.w600,
+                color: strokes != null ? colors.onBackground : colors.textDisabled,
               ),
               textAlign: TextAlign.center,
             ),
@@ -440,14 +456,16 @@ class SubtotalRow extends StatelessWidget {
   }
 
   Color _getRelativeColor(BuildContext context, int? relativeToPar) {
+    final colors = context.colors;
     if (relativeToPar == null) {
-      return context.colors.onSurface.withValues(alpha: 0.4);
+      return colors.textDisabled;
     }
+    // Muted colors per design system
     if (relativeToPar < 0) {
-      return Colors.green.shade700;
+      return colors.success;
     } else if (relativeToPar > 0) {
-      return Colors.red.shade700;
+      return colors.warning;
     }
-    return context.colors.onSurface;
+    return colors.onBackground;
   }
 }

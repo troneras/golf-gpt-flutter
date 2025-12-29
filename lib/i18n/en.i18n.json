@@ -23,21 +23,24 @@
     },
     "onboarding": {
         "welcome": {
-            "title": "Your voice caddie",
-            "subtitle": "Play without a scorecard and without writing anything. Just talk.",
-            "chatgpt_info": "We'll take you to ChatGPT to talk to your caddie.",
-            "setup_time": "Set it up in 30 seconds.",
-            "action": "Continue"
+            "app_name": "TalkCaddy",
+            "tagline": "Your personal AI caddie",
+            "headline": "Hands-free golf.\nVoice only.",
+            "feature_1": "No scorecards",
+            "feature_2": "No typing",
+            "feature_3": "No distractions",
+            "action": "Get Started"
         },
         "app_purpose": {
-            "title": "What is this app for?",
-            "bullet_1": "Allows TalkCaddy to follow you on the course",
-            "bullet_2": "Calculates distances automatically",
-            "bullet_3": "Syncs your round and your shots",
-            "key_message_1": "You don't need to touch anything during the round.",
-            "key_message_2": "Just talk to your caddie in ChatGPT.",
-            "key_message_3": "This app saves your round, location, and stats.",
-            "action": "Got it"
+            "headline": "Play.",
+            "subtitle": "We take care of the rest.",
+            "feature_1_title": "We track your GPS",
+            "feature_1_desc": "To know where you are and which hole you're playing",
+            "feature_2_title": "Talk to your caddie",
+            "feature_2_desc": "Ask for distances or log your shots",
+            "feature_3_title": "Everything saves automatically",
+            "feature_3_desc": "You play. We record it",
+            "action": "Continue"
         },
         "location_permission": {
             "title": "We need your location",

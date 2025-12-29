@@ -881,20 +881,26 @@ class TranslationsOnboardingWelcomeEs {
 
 	// Translations
 
-	/// es: 'Tu caddie por voz'
-	String get title => 'Tu caddie por voz';
+	/// es: 'TalkCaddy'
+	String get app_name => 'TalkCaddy';
 
-	/// es: 'Juega sin tarjeta y sin apuntar nada. Solo habla.'
-	String get subtitle => 'Juega sin tarjeta y sin apuntar nada. Solo habla.';
+	/// es: 'Tu caddie de IA personal'
+	String get tagline => 'Tu caddie de IA personal';
 
-	/// es: 'Te llevamos a ChatGPT para hablar con tu caddie.'
-	String get chatgpt_info => 'Te llevamos a ChatGPT para hablar con tu caddie.';
+	/// es: 'Golf sin manos. Solo voz.'
+	String get headline => 'Golf sin manos.\nSolo voz.';
 
-	/// es: 'Configuralo en 30 segundos.'
-	String get setup_time => 'Configuralo en 30 segundos.';
+	/// es: 'Sin tarjetas'
+	String get feature_1 => 'Sin tarjetas';
 
-	/// es: 'Continuar'
-	String get action => 'Continuar';
+	/// es: 'Sin escribir'
+	String get feature_2 => 'Sin escribir';
+
+	/// es: 'Sin distracciones'
+	String get feature_3 => 'Sin distracciones';
+
+	/// es: 'Empezar'
+	String get action => 'Empezar';
 }
 
 // Path: onboarding.app_purpose
@@ -905,29 +911,32 @@ class TranslationsOnboardingAppPurposeEs {
 
 	// Translations
 
-	/// es: 'Para que sirve esta app?'
-	String get title => 'Para que sirve esta app?';
+	/// es: 'Juega.'
+	String get headline => 'Juega.';
 
-	/// es: 'Permite a TalkCaddy seguirte en el campo'
-	String get bullet_1 => 'Permite a TalkCaddy seguirte en el campo';
+	/// es: 'Nosotros nos encargamos del resto.'
+	String get subtitle => 'Nosotros nos encargamos del resto.';
 
-	/// es: 'Calcula distancias automaticamente'
-	String get bullet_2 => 'Calcula distancias automaticamente';
+	/// es: 'Seguimos tu GPS'
+	String get feature_1_title => 'Seguimos tu GPS';
 
-	/// es: 'Sincroniza tu ronda y tus golpes'
-	String get bullet_3 => 'Sincroniza tu ronda y tus golpes';
+	/// es: 'Para saber donde estas y que hoyo juegas'
+	String get feature_1_desc => 'Para saber donde estas y que hoyo juegas';
 
-	/// es: 'Durante la ronda no tienes que tocar nada.'
-	String get key_message_1 => 'Durante la ronda no tienes que tocar nada.';
+	/// es: 'Hablas con tu caddie'
+	String get feature_2_title => 'Hablas con tu caddie';
 
-	/// es: 'Solo habla con tu caddie en ChatGPT.'
-	String get key_message_2 => 'Solo habla con tu caddie en ChatGPT.';
+	/// es: 'Pregunta distancias o di tus golpes'
+	String get feature_2_desc => 'Pregunta distancias o di tus golpes';
 
-	/// es: 'Esta app guarda la ronda, la ubicacion y tus estadisticas.'
-	String get key_message_3 => 'Esta app guarda la ronda, la ubicacion y tus estadisticas.';
+	/// es: 'Todo se guarda solo'
+	String get feature_3_title => 'Todo se guarda solo';
 
-	/// es: 'Entendido'
-	String get action => 'Entendido';
+	/// es: 'Tu juegas. Nosotros lo registramos'
+	String get feature_3_desc => 'Tu juegas. Nosotros lo registramos';
+
+	/// es: 'Continuar'
+	String get action => 'Continuar';
 }
 
 // Path: onboarding.location_permission
@@ -1604,19 +1613,22 @@ extension on Translations {
 			'rate_popup.description' => 'Es rapido y nos ayuda mucho! Gracias!',
 			'rate_popup.cancel_button' => 'Quiza luego',
 			'rate_popup.rate_button' => 'Si, con gusto!',
-			'onboarding.welcome.title' => 'Tu caddie por voz',
-			'onboarding.welcome.subtitle' => 'Juega sin tarjeta y sin apuntar nada. Solo habla.',
-			'onboarding.welcome.chatgpt_info' => 'Te llevamos a ChatGPT para hablar con tu caddie.',
-			'onboarding.welcome.setup_time' => 'Configuralo en 30 segundos.',
-			'onboarding.welcome.action' => 'Continuar',
-			'onboarding.app_purpose.title' => 'Para que sirve esta app?',
-			'onboarding.app_purpose.bullet_1' => 'Permite a TalkCaddy seguirte en el campo',
-			'onboarding.app_purpose.bullet_2' => 'Calcula distancias automaticamente',
-			'onboarding.app_purpose.bullet_3' => 'Sincroniza tu ronda y tus golpes',
-			'onboarding.app_purpose.key_message_1' => 'Durante la ronda no tienes que tocar nada.',
-			'onboarding.app_purpose.key_message_2' => 'Solo habla con tu caddie en ChatGPT.',
-			'onboarding.app_purpose.key_message_3' => 'Esta app guarda la ronda, la ubicacion y tus estadisticas.',
-			'onboarding.app_purpose.action' => 'Entendido',
+			'onboarding.welcome.app_name' => 'TalkCaddy',
+			'onboarding.welcome.tagline' => 'Tu caddie de IA personal',
+			'onboarding.welcome.headline' => 'Golf sin manos.\nSolo voz.',
+			'onboarding.welcome.feature_1' => 'Sin tarjetas',
+			'onboarding.welcome.feature_2' => 'Sin escribir',
+			'onboarding.welcome.feature_3' => 'Sin distracciones',
+			'onboarding.welcome.action' => 'Empezar',
+			'onboarding.app_purpose.headline' => 'Juega.',
+			'onboarding.app_purpose.subtitle' => 'Nosotros nos encargamos del resto.',
+			'onboarding.app_purpose.feature_1_title' => 'Seguimos tu GPS',
+			'onboarding.app_purpose.feature_1_desc' => 'Para saber donde estas y que hoyo juegas',
+			'onboarding.app_purpose.feature_2_title' => 'Hablas con tu caddie',
+			'onboarding.app_purpose.feature_2_desc' => 'Pregunta distancias o di tus golpes',
+			'onboarding.app_purpose.feature_3_title' => 'Todo se guarda solo',
+			'onboarding.app_purpose.feature_3_desc' => 'Tu juegas. Nosotros lo registramos',
+			'onboarding.app_purpose.action' => 'Continuar',
 			'onboarding.location_permission.title' => 'Necesitamos tu ubicacion',
 			'onboarding.location_permission.description' => 'TalkCaddy usa el GPS para:',
 			'onboarding.location_permission.bullet_1' => 'Detectar el hoyo',

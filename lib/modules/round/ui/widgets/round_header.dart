@@ -1,8 +1,10 @@
 import 'package:apparence_kit/core/theme/extensions/theme_extension.dart';
+import 'package:apparence_kit/i18n/translations.g.dart';
 import 'package:apparence_kit/modules/round/domain/round.dart';
 import 'package:flutter/material.dart';
 
-/// Header widget displaying course name, tee, and running score
+/// Header widget displaying course name, tee, and running score.
+/// Operational screen = minimal glass, readability focused per design system.
 class RoundHeader extends StatelessWidget {
   final Round round;
   final VoidCallback? onGpsTap;
@@ -15,13 +17,17 @@ class RoundHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = context.colors;
+    final tr = Translations.of(context).round_in_progress;
+
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: context.colors.surface,
+        // Operational screen: minimal glass, solid dark background
+        color: colors.surface,
         border: Border(
           bottom: BorderSide(
-            color: context.colors.onSurface.withValues(alpha: 0.1),
+            color: Colors.white.withValues(alpha: 0.06),
           ),
         ),
       ),
@@ -38,6 +44,7 @@ class RoundHeader extends StatelessWidget {
                       round.course.name,
                       style: context.textTheme.titleMedium?.copyWith(
                         fontWeight: FontWeight.w600,
+                        color: colors.onBackground,
                       ),
                     ),
                     if (round.tee != null) ...[
@@ -51,7 +58,9 @@ class RoundHeader extends StatelessWidget {
                               color: round.tee!.displayColor,
                               shape: BoxShape.circle,
                               border: round.tee!.isLightColor
-                                  ? Border.all(color: Colors.grey.shade400, width: 1)
+                                  ? Border.all(
+                                      color: Colors.white.withValues(alpha: 0.3),
+                                    )
                                   : null,
                             ),
                           ),
@@ -59,7 +68,7 @@ class RoundHeader extends StatelessWidget {
                           Text(
                             round.tee!.name,
                             style: context.textTheme.bodySmall?.copyWith(
-                              color: context.colors.onSurface.withValues(alpha: 0.6),
+                              color: colors.textTertiary,
                             ),
                           ),
                         ],
@@ -69,15 +78,27 @@ class RoundHeader extends StatelessWidget {
                 ),
               ),
               if (onGpsTap != null)
-                IconButton(
-                  onPressed: onGpsTap,
-                  icon: Icon(
-                    round.gpsEnabled ? Icons.gps_fixed : Icons.gps_off,
+                Container(
+                  width: 40,
+                  height: 40,
+                  decoration: BoxDecoration(
                     color: round.gpsEnabled
-                        ? context.colors.primary
-                        : context.colors.onSurface.withValues(alpha: 0.4),
+                        ? colors.primary.withValues(alpha: 0.15)
+                        : Colors.white.withValues(alpha: 0.06),
+                    borderRadius: BorderRadius.circular(10),
                   ),
-                  tooltip: round.gpsEnabled ? 'GPS activado' : 'GPS desactivado',
+                  child: IconButton(
+                    onPressed: onGpsTap,
+                    padding: EdgeInsets.zero,
+                    icon: Icon(
+                      round.gpsEnabled ? Icons.gps_fixed : Icons.gps_off,
+                      size: 20,
+                      color: round.gpsEnabled
+                          ? colors.primary
+                          : colors.textDisabled,
+                    ),
+                    tooltip: round.gpsEnabled ? tr.gps_enabled : tr.gps_disabled,
+                  ),
                 ),
             ],
           ),
@@ -97,40 +118,45 @@ class _ScoreSummary extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final tr = Translations.of(context).round_in_progress;
     final holesPlayed = round.holesPlayed;
     final totalStrokes = round.computedTotalStrokes;
     final relativeToPar = round.relativeToParFormatted;
 
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
       decoration: BoxDecoration(
-        color: _getScoreBackgroundColor(context, round.computedRelativeToPar),
-        borderRadius: BorderRadius.circular(8),
+        // Level 1 matte glass for summary card
+        color: const Color(0xFF141A24).withValues(alpha: 0.85),
+        borderRadius: BorderRadius.circular(12),
+        border: Border.all(
+          color: Colors.white.withValues(alpha: 0.06),
+        ),
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
           _SummaryItem(
-            label: 'Golpes',
+            label: tr.strokes,
             value: holesPlayed > 0 ? '$totalStrokes' : '-',
           ),
           Container(
             width: 1,
             height: 30,
-            color: context.colors.onSurface.withValues(alpha: 0.2),
+            color: Colors.white.withValues(alpha: 0.1),
           ),
           _SummaryItem(
-            label: 'vs Par',
+            label: tr.vs_par,
             value: relativeToPar,
             valueColor: _getScoreColor(context, round.computedRelativeToPar),
           ),
           Container(
             width: 1,
             height: 30,
-            color: context.colors.onSurface.withValues(alpha: 0.2),
+            color: Colors.white.withValues(alpha: 0.1),
           ),
           _SummaryItem(
-            label: 'Hoyos',
+            label: tr.holes,
             value: '$holesPlayed/18',
           ),
         ],
@@ -138,22 +164,14 @@ class _ScoreSummary extends StatelessWidget {
     );
   }
 
-  Color _getScoreBackgroundColor(BuildContext context, int relativeToPar) {
-    if (relativeToPar < 0) {
-      return Colors.green.withValues(alpha: 0.1);
-    } else if (relativeToPar > 0) {
-      return Colors.red.withValues(alpha: 0.1);
-    }
-    return context.colors.surface;
-  }
-
   Color _getScoreColor(BuildContext context, int relativeToPar) {
+    final colors = context.colors;
     if (relativeToPar < 0) {
-      return Colors.green.shade700;
+      return colors.success;
     } else if (relativeToPar > 0) {
-      return Colors.red.shade700;
+      return colors.error;
     }
-    return context.colors.onSurface;
+    return colors.onBackground;
   }
 }
 
@@ -170,19 +188,21 @@ class _SummaryItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = context.colors;
+
     return Column(
       children: [
         Text(
           value,
           style: context.textTheme.titleLarge?.copyWith(
             fontWeight: FontWeight.w600,
-            color: valueColor ?? context.colors.onSurface,
+            color: valueColor ?? colors.onBackground,
           ),
         ),
         Text(
           label,
           style: context.textTheme.bodySmall?.copyWith(
-            color: context.colors.onSurface.withValues(alpha: 0.6),
+            color: colors.textTertiary,
           ),
         ),
       ],

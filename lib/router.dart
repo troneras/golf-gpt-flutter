@@ -132,7 +132,11 @@ GoRouter generateRouter({
         builder: (context, state) {
           final extra = state.extra as Map<String, dynamic>?;
           final roundId = extra?['roundId'] as String?;
-          return RoundInProgressPage(roundId: roundId);
+          final showFinishDialog = extra?['showFinishDialog'] as bool? ?? false;
+          return RoundInProgressPage(
+            roundId: roundId,
+            showFinishDialog: showFinishDialog,
+          );
         },
       ),
       GoRoute(

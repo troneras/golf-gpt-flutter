@@ -56,6 +56,7 @@ class _EmptyView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = context.colors;
     return Center(
       child: Padding(
         padding: const EdgeInsets.all(32),
@@ -65,13 +66,13 @@ class _EmptyView extends StatelessWidget {
             Icon(
               Icons.golf_course,
               size: 80,
-              color: context.colors.onBackground.withValues(alpha: 0.3),
+              color: colors.textDisabled,
             ),
             const SizedBox(height: 24),
             Text(
               tr.empty,
               style: context.textTheme.titleMedium?.copyWith(
-                color: context.colors.onBackground.withValues(alpha: 0.7),
+                color: colors.textSecondary,
               ),
               textAlign: TextAlign.center,
             ),
@@ -79,7 +80,7 @@ class _EmptyView extends StatelessWidget {
             Text(
               tr.empty_hint,
               style: context.textTheme.bodyMedium?.copyWith(
-                color: context.colors.onBackground.withValues(alpha: 0.5),
+                color: colors.textTertiary,
               ),
               textAlign: TextAlign.center,
             ),
@@ -98,6 +99,7 @@ class _ErrorView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = context.colors;
     return Center(
       child: Padding(
         padding: const EdgeInsets.all(32),
@@ -107,18 +109,48 @@ class _ErrorView extends StatelessWidget {
             Icon(
               Icons.error_outline,
               size: 64,
-              color: context.colors.error,
+              color: colors.error,
             ),
             const SizedBox(height: 16),
             Text(
               message,
-              style: context.textTheme.bodyLarge,
+              style: context.textTheme.bodyLarge?.copyWith(
+                color: colors.textSecondary,
+              ),
               textAlign: TextAlign.center,
             ),
             const SizedBox(height: 16),
-            FilledButton(
-              onPressed: onRetry,
-              child: Text(Translations.of(context).common.retry),
+            // Primary CTA with gradient and glow per design system
+            GestureDetector(
+              onTap: onRetry,
+              child: Container(
+                padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(12),
+                  gradient: LinearGradient(
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                    colors: [
+                      colors.primary.withValues(alpha: 0.9),
+                      colors.primary,
+                    ],
+                  ),
+                  boxShadow: [
+                    BoxShadow(
+                      color: colors.primary.withValues(alpha: 0.3),
+                      blurRadius: 12,
+                      offset: const Offset(0, 4),
+                    ),
+                  ],
+                ),
+                child: Text(
+                  Translations.of(context).common.retry,
+                  style: context.textTheme.titleSmall?.copyWith(
+                    fontWeight: FontWeight.w600,
+                    color: Colors.white,
+                  ),
+                ),
+              ),
             ),
           ],
         ),
@@ -176,80 +208,86 @@ class _RoundCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = context.colors;
     final dateFormat = DateFormat.yMMMd(Localizations.localeOf(context).toString());
 
-    return Card(
+    // Level 1 Matte Glass - Settings/Lists screen type
+    return Container(
       margin: const EdgeInsets.symmetric(vertical: 6),
-      elevation: 0,
-      shape: RoundedRectangleBorder(
+      decoration: BoxDecoration(
+        color: const Color(0xFF141A24).withValues(alpha: 0.85),
         borderRadius: BorderRadius.circular(12),
-        side: BorderSide(
-          color: context.colors.onSurface.withValues(alpha: 0.1),
+        border: Border.all(
+          color: Colors.white.withValues(alpha: 0.06),
         ),
       ),
-      child: InkWell(
-        borderRadius: BorderRadius.circular(12),
-        onTap: () {
-          context.push('/round-detail/${round.id}');
-        },
-        child: Padding(
-          padding: const EdgeInsets.all(16),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          round.course.name,
-                          style: context.textTheme.titleMedium?.copyWith(
-                            fontWeight: FontWeight.w600,
+      child: Material(
+        color: Colors.transparent,
+        child: InkWell(
+          borderRadius: BorderRadius.circular(12),
+          onTap: () {
+            context.push('/round-detail/${round.id}');
+          },
+          child: Padding(
+            padding: const EdgeInsets.all(16),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            round.course.name,
+                            style: context.textTheme.titleMedium?.copyWith(
+                              fontWeight: FontWeight.w600,
+                              color: colors.onBackground,
+                            ),
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
                           ),
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                        const SizedBox(height: 4),
-                        Text(
-                          dateFormat.format(round.startTime),
-                          style: context.textTheme.bodySmall?.copyWith(
-                            color: context.colors.onSurface.withValues(alpha: 0.6),
+                          const SizedBox(height: 4),
+                          Text(
+                            dateFormat.format(round.startTime),
+                            style: context.textTheme.bodySmall?.copyWith(
+                              color: colors.textTertiary,
+                            ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
-                  ),
-                  _ScoreBadge(round: round),
-                ],
-              ),
-              const SizedBox(height: 12),
-              Row(
-                children: [
-                  if (round.totalStrokes != null) ...[
-                    _StatChip(
-                      icon: Icons.sports_golf,
-                      value: round.totalStrokes.toString(),
-                    ),
-                    const SizedBox(width: 16),
+                    _ScoreBadge(round: round),
                   ],
-                  if (round.totalPutts != null) ...[
-                    _StatChip(
-                      icon: Icons.golf_course,
-                      value: '${round.totalPutts} putts',
-                    ),
-                    const SizedBox(width: 16),
+                ),
+                const SizedBox(height: 12),
+                Row(
+                  children: [
+                    if (round.totalStrokes != null) ...[
+                      _StatChip(
+                        icon: Icons.sports_golf,
+                        value: round.totalStrokes.toString(),
+                      ),
+                      const SizedBox(width: 16),
+                    ],
+                    if (round.totalPutts != null) ...[
+                      _StatChip(
+                        icon: Icons.golf_course,
+                        value: '${round.totalPutts} putts',
+                      ),
+                      const SizedBox(width: 16),
+                    ],
+                    if (round.durationMinutes != null)
+                      _StatChip(
+                        icon: Icons.timer_outlined,
+                        value: _formatDuration(round.durationMinutes!),
+                      ),
                   ],
-                  if (round.durationMinutes != null)
-                    _StatChip(
-                      icon: Icons.timer_outlined,
-                      value: _formatDuration(round.durationMinutes!),
-                    ),
-                ],
-              ),
-            ],
+                ),
+              ],
+            ),
           ),
         ),
       ),
@@ -273,22 +311,27 @@ class _ScoreBadge extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = context.colors;
     // Use stored scoreRelativeToPar for finished rounds (scores array not loaded in list view)
     final relativeToPar = round.scoreRelativeToPar;
     final hasScore = relativeToPar != null || round.totalStrokes != null;
 
+    // Muted colors per design system - not alarming
     Color backgroundColor;
     Color textColor;
 
     if (relativeToPar != null && relativeToPar < 0) {
-      backgroundColor = const Color(0xFF4CAF50).withValues(alpha: 0.15);
-      textColor = const Color(0xFF2E7D32);
+      // Under par - muted green
+      backgroundColor = colors.success.withValues(alpha: 0.15);
+      textColor = colors.success;
     } else if (relativeToPar != null && relativeToPar > 0) {
-      backgroundColor = const Color(0xFFFF9800).withValues(alpha: 0.15);
-      textColor = const Color(0xFFE65100);
+      // Over par - muted amber (contextual, not alert)
+      backgroundColor = colors.warning.withValues(alpha: 0.15);
+      textColor = colors.warning;
     } else {
-      backgroundColor = context.colors.primary.withValues(alpha: 0.15);
-      textColor = context.colors.primary;
+      // Even par or no score - primary accent
+      backgroundColor = colors.primary.withValues(alpha: 0.15);
+      textColor = colors.primary;
     }
 
     String scoreText;
@@ -333,19 +376,21 @@ class _StatChip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = context.colors;
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: [
         Icon(
           icon,
           size: 16,
-          color: context.colors.onSurface.withValues(alpha: 0.5),
+          color: colors.textTertiary,
         ),
         const SizedBox(width: 4),
         Text(
           value,
           style: context.textTheme.bodySmall?.copyWith(
             fontWeight: FontWeight.w500,
+            color: colors.textSecondary,
           ),
         ),
       ],

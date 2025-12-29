@@ -1,6 +1,7 @@
-import 'dart:ui';
-
 import 'package:apparence_kit/core/theme/extensions/theme_extension.dart';
+import 'package:apparence_kit/core/widgets/app_background.dart';
+import 'package:apparence_kit/core/widgets/glass_form_card.dart';
+import 'package:apparence_kit/core/widgets/glass_text_field.dart';
 import 'package:apparence_kit/core/widgets/glow_button.dart';
 import 'package:apparence_kit/i18n/translations.g.dart';
 import 'package:apparence_kit/modules/authentication/providers/models/email.dart';
@@ -38,76 +39,29 @@ class _RecoverPasswordPageState extends ConsumerState<RecoverPasswordPage> {
   @override
   Widget build(BuildContext context) {
     final state = ref.watch(recoverStateProvider);
-    final colors = context.colors;
-    final backgroundColor = colors.background;
 
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
         body: AnnotatedRegion<SystemUiOverlayStyle>(
           value: SystemUiOverlayStyle.light,
-          child: Stack(
-            children: [
-              // Background image
-              Positioned.fill(
-                child: Image.asset(
-                  'assets/images/background-2.jpg',
-                  fit: BoxFit.cover,
-                ),
-              ),
-              // Vignette effect
-              Positioned.fill(
-                child: DecoratedBox(
-                  decoration: BoxDecoration(
-                    gradient: RadialGradient(
-                      radius: 1.0,
-                      colors: [
-                        Colors.transparent,
-                        Colors.transparent,
-                        Colors.black.withValues(alpha: 0.25),
-                        Colors.black.withValues(alpha: 0.45),
-                      ],
-                      stops: const [0.0, 0.45, 0.75, 1.0],
-                    ),
+          child: AppBackground(
+            child: SafeArea(
+              child: Column(
+                children: [
+                  _buildAppBar(context),
+                  Expanded(
+                    child: switch (state) {
+                      RecoverStateData() => _buildEmailForm(context, state),
+                      RecoverStateSending() => _buildLoading(context),
+                      RecoverStateCodeEntry() =>
+                        _buildCodeEntry(context, state),
+                      RecoverStateSuccess() => _buildSuccess(context),
+                    },
                   ),
-                ),
+                ],
               ),
-              // Dark gradient overlay
-              Positioned.fill(
-                child: DecoratedBox(
-                  decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                      begin: Alignment.topCenter,
-                      end: Alignment.bottomCenter,
-                      stops: const [0.0, 0.3, 0.6, 1.0],
-                      colors: [
-                        backgroundColor.withValues(alpha: 0.3),
-                        backgroundColor.withValues(alpha: 0.1),
-                        backgroundColor.withValues(alpha: 0.6),
-                        backgroundColor.withValues(alpha: 0.95),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-              // Content
-              SafeArea(
-                child: Column(
-                  children: [
-                    _buildAppBar(context),
-                    Expanded(
-                      child: switch (state) {
-                        RecoverStateData() => _buildEmailForm(context, state),
-                        RecoverStateSending() => _buildLoading(context),
-                        RecoverStateCodeEntry() =>
-                          _buildCodeEntry(context, state),
-                        RecoverStateSuccess() => _buildSuccess(context),
-                      },
-                    ),
-                  ],
-                ),
-              ),
-            ],
+            ),
           ),
         ),
       ),
@@ -153,7 +107,7 @@ class _RecoverPasswordPageState extends ConsumerState<RecoverPasswordPage> {
         child: ListView(
           children: [
             const SizedBox(height: 32),
-            _GlassFormCard(
+            GlassFormCard(
               child: Column(
                 children: [
                   Icon(
@@ -179,7 +133,7 @@ class _RecoverPasswordPageState extends ConsumerState<RecoverPasswordPage> {
                     textAlign: TextAlign.center,
                   ),
                   const SizedBox(height: 24),
-                  _GlassTextField(
+                  GlassTextField(
                     key: const Key('email_input'),
                     icon: Icons.email_outlined,
                     hintText: tr.email_label,
@@ -247,7 +201,7 @@ class _RecoverPasswordPageState extends ConsumerState<RecoverPasswordPage> {
         child: ListView(
           children: [
             const SizedBox(height: 32),
-            _GlassFormCard(
+            GlassFormCard(
               child: Column(
                 children: [
                   Icon(
@@ -280,7 +234,7 @@ class _RecoverPasswordPageState extends ConsumerState<RecoverPasswordPage> {
                     },
                   ),
                   const SizedBox(height: 20),
-                  _GlassTextField(
+                  GlassTextField(
                     key: const Key('password_input'),
                     icon: Icons.lock_outline,
                     hintText: tr.new_password_label,
@@ -302,7 +256,7 @@ class _RecoverPasswordPageState extends ConsumerState<RecoverPasswordPage> {
                         .setPassword(value),
                   ),
                   const SizedBox(height: 12),
-                  _GlassTextField(
+                  GlassTextField(
                     key: const Key('confirm_password_input'),
                     icon: Icons.lock_outline,
                     hintText: tr.confirm_password_label,
@@ -371,7 +325,7 @@ class _RecoverPasswordPageState extends ConsumerState<RecoverPasswordPage> {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 24.0),
       child: Center(
-        child: _GlassFormCard(
+        child: GlassFormCard(
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
@@ -404,135 +358,6 @@ class _RecoverPasswordPageState extends ConsumerState<RecoverPasswordPage> {
                 onPressed: () => context.go('/signin'),
               ),
             ],
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-/// Glass card container for the form with blur effect
-class _GlassFormCard extends StatelessWidget {
-  final Widget child;
-
-  const _GlassFormCard({required this.child});
-
-  @override
-  Widget build(BuildContext context) {
-    final colors = context.colors;
-
-    return ClipRRect(
-      borderRadius: BorderRadius.circular(16),
-      child: BackdropFilter(
-        filter: ImageFilter.blur(sigmaX: 6, sigmaY: 6),
-        child: Container(
-          decoration: BoxDecoration(
-            // Dark blue tint for contrast
-            color: const Color(0xFF0A1628).withValues(alpha: 0.7),
-            borderRadius: BorderRadius.circular(16),
-            border: Border.all(color: colors.glassBorder),
-          ),
-          child: Stack(
-            children: [
-              // Subtle inset highlight
-              Positioned.fill(
-                child: DecoratedBox(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(16),
-                    gradient: LinearGradient(
-                      begin: Alignment.topLeft,
-                      end: Alignment.bottomRight,
-                      colors: [
-                        Colors.white.withValues(alpha: 0.05),
-                        Colors.transparent,
-                        Colors.transparent,
-                      ],
-                      stops: const [0.0, 0.3, 1.0],
-                    ),
-                  ),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(20),
-                child: child,
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-/// Glass-styled text field with icon
-class _GlassTextField extends StatelessWidget {
-  final IconData icon;
-  final String hintText;
-  final bool obscureText;
-  final TextInputType? keyboardType;
-  final TextInputAction? textInputAction;
-  final List<String>? autofillHints;
-  final TextEditingController? controller;
-  final ValueChanged<String>? onChanged;
-  final FormFieldValidator<String>? validator;
-
-  const _GlassTextField({
-    super.key,
-    required this.icon,
-    required this.hintText,
-    this.obscureText = false,
-    this.keyboardType,
-    this.textInputAction,
-    this.autofillHints,
-    this.controller,
-    this.onChanged,
-    this.validator,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    final colors = context.colors;
-
-    return Container(
-      decoration: BoxDecoration(
-        color: Colors.white.withValues(alpha: 0.1),
-        borderRadius: BorderRadius.circular(12),
-        border: Border.all(
-          color: Colors.white.withValues(alpha: 0.15),
-        ),
-      ),
-      child: TextFormField(
-        controller: controller,
-        obscureText: obscureText,
-        keyboardType: keyboardType,
-        textInputAction: textInputAction,
-        autofillHints: autofillHints,
-        onChanged: onChanged,
-        validator: validator,
-        style: context.textTheme.bodyLarge?.copyWith(
-          color: colors.onBackground,
-        ),
-        decoration: InputDecoration(
-          prefixIcon: Icon(
-            icon,
-            color: colors.textTertiary,
-            size: 20,
-          ),
-          hintText: hintText,
-          hintStyle: context.textTheme.bodyLarge?.copyWith(
-            color: colors.textTertiary,
-          ),
-          filled: false,
-          border: InputBorder.none,
-          enabledBorder: InputBorder.none,
-          focusedBorder: InputBorder.none,
-          contentPadding: const EdgeInsets.symmetric(
-            horizontal: 16,
-            vertical: 16,
-          ),
-          errorStyle: TextStyle(
-            color: colors.error,
-            fontSize: 12,
           ),
         ),
       ),

@@ -1,5 +1,6 @@
 import 'package:apparence_kit/core/data/api/analytics_api.dart';
 import 'package:apparence_kit/core/theme/extensions/theme_extension.dart';
+import 'package:apparence_kit/core/widgets/glow_button.dart';
 import 'package:apparence_kit/i18n/translations.g.dart';
 import 'package:apparence_kit/modules/onboarding/ui/widgets/onboarding_background.dart';
 import 'package:apparence_kit/modules/onboarding/ui/widgets/onboarding_progress.dart';
@@ -41,152 +42,208 @@ class _OnboardingWelcomeStepState extends ConsumerState<OnboardingWelcomeStep> {
     final tr = Translations.of(context).onboarding.welcome;
     final colors = context.colors;
 
-    return OnboardingBackground(
-      child: SafeArea(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            const OnboardingProgress(value: 0.5),
-            const SizedBox(height: 32),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 32),
-              child: Animate(
-                effects: const [
-                  FadeEffect(
-                    delay: Duration(milliseconds: 200),
-                    duration: Duration(milliseconds: 200),
-                  ),
-                  MoveEffect(
-                    delay: Duration(milliseconds: 200),
-                    duration: Duration(milliseconds: 450),
-                    begin: Offset(0, 50),
-                    end: Offset.zero,
-                  ),
-                ],
-                child: Text(
-                  tr.title,
-                  textAlign: TextAlign.center,
-                  style: context.textTheme.headlineMedium?.copyWith(
-                    fontWeight: FontWeight.w600,
-                    color: colors.onBackground,
-                  ),
-                ),
-              ),
-            ),
-            const SizedBox(height: 16),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 32),
-              child: Animate(
-                effects: const [
-                  FadeEffect(
-                    delay: Duration(milliseconds: 300),
-                    duration: Duration(milliseconds: 200),
-                  ),
-                  MoveEffect(
-                    delay: Duration(milliseconds: 300),
-                    duration: Duration(milliseconds: 450),
-                    begin: Offset(0, 50),
-                    end: Offset.zero,
-                  ),
-                ],
-                child: Text(
-                  tr.subtitle,
-                  textAlign: TextAlign.center,
-                  style: context.textTheme.bodyLarge?.copyWith(
-                    color: colors.textSecondary,
-                    height: 1.5,
-                  ),
-                ),
-              ),
-            ),
-            const SizedBox(height: 16),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 32),
-              child: Animate(
-                effects: const [
-                  FadeEffect(
-                    delay: Duration(milliseconds: 400),
-                    duration: Duration(milliseconds: 200),
-                  ),
-                  MoveEffect(
-                    delay: Duration(milliseconds: 400),
-                    duration: Duration(milliseconds: 450),
-                    begin: Offset(0, 50),
-                    end: Offset.zero,
-                  ),
-                ],
-                child: Text(
-                  tr.chatgpt_info,
-                  textAlign: TextAlign.center,
-                  style: context.textTheme.bodyMedium?.copyWith(
-                    color: colors.primary,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-              ),
-            ),
-            const SizedBox(height: 32),
-            Expanded(
-              child: Animate(
-                effects: const [
-                  FadeEffect(
-                    delay: Duration(milliseconds: 100),
-                    duration: Duration(milliseconds: 200),
-                  ),
-                  MoveEffect(
-                    delay: Duration(milliseconds: 100),
-                    duration: Duration(milliseconds: 450),
-                    begin: Offset(0, 50),
-                    end: Offset.zero,
-                  ),
-                ],
-                child: Image.asset(
-                  'assets/images/onboarding/ilustracion-golfista-caminando.png',
-                  fit: BoxFit.contain,
-                ),
-              ),
-            ),
-            const SizedBox(height: 32),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 32),
-              child: Animate(
-                effects: const [
-                  FadeEffect(
-                    delay: Duration(milliseconds: 450),
-                    duration: Duration(milliseconds: 200),
-                  ),
-                ],
-                child: Text(
-                  tr.setup_time,
-                  textAlign: TextAlign.center,
-                  style: context.textTheme.bodySmall?.copyWith(
-                    color: colors.textTertiary,
-                  ),
-                ),
-              ),
-            ),
-            const SizedBox(height: 12),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 32),
-              child: Animate(
-                effects: const [
-                  FadeEffect(
-                    delay: Duration(milliseconds: 500),
-                    duration: Duration(milliseconds: 200),
-                  ),
-                ],
-                child: _OnboardingCTAButton(
-                  onPressed: () {
-                    Navigator.of(context).pushReplacementNamed(widget.nextRoute);
-                  },
-                  text: tr.action,
-                ),
-              ),
-            ),
-            const SizedBox(height: 16),
-          ],
+    final backgroundColor = colors.background;
+
+    return Stack(
+      fit: StackFit.expand,
+      children: [
+        // Full-screen starry background
+        Positioned.fill(
+          child: Image.asset(
+            'assets/images/onboarding/bg1.jpg',
+            fit: BoxFit.cover,
+          ),
         ),
-      ),
+        // Blue stellar tint overlay
+        Positioned.fill(
+          child: DecoratedBox(
+            decoration: BoxDecoration(
+              color: const Color(0xFF0A1628).withValues(alpha: 0.4),
+            ),
+          ),
+        ),
+        // Vignette effect (same as login)
+        Positioned.fill(
+          child: DecoratedBox(
+            decoration: BoxDecoration(
+              gradient: RadialGradient(
+                radius: 1.0,
+                colors: [
+                  Colors.transparent,
+                  Colors.transparent,
+                  Colors.black.withValues(alpha: 0.25),
+                  Colors.black.withValues(alpha: 0.45),
+                ],
+                stops: const [0.0, 0.45, 0.75, 1.0],
+              ),
+            ),
+          ),
+        ),
+        // Dark gradient overlay from bottom (same as login)
+        Positioned.fill(
+          child: DecoratedBox(
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+                stops: const [0.0, 0.3, 0.6, 1.0],
+                colors: [
+                  backgroundColor.withValues(alpha: 0.3),
+                  backgroundColor.withValues(alpha: 0.1),
+                  backgroundColor.withValues(alpha: 0.6),
+                  backgroundColor.withValues(alpha: 0.95),
+                ],
+              ),
+            ),
+          ),
+        ),
+        // Content
+        SafeArea(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 32),
+            child: Column(
+              children: [
+                const Spacer(flex: 2),
+                // App name - prominent with glow
+                Animate(
+                  effects: const [
+                    FadeEffect(
+                      delay: Duration(milliseconds: 200),
+                      duration: Duration(milliseconds: 400),
+                    ),
+                  ],
+                  child: Text(
+                    tr.app_name,
+                    textAlign: TextAlign.center,
+                    style: context.textTheme.displayLarge?.copyWith(
+                      fontWeight: FontWeight.w700,
+                      color: colors.onBackground,
+                      letterSpacing: 2.0,
+                      fontSize: 42,
+                      shadows: [
+                        Shadow(
+                          color: colors.primary.withValues(alpha: 0.5),
+                          blurRadius: 20,
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 8),
+                // Tagline
+                Animate(
+                  effects: const [
+                    FadeEffect(
+                      delay: Duration(milliseconds: 300),
+                      duration: Duration(milliseconds: 400),
+                    ),
+                  ],
+                  child: Text(
+                    tr.tagline,
+                    textAlign: TextAlign.center,
+                    style: context.textTheme.bodyMedium?.copyWith(
+                      color: colors.textTertiary,
+                    ),
+                  ),
+                ),
+                const Spacer(flex: 2),
+                // Main headline
+                Animate(
+                  effects: const [
+                    FadeEffect(
+                      delay: Duration(milliseconds: 400),
+                      duration: Duration(milliseconds: 400),
+                    ),
+                    MoveEffect(
+                      delay: Duration(milliseconds: 400),
+                      duration: Duration(milliseconds: 500),
+                      begin: Offset(0, 30),
+                      end: Offset.zero,
+                    ),
+                  ],
+                  child: Text(
+                    tr.headline,
+                    textAlign: TextAlign.center,
+                    style: context.textTheme.headlineMedium?.copyWith(
+                      fontWeight: FontWeight.w700,
+                      color: colors.onBackground,
+                      height: 1.3,
+                    ),
+                  ),
+                ),
+                const Spacer(flex: 3),
+                // Features row
+                Animate(
+                  effects: const [
+                    FadeEffect(
+                      delay: Duration(milliseconds: 600),
+                      duration: Duration(milliseconds: 400),
+                    ),
+                  ],
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        tr.feature_1,
+                        style: context.textTheme.bodySmall?.copyWith(
+                          color: colors.textTertiary,
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 8),
+                        child: Text(
+                          '·',
+                          style: context.textTheme.bodySmall?.copyWith(
+                            color: colors.textTertiary,
+                          ),
+                        ),
+                      ),
+                      Text(
+                        tr.feature_2,
+                        style: context.textTheme.bodySmall?.copyWith(
+                          color: colors.textTertiary,
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 8),
+                        child: Text(
+                          '·',
+                          style: context.textTheme.bodySmall?.copyWith(
+                            color: colors.textTertiary,
+                          ),
+                        ),
+                      ),
+                      Text(
+                        tr.feature_3,
+                        style: context.textTheme.bodySmall?.copyWith(
+                          color: colors.textTertiary,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(height: 24),
+                // CTA Button with glow (same as login)
+                Animate(
+                  effects: const [
+                    FadeEffect(
+                      delay: Duration(milliseconds: 700),
+                      duration: Duration(milliseconds: 400),
+                    ),
+                  ],
+                  child: GlowButton(
+                    text: tr.action,
+                    onPressed: () {
+                      Navigator.of(context).pushReplacementNamed(widget.nextRoute);
+                    },
+                  ),
+                ),
+                const SizedBox(height: 48),
+              ],
+            ),
+          ),
+        ),
+      ],
     );
   }
 }
@@ -230,140 +287,261 @@ class _OnboardingAppPurposeStepState
     final tr = Translations.of(context).onboarding.app_purpose;
     final colors = context.colors;
 
-    return OnboardingBackground(
-      child: SafeArea(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            const OnboardingProgress(value: 1.0),
-            const SizedBox(height: 32),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 32),
-              child: Animate(
-                effects: const [
-                  FadeEffect(
-                    delay: Duration(milliseconds: 200),
-                    duration: Duration(milliseconds: 200),
-                  ),
-                  MoveEffect(
-                    delay: Duration(milliseconds: 200),
-                    duration: Duration(milliseconds: 450),
-                    begin: Offset(0, 50),
-                    end: Offset.zero,
-                  ),
+    final backgroundColor = colors.background;
+
+    return Stack(
+      fit: StackFit.expand,
+      children: [
+        // Full-screen milky way background
+        Positioned.fill(
+          child: Image.asset(
+            'assets/images/onboarding/bg2.jpg',
+            fit: BoxFit.cover,
+          ),
+        ),
+        // Blue stellar tint overlay
+        Positioned.fill(
+          child: DecoratedBox(
+            decoration: BoxDecoration(
+              color: const Color(0xFF0A1628).withValues(alpha: 0.4),
+            ),
+          ),
+        ),
+        // Vignette effect (same as login)
+        Positioned.fill(
+          child: DecoratedBox(
+            decoration: BoxDecoration(
+              gradient: RadialGradient(
+                radius: 1.0,
+                colors: [
+                  Colors.transparent,
+                  Colors.transparent,
+                  Colors.black.withValues(alpha: 0.25),
+                  Colors.black.withValues(alpha: 0.45),
                 ],
-                child: Text(
-                  tr.title,
-                  textAlign: TextAlign.center,
-                  style: context.textTheme.headlineMedium?.copyWith(
+                stops: const [0.0, 0.45, 0.75, 1.0],
+              ),
+            ),
+          ),
+        ),
+        // Dark gradient overlay from bottom (same as login)
+        Positioned.fill(
+          child: DecoratedBox(
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+                stops: const [0.0, 0.3, 0.6, 1.0],
+                colors: [
+                  backgroundColor.withValues(alpha: 0.3),
+                  backgroundColor.withValues(alpha: 0.1),
+                  backgroundColor.withValues(alpha: 0.6),
+                  backgroundColor.withValues(alpha: 0.95),
+                ],
+              ),
+            ),
+          ),
+        ),
+        // Content
+        SafeArea(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 24),
+            child: Column(
+              children: [
+                const SizedBox(height: 48),
+                // Headline
+                Animate(
+                  effects: const [
+                    FadeEffect(
+                      delay: Duration(milliseconds: 200),
+                      duration: Duration(milliseconds: 400),
+                    ),
+                  ],
+                  child: Text(
+                    tr.headline,
+                    textAlign: TextAlign.center,
+                    style: context.textTheme.displaySmall?.copyWith(
+                      fontWeight: FontWeight.w700,
+                      color: colors.onBackground,
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 8),
+                // Subtitle
+                Animate(
+                  effects: const [
+                    FadeEffect(
+                      delay: Duration(milliseconds: 300),
+                      duration: Duration(milliseconds: 400),
+                    ),
+                  ],
+                  child: Text(
+                    tr.subtitle,
+                    textAlign: TextAlign.center,
+                    style: context.textTheme.bodyLarge?.copyWith(
+                      color: colors.textSecondary,
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 48),
+                // Feature cards
+                Animate(
+                  effects: const [
+                    FadeEffect(
+                      delay: Duration(milliseconds: 400),
+                      duration: Duration(milliseconds: 400),
+                    ),
+                    MoveEffect(
+                      delay: Duration(milliseconds: 400),
+                      duration: Duration(milliseconds: 500),
+                      begin: Offset(0, 30),
+                      end: Offset.zero,
+                    ),
+                  ],
+                  child: _FeatureCard(
+                    iconPath: 'assets/images/onboarding/ic_gps.png',
+                    title: tr.feature_1_title,
+                    description: tr.feature_1_desc,
+                  ),
+                ),
+                const SizedBox(height: 12),
+                Animate(
+                  effects: const [
+                    FadeEffect(
+                      delay: Duration(milliseconds: 500),
+                      duration: Duration(milliseconds: 400),
+                    ),
+                    MoveEffect(
+                      delay: Duration(milliseconds: 500),
+                      duration: Duration(milliseconds: 500),
+                      begin: Offset(0, 30),
+                      end: Offset.zero,
+                    ),
+                  ],
+                  child: _FeatureCard(
+                    iconPath: 'assets/images/onboarding/ic_mic.png',
+                    title: tr.feature_2_title,
+                    description: tr.feature_2_desc,
+                  ),
+                ),
+                const SizedBox(height: 12),
+                Animate(
+                  effects: const [
+                    FadeEffect(
+                      delay: Duration(milliseconds: 600),
+                      duration: Duration(milliseconds: 400),
+                    ),
+                    MoveEffect(
+                      delay: Duration(milliseconds: 600),
+                      duration: Duration(milliseconds: 500),
+                      begin: Offset(0, 30),
+                      end: Offset.zero,
+                    ),
+                  ],
+                  child: _FeatureCard(
+                    iconPath: 'assets/images/onboarding/ic_sync.png',
+                    title: tr.feature_3_title,
+                    description: tr.feature_3_desc,
+                  ),
+                ),
+                const Spacer(),
+                // CTA Button with glow (same as login)
+                Animate(
+                  effects: const [
+                    FadeEffect(
+                      delay: Duration(milliseconds: 700),
+                      duration: Duration(milliseconds: 400),
+                    ),
+                  ],
+                  child: GlowButton(
+                    text: tr.action,
+                    onPressed: _completeOnboarding,
+                  ),
+                ),
+                const SizedBox(height: 48),
+              ],
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+/// Glass feature card for onboarding
+class _FeatureCard extends StatelessWidget {
+  final String iconPath;
+  final String title;
+  final String description;
+
+  const _FeatureCard({
+    required this.iconPath,
+    required this.title,
+    required this.description,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final colors = context.colors;
+
+    return Container(
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        // Glass background
+        color: colors.glassBg,
+        borderRadius: BorderRadius.circular(16),
+        border: Border.all(
+          color: colors.glassBorder,
+        ),
+      ),
+      child: Row(
+        children: [
+          // Icon with deep blue glow
+          Container(
+            width: 48,
+            height: 48,
+            decoration: BoxDecoration(
+              boxShadow: [
+                BoxShadow(
+                  color: const Color(0xFF0A1628).withValues(alpha: 0.8),
+                  blurRadius: 16,
+                  spreadRadius: 2,
+                ),
+                BoxShadow(
+                  color: colors.primary.withValues(alpha: 0.3),
+                  blurRadius: 12,
+                ),
+              ],
+            ),
+            child: Image.asset(
+              iconPath,
+              fit: BoxFit.contain,
+            ),
+          ),
+          const SizedBox(width: 16),
+          // Text content
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  title,
+                  style: context.textTheme.titleMedium?.copyWith(
                     fontWeight: FontWeight.w600,
                     color: colors.onBackground,
                   ),
                 ),
-              ),
-            ),
-            const SizedBox(height: 40),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 32),
-              child: Animate(
-                effects: const [
-                  FadeEffect(
-                    delay: Duration(milliseconds: 300),
-                    duration: Duration(milliseconds: 200),
-                  ),
-                  MoveEffect(
-                    delay: Duration(milliseconds: 300),
-                    duration: Duration(milliseconds: 450),
-                    begin: Offset(0, 50),
-                    end: Offset.zero,
-                  ),
-                ],
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    _BulletPoint(icon: Icons.location_on, text: tr.bullet_1),
-                    const SizedBox(height: 20),
-                    _BulletPoint(icon: Icons.straighten, text: tr.bullet_2),
-                    const SizedBox(height: 20),
-                    _BulletPoint(icon: Icons.psychology, text: tr.bullet_3),
-                  ],
-                ),
-              ),
-            ),
-            const Spacer(),
-            // Key messages card with Level 3 Showcase Glass
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 32),
-              child: Animate(
-                effects: const [
-                  FadeEffect(
-                    delay: Duration(milliseconds: 400),
-                    duration: Duration(milliseconds: 200),
-                  ),
-                ],
-                child: Container(
-                  padding: const EdgeInsets.all(20),
-                  decoration: BoxDecoration(
-                    color: const Color(0xFF141A24).withValues(alpha: 0.90),
-                    borderRadius: BorderRadius.circular(16),
-                    border: Border.all(
-                      color: Colors.white.withValues(alpha: 0.08),
-                    ),
-                  ),
-                  child: Stack(
-                    children: [
-                      // Inset shadow overlay for glass depth
-                      Positioned.fill(
-                        child: DecoratedBox(
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(16),
-                            gradient: LinearGradient(
-                              begin: Alignment.topLeft,
-                              end: Alignment.bottomRight,
-                              colors: [
-                                Colors.black.withValues(alpha: 0.2),
-                                Colors.black.withValues(alpha: 0.05),
-                                Colors.transparent,
-                              ],
-                              stops: const [0.0, 0.3, 0.6],
-                            ),
-                          ),
-                        ),
-                      ),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          _KeyMessageItem(text: tr.key_message_1),
-                          const SizedBox(height: 12),
-                          _KeyMessageItem(text: tr.key_message_2, isHighlighted: true),
-                          const SizedBox(height: 12),
-                          _KeyMessageItem(text: tr.key_message_3),
-                        ],
-                      ),
-                    ],
+                const SizedBox(height: 4),
+                Text(
+                  description,
+                  style: context.textTheme.bodySmall?.copyWith(
+                    color: colors.textTertiary,
                   ),
                 ),
-              ),
+              ],
             ),
-            const Spacer(),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 32),
-              child: Animate(
-                effects: const [
-                  FadeEffect(
-                    delay: Duration(milliseconds: 500),
-                    duration: Duration(milliseconds: 200),
-                  ),
-                ],
-                child: _OnboardingCTAButton(
-                  onPressed: _completeOnboarding,
-                  text: tr.action,
-                ),
-              ),
-            ),
-            const SizedBox(height: 16),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
@@ -444,6 +622,7 @@ class _OnboardingLocationPermissionStepState
     final colors = context.colors;
 
     return OnboardingBackground(
+      bgImagePath: 'assets/images/onboarding/bg2.jpg',
       child: SafeArea(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -560,9 +739,9 @@ class _OnboardingLocationPermissionStepState
                     duration: Duration(milliseconds: 200),
                   ),
                 ],
-                child: _OnboardingCTAButton(
-                  onPressed: () => _requestPermission(context),
+                child: GlowButton(
                   text: tr.action,
+                  onPressed: () => _requestPermission(context),
                 ),
               ),
             ),
@@ -630,105 +809,6 @@ class _BulletPoint extends StatelessWidget {
           ),
         ),
       ],
-    );
-  }
-}
-
-/// Key message item for onboarding glass card.
-class _KeyMessageItem extends StatelessWidget {
-  final String text;
-  final bool isHighlighted;
-
-  const _KeyMessageItem({
-    required this.text,
-    this.isHighlighted = false,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    final colors = context.colors;
-
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Container(
-          width: 6,
-          height: 6,
-          margin: const EdgeInsets.only(top: 7),
-          decoration: BoxDecoration(
-            color: colors.primary,
-            shape: BoxShape.circle,
-            boxShadow: [
-              BoxShadow(
-                color: colors.primary.withValues(alpha: 0.4),
-                blurRadius: 4,
-              ),
-            ],
-          ),
-        ),
-        const SizedBox(width: 12),
-        Expanded(
-          child: Text(
-            text,
-            style: context.textTheme.bodyMedium?.copyWith(
-              fontWeight: isHighlighted ? FontWeight.w600 : FontWeight.normal,
-              color: isHighlighted ? colors.primary : colors.textSecondary,
-              height: 1.4,
-            ),
-          ),
-        ),
-      ],
-    );
-  }
-}
-
-/// Primary CTA button following design system.
-/// Uses gradient background with glow effect.
-class _OnboardingCTAButton extends StatelessWidget {
-  final VoidCallback onPressed;
-  final String text;
-
-  const _OnboardingCTAButton({
-    required this.onPressed,
-    required this.text,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    final colors = context.colors;
-
-    return GestureDetector(
-      onTap: onPressed,
-      child: Container(
-        height: 52,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(12),
-          gradient: LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            colors: [
-              colors.primary.withValues(alpha: 0.9),
-              colors.primary,
-            ],
-          ),
-          boxShadow: [
-            BoxShadow(
-              color: colors.primary.withValues(alpha: 0.3),
-              blurRadius: 12,
-              offset: const Offset(0, 4),
-            ),
-          ],
-        ),
-        child: Center(
-          child: Text(
-            text,
-            style: context.textTheme.titleMedium?.copyWith(
-              color: colors.onPrimary,
-              fontWeight: FontWeight.w600,
-            ),
-          ),
-        ),
-      ),
     );
   }
 }

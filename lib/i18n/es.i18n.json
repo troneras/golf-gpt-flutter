@@ -23,21 +23,24 @@
     },
     "onboarding": {
         "welcome": {
-            "title": "Tu caddie por voz",
-            "subtitle": "Juega sin tarjeta y sin apuntar nada. Solo habla.",
-            "chatgpt_info": "Te llevamos a ChatGPT para hablar con tu caddie.",
-            "setup_time": "Configuralo en 30 segundos.",
-            "action": "Continuar"
+            "app_name": "TalkCaddy",
+            "tagline": "Tu caddie de IA personal",
+            "headline": "Golf sin manos.\nSolo voz.",
+            "feature_1": "Sin tarjetas",
+            "feature_2": "Sin escribir",
+            "feature_3": "Sin distracciones",
+            "action": "Empezar"
         },
         "app_purpose": {
-            "title": "Para que sirve esta app?",
-            "bullet_1": "Permite a TalkCaddy seguirte en el campo",
-            "bullet_2": "Calcula distancias automaticamente",
-            "bullet_3": "Sincroniza tu ronda y tus golpes",
-            "key_message_1": "Durante la ronda no tienes que tocar nada.",
-            "key_message_2": "Solo habla con tu caddie en ChatGPT.",
-            "key_message_3": "Esta app guarda la ronda, la ubicacion y tus estadisticas.",
-            "action": "Entendido"
+            "headline": "Juega.",
+            "subtitle": "Nosotros nos encargamos del resto.",
+            "feature_1_title": "Seguimos tu GPS",
+            "feature_1_desc": "Para saber donde estas y que hoyo juegas",
+            "feature_2_title": "Hablas con tu caddie",
+            "feature_2_desc": "Pregunta distancias o di tus golpes",
+            "feature_3_title": "Todo se guarda solo",
+            "feature_3_desc": "Tu juegas. Nosotros lo registramos",
+            "action": "Continuar"
         },
         "location_permission": {
             "title": "Necesitamos tu ubicacion",

@@ -473,11 +473,13 @@ class _TranslationsOnboardingWelcomeEn extends TranslationsOnboardingWelcomeEs {
 	final TranslationsEn _root; // ignore: unused_field
 
 	// Translations
-	@override String get title => 'Your voice caddie';
-	@override String get subtitle => 'Play without a scorecard and without writing anything. Just talk.';
-	@override String get chatgpt_info => 'We\'ll take you to ChatGPT to talk to your caddie.';
-	@override String get setup_time => 'Set it up in 30 seconds.';
-	@override String get action => 'Continue';
+	@override String get app_name => 'TalkCaddy';
+	@override String get tagline => 'Your personal AI caddie';
+	@override String get headline => 'Hands-free golf.\nVoice only.';
+	@override String get feature_1 => 'No scorecards';
+	@override String get feature_2 => 'No typing';
+	@override String get feature_3 => 'No distractions';
+	@override String get action => 'Get Started';
 }
 
 // Path: onboarding.app_purpose
@@ -487,14 +489,15 @@ class _TranslationsOnboardingAppPurposeEn extends TranslationsOnboardingAppPurpo
 	final TranslationsEn _root; // ignore: unused_field
 
 	// Translations
-	@override String get title => 'What is this app for?';
-	@override String get bullet_1 => 'Allows TalkCaddy to follow you on the course';
-	@override String get bullet_2 => 'Calculates distances automatically';
-	@override String get bullet_3 => 'Syncs your round and your shots';
-	@override String get key_message_1 => 'You don\'t need to touch anything during the round.';
-	@override String get key_message_2 => 'Just talk to your caddie in ChatGPT.';
-	@override String get key_message_3 => 'This app saves your round, location, and stats.';
-	@override String get action => 'Got it';
+	@override String get headline => 'Play.';
+	@override String get subtitle => 'We take care of the rest.';
+	@override String get feature_1_title => 'We track your GPS';
+	@override String get feature_1_desc => 'To know where you are and which hole you\'re playing';
+	@override String get feature_2_title => 'Talk to your caddie';
+	@override String get feature_2_desc => 'Ask for distances or log your shots';
+	@override String get feature_3_title => 'Everything saves automatically';
+	@override String get feature_3_desc => 'You play. We record it';
+	@override String get action => 'Continue';
 }
 
 // Path: onboarding.location_permission
@@ -871,19 +874,22 @@ extension on TranslationsEn {
 			'rate_popup.description' => 'It\'s fast and very helpful! Thanks!',
 			'rate_popup.cancel_button' => 'Maybe later',
 			'rate_popup.rate_button' => 'Yes, with pleasure!',
-			'onboarding.welcome.title' => 'Your voice caddie',
-			'onboarding.welcome.subtitle' => 'Play without a scorecard and without writing anything. Just talk.',
-			'onboarding.welcome.chatgpt_info' => 'We\'ll take you to ChatGPT to talk to your caddie.',
-			'onboarding.welcome.setup_time' => 'Set it up in 30 seconds.',
-			'onboarding.welcome.action' => 'Continue',
-			'onboarding.app_purpose.title' => 'What is this app for?',
-			'onboarding.app_purpose.bullet_1' => 'Allows TalkCaddy to follow you on the course',
-			'onboarding.app_purpose.bullet_2' => 'Calculates distances automatically',
-			'onboarding.app_purpose.bullet_3' => 'Syncs your round and your shots',
-			'onboarding.app_purpose.key_message_1' => 'You don\'t need to touch anything during the round.',
-			'onboarding.app_purpose.key_message_2' => 'Just talk to your caddie in ChatGPT.',
-			'onboarding.app_purpose.key_message_3' => 'This app saves your round, location, and stats.',
-			'onboarding.app_purpose.action' => 'Got it',
+			'onboarding.welcome.app_name' => 'TalkCaddy',
+			'onboarding.welcome.tagline' => 'Your personal AI caddie',
+			'onboarding.welcome.headline' => 'Hands-free golf.\nVoice only.',
+			'onboarding.welcome.feature_1' => 'No scorecards',
+			'onboarding.welcome.feature_2' => 'No typing',
+			'onboarding.welcome.feature_3' => 'No distractions',
+			'onboarding.welcome.action' => 'Get Started',
+			'onboarding.app_purpose.headline' => 'Play.',
+			'onboarding.app_purpose.subtitle' => 'We take care of the rest.',
+			'onboarding.app_purpose.feature_1_title' => 'We track your GPS',
+			'onboarding.app_purpose.feature_1_desc' => 'To know where you are and which hole you\'re playing',
+			'onboarding.app_purpose.feature_2_title' => 'Talk to your caddie',
+			'onboarding.app_purpose.feature_2_desc' => 'Ask for distances or log your shots',
+			'onboarding.app_purpose.feature_3_title' => 'Everything saves automatically',
+			'onboarding.app_purpose.feature_3_desc' => 'You play. We record it',
+			'onboarding.app_purpose.action' => 'Continue',
 			'onboarding.location_permission.title' => 'We need your location',
 			'onboarding.location_permission.description' => 'TalkCaddy uses GPS to:',
 			'onboarding.location_permission.bullet_1' => 'Detect the hole',

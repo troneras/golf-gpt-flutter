@@ -1,7 +1,8 @@
-import 'dart:ui';
-
 import 'package:apparence_kit/core/states/user_state_notifier.dart';
 import 'package:apparence_kit/core/theme/extensions/theme_extension.dart';
+import 'package:apparence_kit/core/widgets/app_background.dart';
+import 'package:apparence_kit/core/widgets/glass_form_card.dart';
+import 'package:apparence_kit/core/widgets/glass_text_field.dart';
 import 'package:apparence_kit/core/widgets/glow_button.dart';
 import 'package:apparence_kit/core/widgets/toast.dart';
 import 'package:apparence_kit/i18n/translations.g.dart';
@@ -30,7 +31,6 @@ class SigninPage extends ConsumerWidget {
     final state = ref.watch(signinStateProvider);
     final tr = Translations.of(context).auth.signin;
     final colors = context.colors;
-    final backgroundColor = colors.background;
 
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
@@ -38,59 +38,15 @@ class SigninPage extends ConsumerWidget {
         canPop: canDismiss,
         child: Scaffold(
           resizeToAvoidBottomInset: true,
-          body: Stack(
-            children: [
-              // Background image - golf course
-              Positioned.fill(
-                child: Image.asset(
-                  'assets/images/background-2.jpg',
-                  fit: BoxFit.cover,
-                ),
-              ),
-              // Vignette effect
-              Positioned.fill(
-                child: DecoratedBox(
-                  decoration: BoxDecoration(
-                    gradient: RadialGradient(
-                      radius: 1.0,
-                      colors: [
-                        Colors.transparent,
-                        Colors.transparent,
-                        Colors.black.withValues(alpha: 0.25),
-                        Colors.black.withValues(alpha: 0.45),
-                      ],
-                      stops: const [0.0, 0.45, 0.75, 1.0],
-                    ),
-                  ),
-                ),
-              ),
-              // Dark gradient overlay from bottom
-              Positioned.fill(
-                child: DecoratedBox(
-                  decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                      begin: Alignment.topCenter,
-                      end: Alignment.bottomCenter,
-                      stops: const [0.0, 0.3, 0.6, 1.0],
-                      colors: [
-                        backgroundColor.withValues(alpha: 0.3),
-                        backgroundColor.withValues(alpha: 0.1),
-                        backgroundColor.withValues(alpha: 0.6),
-                        backgroundColor.withValues(alpha: 0.95),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-              // Main content
-              SafeArea(
-                child: AutofillGroup(
-                  child: Form(
-                    autovalidateMode: AutovalidateMode.disabled,
-                    key: _formKey,
-                    child: ListView(
-                      padding: const EdgeInsets.symmetric(horizontal: 24),
-                      children: [
+          body: AppBackground(
+            child: SafeArea(
+              child: AutofillGroup(
+                child: Form(
+                  autovalidateMode: AutovalidateMode.disabled,
+                  key: _formKey,
+                  child: ListView(
+                    padding: const EdgeInsets.symmetric(horizontal: 24),
+                    children: [
                         const SizedBox(height: 48),
                         // TalkCaddy title
                         Text(
@@ -112,11 +68,11 @@ class SigninPage extends ConsumerWidget {
                         ),
                         const SizedBox(height: 48),
                         // Glass form card
-                        _GlassFormCard(
+                        GlassFormCard(
                           child: Column(
                             children: [
                               // Email field
-                              _GlassTextField(
+                              GlassTextField(
                                 key: const Key('email_input'),
                                 icon: Icons.email_outlined,
                                 hintText: tr.email_hint,
@@ -140,7 +96,7 @@ class SigninPage extends ConsumerWidget {
                               ),
                               const SizedBox(height: 12),
                               // Password field
-                              _GlassTextField(
+                              GlassTextField(
                                 key: const Key('password_input'),
                                 icon: Icons.lock_outline,
                                 hintText: tr.password_hint,
@@ -216,13 +172,12 @@ class SigninPage extends ConsumerWidget {
                             ),
                           ),
                         ),
-                        const SizedBox(height: 32),
-                      ],
-                    ),
+                      const SizedBox(height: 32),
+                    ],
                   ),
                 ),
               ),
-            ],
+            ),
           ),
         ),
       ),
@@ -251,133 +206,6 @@ class SigninPage extends ConsumerWidget {
         context: context,
         title: tr.error_title,
         text: tr.error_message,
-      ),
-    );
-  }
-}
-
-/// Glass card container for the form with blur effect
-class _GlassFormCard extends StatelessWidget {
-  final Widget child;
-
-  const _GlassFormCard({required this.child});
-
-  @override
-  Widget build(BuildContext context) {
-    final colors = context.colors;
-
-    return ClipRRect(
-      borderRadius: BorderRadius.circular(16),
-      child: BackdropFilter(
-        filter: ImageFilter.blur(sigmaX: 6, sigmaY: 6),
-        child: Container(
-          decoration: BoxDecoration(
-            // Dark blue tint for contrast
-            color: const Color(0xFF0A1628).withValues(alpha: 0.7),
-            borderRadius: BorderRadius.circular(16),
-            border: Border.all(color: colors.glassBorder),
-          ),
-          child: Stack(
-            children: [
-              // Subtle inset highlight
-              Positioned.fill(
-                child: DecoratedBox(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(16),
-                    gradient: LinearGradient(
-                      begin: Alignment.topLeft,
-                      end: Alignment.bottomRight,
-                      colors: [
-                        Colors.white.withValues(alpha: 0.05),
-                        Colors.transparent,
-                        Colors.transparent,
-                      ],
-                      stops: const [0.0, 0.3, 1.0],
-                    ),
-                  ),
-                ),
-              ),
-              // Content
-              Padding(
-                padding: const EdgeInsets.all(20),
-                child: child,
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-/// Glass-styled text field with icon
-class _GlassTextField extends StatelessWidget {
-  final IconData icon;
-  final String hintText;
-  final bool obscureText;
-  final TextInputType? keyboardType;
-  final TextInputAction? textInputAction;
-  final List<String>? autofillHints;
-  final ValueChanged<String>? onChanged;
-  final FormFieldValidator<String>? validator;
-
-  const _GlassTextField({
-    super.key,
-    required this.icon,
-    required this.hintText,
-    this.obscureText = false,
-    this.keyboardType,
-    this.textInputAction,
-    this.autofillHints,
-    this.onChanged,
-    this.validator,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    final colors = context.colors;
-
-    return Container(
-      decoration: BoxDecoration(
-        color: Colors.white.withValues(alpha: 0.1),
-        borderRadius: BorderRadius.circular(12),
-        border: Border.all(
-          color: Colors.white.withValues(alpha: 0.15),
-        ),
-      ),
-      child: TextFormField(
-        obscureText: obscureText,
-        keyboardType: keyboardType,
-        textInputAction: textInputAction,
-        autofillHints: autofillHints,
-        onChanged: onChanged,
-        validator: validator,
-        style: context.textTheme.bodyLarge?.copyWith(
-          color: colors.onBackground,
-        ),
-        decoration: InputDecoration(
-          prefixIcon: Icon(
-            icon,
-            color: colors.textTertiary,
-            size: 20,
-          ),
-          hintText: hintText,
-          hintStyle: context.textTheme.bodyLarge?.copyWith(
-            color: colors.textTertiary,
-          ),
-          filled: false,
-          border: InputBorder.none,
-          enabledBorder: InputBorder.none,
-          focusedBorder: InputBorder.none,
-          contentPadding: const EdgeInsets.symmetric(
-            horizontal: 16,
-            vertical: 16,
-          ),
-          errorStyle: TextStyle(
-            color: colors.error,
-            fontSize: 12,
-          ),
-        ),
       ),
     );
   }

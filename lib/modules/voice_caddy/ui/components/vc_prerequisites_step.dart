@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:apparence_kit/core/data/api/analytics_api.dart';
 import 'package:apparence_kit/core/theme/extensions/theme_extension.dart';
+import 'package:apparence_kit/core/widgets/chatgpt_icon.dart';
 import 'package:apparence_kit/i18n/translations.g.dart';
 import 'package:apparence_kit/modules/onboarding/ui/widgets/onboarding_background.dart';
 import 'package:apparence_kit/modules/voice_caddy/ui/widgets/vc_progress.dart';
@@ -142,20 +143,8 @@ class _VcPrerequisitesStepState extends ConsumerState<VcPrerequisitesStep> {
                   ),
                   child: Column(
                     children: [
-                      // ChatGPT icon placeholder
-                      Container(
-                        width: 64,
-                        height: 64,
-                        decoration: BoxDecoration(
-                          color: const Color(0xFF10A37F),
-                          borderRadius: BorderRadius.circular(16),
-                        ),
-                        child: const Icon(
-                          Icons.chat_bubble_outline,
-                          color: Colors.white,
-                          size: 32,
-                        ),
-                      ),
+                      // ChatGPT/OpenAI branded icon
+                      const ChatGptBrandedIcon(iconSize: 36),
                       const SizedBox(height: 16),
                       Text(
                         tr.chatgpt_label,

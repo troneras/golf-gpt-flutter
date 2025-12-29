@@ -1,8 +1,11 @@
 import 'package:apparence_kit/core/theme/extensions/theme_extension.dart';
+import 'package:apparence_kit/i18n/translations.g.dart';
 import 'package:apparence_kit/modules/round/domain/running_score.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
+/// Round summary page - "Emotional" screen type per design system.
+/// Uses Level 2 glass for cards, primary CTA with glow.
 class RoundSummaryPage extends StatelessWidget {
   final String roundId;
   final RoundSummary summary;
@@ -15,15 +18,18 @@ class RoundSummaryPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = context.colors;
+    final tr = Translations.of(context).round_summary;
+
     return Scaffold(
-      backgroundColor: context.colors.background,
+      backgroundColor: colors.background,
       body: SafeArea(
         child: SingleChildScrollView(
           padding: const EdgeInsets.all(24),
           child: Column(
             children: [
               const SizedBox(height: 32),
-              // Success icon
+              // Success icon with accent glow
               Container(
                 width: 80,
                 height: 80,
@@ -33,29 +39,37 @@ class RoundSummaryPage extends StatelessWidget {
                     begin: Alignment.topCenter,
                     end: Alignment.bottomCenter,
                     colors: [
-                      Colors.green.shade400,
-                      Colors.green.shade600,
+                      colors.accent,
+                      colors.accentSoft,
                     ],
                   ),
+                  boxShadow: [
+                    BoxShadow(
+                      color: colors.accent.withValues(alpha: 0.4),
+                      blurRadius: 20,
+                      offset: const Offset(0, 4),
+                    ),
+                  ],
                 ),
-                child: const Icon(
+                child: Icon(
                   Icons.check,
                   size: 48,
-                  color: Colors.white,
+                  color: colors.onPrimary,
                 ),
               ),
               const SizedBox(height: 24),
               Text(
-                'Ronda finalizada!',
+                tr.title,
                 style: context.textTheme.headlineSmall?.copyWith(
                   fontWeight: FontWeight.w600,
+                  color: colors.onBackground,
                 ),
               ),
               const SizedBox(height: 8),
               Text(
-                'Aqui esta tu resumen',
+                tr.subtitle,
                 style: context.textTheme.bodyLarge?.copyWith(
-                  color: context.colors.onSurface.withValues(alpha: 0.6),
+                  color: colors.textSecondary,
                 ),
               ),
               const SizedBox(height: 32),
@@ -65,50 +79,61 @@ class RoundSummaryPage extends StatelessWidget {
               // Stats grid
               _StatsGrid(summary: summary),
               const SizedBox(height: 32),
-              // Action buttons
-              SizedBox(
-                width: double.infinity,
-                height: 52,
+              // Primary CTA with gradient and glow
+              GestureDetector(
+                onTap: () => context.go('/'),
                 child: Container(
+                  width: double.infinity,
+                  height: 52,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(12),
-                    gradient: const LinearGradient(
+                    gradient: LinearGradient(
                       begin: Alignment.topCenter,
                       end: Alignment.bottomCenter,
                       colors: [
-                        Color(0xFF8BC34A),
-                        Color(0xFF689F38),
+                        colors.primary.withValues(alpha: 0.9),
+                        colors.primary,
                       ],
                     ),
+                    boxShadow: [
+                      BoxShadow(
+                        color: colors.primary.withValues(alpha: 0.3),
+                        blurRadius: 12,
+                        offset: const Offset(0, 4),
+                      ),
+                    ],
                   ),
-                  child: Material(
-                    color: Colors.transparent,
-                    child: InkWell(
-                      onTap: () => context.go('/'),
-                      borderRadius: BorderRadius.circular(12),
-                      child: Center(
-                        child: Text(
-                          'Volver al inicio',
-                          style: context.textTheme.titleSmall?.copyWith(
-                            fontWeight: FontWeight.w600,
-                            color: Colors.white,
-                          ),
-                        ),
+                  child: Center(
+                    child: Text(
+                      tr.back_home,
+                      style: context.textTheme.titleMedium?.copyWith(
+                        fontWeight: FontWeight.w600,
+                        color: colors.onPrimary,
                       ),
                     ),
                   ),
                 ),
               ),
               const SizedBox(height: 12),
-              TextButton(
-                onPressed: () {
-                  context.push('/round-detail/$roundId');
-                },
-                child: Text(
-                  'Ver detalles',
-                  style: context.textTheme.bodyMedium?.copyWith(
-                    color: context.colors.primary,
-                    fontWeight: FontWeight.w600,
+              // Ghost button for details
+              GestureDetector(
+                onTap: () => context.push('/round-detail/$roundId'),
+                child: Container(
+                  width: double.infinity,
+                  height: 44,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(12),
+                    border: Border.all(
+                      color: Colors.white.withValues(alpha: 0.15),
+                    ),
+                  ),
+                  child: Center(
+                    child: Text(
+                      tr.view_details,
+                      style: context.textTheme.bodyLarge?.copyWith(
+                        color: colors.textSecondary,
+                      ),
+                    ),
                   ),
                 ),
               ),
@@ -127,82 +152,93 @@ class _ScoreCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = context.colors;
+    final tr = Translations.of(context).round_summary;
     final isUnderPar = summary.relativeToPar < 0;
     final isOverPar = summary.relativeToPar > 0;
+
+    // Score badge color based on performance (muted per design system)
+    final badgeColor = isUnderPar
+        ? colors.success
+        : isOverPar
+            ? colors.error
+            : colors.textTertiary;
 
     return Container(
       padding: const EdgeInsets.all(24),
       decoration: BoxDecoration(
-        gradient: LinearGradient(
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-          colors: [
-            isUnderPar
-                ? Colors.green.shade50
-                : isOverPar
-                    ? Colors.red.shade50
-                    : Colors.grey.shade100,
-            isUnderPar
-                ? Colors.green.shade100
-                : isOverPar
-                    ? Colors.red.shade100
-                    : Colors.grey.shade200,
-          ],
-        ),
-        borderRadius: BorderRadius.circular(20),
+        // Level 2 Prominent Glass
+        color: const Color(0xFF141A24).withValues(alpha: 0.90),
+        borderRadius: BorderRadius.circular(16),
         border: Border.all(
-          color: isUnderPar
-              ? Colors.green.shade200
-              : isOverPar
-                  ? Colors.red.shade200
-                  : Colors.grey.shade300,
-          width: 2,
+          color: Colors.white.withValues(alpha: 0.08),
         ),
       ),
-      child: Column(
+      child: Stack(
         children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.end,
-            children: [
-              Text(
-                '${summary.totalStrokes}',
-                style: context.textTheme.displayLarge?.copyWith(
-                  fontWeight: FontWeight.w600,
-                  color: context.colors.onSurface,
-                  height: 1,
+          // Inset shadow overlay for glass depth
+          Positioned.fill(
+            child: DecoratedBox(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(16),
+                gradient: LinearGradient(
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                  colors: [
+                    Colors.black.withValues(alpha: 0.15),
+                    Colors.black.withValues(alpha: 0.05),
+                    Colors.transparent,
+                  ],
+                  stops: const [0.0, 0.3, 0.6],
                 ),
               ),
-              const SizedBox(width: 12),
-              Padding(
-                padding: const EdgeInsets.only(bottom: 8),
-                child: Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-                  decoration: BoxDecoration(
-                    color: isUnderPar
-                        ? Colors.green.shade600
-                        : isOverPar
-                            ? Colors.red.shade600
-                            : Colors.grey.shade600,
-                    borderRadius: BorderRadius.circular(20),
-                  ),
-                  child: Text(
-                    summary.relativeToParFormatted,
-                    style: context.textTheme.titleMedium?.copyWith(
+            ),
+          ),
+          Column(
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  Text(
+                    '${summary.totalStrokes}',
+                    style: context.textTheme.displayLarge?.copyWith(
                       fontWeight: FontWeight.w600,
-                      color: Colors.white,
+                      color: colors.onBackground,
+                      height: 1,
                     ),
                   ),
+                  const SizedBox(width: 12),
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 8),
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                      decoration: BoxDecoration(
+                        color: badgeColor.withValues(alpha: 0.2),
+                        borderRadius: BorderRadius.circular(20),
+                        border: Border.all(
+                          color: badgeColor.withValues(alpha: 0.4),
+                        ),
+                      ),
+                      child: Text(
+                        summary.relativeToParFormatted,
+                        style: context.textTheme.titleMedium?.copyWith(
+                          fontWeight: FontWeight.w600,
+                          color: badgeColor,
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 8),
+              Text(
+                tr.total_strokes,
+                style: context.textTheme.bodyMedium?.copyWith(
+                  color: colors.textTertiary,
                 ),
               ),
             ],
-          ),
-          const SizedBox(height: 8),
-          Text(
-            'golpes totales',
-            style: context.textTheme.bodyMedium?.copyWith(
-              color: context.colors.onSurface.withValues(alpha: 0.6),
-            ),
           ),
         ],
       ),
@@ -217,6 +253,8 @@ class _StatsGrid extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final tr = Translations.of(context).round_summary;
+
     return Column(
       children: [
         Row(
@@ -224,7 +262,7 @@ class _StatsGrid extends StatelessWidget {
             Expanded(
               child: _StatCard(
                 icon: Icons.golf_course,
-                label: 'Putts',
+                label: tr.putts,
                 value: '${summary.totalPutts}',
               ),
             ),
@@ -232,7 +270,7 @@ class _StatsGrid extends StatelessWidget {
             Expanded(
               child: _StatCard(
                 icon: Icons.timer_outlined,
-                label: 'Duracion',
+                label: tr.duration,
                 value: summary.durationFormatted,
               ),
             ),
@@ -244,7 +282,7 @@ class _StatsGrid extends StatelessWidget {
             Expanded(
               child: _StatCard(
                 icon: Icons.flag_outlined,
-                label: 'Fairways',
+                label: tr.fairways,
                 value: summary.fairwaysFormatted,
                 subtitle: summary.fairwaysPercentage != null
                     ? '${(summary.fairwaysPercentage! * 100).toStringAsFixed(0)}%'
@@ -255,7 +293,7 @@ class _StatsGrid extends StatelessWidget {
             Expanded(
               child: _StatCard(
                 icon: Icons.adjust,
-                label: 'GIR',
+                label: tr.gir,
                 value: summary.girFormatted,
                 subtitle: summary.girPercentage != null
                     ? '${(summary.girPercentage! * 100).toStringAsFixed(0)}%'
@@ -269,6 +307,7 @@ class _StatsGrid extends StatelessWidget {
   }
 }
 
+/// Stat card with Level 1 matte glass styling.
 class _StatCard extends StatelessWidget {
   final IconData icon;
   final String label;
@@ -284,13 +323,16 @@ class _StatCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = context.colors;
+
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: context.colors.surface,
+        // Level 1 Matte Glass
+        color: const Color(0xFF141A24).withValues(alpha: 0.85),
         borderRadius: BorderRadius.circular(12),
         border: Border.all(
-          color: context.colors.onSurface.withValues(alpha: 0.1),
+          color: Colors.white.withValues(alpha: 0.06),
         ),
       ),
       child: Column(
@@ -298,21 +340,29 @@ class _StatCard extends StatelessWidget {
         children: [
           Row(
             children: [
-              Icon(
-                icon,
-                size: 18,
-                color: context.colors.onSurface.withValues(alpha: 0.5),
+              Container(
+                width: 28,
+                height: 28,
+                decoration: BoxDecoration(
+                  color: colors.primary.withValues(alpha: 0.15),
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                child: Icon(
+                  icon,
+                  size: 16,
+                  color: colors.primary,
+                ),
               ),
               const SizedBox(width: 8),
               Text(
                 label,
                 style: context.textTheme.bodySmall?.copyWith(
-                  color: context.colors.onSurface.withValues(alpha: 0.6),
+                  color: colors.textTertiary,
                 ),
               ),
             ],
           ),
-          const SizedBox(height: 8),
+          const SizedBox(height: 12),
           Row(
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
@@ -320,6 +370,7 @@ class _StatCard extends StatelessWidget {
                 value,
                 style: context.textTheme.titleLarge?.copyWith(
                   fontWeight: FontWeight.w600,
+                  color: colors.onBackground,
                 ),
               ),
               if (subtitle != null) ...[
@@ -329,7 +380,7 @@ class _StatCard extends StatelessWidget {
                   child: Text(
                     subtitle!,
                     style: context.textTheme.bodySmall?.copyWith(
-                      color: context.colors.primary,
+                      color: colors.primary,
                       fontWeight: FontWeight.w600,
                     ),
                   ),

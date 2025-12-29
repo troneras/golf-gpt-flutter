@@ -93,6 +93,7 @@ class _TotalRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = context.colors;
     final holesPlayed = round.holesPlayed;
     final totalStrokes = round.computedTotalStrokes;
     final relativeToPar = round.computedRelativeToPar;
@@ -100,10 +101,10 @@ class _TotalRow extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 12),
       decoration: BoxDecoration(
-        color: context.colors.primary.withValues(alpha: 0.1),
+        color: colors.primary.withValues(alpha: 0.1),
         border: Border(
           bottom: BorderSide(
-            color: context.colors.onSurface.withValues(alpha: 0.2),
+            color: Colors.white.withValues(alpha: 0.06),
             width: 1,
           ),
         ),
@@ -117,6 +118,7 @@ class _TotalRow extends StatelessWidget {
               'TOT',
               style: context.textTheme.bodyMedium?.copyWith(
                 fontWeight: FontWeight.w600,
+                color: colors.onBackground,
               ),
               textAlign: TextAlign.center,
             ),
@@ -127,7 +129,7 @@ class _TotalRow extends StatelessWidget {
               round.totalYards != null ? '${round.totalYards}' : '-',
               style: context.textTheme.bodySmall?.copyWith(
                 fontWeight: FontWeight.w600,
-                color: context.colors.onSurface.withValues(alpha: 0.6),
+                color: colors.textTertiary,
               ),
               textAlign: TextAlign.center,
             ),
@@ -138,6 +140,7 @@ class _TotalRow extends StatelessWidget {
               '${round.totalPar}',
               style: context.textTheme.bodyMedium?.copyWith(
                 fontWeight: FontWeight.w600,
+                color: colors.textSecondary,
               ),
               textAlign: TextAlign.center,
             ),
@@ -147,6 +150,7 @@ class _TotalRow extends StatelessWidget {
               holesPlayed > 0 ? '$totalStrokes' : '-',
               style: context.textTheme.titleMedium?.copyWith(
                 fontWeight: FontWeight.w600,
+                color: holesPlayed > 0 ? colors.onBackground : colors.textDisabled,
               ),
               textAlign: TextAlign.center,
             ),
@@ -175,14 +179,16 @@ class _TotalRow extends StatelessWidget {
   }
 
   Color _getRelativeColor(BuildContext context, int? relativeToPar) {
+    final colors = context.colors;
     if (relativeToPar == null) {
-      return context.colors.onSurface.withValues(alpha: 0.4);
+      return colors.textDisabled;
     }
+    // Muted colors per design system
     if (relativeToPar < 0) {
-      return Colors.green.shade700;
+      return colors.success;
     } else if (relativeToPar > 0) {
-      return Colors.red.shade700;
+      return colors.warning;
     }
-    return context.colors.onSurface;
+    return colors.onBackground;
   }
 }

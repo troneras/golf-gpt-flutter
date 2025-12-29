@@ -1,8 +1,8 @@
 import 'package:apparence_kit/core/data/api/analytics_api.dart';
 import 'package:apparence_kit/core/theme/extensions/theme_extension.dart';
+import 'package:apparence_kit/core/widgets/app_background.dart';
 import 'package:apparence_kit/core/widgets/glow_button.dart';
 import 'package:apparence_kit/core/widgets/styled_dialog.dart';
-import 'package:apparence_kit/core/widgets/shooting_stars.dart';
 import 'package:apparence_kit/core/widgets/suggestion_card.dart';
 import 'package:apparence_kit/i18n/translations.g.dart';
 import 'package:apparence_kit/modules/round/domain/round.dart';
@@ -329,123 +329,66 @@ class _HomePageState extends ConsumerState<HomePage> with WidgetsBindingObserver
     context.push('/round-in-progress', extra: {'roundId': activeRound.id});
   }
 
-  Future<void> _finishActiveRound(Round activeRound) async {
+  void _finishActiveRound(Round activeRound) {
     HapticFeedback.mediumImpact();
-    // Load the round into the notifier first
-    await ref.read(activeRoundNotifierProvider.notifier).loadRound(activeRound.id);
-    if (!mounted) return;
-    // Then navigate to round summary via the finish flow
-    context.push('/round-in-progress', extra: {'roundId': activeRound.id});
+    // Navigate to round screen with flag to show finish dialog
+    context.push('/round-in-progress', extra: {
+      'roundId': activeRound.id,
+      'showFinishDialog': true,
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     final tr = Translations.of(context).home;
-    final backgroundColor = context.colors.background;
-    return Stack(
-      children: [
-        // Background image - full screen golf course
-        Positioned.fill(
-          child: Image.asset(
-            'assets/images/background-2.jpg',
-            fit: BoxFit.cover,
-          ),
-        ),
-        // Vignette/inset shadow effect around edges
-        Positioned.fill(
-          child: DecoratedBox(
-            decoration: BoxDecoration(
-              gradient: RadialGradient(
-                radius: 1.0,
-                colors: [
-                  Colors.transparent,
-                  Colors.transparent,
-                  Colors.black.withValues(alpha: 0.25),
-                  Colors.black.withValues(alpha: 0.45),
-                ],
-                stops: const [0.0, 0.45, 0.75, 1.0],
+    return AppBackground(
+      child: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 24),
+          child: Column(
+            children: [
+              const SizedBox(height: 48),
+              // Header - TalkCaddy title
+              Text(
+                tr.title,
+                style: context.textTheme.displayLarge?.copyWith(
+                  color: context.colors.onBackground,
+                  fontWeight: FontWeight.w600,
+                ),
               ),
-            ),
-          ),
-        ),
-        // Dark gradient overlay from bottom for readability
-        Positioned.fill(
-          child: DecoratedBox(
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
-                stops: const [0.0, 0.3, 0.6, 1.0],
-                colors: [
-                  backgroundColor.withValues(alpha: 0.3),
-                  backgroundColor.withValues(alpha: 0.1),
-                  backgroundColor.withValues(alpha: 0.6),
-                  backgroundColor.withValues(alpha: 0.95),
-                ],
+              const SizedBox(height: 4),
+              // Subtitle - Voice Caddie
+              Text(
+                'Voice Caddie',
+                style: context.textTheme.bodyLarge?.copyWith(
+                  color: context.colors.textSecondary,
+                ),
               ),
-            ),
+              const Spacer(),
+              // Start Round Button - vertically centered
+              GlowButton(
+                text: tr.start_round.toUpperCase(),
+                icon: Icons.play_arrow_rounded,
+                onPressed: _isCheckingPermission ? null : _handleStartRound,
+                isLoading: _isCheckingPermission,
+              ),
+              const SizedBox(height: 12),
+              // Subtitle below button
+              Text(
+                tr.subtitle,
+                textAlign: TextAlign.center,
+                style: context.textTheme.bodyMedium?.copyWith(
+                  color: context.colors.textSecondary,
+                ),
+              ),
+              const SizedBox(height: 24),
+              // AI Suggestion card with rotating suggestions
+              const SuggestionCard(),
+              const Spacer(),
+            ],
           ),
         ),
-        // Shooting stars in the night sky
-        const Positioned(
-          top: 0,
-          left: 0,
-          right: 0,
-          child: ShootingStars(
-            height: 200,
-            spawnInterval: Duration(seconds: 3),
-            maxStars: 2,
-          ),
-        ),
-        // Main content
-        SafeArea(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 24),
-            child: Column(
-              children: [
-                const SizedBox(height: 48),
-                // Header - TalkCaddy title
-                Text(
-                  tr.title,
-                  style: context.textTheme.displayLarge?.copyWith(
-                    color: context.colors.onBackground,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-                const SizedBox(height: 4),
-                // Subtitle - Voice Caddie
-                Text(
-                  'Voice Caddie',
-                  style: context.textTheme.bodyLarge?.copyWith(
-                    color: context.colors.textSecondary,
-                  ),
-                ),
-                const Spacer(),
-                // Start Round Button - vertically centered
-                GlowButton(
-                  text: tr.start_round.toUpperCase(),
-                  icon: Icons.play_arrow_rounded,
-                  onPressed: _isCheckingPermission ? null : _handleStartRound,
-                  isLoading: _isCheckingPermission,
-                ),
-                const SizedBox(height: 12),
-                // Subtitle below button
-                Text(
-                  tr.subtitle,
-                  textAlign: TextAlign.center,
-                  style: context.textTheme.bodyMedium?.copyWith(
-                    color: context.colors.textSecondary,
-                  ),
-                ),
-                const SizedBox(height: 24),
-                // AI Suggestion card with rotating suggestions
-                const SuggestionCard(),
-                const Spacer(),
-              ],
-            ),
-          ),
-        ),
-      ],
+      ),
     );
   }
 }

@@ -1,7 +1,7 @@
-import 'dart:ui';
-
 import 'package:apparence_kit/core/states/user_state_notifier.dart';
 import 'package:apparence_kit/core/theme/extensions/theme_extension.dart';
+import 'package:apparence_kit/core/widgets/app_background.dart';
+import 'package:apparence_kit/core/widgets/glass_form_card.dart';
 import 'package:apparence_kit/core/widgets/glow_button.dart';
 import 'package:apparence_kit/i18n/translations.g.dart';
 import 'package:apparence_kit/modules/authentication/providers/email_verification_notifier.dart';
@@ -32,9 +32,6 @@ class _EmailVerificationPageState extends ConsumerState<EmailVerificationPage> {
   @override
   Widget build(BuildContext context) {
     final state = ref.watch(emailVerificationProvider);
-    final tr = Translations.of(context).auth.email_verification;
-    final colors = context.colors;
-    final backgroundColor = colors.background;
 
     ref.listen(emailVerificationProvider, (previous, next) async {
       if (next is EmailVerificationVerified) {
@@ -50,65 +47,20 @@ class _EmailVerificationPageState extends ConsumerState<EmailVerificationPage> {
       child: Scaffold(
         body: AnnotatedRegion<SystemUiOverlayStyle>(
           value: SystemUiOverlayStyle.light,
-          child: Stack(
-            children: [
-              // Background image
-              Positioned.fill(
-                child: Image.asset(
-                  'assets/images/background-2.jpg',
-                  fit: BoxFit.cover,
-                ),
-              ),
-              // Vignette effect
-              Positioned.fill(
-                child: DecoratedBox(
-                  decoration: BoxDecoration(
-                    gradient: RadialGradient(
-                      radius: 1.0,
-                      colors: [
-                        Colors.transparent,
-                        Colors.transparent,
-                        Colors.black.withValues(alpha: 0.25),
-                        Colors.black.withValues(alpha: 0.45),
-                      ],
-                      stops: const [0.0, 0.45, 0.75, 1.0],
+          child: AppBackground(
+            child: SafeArea(
+              child: Column(
+                children: [
+                  _buildAppBar(context),
+                  Expanded(
+                    child: SingleChildScrollView(
+                      padding: const EdgeInsets.symmetric(horizontal: 24),
+                      child: _buildContent(context, state),
                     ),
                   ),
-                ),
+                ],
               ),
-              // Dark gradient overlay
-              Positioned.fill(
-                child: DecoratedBox(
-                  decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                      begin: Alignment.topCenter,
-                      end: Alignment.bottomCenter,
-                      stops: const [0.0, 0.3, 0.6, 1.0],
-                      colors: [
-                        backgroundColor.withValues(alpha: 0.3),
-                        backgroundColor.withValues(alpha: 0.1),
-                        backgroundColor.withValues(alpha: 0.6),
-                        backgroundColor.withValues(alpha: 0.95),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-              // Content
-              SafeArea(
-                child: Column(
-                  children: [
-                    _buildAppBar(context),
-                    Expanded(
-                      child: SingleChildScrollView(
-                        padding: const EdgeInsets.symmetric(horizontal: 24),
-                        child: _buildContent(context, state),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ],
+            ),
           ),
         ),
       ),
@@ -165,7 +117,7 @@ class _EmailVerificationPageState extends ConsumerState<EmailVerificationPage> {
     return Column(
       children: [
         const SizedBox(height: 32),
-        _GlassFormCard(
+        GlassFormCard(
           child: Column(
             children: [
               Icon(
@@ -237,59 +189,6 @@ class _EmailVerificationPageState extends ConsumerState<EmailVerificationPage> {
           ),
         ),
       ],
-    );
-  }
-}
-
-/// Glass card container for the form with blur effect
-class _GlassFormCard extends StatelessWidget {
-  final Widget child;
-
-  const _GlassFormCard({required this.child});
-
-  @override
-  Widget build(BuildContext context) {
-    final colors = context.colors;
-
-    return ClipRRect(
-      borderRadius: BorderRadius.circular(16),
-      child: BackdropFilter(
-        filter: ImageFilter.blur(sigmaX: 6, sigmaY: 6),
-        child: Container(
-          decoration: BoxDecoration(
-            // Dark blue tint for contrast
-            color: const Color(0xFF0A1628).withValues(alpha: 0.7),
-            borderRadius: BorderRadius.circular(16),
-            border: Border.all(color: colors.glassBorder),
-          ),
-          child: Stack(
-            children: [
-              // Subtle inset highlight
-              Positioned.fill(
-                child: DecoratedBox(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(16),
-                    gradient: LinearGradient(
-                      begin: Alignment.topLeft,
-                      end: Alignment.bottomRight,
-                      colors: [
-                        Colors.white.withValues(alpha: 0.05),
-                        Colors.transparent,
-                        Colors.transparent,
-                      ],
-                      stops: const [0.0, 0.3, 1.0],
-                    ),
-                  ),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(20),
-                child: child,
-              ),
-            ],
-          ),
-        ),
-      ),
     );
   }
 }

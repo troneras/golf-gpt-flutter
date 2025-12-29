@@ -83,6 +83,7 @@ class _RoundDetailContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = context.colors;
     final tr = Translations.of(context).round_in_progress;
     final dateFormat = DateFormat.yMMMd(Localizations.localeOf(context).toString());
 
@@ -100,22 +101,42 @@ class _RoundDetailContent extends StatelessWidget {
                   round.course.name,
                   style: context.textTheme.headlineSmall?.copyWith(
                     fontWeight: FontWeight.w600,
+                    color: colors.onBackground,
                   ),
                 ),
                 const SizedBox(height: 4),
                 Text(
                   dateFormat.format(round.startTime),
                   style: context.textTheme.bodyMedium?.copyWith(
-                    color: context.colors.onBackground.withValues(alpha: 0.6),
+                    color: colors.textTertiary,
                   ),
                 ),
                 if (round.tee != null) ...[
                   const SizedBox(height: 4),
-                  Text(
-                    'Tee: ${round.tee!.name}',
-                    style: context.textTheme.bodyMedium?.copyWith(
-                      color: context.colors.onBackground.withValues(alpha: 0.6),
-                    ),
+                  Row(
+                    children: [
+                      Container(
+                        width: 10,
+                        height: 10,
+                        decoration: BoxDecoration(
+                          color: round.tee!.displayColor,
+                          shape: BoxShape.circle,
+                          border: round.tee!.isLightColor
+                              ? Border.all(
+                                  color: Colors.white.withValues(alpha: 0.3),
+                                  width: 1,
+                                )
+                              : null,
+                        ),
+                      ),
+                      const SizedBox(width: 6),
+                      Text(
+                        round.tee!.name,
+                        style: context.textTheme.bodyMedium?.copyWith(
+                          color: colors.textTertiary,
+                        ),
+                      ),
+                    ],
                   ),
                 ],
               ],
@@ -131,6 +152,7 @@ class _RoundDetailContent extends StatelessWidget {
               'Scorecard',
               style: context.textTheme.titleMedium?.copyWith(
                 fontWeight: FontWeight.w600,
+                color: colors.onBackground,
               ),
             ),
           ),
@@ -157,10 +179,11 @@ class _SummaryStats extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.all(16),
         decoration: BoxDecoration(
-          color: context.colors.surface,
+          // Level 1 Matte Glass per design system
+          color: const Color(0xFF141A24).withValues(alpha: 0.85),
           borderRadius: BorderRadius.circular(12),
           border: Border.all(
-            color: context.colors.onSurface.withValues(alpha: 0.1),
+            color: Colors.white.withValues(alpha: 0.06),
           ),
         ),
         child: Row(
@@ -174,6 +197,7 @@ class _SummaryStats extends StatelessWidget {
             _StatItem(
               label: 'vs Par',
               value: _formatRelativeToPar(round.scoreRelativeToPar),
+              relativeToPar: round.scoreRelativeToPar,
             ),
             _StatItem(
               label: tr.putts,
@@ -209,29 +233,49 @@ class _StatItem extends StatelessWidget {
   final String label;
   final String value;
   final bool highlight;
+  final int? relativeToPar;
 
   const _StatItem({
     required this.label,
     required this.value,
     this.highlight = false,
+    this.relativeToPar,
   });
 
   @override
   Widget build(BuildContext context) {
+    final colors = context.colors;
+
+    // Determine value color based on relativeToPar (muted per design system)
+    Color valueColor;
+    if (highlight) {
+      valueColor = colors.primary;
+    } else if (relativeToPar != null) {
+      if (relativeToPar! < 0) {
+        valueColor = colors.success;
+      } else if (relativeToPar! > 0) {
+        valueColor = colors.warning;
+      } else {
+        valueColor = colors.onBackground;
+      }
+    } else {
+      valueColor = colors.onBackground;
+    }
+
     return Column(
       children: [
         Text(
           value,
           style: context.textTheme.headlineSmall?.copyWith(
             fontWeight: FontWeight.w600,
-            color: highlight ? context.colors.primary : null,
+            color: valueColor,
           ),
         ),
         const SizedBox(height: 4),
         Text(
           label,
           style: context.textTheme.bodySmall?.copyWith(
-            color: context.colors.onSurface.withValues(alpha: 0.6),
+            color: colors.textTertiary,
           ),
         ),
       ],
@@ -251,17 +295,19 @@ class _Scorecard extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 16),
       child: Container(
         decoration: BoxDecoration(
-          color: context.colors.surface,
+          // Level 1 Matte Glass per design system
+          color: const Color(0xFF141A24).withValues(alpha: 0.85),
           borderRadius: BorderRadius.circular(12),
           border: Border.all(
-            color: context.colors.onSurface.withValues(alpha: 0.1),
+            color: Colors.white.withValues(alpha: 0.06),
           ),
         ),
+        clipBehavior: Clip.antiAlias,
         child: Column(
           children: [
             // Header row
             _ScorecardHeaderRow(tr: tr),
-            const Divider(height: 1),
+            Divider(height: 1, color: Colors.white.withValues(alpha: 0.06)),
             // Front 9
             ...round.frontNine.map((score) => _ScorecardRow(score: score)),
             // Out row
@@ -270,7 +316,7 @@ class _Scorecard extends StatelessWidget {
               par: round.outPar,
               strokes: round.outStrokes,
             ),
-            const Divider(height: 1),
+            Divider(height: 1, color: Colors.white.withValues(alpha: 0.06)),
             // Back 9
             ...round.backNine.map((score) => _ScorecardRow(score: score)),
             // In row
@@ -279,7 +325,7 @@ class _Scorecard extends StatelessWidget {
               par: round.inPar,
               strokes: round.inStrokes,
             ),
-            const Divider(height: 1),
+            Divider(height: 1, color: Colors.white.withValues(alpha: 0.06)),
             // Total row
             _ScorecardTotalRow(
               label: tr.total,
@@ -301,10 +347,11 @@ class _ScorecardHeaderRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = context.colors;
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
       decoration: BoxDecoration(
-        color: context.colors.primary.withValues(alpha: 0.1),
+        color: colors.primary.withValues(alpha: 0.1),
         borderRadius: const BorderRadius.vertical(top: Radius.circular(11)),
       ),
       child: Row(
@@ -315,6 +362,7 @@ class _ScorecardHeaderRow extends StatelessWidget {
               tr.hole,
               style: context.textTheme.bodySmall?.copyWith(
                 fontWeight: FontWeight.w600,
+                color: colors.textSecondary,
               ),
             ),
           ),
@@ -324,6 +372,7 @@ class _ScorecardHeaderRow extends StatelessWidget {
               tr.par,
               style: context.textTheme.bodySmall?.copyWith(
                 fontWeight: FontWeight.w600,
+                color: colors.textSecondary,
               ),
               textAlign: TextAlign.center,
             ),
@@ -334,6 +383,7 @@ class _ScorecardHeaderRow extends StatelessWidget {
               tr.score,
               style: context.textTheme.bodySmall?.copyWith(
                 fontWeight: FontWeight.w600,
+                color: colors.textSecondary,
               ),
               textAlign: TextAlign.center,
             ),
@@ -343,6 +393,7 @@ class _ScorecardHeaderRow extends StatelessWidget {
               Translations.of(context).rounds.result,
               style: context.textTheme.bodySmall?.copyWith(
                 fontWeight: FontWeight.w600,
+                color: colors.textSecondary,
               ),
               textAlign: TextAlign.center,
             ),
@@ -360,6 +411,7 @@ class _ScorecardRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = context.colors;
     final strokes = score.strokes;
     final par = score.par;
     final holeNumber = score.holeNumber;
@@ -368,9 +420,10 @@ class _ScorecardRow extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
       decoration: BoxDecoration(
+        // Alternating rows with subtle variation per dark-first design
         color: holeNumber.isEven
-            ? context.colors.surface
-            : context.colors.background.withValues(alpha: 0.5),
+            ? Colors.white.withValues(alpha: 0.02)
+            : Colors.transparent,
       ),
       child: Row(
         children: [
@@ -378,14 +431,18 @@ class _ScorecardRow extends StatelessWidget {
             width: 36,
             child: Text(
               holeNumber.toString(),
-              style: context.textTheme.bodyMedium,
+              style: context.textTheme.bodyMedium?.copyWith(
+                color: colors.onBackground,
+              ),
             ),
           ),
           SizedBox(
             width: 36,
             child: Text(
               par.toString(),
-              style: context.textTheme.bodyMedium,
+              style: context.textTheme.bodyMedium?.copyWith(
+                color: colors.textSecondary,
+              ),
               textAlign: TextAlign.center,
             ),
           ),
@@ -395,6 +452,7 @@ class _ScorecardRow extends StatelessWidget {
               strokes?.toString() ?? '-',
               style: context.textTheme.bodyMedium?.copyWith(
                 fontWeight: strokes != null ? FontWeight.w600 : null,
+                color: strokes != null ? colors.onBackground : colors.textDisabled,
               ),
               textAlign: TextAlign.center,
             ),
@@ -423,13 +481,14 @@ class _ScorecardTotalRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = context.colors;
     final diff = strokes != null ? strokes! - par : null;
 
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
       color: isTotal
-          ? context.colors.primary.withValues(alpha: 0.1)
-          : context.colors.surface,
+          ? colors.primary.withValues(alpha: 0.1)
+          : Colors.white.withValues(alpha: 0.03),
       child: Row(
         children: [
           SizedBox(
@@ -438,6 +497,7 @@ class _ScorecardTotalRow extends StatelessWidget {
               label,
               style: context.textTheme.bodyMedium?.copyWith(
                 fontWeight: FontWeight.w600,
+                color: colors.onBackground,
               ),
             ),
           ),
@@ -447,6 +507,7 @@ class _ScorecardTotalRow extends StatelessWidget {
               par.toString(),
               style: context.textTheme.bodyMedium?.copyWith(
                 fontWeight: FontWeight.w600,
+                color: colors.textSecondary,
               ),
               textAlign: TextAlign.center,
             ),
@@ -457,6 +518,7 @@ class _ScorecardTotalRow extends StatelessWidget {
               strokes?.toString() ?? '-',
               style: context.textTheme.bodyMedium?.copyWith(
                 fontWeight: FontWeight.w600,
+                color: strokes != null ? colors.onBackground : colors.textDisabled,
               ),
               textAlign: TextAlign.center,
             ),
@@ -478,39 +540,41 @@ class _ScoreResultBadge extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = context.colors;
     if (diff == null || scoreName.isEmpty) {
       return Text(
         '-',
         style: context.textTheme.bodySmall?.copyWith(
-          color: context.colors.onSurface.withValues(alpha: 0.5),
+          color: colors.textDisabled,
         ),
         textAlign: TextAlign.center,
       );
     }
 
+    // Muted colors per design system - contextual, not alarming
     Color backgroundColor;
     Color textColor;
 
     if (diff! <= -2) {
-      // Eagle or better - gold
-      backgroundColor = const Color(0xFFFFD700).withValues(alpha: 0.2);
-      textColor = const Color(0xFFB8860B);
+      // Eagle or better - muted amber (B8956A from design system)
+      backgroundColor = const Color(0xFFB8956A).withValues(alpha: 0.2);
+      textColor = const Color(0xFFB8956A);
     } else if (diff == -1) {
-      // Birdie - green
-      backgroundColor = const Color(0xFF4CAF50).withValues(alpha: 0.15);
-      textColor = const Color(0xFF2E7D32);
+      // Birdie - muted green (6BCF9B from design system)
+      backgroundColor = colors.success.withValues(alpha: 0.15);
+      textColor = colors.success;
     } else if (diff == 0) {
-      // Par - neutral
-      backgroundColor = context.colors.primary.withValues(alpha: 0.1);
-      textColor = context.colors.primary;
+      // Par - primary accent
+      backgroundColor = colors.primary.withValues(alpha: 0.1);
+      textColor = colors.primary;
     } else if (diff == 1) {
-      // Bogey - light orange
-      backgroundColor = const Color(0xFFFF9800).withValues(alpha: 0.12);
-      textColor = const Color(0xFFE65100);
+      // Bogey - muted amber/warning
+      backgroundColor = colors.warning.withValues(alpha: 0.12);
+      textColor = colors.warning;
     } else {
-      // Double bogey or worse - red
-      backgroundColor = const Color(0xFFF44336).withValues(alpha: 0.12);
-      textColor = const Color(0xFFC62828);
+      // Double bogey or worse - muted red (CF6B6B from design system)
+      backgroundColor = colors.error.withValues(alpha: 0.12);
+      textColor = colors.error;
     }
 
     return Container(
@@ -538,21 +602,25 @@ class _DiffBadge extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = context.colors;
     if (diff == null) {
       return Text(
         '-',
-        style: context.textTheme.bodyMedium,
+        style: context.textTheme.bodyMedium?.copyWith(
+          color: colors.textDisabled,
+        ),
         textAlign: TextAlign.center,
       );
     }
 
+    // Muted colors per design system
     Color textColor;
     if (diff! < 0) {
-      textColor = const Color(0xFF2E7D32);
+      textColor = colors.success;
     } else if (diff! > 0) {
-      textColor = const Color(0xFFE65100);
+      textColor = colors.warning;
     } else {
-      textColor = context.colors.onSurface;
+      textColor = colors.onBackground;
     }
 
     String text;

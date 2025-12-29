@@ -1,3 +1,5 @@
+import 'package:apparence_kit/core/data/api/analytics_api.dart';
+import 'package:apparence_kit/core/states/user_state_notifier.dart';
 import 'package:apparence_kit/core/theme/extensions/theme_extension.dart';
 import 'package:apparence_kit/core/widgets/styled_dialog.dart';
 import 'package:apparence_kit/i18n/translations.g.dart';
@@ -7,7 +9,7 @@ import 'package:apparence_kit/modules/round/providers/models/active_round_state.
 import 'package:apparence_kit/modules/round/ui/widgets/round_header.dart';
 import 'package:apparence_kit/modules/round/ui/widgets/score_input_sheet.dart';
 import 'package:apparence_kit/modules/round/ui/widgets/scorecard_grid.dart';
-import 'package:apparence_kit/modules/voice_caddy/ui/widgets/voice_caddy_fab.dart';
+import 'package:apparence_kit/modules/voice_caddy/providers/voice_caddy_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -18,10 +20,12 @@ const activeRoundNotifierProvider = activeRoundProvider;
 
 class RoundInProgressPage extends ConsumerStatefulWidget {
   final String? roundId;
+  final bool showFinishDialog;
 
   const RoundInProgressPage({
     super.key,
     this.roundId,
+    this.showFinishDialog = false,
   });
 
   @override
@@ -31,6 +35,7 @@ class RoundInProgressPage extends ConsumerStatefulWidget {
 class _RoundInProgressPageState extends ConsumerState<RoundInProgressPage> {
   final _scrollController = ScrollController();
   ForgottenRoundHandler? _forgottenRoundHandler;
+  bool _hasShownFinishDialog = false;
 
   @override
   void initState() {
@@ -56,39 +61,62 @@ class _RoundInProgressPageState extends ConsumerState<RoundInProgressPage> {
   @override
   Widget build(BuildContext context) {
     final state = ref.watch(activeRoundNotifierProvider);
+    final colors = context.colors;
+    final tr = Translations.of(context).round_in_progress;
 
-    return Scaffold(
-      backgroundColor: context.colors.background,
-      appBar: AppBar(
-        backgroundColor: context.colors.background,
-        elevation: 0,
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back, color: context.colors.onBackground),
-          onPressed: () => _handleBack(context),
-        ),
-        title: Text(
-          'Ronda en curso',
-          style: context.textTheme.titleLarge?.copyWith(
-            fontWeight: FontWeight.w600,
-          ),
-        ),
-        centerTitle: true,
-        actions: [
-          if (state is ActiveRoundStateActive && state.isSaving)
-            const Padding(
-              padding: EdgeInsets.only(right: 16),
-              child: SizedBox(
-                width: 20,
-                height: 20,
-                child: CircularProgressIndicator(strokeWidth: 2),
-              ),
+    // Show finish dialog automatically if requested and round is active
+    if (widget.showFinishDialog &&
+        !_hasShownFinishDialog &&
+        state is ActiveRoundStateActive) {
+      _hasShownFinishDialog = true;
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (mounted) {
+          _showFinishDialog(context);
+        }
+      });
+    }
+
+    return PopScope(
+      canPop: false,
+      onPopInvokedWithResult: (didPop, result) {
+        if (didPop) return;
+        // Back gesture triggers finish round dialog
+        if (state is ActiveRoundStateActive) {
+          _showFinishDialog(context);
+        }
+      },
+      child: Scaffold(
+        backgroundColor: colors.background,
+        appBar: AppBar(
+          backgroundColor: colors.background,
+          surfaceTintColor: Colors.transparent,
+          elevation: 0,
+          automaticallyImplyLeading: false,
+          title: Text(
+            tr.title,
+            style: context.textTheme.titleLarge?.copyWith(
+              fontWeight: FontWeight.w600,
+              color: colors.onBackground,
             ),
-        ],
+          ),
+          centerTitle: true,
+          actions: [
+            if (state is ActiveRoundStateActive && state.isSaving)
+              Padding(
+                padding: const EdgeInsets.only(right: 16),
+                child: SizedBox(
+                  width: 20,
+                  height: 20,
+                  child: CircularProgressIndicator(
+                    strokeWidth: 2,
+                    color: colors.primary,
+                  ),
+                ),
+              ),
+          ],
+        ),
+        body: _buildBody(context, state),
       ),
-      floatingActionButton: state is ActiveRoundStateActive
-          ? const VoiceCaddyFab()
-          : null,
-      body: _buildBody(context, state),
     );
   }
 
@@ -170,7 +198,12 @@ class _RoundInProgressPageState extends ConsumerState<RoundInProgressPage> {
           label: tr.exit_action,
           onTap: () {
             Navigator.pop(context);
-            context.pop();
+            // Navigate after dialog is dismissed
+            WidgetsBinding.instance.addPostFrameCallback((_) {
+              if (mounted) {
+                context.go('/');
+              }
+            });
           },
         ),
       ],
@@ -328,7 +361,7 @@ class _LoadingView extends StatelessWidget {
   }
 }
 
-class _ActiveView extends StatelessWidget {
+class _ActiveView extends ConsumerWidget {
   final ActiveRoundStateActive state;
   final ScrollController scrollController;
   final void Function(int hole) onHoleTap;
@@ -352,29 +385,41 @@ class _ActiveView extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final colors = context.colors;
+    final tr = Translations.of(context).round_in_progress;
+
     return Column(
       children: [
+        // Voice caddy card - primary action at top
+        _VoiceCaddyCard(),
         // Header with course info and score summary
         RoundHeader(
           round: state.round,
           onGpsTap: onGpsTap,
         ),
-        // Error banner
+        // Error banner with muted colors per design system
         if (savingError != null)
           Container(
             width: double.infinity,
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-            color: Colors.red.shade100,
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+            decoration: BoxDecoration(
+              color: colors.error.withValues(alpha: 0.15),
+              border: Border(
+                bottom: BorderSide(
+                  color: colors.error.withValues(alpha: 0.3),
+                ),
+              ),
+            ),
             child: Row(
               children: [
-                Icon(Icons.error_outline, color: Colors.red.shade700, size: 16),
+                Icon(Icons.error_outline, color: colors.error, size: 16),
                 const SizedBox(width: 8),
                 Expanded(
                   child: Text(
-                    'Error al guardar: $savingError',
+                    '${tr.error_saving}: $savingError',
                     style: context.textTheme.bodySmall?.copyWith(
-                      color: Colors.red.shade700,
+                      color: colors.error,
                     ),
                   ),
                 ),
@@ -385,6 +430,7 @@ class _ActiveView extends StatelessWidget {
         Expanded(
           child: RefreshIndicator(
             onRefresh: onRefresh,
+            color: colors.primary,
             child: ScorecardGrid(
               round: state.round,
               currentHole: state.currentHole,
@@ -405,6 +451,125 @@ class _ActiveView extends StatelessWidget {
   }
 }
 
+/// Voice caddy card - primary action for talking to caddy during round.
+class _VoiceCaddyCard extends ConsumerWidget {
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final colors = context.colors;
+    final userState = ref.watch(userStateNotifierProvider);
+    final tr = Translations.of(context).voice_caddy.home_card;
+    final isConnected = userState.user.isGptConnected;
+
+    return GestureDetector(
+      onTap: () => _onTap(context, ref, isConnected),
+      child: Container(
+        margin: const EdgeInsets.fromLTRB(16, 8, 16, 8),
+        padding: const EdgeInsets.all(14),
+        decoration: BoxDecoration(
+          // Level 2 prominent glass for primary action
+          color: isConnected
+              ? colors.primary.withValues(alpha: 0.15)
+              : const Color(0xFF141A24).withValues(alpha: 0.90),
+          borderRadius: BorderRadius.circular(12),
+          border: Border.all(
+            color: isConnected
+                ? colors.primary.withValues(alpha: 0.4)
+                : Colors.white.withValues(alpha: 0.08),
+          ),
+        ),
+        child: Row(
+          children: [
+            Container(
+              width: 44,
+              height: 44,
+              decoration: BoxDecoration(
+                color: isConnected
+                    ? colors.primary
+                    : colors.primary.withValues(alpha: 0.15),
+                borderRadius: BorderRadius.circular(10),
+                boxShadow: isConnected
+                    ? [
+                        BoxShadow(
+                          color: colors.primary.withValues(alpha: 0.4),
+                          blurRadius: 8,
+                        ),
+                      ]
+                    : null,
+              ),
+              child: Icon(
+                isConnected ? Icons.headphones : Icons.mic_none,
+                size: 24,
+                color: isConnected ? colors.onPrimary : colors.primary,
+              ),
+            ),
+            const SizedBox(width: 12),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    isConnected ? tr.connected_title : tr.not_connected_title,
+                    style: context.textTheme.titleSmall?.copyWith(
+                      fontWeight: FontWeight.w600,
+                      color: colors.onBackground,
+                    ),
+                  ),
+                  const SizedBox(height: 2),
+                  Text(
+                    isConnected ? tr.connected_subtitle : tr.not_connected_subtitle,
+                    style: context.textTheme.bodySmall?.copyWith(
+                      color: colors.textTertiary,
+                    ),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(width: 8),
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+              decoration: BoxDecoration(
+                color: isConnected
+                    ? colors.primary
+                    : Colors.white.withValues(alpha: 0.1),
+                borderRadius: BorderRadius.circular(8),
+              ),
+              child: Text(
+                isConnected ? tr.connected_cta : tr.not_connected_cta,
+                style: context.textTheme.labelSmall?.copyWith(
+                  fontWeight: FontWeight.w600,
+                  color: isConnected ? colors.onPrimary : colors.textSecondary,
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Future<void> _onTap(
+    BuildContext context,
+    WidgetRef ref,
+    bool isConnected,
+  ) async {
+    if (isConnected) {
+      await ref.read(analyticsApiProvider).logEvent('voice_caddy_card_opened', {
+        'source': 'round_in_progress',
+      });
+      await ref.read(voiceCaddyProvider.notifier).openChatGPT();
+    } else {
+      await ref.read(analyticsApiProvider).logEvent('voice_caddy_card_setup', {
+        'source': 'round_in_progress',
+      });
+      if (context.mounted) {
+        context.push('/voice-caddy-setup');
+      }
+    }
+  }
+}
+
 class _BottomButton extends StatelessWidget {
   final VoidCallback onFinish;
   final bool isSaving;
@@ -416,46 +581,67 @@ class _BottomButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = context.colors;
+    final tr = Translations.of(context).round_in_progress;
+
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: context.colors.background,
+        color: colors.background,
         border: Border(
           top: BorderSide(
-            color: context.colors.onSurface.withValues(alpha: 0.1),
+            color: Colors.white.withValues(alpha: 0.06),
           ),
         ),
       ),
       child: SafeArea(
         top: false,
-        child: SizedBox(
-          width: double.infinity,
-          height: 52,
-          child: ElevatedButton(
-            onPressed: isSaving ? null : onFinish,
-            style: ElevatedButton.styleFrom(
-              backgroundColor: context.colors.primary,
-              foregroundColor: Colors.white,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(12),
-              ),
+        child: GestureDetector(
+          onTap: isSaving ? null : onFinish,
+          child: Container(
+            width: double.infinity,
+            height: 52,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(12),
+              gradient: isSaving
+                  ? null
+                  : LinearGradient(
+                      begin: Alignment.topCenter,
+                      end: Alignment.bottomCenter,
+                      colors: [
+                        colors.primary.withValues(alpha: 0.9),
+                        colors.primary,
+                      ],
+                    ),
+              color: isSaving ? Colors.white.withValues(alpha: 0.08) : null,
+              boxShadow: isSaving
+                  ? null
+                  : [
+                      BoxShadow(
+                        color: colors.primary.withValues(alpha: 0.3),
+                        blurRadius: 12,
+                        offset: const Offset(0, 4),
+                      ),
+                    ],
             ),
-            child: isSaving
-                ? const SizedBox(
-                    width: 20,
-                    height: 20,
-                    child: CircularProgressIndicator(
-                      strokeWidth: 2,
-                      color: Colors.white,
+            child: Center(
+              child: isSaving
+                  ? SizedBox(
+                      width: 20,
+                      height: 20,
+                      child: CircularProgressIndicator(
+                        strokeWidth: 2,
+                        color: colors.textDisabled,
+                      ),
+                    )
+                  : Text(
+                      tr.finish_round,
+                      style: context.textTheme.titleMedium?.copyWith(
+                        fontWeight: FontWeight.w600,
+                        color: colors.onPrimary,
+                      ),
                     ),
-                  )
-                : const Text(
-                    'Finalizar Ronda',
-                    style: TextStyle(
-                      fontWeight: FontWeight.w600,
-                      fontSize: 16,
-                    ),
-                  ),
+            ),
           ),
         ),
       ),
@@ -476,22 +662,33 @@ class _ErrorView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = context.colors;
     final tr = Translations.of(context);
+
     return Padding(
       padding: const EdgeInsets.all(24),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Icon(
-            Icons.error_outline,
-            size: 64,
-            color: context.colors.error,
+          Container(
+            width: 80,
+            height: 80,
+            decoration: BoxDecoration(
+              color: colors.error.withValues(alpha: 0.15),
+              shape: BoxShape.circle,
+            ),
+            child: Icon(
+              Icons.error_outline,
+              size: 40,
+              color: colors.error,
+            ),
           ),
           const SizedBox(height: 24),
           Text(
             tr.common.error,
             style: context.textTheme.titleLarge?.copyWith(
               fontWeight: FontWeight.w600,
+              color: colors.onBackground,
             ),
             textAlign: TextAlign.center,
           ),
@@ -499,7 +696,7 @@ class _ErrorView extends StatelessWidget {
           Text(
             message,
             style: context.textTheme.bodyMedium?.copyWith(
-              color: context.colors.onSurface.withValues(alpha: 0.6),
+              color: colors.textSecondary,
             ),
             textAlign: TextAlign.center,
           ),
@@ -507,14 +704,57 @@ class _ErrorView extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              OutlinedButton(
-                onPressed: onBack,
-                child: Text(tr.round_in_progress.back),
+              // Ghost button for back
+              GestureDetector(
+                onTap: onBack,
+                child: Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(12),
+                    border: Border.all(
+                      color: Colors.white.withValues(alpha: 0.15),
+                    ),
+                  ),
+                  child: Text(
+                    tr.round_in_progress.back,
+                    style: context.textTheme.titleSmall?.copyWith(
+                      color: colors.textSecondary,
+                    ),
+                  ),
+                ),
               ),
               const SizedBox(width: 16),
-              FilledButton(
-                onPressed: onRetry,
-                child: Text(tr.round_in_progress.retry),
+              // Primary CTA for retry
+              GestureDetector(
+                onTap: onRetry,
+                child: Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(12),
+                    gradient: LinearGradient(
+                      begin: Alignment.topCenter,
+                      end: Alignment.bottomCenter,
+                      colors: [
+                        colors.primary.withValues(alpha: 0.9),
+                        colors.primary,
+                      ],
+                    ),
+                    boxShadow: [
+                      BoxShadow(
+                        color: colors.primary.withValues(alpha: 0.3),
+                        blurRadius: 12,
+                        offset: const Offset(0, 4),
+                      ),
+                    ],
+                  ),
+                  child: Text(
+                    tr.round_in_progress.retry,
+                    style: context.textTheme.titleSmall?.copyWith(
+                      fontWeight: FontWeight.w600,
+                      color: colors.onPrimary,
+                    ),
+                  ),
+                ),
               ),
             ],
           ),
@@ -546,9 +786,9 @@ class _FinishRoundOptionsDialog extends StatelessWidget {
       title: tr.finish_title,
       content: tr.finish_message,
       actions: [
-        StyledDialogAction.secondary(
-          label: Translations.of(context).common.cancel,
-          onTap: () => Navigator.pop(context),
+        StyledDialogAction.destructive(
+          label: tr.discard_action,
+          onTap: onDiscard,
         ),
         StyledDialogAction.primary(
           label: tr.save_action,
