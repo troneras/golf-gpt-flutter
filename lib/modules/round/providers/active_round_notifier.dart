@@ -50,10 +50,10 @@ class ActiveRoundNotifier extends _$ActiveRoundNotifier {
         currentHole: round.currentHole,
       );
 
-      // Start GPS tracking if enabled
+      // Start GPS tracking if enabled (await to ensure it starts before continuing)
       if (round.gpsEnabled) {
         _logger.i('Starting GPS tracking for round');
-        ref.read(gpsTrackingProvider.notifier).startTracking();
+        await ref.read(gpsTrackingProvider.notifier).startTracking();
       }
 
       // Schedule forgotten round reminder
@@ -92,10 +92,10 @@ class ActiveRoundNotifier extends _$ActiveRoundNotifier {
         currentHole: round.currentHole,
       );
 
-      // Start GPS tracking if enabled for resumed round
+      // Start GPS tracking if enabled for resumed round (await to ensure it starts)
       if (round.gpsEnabled) {
         _logger.i('Starting GPS tracking for resumed round');
-        ref.read(gpsTrackingProvider.notifier).startTracking();
+        await ref.read(gpsTrackingProvider.notifier).startTracking();
       }
 
       // Schedule forgotten round reminder for resumed round
