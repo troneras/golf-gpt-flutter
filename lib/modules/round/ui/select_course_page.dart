@@ -100,18 +100,13 @@ class SelectCoursePage extends ConsumerWidget {
               HapticFeedback.mediumImpact();
               if (selectedTee == null) return;
 
-              // Step 1: Check if GPT is connected, if not trigger setup
+              // Step 1: Check if GPT is connected, if not offer setup (but allow skip)
               final userState = ref.read(userStateNotifierProvider);
               if (!userState.user.isGptConnected) {
                 // Navigate to voice caddy setup and wait for completion
                 await context.push('/voice-caddy-setup');
-                // After returning, check again if user completed setup
                 if (!context.mounted) return;
-                final updatedUserState = ref.read(userStateNotifierProvider);
-                if (!updatedUserState.user.isGptConnected) {
-                  // User skipped setup, don't start round
-                  return;
-                }
+                // User can skip setup and still start the round
               }
 
               // Step 2: If GPS is enabled, request notification permission (but don't block if denied)
@@ -138,21 +133,28 @@ class SelectCoursePage extends ConsumerWidget {
               final roundState = ref.read(activeRoundNotifierProvider);
               if (roundState is ActiveRoundStateActive) {
                 if (!context.mounted) return;
-                // Check if this is the first time starting a round (per install)
-                final prefs = ref.read(sharedPreferencesProvider).prefs;
-                final hasSeenHandoff = prefs.getBool(_handoffShownKey) ?? false;
-                if (!hasSeenHandoff) {
-                  // Show the handoff dialog
-                  await showChatgptHandoffDialog(context);
-                  // Mark as shown for future rounds
-                  await prefs.setBool(_handoffShownKey, true);
+                // Check if user has GPT connected (may have skipped setup)
+                final updatedUserState = ref.read(userStateNotifierProvider);
+                final isGptConnected = updatedUserState.user.isGptConnected;
+                if (isGptConnected) {
+                  // Check if this is the first time starting a round (per install)
+                  final prefs = ref.read(sharedPreferencesProvider).prefs;
+                  final hasSeenHandoff = prefs.getBool(_handoffShownKey) ?? false;
+                  if (!hasSeenHandoff) {
+                    // Show the handoff dialog
+                    await showChatgptHandoffDialog(context);
+                    // Mark as shown for future rounds
+                    await prefs.setBool(_handoffShownKey, true);
+                  }
                 }
-                // Navigate to round in progress first (so it's ready when user returns)
+                // Navigate to round in progress
                 if (context.mounted) {
                   context.go('/round-in-progress');
                 }
-                // Open ChatGPT
-                await ref.read(voiceCaddyProvider.notifier).openChatGPT();
+                // Only open ChatGPT if user is connected
+                if (isGptConnected) {
+                  await ref.read(voiceCaddyProvider.notifier).openChatGPT();
+                }
               } else if (roundState is ActiveRoundStateError) {
                 // Show error
                 if (context.mounted) {
