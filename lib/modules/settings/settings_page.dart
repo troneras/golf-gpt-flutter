@@ -118,14 +118,16 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
                 icon: Icons.privacy_tip,
                 title: tr.settings.privacy_policy,
                 onTap: () {
-                  launchUrl(Uri.parse("https://apparencekit.dev/privacy/"));
+                  final lang = LocaleSettings.currentLocale.languageCode;
+                  launchUrl(Uri.parse("https://talkcaddy.com/privacy-policy?lang=$lang"));
                 },
               ),
               SettingsTile(
                 icon: Icons.help,
                 title: tr.settings.support,
                 onTap: () {
-                  launchUrl(Uri.parse("https://apparencekit.dev/"));
+                  final lang = LocaleSettings.currentLocale.languageCode;
+                  launchUrl(Uri.parse("https://talkcaddy.com/faq?lang=$lang"));
                 },
               ),
             ],
