@@ -114,18 +114,28 @@ flutter_launcher_icons:
   android: true
   image_path_ios: "assets/launcher/icon.png"
   image_path_android: "assets/launcher/icon.png"
-  adaptive_icon_background: "assets/launcher/background.png"
+  adaptive_icon_background: "#FFFFFF"
   adaptive_icon_foreground: "assets/launcher/foreground.png"
   remove_alpha_ios: true
+
 flutter_native_splash:
+  # Light theme (default)
   color: "#FFFFFF"
+  image: assets/images/splashscreen.png
   fullscreen: true
   ios: true
   android: true
-  image: assets/images/splashscreen.png
+
+  # Dark theme
+  color_dark: "#2C2C2C"
+  image_dark: assets/images/splashscreen_dark.png
+
+  # Android 12+ splash screen
   android_12:
     color: "#FFFFFF"
     image: assets/images/splashscreen.png
+    color_dark: "#2C2C2C"
+    image_dark: assets/images/splashscreen_dark.png
 
 # Sentry debug symbols upload configuration
 # Set SENTRY_AUTH_TOKEN environment variable before building
