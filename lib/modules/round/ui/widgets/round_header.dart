@@ -127,7 +127,7 @@ class _ScoreSummary extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
       decoration: BoxDecoration(
         // Level 1 matte glass for summary card
-        color: const Color(0xFF141A24).withValues(alpha: 0.85),
+        color: const Color(0xFF3A3A3A).withValues(alpha: 0.85),
         borderRadius: BorderRadius.circular(12),
         border: Border.all(
           color: Colors.white.withValues(alpha: 0.06),

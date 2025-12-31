@@ -83,7 +83,7 @@ class _ClubEditSheetState extends State<ClubEditSheet> {
       ),
       child: Container(
         decoration: BoxDecoration(
-          color: const Color(0xFF141A24).withValues(alpha: 0.95),
+          color: const Color(0xFF3A3A3A).withValues(alpha: 0.95),
           borderRadius: const BorderRadius.vertical(top: Radius.circular(16)),
           border: Border(
             top: BorderSide(color: Colors.white.withValues(alpha: 0.08)),
@@ -228,7 +228,7 @@ class _ReadOnlyClubName extends StatelessWidget {
       width: double.infinity,
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
       decoration: BoxDecoration(
-        color: const Color(0xFF141A24).withValues(alpha: 0.85),
+        color: const Color(0xFF3A3A3A).withValues(alpha: 0.85),
         borderRadius: BorderRadius.circular(12),
         border: Border.all(color: Colors.white.withValues(alpha: 0.06)),
       ),
@@ -263,7 +263,7 @@ class _ClubTypeDropdown extends StatelessWidget {
       width: double.infinity,
       padding: const EdgeInsets.symmetric(horizontal: 16),
       decoration: BoxDecoration(
-        color: const Color(0xFF141A24).withValues(alpha: 0.85),
+        color: const Color(0xFF3A3A3A).withValues(alpha: 0.85),
         borderRadius: BorderRadius.circular(12),
         border: Border.all(color: Colors.white.withValues(alpha: 0.06)),
       ),
@@ -271,7 +271,7 @@ class _ClubTypeDropdown extends StatelessWidget {
         child: DropdownButton<String>(
           value: value,
           isExpanded: true,
-          dropdownColor: const Color(0xFF141A24),
+          dropdownColor: const Color(0xFF3A3A3A),
           hint: Text(
             hintText,
             style: context.textTheme.bodyLarge?.copyWith(
@@ -324,7 +324,7 @@ class _DistanceInput extends StatelessWidget {
         hintText: hintText,
         hintStyle: TextStyle(color: colors.onSurface.withValues(alpha: 0.5)),
         filled: true,
-        fillColor: const Color(0xFF141A24).withValues(alpha: 0.85),
+        fillColor: const Color(0xFF3A3A3A).withValues(alpha: 0.85),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),
           borderSide: BorderSide(color: Colors.white.withValues(alpha: 0.06)),

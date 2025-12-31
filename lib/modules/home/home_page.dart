@@ -343,8 +343,13 @@ class _HomePageState extends ConsumerState<HomePage> with WidgetsBindingObserver
     final tr = Translations.of(context).home;
     return AppBackground(
       child: SafeArea(
+        bottom: false, // Allow content to extend behind bottom bar
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 24),
+          padding: EdgeInsets.only(
+            left: 24,
+            right: 24,
+            bottom: MediaQuery.of(context).padding.bottom + 72,
+          ),
           child: Column(
             children: [
               const SizedBox(height: 48),

@@ -12,6 +12,8 @@ import 'package:apparence_kit/modules/round/providers/select_course_notifier.dar
 import 'package:apparence_kit/modules/round/ui/widgets/chatgpt_handoff_dialog.dart';
 import 'package:apparence_kit/modules/voice_caddy/providers/voice_caddy_provider.dart';
 
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -347,7 +349,12 @@ class _LoadedView extends StatelessWidget {
       children: [
         Expanded(
           child: SingleChildScrollView(
-            padding: const EdgeInsets.all(16),
+            padding: EdgeInsets.only(
+              left: 16,
+              right: 16,
+              top: 16,
+              bottom: MediaQuery.of(context).padding.bottom + 100,
+            ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -444,7 +451,7 @@ class _CourseCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final tr = Translations.of(context).select_course;
     // Slightly more prominent glass - main context card
-    const baseColor = Color(0xFF141A24);
+    const baseColor = Color(0xFF3A3A3A);
     return Container(
       decoration: BoxDecoration(
         color: baseColor.withValues(alpha: 0.9),
@@ -526,7 +533,7 @@ class _TeeCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // Matte glass style - dark smoked glass
-    const baseColor = Color(0xFF141A24);
+    const baseColor = Color(0xFF3A3A3A);
     return Container(
       decoration: BoxDecoration(
         color: baseColor.withValues(alpha: 0.85),
@@ -627,7 +634,7 @@ class _GpsToggleCard extends StatelessWidget {
         : tr.gps_tracking_description;
 
     // Matte glass style - same as other cards
-    const baseColor = Color(0xFF141A24);
+    const baseColor = Color(0xFF3A3A3A);
     // Muted amber for warning (contextual, not alarming)
     const mutedAmber = Color(0xFFB8956A);
 
@@ -706,19 +713,22 @@ class _BottomButtons extends StatelessWidget {
     final tr = Translations.of(context);
     final isEnabled = onStartRound != null;
 
-    return Container(
-      padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: context.colors.background,
-        border: Border(
-          top: BorderSide(
-            color: Colors.white.withValues(alpha: 0.06),
+    return ClipRect(
+      child: BackdropFilter(
+        filter: ImageFilter.blur(sigmaX: 25, sigmaY: 25),
+        child: Container(
+          padding: const EdgeInsets.all(16),
+          decoration: BoxDecoration(
+            color: context.colors.background.withValues(alpha: 0.5),
+            border: Border(
+              top: BorderSide(
+                color: Colors.white.withValues(alpha: 0.08),
+              ),
+            ),
           ),
-        ),
-      ),
-      child: SafeArea(
-        top: false,
-        child: Row(
+          child: SafeArea(
+            top: false,
+            child: Row(
           children: [
             // Cancel button - ghost style
             Expanded(
@@ -799,7 +809,9 @@ class _BottomButtons extends StatelessWidget {
                 ),
               ),
             ),
-          ],
+              ],
+            ),
+          ),
         ),
       ),
     );

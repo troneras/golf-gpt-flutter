@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:apparence_kit/core/bottom_menu/bottom_router.dart';
 import 'package:apparence_kit/core/theme/extensions/theme_extension.dart';
 import 'package:apparence_kit/core/widgets/responsive_layout.dart';
@@ -75,7 +77,7 @@ class _GlassyBottomBarFactory extends BartBottomBarFactory {
   }
 }
 
-/// Glassy transparent bottom navigation bar - HUD style
+/// Glassy transparent bottom navigation bar - HUD style with blur
 class _GlassyBottomBar extends StatelessWidget {
   final List<bart.BartMenuRoute> routes;
   final int currentIndex;
@@ -90,35 +92,40 @@ class _GlassyBottomBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final colors = context.colors;
-    // Dark glass - matches the app's dark aesthetic
-    return Container(
-      decoration: BoxDecoration(
-        color: colors.background.withValues(alpha: 0.85),
-        border: Border(
-          top: BorderSide(
-            color: Colors.white.withValues(alpha: 0.06),
+    // Frosted glass effect - blur with semi-transparent overlay
+    return ClipRect(
+      child: BackdropFilter(
+        filter: ImageFilter.blur(sigmaX: 25, sigmaY: 25),
+        child: Container(
+          decoration: BoxDecoration(
+            color: colors.background.withValues(alpha: 0.35),
+            border: Border(
+              top: BorderSide(
+                color: Colors.white.withValues(alpha: 0.08),
+              ),
+            ),
           ),
-        ),
-      ),
-      child: SafeArea(
-        top: false,
-        child: SizedBox(
-          height: 56,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: routes.asMap().entries.map((entry) {
-              final index = entry.key;
-              final route = entry.value;
-              final isSelected = currentIndex == index;
-              return Expanded(
-                child: _GlassyNavItem(
-                  icon: route.icon ?? Icons.circle,
-                  label: route.label ?? '',
-                  isSelected: isSelected,
-                  onTap: () => onTap(index),
-                ),
-              );
-            }).toList(),
+          child: SafeArea(
+            top: false,
+            child: SizedBox(
+              height: 56,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: routes.asMap().entries.map((entry) {
+                  final index = entry.key;
+                  final route = entry.value;
+                  final isSelected = currentIndex == index;
+                  return Expanded(
+                    child: _GlassyNavItem(
+                      icon: route.icon ?? Icons.circle,
+                      label: route.label ?? '',
+                      isSelected: isSelected,
+                      onTap: () => onTap(index),
+                    ),
+                  );
+                }).toList(),
+              ),
+            ),
           ),
         ),
       ),

@@ -69,10 +69,10 @@ void main() {
     float dist = roundedBoxSDF(center, buttonSize * 0.5, uBorderRadius);
     float maxGlowDist = min(uGlowPaddingH, uGlowPaddingV);
 
-    // === COLORS (clean cyan palette, reduced ~12% intensity) ===
-    vec3 cyanBright = vec3(0.0, 0.82, 0.87);
-    vec3 cyanMid = vec3(0.0, 0.6, 0.78);
-    vec3 cyanDeep = vec3(0.0, 0.35, 0.52);
+    // === COLORS (green palette based on #335D43) ===
+    vec3 greenBright = vec3(0.353, 0.62, 0.447);   // #5A9E72
+    vec3 greenMid = vec3(0.2, 0.365, 0.263);       // #335D43 (primary)
+    vec3 greenDeep = vec3(0.122, 0.22, 0.161);     // #1F3829
     vec3 white = vec3(1.0);
 
     // Smooth breathing (with bright peak)
@@ -89,7 +89,7 @@ void main() {
         float glowIntensity = glow * (0.6 + breatheBright * 0.5);
 
         // Add white during bright peaks
-        vec3 glowColor = mix(cyanMid, white, breatheBright * 0.4);
+        vec3 glowColor = mix(greenMid, white, breatheBright * 0.4);
         color = glowColor * glowIntensity;
         alpha = glowIntensity * 0.6;
 
@@ -101,8 +101,8 @@ void main() {
     if (dist < 0.0) {
         float innerDist = -dist;
 
-        // Dark glass base
-        vec3 glassColor = vec3(0.02, 0.05, 0.1);
+        // Dark glass base (neutral gray)
+        vec3 glassColor = vec3(0.06, 0.06, 0.06);
         float glassAlpha = 0.7;
 
         // Gentle smoke wisps
@@ -120,10 +120,10 @@ void main() {
 
         // Combine
         color = glassColor;
-        color += cyanDeep * smoke * 0.5;
-        color += cyanBright * pts * 0.5;
+        color += greenDeep * smoke * 0.5;
+        color += greenBright * pts * 0.5;
         // Add white to inner glow during bright peaks
-        vec3 innerGlowColor = mix(cyanMid, white, breatheBright * 0.5);
+        vec3 innerGlowColor = mix(greenMid, white, breatheBright * 0.5);
         color += innerGlowColor * glowStrength;
 
         alpha = glassAlpha;
@@ -152,10 +152,10 @@ void main() {
         sparkle = pow(sparkle, 6.0) * neonLine * 0.6;
 
         // Build neon color
-        vec3 neonColor = cyanMid * outerGlow;
-        neonColor = mix(neonColor, cyanBright, neonLine);
+        vec3 neonColor = greenMid * outerGlow;
+        neonColor = mix(neonColor, greenBright, neonLine);
         neonColor = mix(neonColor, white, hotCore * 0.9);
-        neonColor += cyanBright * flow;
+        neonColor += greenBright * flow;
         neonColor += white * sparkle;
 
         // Bright pulse - goes whiter at peaks

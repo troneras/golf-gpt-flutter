@@ -469,7 +469,7 @@ class _VoiceCaddyCard extends ConsumerWidget {
           // Level 2 prominent glass for primary action
           color: isConnected
               ? colors.primary.withValues(alpha: 0.15)
-              : const Color(0xFF141A24).withValues(alpha: 0.90),
+              : const Color(0xFF3A3A3A).withValues(alpha: 0.90),
           borderRadius: BorderRadius.circular(12),
           border: Border.all(
             color: isConnected
@@ -828,7 +828,7 @@ class _FinishRoundDialogState extends State<_FinishRoundDialog> {
       elevation: 0,
       child: Container(
         decoration: BoxDecoration(
-          color: const Color(0xFF141A24).withValues(alpha: 0.90),
+          color: const Color(0xFF3A3A3A).withValues(alpha: 0.90),
           borderRadius: BorderRadius.circular(16),
           border: Border.all(
             color: Colors.white.withValues(alpha: 0.08),
@@ -878,7 +878,7 @@ class _FinishRoundDialogState extends State<_FinishRoundDialog> {
                   hintText: tr.notes_hint,
                   hintStyle: TextStyle(color: colors.onSurface.withValues(alpha: 0.5)),
                   filled: true,
-                  fillColor: const Color(0xFF141A24).withValues(alpha: 0.85),
+                  fillColor: const Color(0xFF3A3A3A).withValues(alpha: 0.85),
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(12),
                     borderSide: BorderSide(color: Colors.white.withValues(alpha: 0.06)),

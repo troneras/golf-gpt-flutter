@@ -152,7 +152,7 @@ class OtpInputField extends StatelessWidget {
       height: 60,
       margin: const EdgeInsets.symmetric(horizontal: 4),
       decoration: BoxDecoration(
-        color: const Color(0xFF141A24).withValues(alpha: 0.85),
+        color: const Color(0xFF3A3A3A).withValues(alpha: 0.85),
         borderRadius: BorderRadius.circular(12),
         border: Border.all(
           color: Colors.white.withValues(alpha: 0.08),

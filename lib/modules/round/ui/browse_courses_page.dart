@@ -70,6 +70,7 @@ class _BrowseCoursesPageState extends ConsumerState<BrowseCoursesPage>
       appBar: AppBar(
         backgroundColor: context.colors.background,
         elevation: 0,
+        scrolledUnderElevation: 0,
         leading: IconButton(
           icon: Icon(Icons.arrow_back, color: Colors.white.withValues(alpha: 0.9)),
           onPressed: () => context.pop(),
@@ -247,7 +248,7 @@ class _SearchTab extends StatelessWidget {
   Widget build(BuildContext context) {
     final tr = Translations.of(context).browse_courses;
     // Glass style for search input
-    const baseColor = Color(0xFF141A24);
+    const baseColor = Color(0xFF3A3A3A);
     return Column(
       children: [
         Padding(
@@ -337,7 +338,12 @@ class _CourseListView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
-      padding: const EdgeInsets.fromLTRB(16, 16, 16, 0),
+      padding: EdgeInsets.only(
+        left: 16,
+        right: 16,
+        top: 16,
+        bottom: MediaQuery.of(context).padding.bottom + 24,
+      ),
       itemCount: courses.length,
       itemBuilder: (context, index) {
         final course = courses[index];
@@ -373,7 +379,7 @@ class _CourseListTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // Matte glass style
-    const baseColor = Color(0xFF141A24);
+    const baseColor = Color(0xFF3A3A3A);
     return Container(
       margin: const EdgeInsets.only(bottom: 8),
       decoration: BoxDecoration(

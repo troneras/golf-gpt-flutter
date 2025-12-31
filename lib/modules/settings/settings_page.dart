@@ -60,10 +60,15 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
     };
 
     return Scaffold(
-      backgroundColor: context.colors.background,
+      backgroundColor: Colors.transparent,
+      extendBody: true,
       body: SafeArea(
+        bottom: false, // Allow content to extend behind bottom bar
         child: ListView(
-          padding: const EdgeInsets.fromLTRB(16, 40, 16, 24),
+          padding: EdgeInsets.fromLTRB(
+            16, 40, 16,
+            MediaQuery.of(context).padding.bottom + 72, // Bottom bar + safe area
+          ),
         children: [
           Text(
             tr.settings.title,
@@ -204,7 +209,7 @@ class _SettingsSection extends StatelessWidget {
         // Matte Glass - Level 1 (Design System)
         Container(
           decoration: BoxDecoration(
-            color: const Color(0xFF141A24).withValues(alpha: 0.85),
+            color: const Color(0xFF3A3A3A).withValues(alpha: 0.85),
             borderRadius: BorderRadius.circular(12),
             border: Border.all(
               color: Colors.white.withValues(alpha: 0.06),
@@ -252,7 +257,7 @@ class ProfileTile extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: const Color(0xFF141A24).withValues(alpha: 0.90),
+        color: const Color(0xFF3A3A3A).withValues(alpha: 0.90),
         borderRadius: BorderRadius.circular(12),
         border: Border.all(
           color: Colors.white.withValues(alpha: 0.08),
@@ -357,7 +362,7 @@ class _SignOutTile extends StatelessWidget {
               elevation: 0,
               child: Container(
                 decoration: BoxDecoration(
-                  color: const Color(0xFF141A24).withValues(alpha: 0.90),
+                  color: const Color(0xFF3A3A3A).withValues(alpha: 0.90),
                   borderRadius: BorderRadius.circular(16),
                   border: Border.all(
                     color: Colors.white.withValues(alpha: 0.08),
@@ -528,7 +533,7 @@ class _DeleteAccountTile extends ConsumerWidget {
               elevation: 0,
               child: Container(
                 decoration: BoxDecoration(
-                  color: const Color(0xFF141A24).withValues(alpha: 0.90),
+                  color: const Color(0xFF3A3A3A).withValues(alpha: 0.90),
                   borderRadius: BorderRadius.circular(16),
                   border: Border.all(
                     color: Colors.white.withValues(alpha: 0.08),

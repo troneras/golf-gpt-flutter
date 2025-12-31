@@ -16,13 +16,16 @@ class RoundsPage extends ConsumerWidget {
     final state = ref.watch(roundsPageProvider);
 
     return Scaffold(
-      backgroundColor: context.colors.background,
+      backgroundColor: Colors.transparent,
+      extendBody: true,
       appBar: AppBar(
         title: Text(tr.title),
-        backgroundColor: context.colors.background,
+        backgroundColor: context.colors.background.withValues(alpha: 0.8),
         elevation: 0,
+        scrolledUnderElevation: 0,
       ),
       body: SafeArea(
+        bottom: false, // Allow content to extend behind bottom bar
         child: state.when(
           loading: () => const Center(child: CircularProgressIndicator()),
           error: (error, _) => _ErrorView(
@@ -185,7 +188,12 @@ class _RoundsList extends StatelessWidget {
         return false;
       },
       child: ListView.builder(
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+        padding: EdgeInsets.only(
+          left: 16,
+          right: 16,
+          top: 8,
+          bottom: MediaQuery.of(context).padding.bottom + 72, // Bottom bar + safe area
+        ),
         itemCount: rounds.length + (hasMore ? 1 : 0),
         itemBuilder: (context, index) {
           if (index == rounds.length) {
@@ -215,7 +223,7 @@ class _RoundCard extends StatelessWidget {
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 6),
       decoration: BoxDecoration(
-        color: const Color(0xFF141A24).withValues(alpha: 0.85),
+        color: const Color(0xFF3A3A3A).withValues(alpha: 0.85),
         borderRadius: BorderRadius.circular(12),
         border: Border.all(
           color: Colors.white.withValues(alpha: 0.06),

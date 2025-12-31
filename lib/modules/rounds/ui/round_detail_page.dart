@@ -180,7 +180,7 @@ class _SummaryStats extends StatelessWidget {
         padding: const EdgeInsets.all(16),
         decoration: BoxDecoration(
           // Level 1 Matte Glass per design system
-          color: const Color(0xFF141A24).withValues(alpha: 0.85),
+          color: const Color(0xFF3A3A3A).withValues(alpha: 0.85),
           borderRadius: BorderRadius.circular(12),
           border: Border.all(
             color: Colors.white.withValues(alpha: 0.06),
@@ -296,7 +296,7 @@ class _Scorecard extends StatelessWidget {
       child: Container(
         decoration: BoxDecoration(
           // Level 1 Matte Glass per design system
-          color: const Color(0xFF141A24).withValues(alpha: 0.85),
+          color: const Color(0xFF3A3A3A).withValues(alpha: 0.85),
           borderRadius: BorderRadius.circular(12),
           border: Border.all(
             color: Colors.white.withValues(alpha: 0.06),

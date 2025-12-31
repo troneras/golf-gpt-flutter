@@ -168,7 +168,7 @@ class _ScoreCard extends StatelessWidget {
       padding: const EdgeInsets.all(24),
       decoration: BoxDecoration(
         // Level 2 Prominent Glass
-        color: const Color(0xFF141A24).withValues(alpha: 0.90),
+        color: const Color(0xFF3A3A3A).withValues(alpha: 0.90),
         borderRadius: BorderRadius.circular(16),
         border: Border.all(
           color: Colors.white.withValues(alpha: 0.08),
@@ -329,7 +329,7 @@ class _StatCard extends StatelessWidget {
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
         // Level 1 Matte Glass
-        color: const Color(0xFF141A24).withValues(alpha: 0.85),
+        color: const Color(0xFF3A3A3A).withValues(alpha: 0.85),
         borderRadius: BorderRadius.circular(12),
         border: Border.all(
           color: Colors.white.withValues(alpha: 0.06),

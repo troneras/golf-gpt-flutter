@@ -85,7 +85,7 @@ class _FeedbackFormView extends ConsumerWidget {
           color: Colors.white.withValues(alpha: 0.5),
         ),
         filled: true,
-        fillColor: const Color(0xFF141A24).withValues(alpha: 0.85),
+        fillColor: const Color(0xFF3A3A3A).withValues(alpha: 0.85),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),
           borderSide: BorderSide(
@@ -156,7 +156,7 @@ class _FeedbackFormView extends ConsumerWidget {
             // Styled dropdown
             Container(
               decoration: BoxDecoration(
-                color: const Color(0xFF141A24).withValues(alpha: 0.85),
+                color: const Color(0xFF3A3A3A).withValues(alpha: 0.85),
                 borderRadius: BorderRadius.circular(12),
                 border: Border.all(
                   color: Colors.white.withValues(alpha: 0.06),
@@ -164,7 +164,7 @@ class _FeedbackFormView extends ConsumerWidget {
               ),
               child: DropdownButtonFormField<FeedbackCategory>(
                 initialValue: currentCategory,
-                dropdownColor: const Color(0xFF141A24),
+                dropdownColor: const Color(0xFF3A3A3A),
                 style: context.textTheme.bodyMedium?.copyWith(
                   color: Colors.white,
                 ),
@@ -381,6 +381,7 @@ class _FeedbackSuccessView extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final colors = context.colors;
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 24.0),
       child: Column(
@@ -390,7 +391,7 @@ class _FeedbackSuccessView extends ConsumerWidget {
           Container(
             padding: const EdgeInsets.all(32),
             decoration: BoxDecoration(
-              color: const Color(0xFF141A24).withValues(alpha: 0.90),
+              color: colors.surface,
               borderRadius: BorderRadius.circular(16),
               border: Border.all(
                 color: Colors.white.withValues(alpha: 0.08),
@@ -404,19 +405,19 @@ class _FeedbackSuccessView extends ConsumerWidget {
                   height: 80,
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
-                    color: const Color(0xFF6BCF9B).withValues(alpha: 0.15),
+                    color: colors.success.withValues(alpha: 0.15),
                     boxShadow: [
                       BoxShadow(
-                        color: const Color(0xFF6BCF9B).withValues(alpha: 0.2),
+                        color: colors.success.withValues(alpha: 0.2),
                         blurRadius: 24,
                         spreadRadius: 4,
                       ),
                     ],
                   ),
-                  child: const Icon(
+                  child: Icon(
                     Icons.check_rounded,
                     size: 48,
-                    color: Color(0xFF6BCF9B),
+                    color: colors.success,
                   ),
                 ),
                 const SizedBox(height: 24),

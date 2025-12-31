@@ -24,8 +24,8 @@ class GlassFormCard extends StatelessWidget {
         filter: ImageFilter.blur(sigmaX: 6, sigmaY: 6),
         child: Container(
           decoration: BoxDecoration(
-            // Dark blue tint for contrast
-            color: const Color(0xFF0A1628).withValues(alpha: 0.7),
+            // Neutral dark for contrast
+            color: colors.surface.withValues(alpha: 0.7),
             borderRadius: BorderRadius.circular(16),
             border: Border.all(color: colors.glassBorder),
           ),

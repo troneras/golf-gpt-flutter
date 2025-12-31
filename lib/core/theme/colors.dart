@@ -119,19 +119,19 @@ class ApparenceKitColors extends ThemeExtension<ApparenceKitColors> {
         grey3: Color(0xFF0F172A),
       );
 
-  /// Dark mode - main identity (premium, AI-first)
+  /// Dark mode - main identity (premium, golf-first)
   factory ApparenceKitColors.dark() => const ApparenceKitColors(
-        // Accents
-        primary: Color(0xFF5AA9FF),        // AI blue
+        // Accents (based on primary green #335D43)
+        primary: Color(0xFF5A9E72),        // Lighter green for interactive elements
         onPrimary: Color(0xFFFFFFFF),
-        accent: Color(0xFF6BCF9B),          // Golf green premium
-        accentSoft: Color(0xFF4FAF82),
-        // Backgrounds (cool blue-tinted, never pure black)
-        background: Color(0xFF0B0F14),
+        accent: Color(0xFF335D43),          // Official primary green
+        accentSoft: Color(0xFF2D5139),      // Darker variant
+        // Backgrounds
+        background: Color(0xFF2C2C2C),
         onBackground: Color(0xFFE6EAF0),   // Never pure white
-        surface: Color(0xFF111826),
+        surface: Color(0xFF363636),
         onSurface: Color(0xFFE6EAF0),
-        elevated: Color(0xFF162033),
+        elevated: Color(0xFF424242),
         // Glass effect (for frosted cards)
         glassBg: Color(0x0FFFFFFF),        // 6% white
         glassBorder: Color(0x1FFFFFFF),    // 12% white
@@ -143,14 +143,14 @@ class ApparenceKitColors extends ThemeExtension<ApparenceKitColors> {
         error: Color(0xFFF87171),
         warning: Color(0xFFFBBF24),
         success: Color(0xFF4ADE80),
-        // CTA gradient (blue → green with glow)
-        ctaGradientStart: Color(0xFF5AA9FF),
-        ctaGradientEnd: Color(0xFF6BCF9B),
-        ctaGlow: Color(0x735AA9FF),        // 45% blue glow
+        // CTA gradient (green tones)
+        ctaGradientStart: Color(0xFF335D43),  // Official primary green
+        ctaGradientEnd: Color(0xFF5A9E72),    // Lighter green
+        ctaGlow: Color(0x73335D43),           // 45% primary green glow
         // Legacy
-        divider: Color(0xFF1E293B),
-        textInverse: Color(0xFF0B0F14),
-        grey1: Color(0xFF1E293B),
+        divider: Color(0xFF3D3D3D),
+        textInverse: Color(0xFF2C2C2C),
+        grey1: Color(0xFF3D3D3D),
         grey2: Color(0xFFB5BCC9),
         grey3: Color(0xFFE6EAF0),
       );

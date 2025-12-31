@@ -58,7 +58,7 @@ class _OnboardingWelcomeStepState extends ConsumerState<OnboardingWelcomeStep> {
         Positioned.fill(
           child: DecoratedBox(
             decoration: BoxDecoration(
-              color: const Color(0xFF0A1628).withValues(alpha: 0.4),
+              color: const Color(0xFF2C2C2C).withValues(alpha: 0.4),
             ),
           ),
         ),
@@ -303,7 +303,7 @@ class _OnboardingAppPurposeStepState
         Positioned.fill(
           child: DecoratedBox(
             decoration: BoxDecoration(
-              color: const Color(0xFF0A1628).withValues(alpha: 0.4),
+              color: const Color(0xFF2C2C2C).withValues(alpha: 0.4),
             ),
           ),
         ),
@@ -503,7 +503,7 @@ class _FeatureCard extends StatelessWidget {
             decoration: BoxDecoration(
               boxShadow: [
                 BoxShadow(
-                  color: const Color(0xFF0A1628).withValues(alpha: 0.8),
+                  color: const Color(0xFF2C2C2C).withValues(alpha: 0.8),
                   blurRadius: 16,
                   spreadRadius: 2,
                 ),

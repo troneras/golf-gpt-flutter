@@ -203,15 +203,15 @@ class _FallbackButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const neonBlue = Color(0xFF5AA9FF);
-    const accentGreen = Color(0xFF6BCF9B);
+    const primaryGreen = Color(0xFF335D43);
+    const lightGreen = Color(0xFF5A9E72);
 
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
-            color: neonBlue.withValues(alpha: 0.5),
+            color: primaryGreen.withValues(alpha: 0.5),
             blurRadius: 20,
             spreadRadius: 1,
           ),
@@ -224,8 +224,8 @@ class _FallbackButton extends StatelessWidget {
           borderRadius: BorderRadius.circular(16),
           gradient: LinearGradient(
             colors: [
-              neonBlue.withValues(alpha: 0.5),
-              accentGreen.withValues(alpha: 0.5),
+              primaryGreen.withValues(alpha: 0.5),
+              lightGreen.withValues(alpha: 0.5),
             ],
           ),
           border: Border.all(

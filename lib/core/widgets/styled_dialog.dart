@@ -28,7 +28,7 @@ class StyledDialog extends StatelessWidget {
       elevation: 0,
       child: Container(
         decoration: BoxDecoration(
-          color: const Color(0xFF141A24).withValues(alpha: 0.90),
+          color: const Color(0xFF3A3A3A).withValues(alpha: 0.90),
           borderRadius: BorderRadius.circular(16),
           border: Border.all(
             color: Colors.white.withValues(alpha: 0.08),

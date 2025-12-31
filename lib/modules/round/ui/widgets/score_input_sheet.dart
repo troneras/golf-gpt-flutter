@@ -56,7 +56,7 @@ class _ScoreInputSheetState extends State<ScoreInputSheet> {
     final tr = Translations.of(context).score_input;
     return Container(
       decoration: BoxDecoration(
-        color: const Color(0xFF141A24).withValues(alpha: 0.95),
+        color: const Color(0xFF3A3A3A).withValues(alpha: 0.95),
         borderRadius: const BorderRadius.vertical(top: Radius.circular(16)),
         border: Border(
           top: BorderSide(color: Colors.white.withValues(alpha: 0.08)),
@@ -336,7 +336,7 @@ class _ScorePreview extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
       decoration: BoxDecoration(
-        color: const Color(0xFF141A24).withValues(alpha: 0.85),
+        color: const Color(0xFF3A3A3A).withValues(alpha: 0.85),
         borderRadius: BorderRadius.circular(12),
         border: Border.all(color: Colors.white.withValues(alpha: 0.06)),
       ),
