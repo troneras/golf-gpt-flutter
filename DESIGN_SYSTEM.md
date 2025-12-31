@@ -31,20 +31,21 @@ Effects should feel like *"this floats slightly"*, not *"look at this effect"*.
 
 ### Base Colors
 ```dart
-// Background hierarchy
-background:      #0D1117  // Deepest dark
-surface:         #141A24  // Card backgrounds (glass base)
-elevated:        #162033  // Elevated surfaces
+// Background hierarchy (neutral grays)
+background:      #2C2C2C  // Base dark gray
+surface:         #363636  // Card backgrounds (glass base)
+elevated:        #424242  // Elevated surfaces
 
-// Primary accent (cyan/teal)
-primary:         #00D4DE  // Main accent color
-primaryMuted:    #00A0A8  // Subdued accent
+// Primary accent (golf green based on #335D43)
+primary:         #5A9E72  // Lighter green for interactive elements
+accent:          #335D43  // Official brand green
+accentSoft:      #2D5139  // Darker variant
 ```
 
 ### Glass Colors
 ```dart
 // Glass backgrounds (applied with alpha)
-glassBg:         #141A24  // Base for glass effect
+glassBg:         #363636  // Base for glass effect (matches surface)
 glassBorder:     #FFFFFF  // White borders with low alpha
 
 // Alpha levels
@@ -63,9 +64,9 @@ textDisabled:    #FFFFFF @ 30%    // Disabled states
 ### Semantic Colors
 ```dart
 // Status colors (muted, not alarming)
-success:         #6BCF9B  // Muted green
-warning:         #B8956A  // Muted amber (contextual, not alert)
-error:           #CF6B6B  // Muted red
+success:         #4ADE80  // Green (matches theme)
+warning:         #FBBF24  // Muted amber (contextual, not alert)
+error:           #F87171  // Muted red
 ```
 
 ---
@@ -78,7 +79,7 @@ For most cards and containers in decisional/operational screens.
 ```dart
 Container(
   decoration: BoxDecoration(
-    color: const Color(0xFF141A24).withValues(alpha: 0.85),
+    color: const Color(0xFF363636).withValues(alpha: 0.85),
     borderRadius: BorderRadius.circular(12),
     border: Border.all(
       color: Colors.white.withValues(alpha: 0.06),
@@ -88,7 +89,7 @@ Container(
 ```
 
 **Properties:**
-- Background: `#141A24` @ 85% alpha
+- Background: `#363636` @ 85% alpha
 - Border: white @ 6% alpha
 - Blur: None (or very subtle, 2-3px)
 - Border radius: 12px
@@ -99,7 +100,7 @@ For main context cards (e.g., selected course, primary info).
 ```dart
 Container(
   decoration: BoxDecoration(
-    color: const Color(0xFF141A24).withValues(alpha: 0.90),
+    color: const Color(0xFF363636).withValues(alpha: 0.90),
     borderRadius: BorderRadius.circular(12),
     border: Border.all(
       color: Colors.white.withValues(alpha: 0.08),
@@ -109,7 +110,7 @@ Container(
 ```
 
 **Properties:**
-- Background: `#141A24` @ 90% alpha
+- Background: `#363636` @ 90% alpha
 - Border: white @ 8% alpha
 - Blur: None to subtle (3-6px)
 - Border radius: 12px
@@ -214,7 +215,7 @@ Container(
 
 #### GlowButton (Home CTA)
 Uses custom GLSL shader (`shaders/glow_button.frag`).
-- Animated neon border
+- Animated neon border (green palette: #335D43 → #5A9E72)
 - Breathing glow effect
 - Inner glass with particles
 - Reserved for Home screen only
@@ -414,8 +415,8 @@ color: Colors.white.withValues(alpha: 0.6)
 // Disabled
 color: Colors.white.withValues(alpha: 0.3)
 
-// Warning (muted)
-color: const Color(0xFFB8956A)
+// Warning (muted amber)
+color: const Color(0xFFFBBF24)
 ```
 
 ---
