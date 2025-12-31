@@ -7,11 +7,13 @@ endif
 
 # Default values (override in .env file)
 BACKEND_URL ?= http://localhost:8888
+BACKEND_URL_PROD ?= https://talkcaddy.com/api
 GOOGLE_SERVER_CLIENT_ID ?=
 SENTRY_DSN ?=
 SENTRY_AUTH_TOKEN ?=
 MIXPANEL_TOKEN ?=
 GPT_ID ?=
+GPT_ID_PROD ?= $(GPT_ID)
 
 # Build dart-define flags (dev mode)
 DART_DEFINES = --dart-define=BACKEND_URL=$(BACKEND_URL)
@@ -25,8 +27,17 @@ ifneq ($(GPT_ID),)
     DART_DEFINES += --dart-define=GPT_ID=$(GPT_ID)
 endif
 
-# Build dart-define flags (prod mode - includes Sentry)
-DART_DEFINES_PROD = $(DART_DEFINES) --dart-define=ENV=prod
+# Build dart-define flags (prod mode - uses prod backend + Sentry)
+DART_DEFINES_PROD = --dart-define=BACKEND_URL=$(BACKEND_URL_PROD) --dart-define=ENV=prod
+ifneq ($(GOOGLE_SERVER_CLIENT_ID),)
+    DART_DEFINES_PROD += --dart-define=GOOGLE_SERVER_CLIENT_ID=$(GOOGLE_SERVER_CLIENT_ID)
+endif
+ifneq ($(MIXPANEL_TOKEN),)
+    DART_DEFINES_PROD += --dart-define=MIXPANEL_TOKEN=$(MIXPANEL_TOKEN)
+endif
+ifneq ($(GPT_ID_PROD),)
+    DART_DEFINES_PROD += --dart-define=GPT_ID=$(GPT_ID_PROD)
+endif
 ifneq ($(SENTRY_DSN),)
     DART_DEFINES_PROD += --dart-define=SENTRY_DSN=$(SENTRY_DSN)
 endif
