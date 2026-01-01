@@ -15,19 +15,18 @@ class AppleSigninComponent extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final tr = Translations.of(context);
     return SocialSigninButton.apple(
-      () => ref
-          .read(signinStateProvider.notifier)
-          .signinWithApple()
-          .catchError(
-            (err) => showErrorToast(
-              context: context,
-              title: tr.common.error,
-              text: tr.auth.social_signin_error.apple,
-            ),
-          )
-          .then(
-            (value) => context.pushReplacement('/'),
-          ),
+      () async {
+        try {
+          await ref.read(signinStateProvider.notifier).signinWithApple();
+          context.pushReplacement('/');
+        } catch (err) {
+          showErrorToast(
+            context: context,
+            title: tr.common.error,
+            text: tr.auth.social_signin_error.apple,
+          );
+        }
+      },
     );
   }
 }

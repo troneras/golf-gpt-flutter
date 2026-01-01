@@ -17,26 +17,18 @@ class GoogleSignInComponent extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final tr = Translations.of(context);
-    void onPressed() {
-      ref
-          .read(signinStateProvider.notifier)
-          .signinWithGoogle()
-          .then(
-            (value) async {
-              await ref.read(userStateNotifierProvider.notifier).onOnboarded();
-              context.go('/');
-            },
-          )
-          .catchError(
-        (err) {
-          showErrorToast(
-            context: context,
-            title: tr.common.error,
-            text: tr.auth.social_signin_error.google,
-          );
-          return err;
-        },
-      );
+    Future<void> onPressed() async {
+      try {
+        await ref.read(signinStateProvider.notifier).signinWithGoogle();
+        await ref.read(userStateNotifierProvider.notifier).onOnboarded();
+        context.go('/');
+      } catch (err) {
+        showErrorToast(
+          context: context,
+          title: tr.common.error,
+          text: tr.auth.social_signin_error.google,
+        );
+      }
     }
     if (label != null) {
       return SocialSigninButton.googleWithText(onPressed, label: label!);
@@ -52,19 +44,18 @@ class GooglePlayGamesSignInComponent extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final tr = Translations.of(context);
     return SocialSigninButton.googlePlayGames(
-      () => ref
-          .read(signinStateProvider.notifier)
-          .signinWithGoogle()
-          .catchError(
-            (err) => showErrorToast(
-              context: context,
-              title: tr.common.error,
-              text: tr.auth.social_signin_error.google_play,
-            ),
-          )
-          .then(
-            (value) => context.pushReplacementNamed('/signup'),
-          ),
+      () async {
+        try {
+          await ref.read(signinStateProvider.notifier).signinWithGoogle();
+          context.pushReplacementNamed('/signup');
+        } catch (err) {
+          showErrorToast(
+            context: context,
+            title: tr.common.error,
+            text: tr.auth.social_signin_error.google_play,
+          );
+        }
+      },
     );
   }
 }

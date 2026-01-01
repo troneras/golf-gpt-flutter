@@ -15,19 +15,18 @@ class FacebookSigninComponent extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final tr = Translations.of(context);
     return SocialSigninButton.facebook(
-      () => ref
-          .read(signinStateProvider.notifier)
-          .signinWithFacebook()
-          .catchError(
-            (err) => showErrorToast(
-              context: context,
-              title: tr.common.error,
-              text: tr.auth.social_signin_error.facebook,
-            ),
-          )
-          .then(
-            (value) => context.pushReplacement('/'),
-          ),
+      () async {
+        try {
+          await ref.read(signinStateProvider.notifier).signinWithFacebook();
+          context.pushReplacement('/');
+        } catch (err) {
+          showErrorToast(
+            context: context,
+            title: tr.common.error,
+            text: tr.auth.social_signin_error.facebook,
+          );
+        }
+      },
     );
   }
 }
