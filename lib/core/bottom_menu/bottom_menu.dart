@@ -89,6 +89,17 @@ class _GlassyBottomBar extends StatelessWidget {
     required this.onTap,
   });
 
+  void _handleTap(int index) {
+    // Guard against tapping when bart's navigator isn't ready.
+    // This can happen when navigating back from a GoRouter route outside
+    // the bart navigation (e.g., round-in-progress) and tapping immediately.
+    try {
+      onTap(index);
+    } catch (e) {
+      // Navigator not ready yet - ignore tap
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final colors = context.colors;
@@ -120,7 +131,7 @@ class _GlassyBottomBar extends StatelessWidget {
                       icon: route.icon ?? Icons.circle,
                       label: route.label ?? '',
                       isSelected: isSelected,
-                      onTap: () => onTap(index),
+                      onTap: () => _handleTap(index),
                     ),
                   );
                 }).toList(),
