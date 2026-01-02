@@ -275,8 +275,14 @@ class _HomePageState extends ConsumerState<HomePage> with WidgetsBindingObserver
   }
 
   void _showActiveRoundDialog(Round activeRound) {
+    if (!mounted) return;
+
     final tr = Translations.of(context).active_round;
     final colors = context.colors;
+    final textTheme = context.textTheme;
+    // Store navigator before showing dialog to avoid accessing disposed context in callbacks
+    final navigator = Navigator.of(context);
+
     showStyledDialog(
       context: context,
       barrierDismissible: false,
@@ -292,14 +298,14 @@ class _HomePageState extends ConsumerState<HomePage> with WidgetsBindingObserver
         children: [
           Text(
             tr.message(courseName: activeRound.course.name),
-            style: context.textTheme.bodyMedium?.copyWith(
+            style: textTheme.bodyMedium?.copyWith(
               color: colors.onSurface.withValues(alpha: 0.7),
             ),
           ),
           const SizedBox(height: 8),
           Text(
             tr.holes_played(count: activeRound.holesPlayed),
-            style: context.textTheme.bodySmall?.copyWith(
+            style: textTheme.bodySmall?.copyWith(
               color: colors.onSurface.withValues(alpha: 0.5),
             ),
           ),
@@ -309,15 +315,19 @@ class _HomePageState extends ConsumerState<HomePage> with WidgetsBindingObserver
         StyledDialogAction.secondary(
           label: tr.finish,
           onTap: () {
-            Navigator.of(context).pop();
-            _finishActiveRound(activeRound);
+            navigator.pop();
+            if (mounted) {
+              _finishActiveRound(activeRound);
+            }
           },
         ),
         StyledDialogAction.primary(
           label: tr.resume,
           onTap: () {
-            Navigator.of(context).pop();
-            _resumeActiveRound(activeRound);
+            navigator.pop();
+            if (mounted) {
+              _resumeActiveRound(activeRound);
+            }
           },
         ),
       ],
