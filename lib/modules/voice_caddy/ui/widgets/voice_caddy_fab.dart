@@ -42,13 +42,18 @@ class VoiceCaddyFab extends ConsumerWidget {
     WidgetRef ref,
     bool isConnected,
   ) async {
+    // Read providers synchronously before async operations to avoid
+    // using ref after the widget may have been unmounted
+    final analyticsApi = ref.read(analyticsApiProvider);
+    final voiceCaddyNotifier = ref.read(voiceCaddyProvider.notifier);
+
     if (isConnected) {
-      await ref.read(analyticsApiProvider).logEvent('voice_caddy_fab_opened', {
+      await analyticsApi.logEvent('voice_caddy_fab_opened', {
         'source': 'round_in_progress',
       });
-      await ref.read(voiceCaddyProvider.notifier).openChatGPT();
+      await voiceCaddyNotifier.openChatGPT();
     } else {
-      await ref.read(analyticsApiProvider).logEvent('voice_caddy_fab_setup', {
+      await analyticsApi.logEvent('voice_caddy_fab_setup', {
         'source': 'round_in_progress',
       });
       if (context.mounted) {
