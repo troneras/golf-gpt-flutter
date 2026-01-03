@@ -1546,6 +1546,21 @@ class TranslationsVoiceCaddySettingsEs {
 
 	/// es: 'No conectado'
 	String get not_connected => 'No conectado';
+
+	/// es: 'Desconectar de ChatGPT'
+	String get disconnect_title => 'Desconectar de ChatGPT';
+
+	/// es: 'Esto revocara el acceso de ChatGPT a tu cuenta TalkCaddy. Podras reconectarte en cualquier momento.'
+	String get disconnect_subtitle => 'Esto revocara el acceso de ChatGPT a tu cuenta TalkCaddy. Podras reconectarte en cualquier momento.';
+
+	/// es: 'Desconectar'
+	String get disconnect_confirm => 'Desconectar';
+
+	/// es: 'Cancelar'
+	String get disconnect_cancel => 'Cancelar';
+
+	/// es: 'Error al desconectar. Intentalo de nuevo.'
+	String get disconnect_error => 'Error al desconectar. Intentalo de nuevo.';
 }
 
 // Path: voice_caddy.fab
@@ -1949,6 +1964,11 @@ extension on Translations {
 			'voice_caddy.settings.title' => 'Caddie de Voz',
 			'voice_caddy.settings.connected' => 'Conectado',
 			'voice_caddy.settings.not_connected' => 'No conectado',
+			'voice_caddy.settings.disconnect_title' => 'Desconectar de ChatGPT',
+			'voice_caddy.settings.disconnect_subtitle' => 'Esto revocara el acceso de ChatGPT a tu cuenta TalkCaddy. Podras reconectarte en cualquier momento.',
+			'voice_caddy.settings.disconnect_confirm' => 'Desconectar',
+			'voice_caddy.settings.disconnect_cancel' => 'Cancelar',
+			'voice_caddy.settings.disconnect_error' => 'Error al desconectar. Intentalo de nuevo.',
 			'voice_caddy.fab.tooltip_connected' => 'Hablar con tu caddie',
 			'voice_caddy.fab.tooltip_not_connected' => 'Configurar caddie de voz',
 			'voice_caddy.handoff.title' => 'Tu caddie esta listo',

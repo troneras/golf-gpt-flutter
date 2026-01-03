@@ -1,3 +1,4 @@
+import 'package:apparence_kit/core/data/api/base_api_exceptions.dart';
 import 'package:apparence_kit/core/data/api/http_client.dart';
 import 'package:apparence_kit/modules/voice_caddy/api/entities/gpt_connection_entity.dart';
 import 'package:dio/dio.dart';
@@ -42,6 +43,15 @@ class VoiceCaddyApi {
         return const GptConnectionEntity();
       }
       rethrow;
+    }
+  }
+
+  /// Disconnect from GPT - revokes all OAuth tokens
+  Future<void> disconnectGpt(String userId) async {
+    try {
+      await _client.delete('/users/$userId/gpt-connection');
+    } on DioException catch (e) {
+      throw ApiError.fromDioException(e);
     }
   }
 }

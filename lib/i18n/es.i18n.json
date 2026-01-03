@@ -432,7 +432,12 @@
         "settings": {
             "title": "Caddie de Voz",
             "connected": "Conectado",
-            "not_connected": "No conectado"
+            "not_connected": "No conectado",
+            "disconnect_title": "Desconectar de ChatGPT",
+            "disconnect_subtitle": "Esto revocara el acceso de ChatGPT a tu cuenta TalkCaddy. Podras reconectarte en cualquier momento.",
+            "disconnect_confirm": "Desconectar",
+            "disconnect_cancel": "Cancelar",
+            "disconnect_error": "Error al desconectar. Intentalo de nuevo."
         },
         "fab": {
             "tooltip_connected": "Hablar con tu caddie",

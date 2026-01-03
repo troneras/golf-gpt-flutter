@@ -36,4 +36,9 @@ class VoiceCaddyRepository {
       return GptConnectionStatus.notConnected();
     }
   }
+
+  /// Disconnect from GPT - revokes all OAuth tokens
+  Future<void> disconnect(String userId) async {
+    await _api.disconnectGpt(userId);
+  }
 }

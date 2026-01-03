@@ -432,7 +432,12 @@
         "settings": {
             "title": "Voice Caddy",
             "connected": "Connected",
-            "not_connected": "Not connected"
+            "not_connected": "Not connected",
+            "disconnect_title": "Disconnect from ChatGPT",
+            "disconnect_subtitle": "This will revoke ChatGPT's access to your TalkCaddy account. You can reconnect anytime.",
+            "disconnect_confirm": "Disconnect",
+            "disconnect_cancel": "Cancel",
+            "disconnect_error": "Error disconnecting. Please try again."
         },
         "fab": {
             "tooltip_connected": "Talk to your caddy",

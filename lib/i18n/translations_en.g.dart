@@ -821,6 +821,11 @@ class _TranslationsVoiceCaddySettingsEn extends TranslationsVoiceCaddySettingsEs
 	@override String get title => 'Voice Caddy';
 	@override String get connected => 'Connected';
 	@override String get not_connected => 'Not connected';
+	@override String get disconnect_title => 'Disconnect from ChatGPT';
+	@override String get disconnect_subtitle => 'This will revoke ChatGPT\'s access to your TalkCaddy account. You can reconnect anytime.';
+	@override String get disconnect_confirm => 'Disconnect';
+	@override String get disconnect_cancel => 'Cancel';
+	@override String get disconnect_error => 'Error disconnecting. Please try again.';
 }
 
 // Path: voice_caddy.fab
@@ -1210,6 +1215,11 @@ extension on TranslationsEn {
 			'voice_caddy.settings.title' => 'Voice Caddy',
 			'voice_caddy.settings.connected' => 'Connected',
 			'voice_caddy.settings.not_connected' => 'Not connected',
+			'voice_caddy.settings.disconnect_title' => 'Disconnect from ChatGPT',
+			'voice_caddy.settings.disconnect_subtitle' => 'This will revoke ChatGPT\'s access to your TalkCaddy account. You can reconnect anytime.',
+			'voice_caddy.settings.disconnect_confirm' => 'Disconnect',
+			'voice_caddy.settings.disconnect_cancel' => 'Cancel',
+			'voice_caddy.settings.disconnect_error' => 'Error disconnecting. Please try again.',
 			'voice_caddy.fab.tooltip_connected' => 'Talk to your caddy',
 			'voice_caddy.fab.tooltip_not_connected' => 'Set up voice caddy',
 			'voice_caddy.handoff.title' => 'Your caddie is ready',

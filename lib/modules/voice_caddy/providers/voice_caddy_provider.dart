@@ -182,4 +182,33 @@ class VoiceCaddyNotifier extends _$VoiceCaddyNotifier {
   Future<void> confirmConnection() async {
     await checkConnectionStatus();
   }
+
+  /// Disconnect from GPT - revokes all OAuth tokens
+  /// Returns true on success, false on error
+  Future<bool> disconnect() async {
+    final userState = ref.read(userStateNotifierProvider);
+    if (!userState.user.isAuthenticated) return false;
+
+    try {
+      final repository = ref.read(voiceCaddyRepositoryProvider);
+      await repository.disconnect(userState.user.idOrThrow);
+
+      // Update local state
+      state = state.copyWith(
+        isConnected: false,
+        lastInteraction: null,
+        hasCompletedFlow: false,
+      );
+
+      // Refresh user state to sync the flag
+      await _refreshUserState();
+
+      _logger.i('Successfully disconnected from GPT');
+      return true;
+    } catch (e) {
+      _logger.e('Error disconnecting from GPT: $e');
+      state = state.copyWith(error: e.toString());
+      return false;
+    }
+  }
 }
