@@ -7,4 +7,4 @@ package_name("io.talkcaddy")
 # Path to Google Play service account JSON key
 # Download from Google Cloud Console > IAM > Service Accounts
 # Store securely and reference via environment variable
-json_key_file(ENV["GOOGLE_PLAY_JSON_KEY"] || "google-play-key.json")
+json_key_file(ENV["GOOGLE_PLAY_JSON_KEY"] || "fastlane/google-play-key.json")

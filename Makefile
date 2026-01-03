@@ -174,7 +174,10 @@ setup: ## Initial project setup (deps + gen + icons + splash)
 deploy-internal: build-appbundle-prod ## Build and deploy to Play Store Internal Testing
 	cd android && fastlane internal
 
-deploy-beta: build-appbundle-prod ## Build and deploy to Play Store Beta
+deploy-closed: build-appbundle-prod ## Build and deploy to Play Store Closed Testing (Alpha)
+	cd android && fastlane alpha
+
+deploy-beta: build-appbundle-prod ## Build and deploy to Play Store Open Testing (Beta)
 	cd android && fastlane beta
 
 deploy-production: build-appbundle-prod ## Build and deploy to Play Store Production
