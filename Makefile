@@ -168,3 +168,20 @@ setup: ## Initial project setup (deps + gen + icons + splash)
 	flutter pub run build_runner build --delete-conflicting-outputs
 	flutter pub run slang
 	@echo "Setup complete! Copy .env.example to .env and configure your values."
+
+# ==================== Deploy (Fastlane) ====================
+
+deploy-internal: build-appbundle-prod ## Build and deploy to Play Store Internal Testing
+	cd android && fastlane internal
+
+deploy-beta: build-appbundle-prod ## Build and deploy to Play Store Beta
+	cd android && fastlane beta
+
+deploy-production: build-appbundle-prod ## Build and deploy to Play Store Production
+	cd android && fastlane production
+
+promote-to-beta: ## Promote Internal release to Beta
+	cd android && fastlane promote_to_beta
+
+promote-to-production: ## Promote Beta release to Production
+	cd android && fastlane promote_to_production

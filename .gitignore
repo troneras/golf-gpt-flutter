@@ -50,3 +50,4 @@ app.*.map.json
 /android/app/release
 /android/build/
 /android/.gradle/
+android/fastlane/google-play-key.json

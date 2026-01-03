@@ -135,6 +135,25 @@ Co-Authored-By: Claude Opus 4.5 <noreply@anthropic.com>"
 
 ## Step 8: Upload to Play Console
 
+### Option A: Automated with Fastlane (Recommended)
+
+```bash
+# Deploy to Internal Testing (fastest for QA)
+make deploy-internal
+
+# Deploy to Beta (Open Testing)
+make deploy-beta
+
+# Deploy to Production
+make deploy-production
+
+# Or promote between tracks
+make promote-to-beta        # Internal → Beta
+make promote-to-production  # Beta → Production
+```
+
+### Option B: Manual Upload
+
 1. Go to [Google Play Console](https://play.google.com/console)
 2. Select TalkCaddy app
 3. Go to Release > Production (or Testing track)
@@ -144,14 +163,73 @@ Co-Authored-By: Claude Opus 4.5 <noreply@anthropic.com>"
 7. Paste release notes for each language
 8. Review and roll out
 
+## Fastlane Setup (One-Time)
+
+### 1. Install Fastlane
+
+```bash
+# macOS
+brew install fastlane
+
+# Or via Ruby
+gem install fastlane
+```
+
+### 2. Create Google Play Service Account
+
+1. Go to [Google Cloud Console](https://console.cloud.google.com)
+2. Select your project (or create one)
+3. Go to **IAM & Admin > Service Accounts**
+4. Create service account with name like `fastlane-deploy`
+5. Grant role: **Service Account User**
+6. Create JSON key and download it
+
+### 3. Link Service Account to Play Console
+
+1. Go to [Google Play Console](https://play.google.com/console)
+2. Go to **Setup > API access**
+3. Link your Google Cloud project
+4. Find your service account and click **Manage Play Console permissions**
+5. Grant permissions:
+   - **View app information and download bulk reports**
+   - **Release to production, exclude devices, and use Play App Signing**
+   - **Manage testing tracks and edit tester lists**
+
+### 4. Configure the Key
+
+```bash
+# Option 1: Environment variable (recommended for CI)
+export GOOGLE_PLAY_JSON_KEY=/path/to/google-play-key.json
+
+# Option 2: Place in fastlane directory (add to .gitignore!)
+cp /path/to/key.json android/fastlane/google-play-key.json
+```
+
+**Important**: Never commit the JSON key to git!
+
+Add to `.gitignore`:
+```
+android/fastlane/google-play-key.json
+```
+
 ## Quick Reference
 
 ### Make Targets
 
 ```bash
+# Build only
 make build-appbundle-prod  # Production bundle with Sentry
 make build-apk-prod        # Production APK with Sentry
 make build-appbundle       # Dev bundle (no Sentry)
+
+# Build + Deploy (Fastlane)
+make deploy-internal       # Deploy to Internal Testing
+make deploy-beta           # Deploy to Beta
+make deploy-production     # Deploy to Production
+
+# Promote between tracks
+make promote-to-beta       # Internal → Beta
+make promote-to-production # Beta → Production
 ```
 
 ### File Locations
@@ -183,5 +261,15 @@ Required for production builds:
 - [ ] Generate release notes (ES + EN)
 - [ ] Commit version bump
 - [ ] Push to remote
-- [ ] Upload to Play Console
+- [ ] Deploy: `make deploy-internal` (or `deploy-beta` / `deploy-production`)
+- [ ] Add release notes in Play Console
 - [ ] Submit for review
+
+## Full Automated Release Command
+
+```bash
+# Complete release flow (after bumping version)
+make deploy-internal  # Builds + uploads to Internal Testing
+```
+
+Then add release notes manually in Play Console and roll out.
